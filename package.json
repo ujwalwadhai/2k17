@@ -1,0 +1,11 @@
+{
+  "name": "2k17",
+  "version": "1.0.0",
+  "description": "A mini social media project for the batch of 2k17",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ujwal W.",
+  "license": "ISC"
+}

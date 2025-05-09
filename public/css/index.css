@@ -10,7 +10,7 @@ body {
 
 .hero {
   height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
 }
 
 .header {
@@ -68,13 +68,17 @@ body {
 .hero .hero-text h2 {
   font-size: 3rem;
   color: white;
+  margin-bottom: 16px;
 }
 .hero .hero-text p {
   margin: 1rem 0;
   font-size: 1.2rem;
+  width: 50%;
+  min-width: 284px;
+  line-height: 26px;
 }
 .hero .hero-text .cta-btn {
-  background: #7b5cf0;
+  background: #6342d8;
   color: #fff;
   padding: 0.75rem 1.5rem;
   text-decoration: none;
@@ -82,7 +86,7 @@ body {
   transition: 0.3s;
 }
 .hero .hero-text .cta-btn:hover {
-  background: #6342d8;
+  background: #7b5cf0;
 }
 
 .about, .features, .contact {
@@ -111,12 +115,13 @@ body {
 .features-grid .feature-card {
   background: #1f1c2e;
   padding: 1.5rem;
+  text-align: left;
   border-radius: 1rem;
   border: 0.5px solid grey;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 .features-grid .feature-card .feature-icon {
-  font-size: 48px;
+  font-size: 36px;
 }
 .features-grid .feature-card h4 {
   color: white;
@@ -124,7 +129,11 @@ body {
 }
 .features-grid .feature-card p {
   font-size: 0.95rem;
-  color: #555;
+  color: grey;
+}
+.features-grid .feature-card:hover {
+  transform: scale(1.05);
+  transition: 0.2s;
 }
 
 footer {

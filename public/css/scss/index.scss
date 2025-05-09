@@ -17,7 +17,7 @@ body {
 
 .hero{
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 }
 
 .header {
@@ -81,15 +81,18 @@ body {
     h2 {
       font-size: 3rem;
       color: white;
-      
+      margin-bottom: 16px;
     }
     p {
       margin: 1rem 0;
       font-size: 1.2rem;
+      width: 50%;
+      min-width: 284px;
+      line-height: 26px;
     }
 
     .cta-btn {
-      background: $primary;
+      background: $primary-dark;
       color: #fff;
       padding: 0.75rem 1.5rem;
       text-decoration: none;
@@ -97,7 +100,7 @@ body {
       transition: 0.3s;
 
       &:hover {
-        background: $primary-dark;
+        background: $primary;
       }
     }
   }
@@ -132,11 +135,12 @@ body {
   .feature-card {
     background: $bg-dark;
     padding: 1.5rem;
+    text-align: left;
     border-radius: 1rem;
     border: 0.5px solid grey;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     .feature-icon{
-        font-size: 48px;
+        font-size: 36px;
     }
     h4 {
       color: white;
@@ -145,7 +149,12 @@ body {
 
     p {
       font-size: 0.95rem;
-      color: #555;
+      color: grey;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      transition: 0.2s;
     }
   }
 }

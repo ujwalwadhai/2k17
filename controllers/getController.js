@@ -1,12 +1,15 @@
-exports.home = (req, res) => {
-  //res.render('home', { title: 'Home Page' });
-  res.send('Hello World');
+exports.indexPage = (req, res) => {
+  res.render('pages/index');
 };
   
 exports.login = (req, res) => {
-  res.render('pages/login', { title: 'Login Page' });
+  res.render('pages/login');
 }
 
 exports.createAccount = (req, res) => {
-  res.render('pages/signup', { title: 'Create Account Page' });
+  res.render('pages/signup');
+}
+
+exports.emailLogin = (req, res) => {
+  res.render('pages/email-login');
 }

@@ -67,4 +67,24 @@ function togglePassword(){
     }
 }
 
+function sendOTP(){
+    var otp = document.getElementById("otp");
+    var status_message = document.getElementById("otp-status-message");
+    var email_inp = document.getElementById("login-email");
+    var send_otp_btn = document.getElementById("send-otp-btn");
+    var login_btn = document.getElementById("login-btn");
+    if(email_inp.value){
+        send_otp_btn.innerHTML = "<span class='fal fa-spin fa-rotate'><span>"
+        status_message.innerHTML = "Sending OTP...";
+        setTimeout(()=>{
+            send_otp_btn.style.display = "none";
+            email_inp.style.display = "none";
+            status_message.innerHTML = `OTP sent to ${email_inp.value}`;
+            login_btn.style.display = "block";
+            otp.style.display = "block";
+            otp.disabled = false;
+        }, 2000)
+    }
+}
+
 setInterval(nextSlide, 4000);

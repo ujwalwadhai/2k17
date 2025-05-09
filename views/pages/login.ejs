@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - 2k17</title>
-  <link rel="stylesheet" href="/css/login.css">
+  <%- include('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/css/signup.css"/>
+  <title>Log In - 2k17 ❤️</title>
 </head>
 <body>
-  <div class="login-container">
-    <form action="/login" method="POST" class="login-form">
-      <h2>Welcome Back</h2>
+  <div class="container">
+    <%- include('../partials/login-carousal.ejs') %>
 
-      <% if (!typeof error && (error)) { %>
-        <p class="error-msg"><%= error %></p>
-      <% } %>
 
-      <div class="input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required />
-      </div>
-
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
-      </div>
-
-      <button type="submit">Login</button>
-    </form>
+    <div class="right-pane">
+      <form class="signup-form">
+        <h1>Log in to 2k17 ❤️</h1>
+        <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
+        <small class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; If this is first time, your password is your DOB (DDMMYYYY).</small><br><br>
+        <div>
+          <input type="email" placeholder="Email or username *"/>
+          <div class="password-field">
+            <input id="password" type="password" placeholder="Enter your password" />
+            <span onclick="togglePassword()" id="toggle" class="eye-icon fal fa-eye"></span>
+          </div><br>
+        </div>
+        
+        <a href="#">Login with Email OTP instead</a>
+        <button type="submit" class="primary-btn">Continue</button><br><br>
+        <!-- <div class="divider">Or register with</div>
+        <div class="social-buttons">
+          <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
+          <button class="apple">Apple</button>
+        </div>-->
+      </form>
+    </div>
   </div>
+
+  <script src="/js/signup.js"></script>
 </body>
 </html>

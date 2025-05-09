@@ -3,53 +3,43 @@
 <head>
   <%- include('../partials/head.ejs') %>
   <link rel="stylesheet" href="/css/signup.css"/>
-  <title>Create Account</title>
+  <title>Create Account - 2k17 ❤️</title>
 </head>
 <body>
   <div class="container">
-    <div class="left-pane">
-  <div class="carousel">
-    <div class="slide active" style="background-image: url('/images/jnv-bg-1.jpg');"></div>
-    <div class="slide" style="background-image: url('/images/jnv-bg-2.jpg');"></div>
-    <div class="slide" style="background-image: url('/images/jnv-bg-3.jpg');"></div>
-
-    <div class="header">
-      <div class="logo">2k17 ❤️</div>
-      <a href="#" class="back-button">Back to website &nbsp; <span class="fal fa-arrow-right"></span></a>
-    </div>
-
-    <div class="image-caption">
-      <p>Capturing Moments,<br>Creating Memories</p>
-      <div class="dots">
-        <span class="dot active" data-index="0"></span>
-        <span class="dot" data-index="1"></span>
-        <span class="dot" data-index="2"></span>
-      </div>
-    </div>
-  </div>
-</div>
+    <%- include('../partials/login-carousal.ejs') %>
 
 
     <div class="right-pane">
       <form class="signup-form">
-        <h1>Create an account</h1>
-        <p>Already have an account? &nbsp;<a href="#">Log in</a></p><br>
-        <input type="text" placeholder="Name" />
-        <input type="email" placeholder="Email" />
-        <div class="password-field">
-          <input type="password" placeholder="Enter your password" />
-          <span class="eye-icon">👁️</span>
+        <h1>Let the journey begin!</h1>
+        <p>Already have an account? &nbsp;<a href="/login">Log in</a></p><br>
+        <small class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Use the unique code from Ujwal to activate your account. Your details will auto-fill. Default password is your DOB (DDMMYYYY). You can update it later.
+        </small><br><br>
+        <div>
+        <div class="username-field">
+            <input type="text" oninput="this.value = this.value.toLowerCase(); checkUsername(this.value)" id="signup-username" name="username" placeholder="Choose username" />
+            <span id="status-icon" class="status-icon fal fa-user-circle"></span>
         </div>
+        <small id="status-message" class="grey-1"></small>
+        <input type="email" name="email" disabled="" placeholder="Email (auto-fill if available)*"/>
+        <input type="text" name="act-code" oninput="this.value = this.value.toUpperCase()" id="" placeholder="Enter activation code" required>
+        <!-- <div class="password-field">
+          <input type="password" placeholder="Enter your password" />
+          <span class="eye-icon fal fa-eye"></span>
+        </div> --> <br>
         <label class="terms">
           <input type="checkbox" />
-          I agree to the &nbsp; <a href="#"> Terms & Conditions</a>
+          I agree to the &nbsp; <a href="/terms-conditions"> Terms & Conditions</a>
         </label><br>
-        <button type="submit" class="primary-btn">Create account</button>
-        <div class="divider">Or register with</div>
+        </div>
+        
+        <button type="submit" class="primary-btn">Fetch Information</button><br><br>
+        <!-- <div class="divider">Or register with</div>
         <div class="social-buttons">
           <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
           <button class="apple">Apple</button>
-        </div>
+        </div>-->
       </form>
     </div>
   </div>

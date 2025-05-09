@@ -12,7 +12,6 @@ body {
 
 .left-pane {
   flex: 1;
-  background: url("your-image.jpg") no-repeat center center/cover;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -45,7 +44,7 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 1;
 }
 .left-pane .carousel .slide.active {
@@ -57,19 +56,21 @@ body {
   position: relative;
   z-index: 3;
   padding: 12px;
-  bottom: 0;
+  bottom: 8px;
 }
 .left-pane .carousel .image-caption {
-  margin-top: 30vw;
   margin-left: 8px;
+  position: absolute;
 }
 .left-pane .carousel .image-caption p {
   font-size: 28px;
+  font-weight: bold;
 }
 .left-pane .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 8px;
 }
 .left-pane .header .logo {
   font-size: 1.8rem;
@@ -83,15 +84,10 @@ body {
   padding: 0.5rem 1rem;
   border-radius: 999px;
   text-decoration: none;
-  transition: 0.3s;
   text-align: center;
 }
 .left-pane .header .back-button:hover {
   background: rgba(255, 255, 255, 0.4);
-}
-.left-pane .image-caption p {
-  font-size: 1.5rem;
-  font-weight: 500;
 }
 .left-pane .image-caption .dots {
   margin-top: 1rem;
@@ -153,6 +149,41 @@ body {
   transform: translateY(-50%);
   cursor: pointer;
 }
+.right-pane .signup-form .username-field {
+  position: relative;
+}
+.right-pane .signup-form .username-field .status-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.right-pane .signup-form .username-field .fa-spin {
+  position: absolute;
+  top: 36%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.right-pane .signup-form .username-field .fa-check-circle {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: green;
+  font-weight: bold;
+}
+.right-pane .signup-form .username-field .fa-circle-xmark {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+}
 .right-pane .signup-form .terms {
   display: flex;
   align-items: center;
@@ -206,6 +237,9 @@ body {
   .container {
     flex-direction: column;
   }
+  .signup-form h1 {
+    margin-top: 64px;
+  }
   .left-pane {
     height: 40vh;
     padding: 1.5rem;
@@ -245,8 +279,12 @@ body {
     font-size: 0.9rem;
     padding: 0.4rem 0.8rem;
   }
+  .left-pane .image-caption {
+    position: relative;
+    margin-top: 72px;
+  }
   .left-pane .image-caption p {
-    font-size: 1.2rem;
+    font-size: 20px !important;
   }
   .left-pane .image-caption .dots .dot {
     width: 12px;
@@ -262,6 +300,8 @@ body {
 @media (max-width: 600px) {
   .container .left-pane .image-caption {
     text-align: center;
+    position: relative;
+    margin-top: 72px;
   }
   .container .left-pane .image-caption p {
     font-size: 18px;

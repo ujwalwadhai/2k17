@@ -18,7 +18,6 @@ body {
 
 .left-pane {
   flex: 1;
-  background: url('your-image.jpg') no-repeat center center/cover;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -49,7 +48,7 @@ body {
         top: 0; left: 0;
         height: 100%;
         width: 100%;
-        background: rgba(0, 0, 0, 0.5); // dark overlay
+        background: rgba(0, 0, 0, 0.6); // dark overlay
         z-index: 1;
       }
   
@@ -64,15 +63,15 @@ body {
       position: relative;
       z-index: 3;
       padding:12px;
-      bottom: 0;
+      bottom: 8px;
     }
 
     .image-caption {
-        margin-top: 30vw;
         margin-left: 8px;
-
+        position: absolute;
         p{
             font-size: 28px;
+            font-weight: bold;
         }
     }
   }
@@ -82,7 +81,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    margin-top: 8px;
     .logo {
       font-size: 1.8rem;
       font-weight: bold;
@@ -96,7 +95,6 @@ body {
       padding: 0.5rem 1rem;
       border-radius: 999px;
       text-decoration: none;
-      transition: 0.3s;
       text-align: center;
 
       &:hover {
@@ -106,10 +104,6 @@ body {
   }
 
   .image-caption {
-    p {
-      font-size: 1.5rem;
-      font-weight: 500;
-    }
 
     .dots {
       margin-top: 1rem;
@@ -182,6 +176,45 @@ body {
       }
     }
 
+    .username-field {
+      position: relative;
+      .status-icon {
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        cursor: pointer;
+      
+      }
+      .fa-spin{
+        position: absolute;
+        top: 36%;
+        right: 1rem;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+      .fa-check-circle{
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: green;
+        font-weight: bold;
+      }
+      .fa-circle-xmark{
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: red;
+        font-weight: bold;
+      }
+
+
+    }
+
     .terms {
       display: flex;
       align-items: center;
@@ -247,7 +280,11 @@ body {
     .container {
       flex-direction: column;
     }
-  
+    .signup-form{
+      h1{
+        margin-top: 64px;
+      }
+    }
     .left-pane {
       height: 40vh;
       padding: 1.5rem;
@@ -261,7 +298,8 @@ body {
       
         .slide {
           position: absolute;
-          top: 0; left: 0;
+          top: 0; 
+          left: 0;
           height: 100%;
           width: 100%;
           background-size: cover;
@@ -296,8 +334,10 @@ body {
       }
   
       .image-caption {
+        position: relative;
+        margin-top: 72px;
         p {
-          font-size: 1.2rem;
+          font-size:20px !important;
         }
   
         .dots {
@@ -323,7 +363,8 @@ body {
       .left-pane {
         .image-caption {
             text-align: center;
-            
+            position: relative;
+            margin-top: 72px;
             p{
                 font-size: 18px;
             }

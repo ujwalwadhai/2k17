@@ -1,3 +1,10 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 @font-face {
     font-family: 'Lato';
     src: url('/fonts/Lato.ttf');
@@ -13,4 +20,37 @@
 
 .red{
     color: red;
+}
+
+::placeholder{
+    color: gray;
+}
+
+.grey-1{
+    color: gray;
+}
+
+.grey-2{
+    color: #686868;
+}
+
+.grey-3{
+    color: #a2a2a2;
+}
+
+.grey-4{
+    color: #bbbbbb;
+}
+
+.grey-5{
+    color: #c0c0c0;
+}
+
+.grey-6{
+    color: #b0b0b0;
+}
+
+a {
+  color: #7b5cf0;
+  text-decoration: none;
 }

@@ -12,7 +12,7 @@ require('./models/Like')
 require('./models/Post')
 require('./models/Notifications')
 require('./models/UserSettings')
-
+require('./models/PreUser')
 
 dotenv.config();
 

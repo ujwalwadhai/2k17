@@ -1,0 +1,173 @@
+$primary: #7b5cf0;
+$primary-dark: #6342d8;
+$bg-dark: #1f1c2e;
+$text-light: #ffffffcc;
+$text-muted: #888;
+$input-bg: #2c283d;
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  color: white;
+}
+
+.hero{
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+}
+
+.header {
+  background: $bg-dark;
+  padding: 0 24px ;
+  /* position: sticky; */
+  top: 0;
+  z-index: 10;
+  height: 0;
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      color: white;
+      font-size: 1.8rem;
+    }
+
+    ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+
+      li a {
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .login-btn {
+        background: $primary-dark;
+        color: white;
+        padding: 10px 32px;
+        border-radius: 5px;
+        transition: 0.3s ease;
+
+        &:hover {
+          background: $primary-dark ;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10%;
+  gap: 2rem;
+
+  .hero-text {
+    flex: 1;
+    h2 {
+      font-size: 3rem;
+      color: white;
+      
+    }
+    p {
+      margin: 1rem 0;
+      font-size: 1.2rem;
+    }
+
+    .cta-btn {
+      background: $primary;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+
+      &:hover {
+        background: $primary-dark;
+      }
+    }
+  }
+
+}
+
+.about, .features, .contact {
+  padding: 4rem 10%;
+  text-align: center;
+  background: $bg-dark;
+
+  h3 {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    color: grey;
+  }
+}
+
+.features-grid {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  .feature-card {
+    background: $bg-dark;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 0.5px solid grey;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    .feature-icon{
+        font-size: 48px;
+    }
+    h4 {
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+  }
+}
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: $bg-dark;
+  color: grey;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+}
+
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    .hero-text{
+        margin-top: 436px;
+    }
+    .carousel {
+      order: -1;
+    }
+  }
+}

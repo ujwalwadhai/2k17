@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  color: white;
+}
+
+.hero {
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
+}
+
+.header {
+  background: #1f1c2e;
+  padding: 0 24px;
+  /* position: sticky; */
+  top: 0;
+  z-index: 10;
+  height: 0;
+}
+.header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header nav h1 {
+  color: white;
+  font-size: 1.8rem;
+}
+.header nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+.header nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+}
+.header nav ul li a:hover {
+  text-decoration: underline;
+}
+.header nav ul .login-btn {
+  background: #6342d8;
+  color: white;
+  padding: 10px 32px;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+.header nav ul .login-btn:hover {
+  background: #6342d8;
+  text-decoration: none;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10%;
+  gap: 2rem;
+}
+.hero .hero-text {
+  flex: 1;
+}
+.hero .hero-text h2 {
+  font-size: 3rem;
+  color: white;
+}
+.hero .hero-text p {
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+.hero .hero-text .cta-btn {
+  background: #7b5cf0;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.hero .hero-text .cta-btn:hover {
+  background: #6342d8;
+}
+
+.about, .features, .contact {
+  padding: 4rem 10%;
+  text-align: center;
+  background: #1f1c2e;
+}
+.about h3, .features h3, .contact h3 {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+.about p, .features p, .contact p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  color: grey;
+}
+
+.features-grid {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.features-grid .feature-card {
+  background: #1f1c2e;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 0.5px solid grey;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.features-grid .feature-card .feature-icon {
+  font-size: 48px;
+}
+.features-grid .feature-card h4 {
+  color: white;
+  margin-bottom: 0.5rem;
+}
+.features-grid .feature-card p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: #1f1c2e;
+  color: grey;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+  }
+  .hero .hero-text {
+    margin-top: 436px;
+  }
+  .hero .carousel {
+    order: -1;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */

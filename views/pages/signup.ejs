@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/css/signup.css"/>
+  <title>Create Account</title>
+</head>
+<body>
+  <div class="container">
+    <div class="left-pane">
+  <div class="carousel">
+    <div class="slide active" style="background-image: url('/images/jnv-bg-1.jpg');"></div>
+    <div class="slide" style="background-image: url('/images/jnv-bg-2.jpg');"></div>
+    <div class="slide" style="background-image: url('/images/jnv-bg-3.jpg');"></div>
+
+    <div class="header">
+      <div class="logo">2k17 ❤️</div>
+      <a href="#" class="back-button">Back to website &nbsp; <span class="fal fa-arrow-right"></span></a>
+    </div>
+
+    <div class="image-caption">
+      <p>Capturing Moments,<br>Creating Memories</p>
+      <div class="dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="right-pane">
+      <form class="signup-form">
+        <h1>Create an account</h1>
+        <p>Already have an account? &nbsp;<a href="#">Log in</a></p><br>
+        <input type="text" placeholder="Name" />
+        <input type="email" placeholder="Email" />
+        <div class="password-field">
+          <input type="password" placeholder="Enter your password" />
+          <span class="eye-icon">👁️</span>
+        </div>
+        <label class="terms">
+          <input type="checkbox" />
+          I agree to the &nbsp; <a href="#"> Terms & Conditions</a>
+        </label><br>
+        <button type="submit" class="primary-btn">Create account</button>
+        <div class="divider">Or register with</div>
+        <div class="social-buttons">
+          <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
+          <button class="apple">Apple</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+$primary: #7b5cf0;
+$bg-dark: #1f1c2e;
+$text-light: #ffffffcc;
+$text-muted: #888;
+$input-bg: #2c283d;
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #2a273c;
+  color: #fff;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-pane {
+  flex: 1;
+  background: url('your-image.jpg') no-repeat center center/cover;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+
+  .carousel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+  
+    .slide {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      z-index: 1;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5); // dark overlay
+        z-index: 1;
+      }
+  
+      &.active {
+        opacity: 1;
+        z-index: 2;
+      }
+    }
+  
+    .header,
+    .image-caption {
+      position: relative;
+      z-index: 3;
+      padding:12px;
+      bottom: 0;
+    }
+
+    .image-caption {
+        margin-top: 30vw;
+        margin-left: 8px;
+
+        p{
+            font-size: 28px;
+        }
+    }
+  }
+  
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-left: 8px;
+      user-select:none;
+    }
+
+    .back-button {
+      color: $text-light;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: 0.3s;
+      text-align: center;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+    }
+  }
+
+  .image-caption {
+    p {
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+
+    .dots {
+      margin-top: 1rem;
+
+      .dot {
+        height: 6px;
+        width: 18px;
+        background: rgba(255, 255, 255, 0.2);
+        display: inline-block;
+        border-radius: 3px;
+        margin-right: 6px;
+
+        &.active {
+          background: #fff;
+        }
+      }
+    }
+  }
+}
+
+.right-pane {
+  flex: 1;
+  background: $bg-dark;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .signup-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+
+      a {
+        color: $primary;
+        text-decoration: none;
+      }
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 8px;
+      background: $input-bg;
+      color: #fff;
+      outline: none;
+
+      &:focus{
+        border: 1px solid $primary;
+      }
+    }
+
+    .password-field {
+      position: relative;
+
+      .eye-icon {
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+    }
+
+    .terms {
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+
+      input {
+        margin-right: 0.5rem;
+        width: auto;
+      }
+
+      a {
+        color: $primary;
+        text-decoration: none;
+      }
+    }
+
+    .primary-btn {
+      background: $primary;
+      padding: 0.8rem;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: bold;
+      margin-top: 1rem;
+      cursor: pointer;
+
+      &:hover {
+        background: darken($primary, 5%);
+      }
+    }
+
+    .divider {
+      text-align: center;
+      margin: 1rem 0;
+      color: $text-muted;
+    }
+
+    .social-buttons {
+      display: flex;
+      gap: 1rem;
+
+      button {
+        flex: 1;
+        background: $input-bg;
+        color: #fff;
+        border: none;
+        padding: 0.8rem;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+          background: lighten($input-bg, 5%);
+        }
+      }
+    }
+  }
+}
+
+
+// Responsive Design
+@media (max-width: 1024px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .left-pane {
+      height: 40vh;
+      padding: 1.5rem;
+
+      .carousel {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 12px;
+      
+        .slide {
+          position: absolute;
+          top: 0; left: 0;
+          height: 100%;
+          width: 100%;
+          background-size: cover;
+          background-position: center;
+          opacity: 0;
+          transition: opacity 0.8s ease;
+          z-index: 1;
+      
+          &.active {
+            opacity: 1;
+            z-index: 2;
+          }
+        }
+      
+        .header,
+        .image-caption {
+          position: relative;
+          z-index: 3;
+        }
+      }
+      
+  
+      .header {
+        .logo {
+          font-size: 1.2rem;
+        }
+  
+        .back-button {
+          font-size: 0.9rem;
+          padding: 0.4rem 0.8rem;
+        }
+      }
+  
+      .image-caption {
+        p {
+          font-size: 1.2rem;
+        }
+  
+        .dots {
+          .dot {
+            width: 12px;
+          }
+        }
+      }
+    }
+  
+    .right-pane {
+      height: 60vh;
+      padding: 2rem;
+  
+      .signup-form {
+        padding: 1rem;
+      }
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .container {
+      .left-pane {
+        .image-caption {
+            text-align: center;
+            
+            p{
+                font-size: 18px;
+            }
+        }
+      }
+  
+      .right-pane {
+        .signup-form {
+          max-width: 100%;
+          padding: 1rem;
+  
+          .name-fields {
+            flex-direction: column;
+          }
+  
+          input,
+          .primary-btn,
+          .social-buttons button {
+            font-size: 0.9rem;
+          }
+  
+          .divider {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+  

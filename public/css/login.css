@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to right, #c7d2fe, #e0e7ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-container {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #5b21b6;
+  font-size: 1.8rem;
+}
+.login-container .error-msg {
+  text-align: center;
+  color: red;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+.login-container .login-form {
+  display: flex;
+  flex-direction: column;
+}
+.login-container .input-group {
+  margin-bottom: 1.2rem;
+}
+.login-container .input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.login-container .input-group input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+.login-container .input-group input:focus {
+  border-color: #5b21b6;
+  outline: none;
+}
+.login-container button {
+  padding: 0.8rem;
+  background-color: #5b21b6;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.login-container button:hover {
+  background-color: rgb(69.4139534884, 25.1720930233, 138.8279069767);
+}
+
+/*# sourceMappingURL=login.css.map */

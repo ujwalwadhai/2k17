@@ -6,6 +6,14 @@ const dotenv = require('dotenv');
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
 
+require('./models/User')
+require('./models/Comment')
+require('./models/Like')
+require('./models/Post')
+require('./models/Notifications')
+require('./models/UserSettings')
+
+
 dotenv.config();
 
 const app = express();

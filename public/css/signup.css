@@ -1,0 +1,286 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #2a273c;
+  color: #fff;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-pane {
+  flex: 1;
+  background: url("your-image.jpg") no-repeat center center/cover;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+}
+.left-pane .carousel {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.left-pane .carousel .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  z-index: 1;
+}
+.left-pane .carousel .slide::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.left-pane .carousel .slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+.left-pane .carousel .header,
+.left-pane .carousel .image-caption {
+  position: relative;
+  z-index: 3;
+  padding: 12px;
+  bottom: 0;
+}
+.left-pane .carousel .image-caption {
+  margin-top: 30vw;
+  margin-left: 8px;
+}
+.left-pane .carousel .image-caption p {
+  font-size: 28px;
+}
+.left-pane .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.left-pane .header .logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-left: 8px;
+  user-select: none;
+}
+.left-pane .header .back-button {
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: 0.3s;
+  text-align: center;
+}
+.left-pane .header .back-button:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+.left-pane .image-caption p {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.left-pane .image-caption .dots {
+  margin-top: 1rem;
+}
+.left-pane .image-caption .dots .dot {
+  height: 6px;
+  width: 18px;
+  background: rgba(255, 255, 255, 0.2);
+  display: inline-block;
+  border-radius: 3px;
+  margin-right: 6px;
+}
+.left-pane .image-caption .dots .dot.active {
+  background: #fff;
+}
+
+.right-pane {
+  flex: 1;
+  background: #1f1c2e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.right-pane .signup-form {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+}
+.right-pane .signup-form h1 {
+  margin-bottom: 0.5rem;
+}
+.right-pane .signup-form p {
+  font-size: 0.9rem;
+}
+.right-pane .signup-form p a {
+  color: #7b5cf0;
+  text-decoration: none;
+}
+.right-pane .signup-form input {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+  background: #2c283d;
+  color: #fff;
+  outline: none;
+}
+.right-pane .signup-form input:focus {
+  border: 1px solid #7b5cf0;
+}
+.right-pane .signup-form .password-field {
+  position: relative;
+}
+.right-pane .signup-form .password-field .eye-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.right-pane .signup-form .terms {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+}
+.right-pane .signup-form .terms input {
+  margin-right: 0.5rem;
+  width: auto;
+}
+.right-pane .signup-form .terms a {
+  color: #7b5cf0;
+  text-decoration: none;
+}
+.right-pane .signup-form .primary-btn {
+  background: #7b5cf0;
+  padding: 0.8rem;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+.right-pane .signup-form .primary-btn:hover {
+  background: rgb(104.0898876404, 68.6488764045, 237.8511235955);
+}
+.right-pane .signup-form .divider {
+  text-align: center;
+  margin: 1rem 0;
+  color: #888;
+}
+.right-pane .signup-form .social-buttons {
+  display: flex;
+  gap: 1rem;
+}
+.right-pane .signup-form .social-buttons button {
+  flex: 1;
+  background: #2c283d;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.right-pane .signup-form .social-buttons button:hover {
+  background: rgb(55.1089108911, 50.099009901, 76.400990099);
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+  .left-pane {
+    height: 40vh;
+    padding: 1.5rem;
+  }
+  .left-pane .carousel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  .left-pane .carousel .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    z-index: 1;
+  }
+  .left-pane .carousel .slide.active {
+    opacity: 1;
+    z-index: 2;
+  }
+  .left-pane .carousel .header,
+  .left-pane .carousel .image-caption {
+    position: relative;
+    z-index: 3;
+  }
+  .left-pane .header .logo {
+    font-size: 1.2rem;
+  }
+  .left-pane .header .back-button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+  .left-pane .image-caption p {
+    font-size: 1.2rem;
+  }
+  .left-pane .image-caption .dots .dot {
+    width: 12px;
+  }
+  .right-pane {
+    height: 60vh;
+    padding: 2rem;
+  }
+  .right-pane .signup-form {
+    padding: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  .container .left-pane .image-caption {
+    text-align: center;
+  }
+  .container .left-pane .image-caption p {
+    font-size: 18px;
+  }
+  .container .right-pane .signup-form {
+    max-width: 100%;
+    padding: 1rem;
+  }
+  .container .right-pane .signup-form .name-fields {
+    flex-direction: column;
+  }
+  .container .right-pane .signup-form input,
+  .container .right-pane .signup-form .primary-btn,
+  .container .right-pane .signup-form .social-buttons button {
+    font-size: 0.9rem;
+  }
+  .container .right-pane .signup-form .divider {
+    font-size: 0.8rem;
+  }
+}
+
+/*# sourceMappingURL=signup.css.map */

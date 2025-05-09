@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Lato";
+  src: url("/fonts/Lato.ttf");
+}
+* {
+  font-family: "Lato", sans-serif;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+/*# sourceMappingURL=all.css.map */

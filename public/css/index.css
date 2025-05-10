@@ -169,7 +169,7 @@ body {
 }
 .features-grid .feature-card:hover {
   transform: scale(1.05);
-  transition: 0.2s;
+  transition: 0.2s transform ease;
 }
 
 footer {
@@ -290,20 +290,56 @@ footer {
     background: #6342d8;
   }
 }
+.developer-and-contact .contact input {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+  background: #2c283d;
+  color: #fff;
+  outline: none;
+  max-width: 400px;
+}
+.developer-and-contact .contact input:focus {
+  border: 1px solid #7b5cf0;
+}
+.developer-and-contact .contact button {
+  background: #7b5cf0;
+  color: #fff;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+.developer-and-contact .contact button:hover {
+  background: #6342d8;
+}
+.developer-and-contact .contact h3 {
+  margin-bottom: 2rem;
+}
+.developer-and-contact .contact p.contact-text {
+  line-height: 28px !important;
+}
+
 .developer-section {
-  padding: 4rem 2rem;
-  background: #f9f9f9;
-  text-align: center;
+  padding: 4rem 10%;
+  background: #1f1c2e;
+  text-align: left;
 }
 .developer-section h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: #333;
+  color: white;
 }
 .developer-section .dev-card {
-  max-width: 400px;
-  margin: 0 auto;
-  background: white;
+  max-width: 320px;
+  background: #2c283d;
   padding: 2rem;
   border-radius: 1.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -321,25 +357,38 @@ footer {
 }
 .developer-section .dev-card h3 {
   margin: 0.5rem 0;
-  color: #222;
+  color: white;
 }
 .developer-section .dev-card p {
   font-size: 0.95rem;
-  color: #555;
+  color: rgb(172, 172, 172);
   margin-bottom: 1rem;
+  line-height: 22px;
 }
 .developer-section .dev-card .social-links {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   gap: 1rem;
 }
 .developer-section .dev-card .social-links a {
-  color: #555;
+  color: rgb(172, 172, 172);
   font-size: 1.4rem;
   transition: color 0.3s ease;
 }
 .developer-section .dev-card .social-links a:hover {
-  color: #0077b5;
+  color: rgb(118, 118, 118);
+}
+
+@media screen and (min-width: 900px) {
+  .developer-and-contact {
+    display: flex;
+  }
+  .developer-and-contact .developer-section {
+    width: 50%;
+  }
+  .developer-and-contact .contact {
+    width: 50%;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

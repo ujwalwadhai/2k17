@@ -6,51 +6,81 @@ body {
   scroll-behavior: smooth;
   box-sizing: border-box;
   color: white;
+  background-color: #1f1c2e;
 }
 
 .hero {
   height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
 }
 
 .header {
   background: #1f1c2e;
-  padding: 0 24px;
-  /* position: sticky; */
   top: 0;
   z-index: 10;
   height: 0;
 }
-.header nav {
+.header nav.large-and-medium {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.header nav h1 {
+.header nav.large-and-medium h1 {
   color: white;
   font-size: 1.8rem;
 }
-.header nav ul {
+.header nav.large-and-medium ul {
   display: flex;
   list-style: none;
   gap: 1.5rem;
 }
-.header nav ul li a {
+.header nav.large-and-medium ul li a {
   text-decoration: none;
   color: white;
   font-weight: 600;
 }
-.header nav ul li a:hover {
+.header nav.large-and-medium ul li a:hover {
   text-decoration: underline;
 }
-.header nav ul .login-btn {
+.header nav.large-and-medium ul .login-btn {
   background: #6342d8;
   color: white;
   padding: 10px 32px;
   border-radius: 5px;
   transition: 0.3s ease;
 }
-.header nav ul .login-btn:hover {
+.header nav.large-and-medium ul .login-btn:hover {
+  background: #6342d8;
+  text-decoration: none;
+}
+.header nav.small-only {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0 20px;
+}
+.header nav.small-only span.menu-icon {
+  font-size: 20px;
+  padding: 6px 8px;
+  border: 1.2px solid white;
+  border-radius: 4px;
+}
+.header nav.small-only p.brand {
+  margin-left: 16px;
+  font-size: 22px;
+  padding-bottom: 2px;
+}
+.header nav.small-only .login-btn {
+  background: #6342d8;
+  margin-left: auto;
+  color: white;
+  padding: 10px 28px;
+  border: none;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  font-weight: bold;
+}
+.header nav.small-only .login-btn:hover {
   background: #6342d8;
   text-decoration: none;
 }
@@ -69,6 +99,9 @@ body {
   font-size: 3rem;
   color: white;
   margin-bottom: 16px;
+}
+.hero .hero-text h2 span {
+  -webkit-text-stroke: 0.005px white;
 }
 .hero .hero-text p {
   margin: 1rem 0;
@@ -91,7 +124,7 @@ body {
 
 .about, .features, .contact {
   padding: 4rem 10%;
-  text-align: center;
+  text-align: left;
   background: #1f1c2e;
 }
 .about h3, .features h3, .contact h3 {
@@ -102,8 +135,10 @@ body {
 .about p, .features p, .contact p {
   font-size: 1.1rem;
   max-width: 700px;
-  margin: 0 auto;
-  color: grey;
+  margin: 0;
+  color: rgb(172, 172, 172);
+  text-align: left;
+  line-height: 24px;
 }
 
 .features-grid {
@@ -114,6 +149,7 @@ body {
 }
 .features-grid .feature-card {
   background: #1f1c2e;
+  user-select: none;
   padding: 1.5rem;
   text-align: left;
   border-radius: 1rem;
@@ -150,11 +186,160 @@ footer {
     flex-direction: column;
   }
   .hero .hero-text {
-    margin-top: 436px;
+    margin-top: 300px;
   }
   .hero .carousel {
     order: -1;
   }
+}
+@media screen and (min-width: 890px) {
+  .small-only {
+    display: none !important;
+  }
+  .header {
+    padding: 0 24px;
+  }
+  .about-and-newsletter {
+    display: flex;
+  }
+  .about-and-newsletter .about {
+    width: 70%;
+  }
+  .about-and-newsletter .newsletter-sub {
+    background: #1f1c2e;
+    box-sizing: border-box;
+    border: 3px solid #7b5cf0;
+    border-radius: 8px;
+    margin: 5rem 0;
+    margin-right: 5%;
+    padding: 0 5%;
+    padding-top: 16px;
+    max-height: max-content;
+    width: auto;
+    max-width: 400px;
+  }
+  .about-and-newsletter .newsletter-sub input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border: none;
+    border-radius: 8px;
+    background: #2c283d;
+    color: #fff;
+    outline: none;
+  }
+  .about-and-newsletter .newsletter-sub input:focus {
+    border: 1px solid #7b5cf0;
+  }
+  .about-and-newsletter .newsletter-sub button {
+    background: #7b5cf0;
+    color: #fff;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-top: 4px;
+    width: 100%;
+  }
+  .about-and-newsletter .newsletter-sub button:hover {
+    background: #6342d8;
+  }
+}
+@media screen and (max-width: 890px) {
+  .large-and-medium {
+    display: none !important;
+  }
+  .newsletter-sub {
+    background: #1f1c2e;
+    box-sizing: border-box;
+    margin: 4rem 8%;
+    padding: 8px 32px;
+    border: 3px solid #7b5cf0;
+    border-radius: 8px;
+    width: auto;
+    min-width: 250px;
+  }
+  .newsletter-sub input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border: none;
+    border-radius: 8px;
+    background: #2c283d;
+    color: #fff;
+    outline: none;
+  }
+  .newsletter-sub input:focus {
+    border: 1px solid #7b5cf0;
+  }
+  .newsletter-sub button {
+    background: #7b5cf0;
+    color: #fff;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-top: 4px;
+    width: 100%;
+  }
+  .newsletter-sub button:hover {
+    background: #6342d8;
+  }
+}
+.developer-section {
+  padding: 4rem 2rem;
+  background: #f9f9f9;
+  text-align: center;
+}
+.developer-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+.developer-section .dev-card {
+  max-width: 400px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.developer-section .dev-card:hover {
+  transform: translateY(-5px);
+}
+.developer-section .dev-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+.developer-section .dev-card h3 {
+  margin: 0.5rem 0;
+  color: #222;
+}
+.developer-section .dev-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+.developer-section .dev-card .social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.developer-section .dev-card .social-links a {
+  color: #555;
+  font-size: 1.4rem;
+  transition: color 0.3s ease;
+}
+.developer-section .dev-card .social-links a:hover {
+  color: #0077b5;
 }
 
 /*# sourceMappingURL=index.css.map */

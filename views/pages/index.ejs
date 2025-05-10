@@ -7,7 +7,7 @@
 </head>
 <body>
   <div class="header">
-    <nav>
+    <nav class="large-and-medium">
       <h1>2k17 ❤️</h1>
       <ul>
         <li><a href="#about">About</a></li>
@@ -17,6 +17,11 @@
         <li><a href="/login" class="login-btn">Login</a></li>
       </ul>
     </nav>
+    <nav class="small-only">
+      <span class="menu-icon fas fa-bars-sort" onclick="toggleMenu()"></span>
+      <p class="brand">2k17 ❤️</p>
+      <button class="login-btn" onclick="window.location.href = '/login'">Login</button>
+    </nav>
   </div>
 
   <main>
@@ -25,18 +30,32 @@
       <div class="hero-text">
         <h2>Welcome to <span style="color: blue;">2</span><span style="color: green;">k</span><span style="color: red;">1</span><span style="color: yellow;">7</span></h2>
         <p>Private space to reconnect, share moments, and relive memories for the 2017-24 batch of JNV Chandrapur</p><br>
-        <a href="/login" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
+        <a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
       </div>
     </section>
 
+    <div class="about-and-newsletter">
     <!-- About Section -->
     <section id="about" class="about">
       <h3>What is 2k17?</h3>
-      <p>2k17 is a private social platform built for our 2017–2024 batch. No distractions, no outsiders — just us and our memories, in one place.</p>
+      <p>This isn’t just another social media site — it’s a digital time capsule. 2k17 exists for the quiet moments — when you’re feeling a little nostalgic, when you want to see a familiar face or check where someone is, or when a memory from school suddenly resurfaces. It’s not about daily posts or endless scrolling. It’s about checking in once in a while, smiling at something someone shared, and remembering the chaos, laughter, and friendships that shaped those seven years. This place will be here — quietly, patiently — whenever you feel like coming home for a bit.
+</p>
     </section>
 
+    <section id="newsletter-sub" class="newsletter-sub">
+      <h3>Subscribe to our Newsletter</h3>
+      <p>Stay updated with the latest news and updates from 2k17 with a monthly email.</p>
+      <form action="/subscribe" method="POST">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <br><br>
+    </section>
+
+    </div>
+
     <!-- Features Section -->
-    <section id="features" class="features">
+    <section id="features" class="features no-select">
       <h3>Features</h3>
       <div class="features-grid">
         <div class="feature-card">
@@ -62,11 +81,26 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section 
     <section id="contact" class="contact">
       <h3>Contact Ujwal</h3>
       <p>Have suggestions or issues? Reach out directly at <a href="mailto:ujwal@example.com">ujwal@example.com</a>.</p>
+    </section>-->
+
+    <section id="developer" class="developer-section">
+      <h2>Meet the Developer</h2>
+      <div class="dev-card">
+        <img src="https://avatars.githubusercontent.com/ujwalwadhai" alt="Ujwal Wadhai">
+        <h3>Ujwal Wadhai</h3>
+        <p>Creator of 2k17 • Full Stack Developer</p>
+        <div class="social-links">
+          <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://instagram.com/ujwalwadhai" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
     </section>
+
   </main>
 
   <footer>

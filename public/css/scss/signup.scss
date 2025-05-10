@@ -7,7 +7,7 @@ $input-bg: #2c283d;
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #2a273c;
+  background: $bg-dark;
   color: #fff;
 }
 
@@ -48,7 +48,7 @@ body {
         top: 0; left: 0;
         height: 100%;
         width: 100%;
-        background: rgba(0, 0, 0, 0.6); // dark overlay
+        background: rgba(0, 0, 0, 0.5); // dark overlay
         z-index: 1;
       }
   
@@ -282,7 +282,7 @@ body {
     }
     .signup-form{
       h1{
-        margin-top: 64px;
+        margin-top: 84px;
       }
     }
     .left-pane {
@@ -359,6 +359,7 @@ body {
   }
   
   @media (max-width: 600px) {
+    
     .container {
       .left-pane {
         .image-caption {
@@ -375,6 +376,7 @@ body {
         .signup-form {
           max-width: 100%;
           padding: 1rem;
+          padding-top: 0;
   
           .name-fields {
             flex-direction: column;
@@ -394,3 +396,8 @@ body {
     }
   }
   
+  @media screen and (min-width: 600px) {
+    .only-small{
+      display: none;
+    }
+  }

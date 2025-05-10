@@ -13,22 +13,21 @@ body {
   scroll-behavior: smooth;
   box-sizing: border-box;
   color: white;
+  background-color: $bg-dark;
 }
 
 .hero{
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 }
 
 .header {
   background: $bg-dark;
-  padding: 0 24px ;
-  /* position: sticky; */
   top: 0;
   z-index: 10;
   height: 0;
 
-  nav {
+  nav.large-and-medium {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,6 +66,41 @@ body {
       }
     }
   }
+
+  nav.small-only{
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0 20px;
+
+    span.menu-icon{
+      font-size: 20px;
+      padding: 6px 8px;
+      border: 1.2px solid white;
+      border-radius: 4px;
+    }
+
+    p.brand{
+      margin-left: 16px;
+      font-size: 22px;
+      padding-bottom: 2px;
+    }
+
+    .login-btn {
+        background: $primary-dark;
+        margin-left: auto;
+        color: white;
+        padding: 10px 28px;
+        border: none;
+        border-radius: 5px;
+        transition: 0.3s ease;
+        font-weight: bold;
+        &:hover {
+          background: $primary-dark ;
+          text-decoration: none;
+        }
+      }
+  }
 }
 
 .hero {
@@ -82,6 +116,10 @@ body {
       font-size: 3rem;
       color: white;
       margin-bottom: 16px;
+
+      span{
+        -webkit-text-stroke: 0.005px white;
+      }
     }
     p {
       margin: 1rem 0;
@@ -109,7 +147,7 @@ body {
 
 .about, .features, .contact {
   padding: 4rem 10%;
-  text-align: center;
+  text-align: left;
   background: $bg-dark;
 
   h3 {
@@ -121,8 +159,10 @@ body {
   p {
     font-size: 1.1rem;
     max-width: 700px;
-    margin: 0 auto;
-    color: grey;
+    margin: 0;
+    color: rgb(172, 172, 172);
+    text-align: left;
+    line-height: 24px;
   }
 }
 
@@ -134,6 +174,7 @@ body {
 
   .feature-card {
     background: $bg-dark;
+    user-select: none;
     padding: 1.5rem;
     text-align: left;
     border-radius: 1rem;
@@ -173,10 +214,186 @@ footer {
   .hero {
     flex-direction: column;
     .hero-text{
-        margin-top: 436px;
+        margin-top: 300px;
     }
     .carousel {
       order: -1;
+    }
+  }
+}
+
+
+
+
+@media screen and (min-width: 890px) {
+  .small-only{
+    display: none !important;
+  }
+
+  .header{
+    padding: 0 24px;
+  }
+  .about-and-newsletter{
+  display: flex;
+
+  .about{
+    width: 70%;
+  }
+
+  
+
+  .newsletter-sub{
+    background: $bg-dark;
+    box-sizing: border-box;
+    border: 3px solid $primary;
+    border-radius: 8px;
+    margin: 5rem 0;
+    margin-right: 5%;
+    padding: 0 5%;
+    padding-top: 16px;
+    max-height: max-content;
+    width: auto;
+    max-width: 400px;
+    input{
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 8px;
+      background: $input-bg;
+      color: #fff;
+      outline: none;
+
+      &:focus{
+        border: 1px solid $primary;
+      }
+    }
+
+    button{
+      background: $primary;
+      color: #fff;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin-top: 4px;
+      width: 100%;
+      &:hover{
+        background: $primary-dark;
+      }
+    }
+  }
+  }
+}
+
+@media screen and (max-width: 890px) {
+  .large-and-medium{
+    display: none !important;
+  }
+
+  .newsletter-sub{
+    background: $bg-dark;
+    box-sizing: border-box;
+    margin: 4rem 8%;
+    padding: 8px 32px;
+    border: 3px solid $primary;
+    border-radius: 8px;
+    width: auto;
+    min-width: 250px;
+    input{
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 8px;
+      background: $input-bg;
+      color: #fff;
+      outline: none;
+
+      &:focus{
+        border: 1px solid $primary;
+      }
+    }
+
+    button{
+      background: $primary;
+      color: #fff;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin-top: 4px;
+      width: 100%;
+      &:hover{
+        background: $primary-dark;
+      }
+    }
+  }
+}
+
+
+
+.developer-section {
+  padding: 4rem 2rem;
+  background: #f9f9f9;
+  text-align: center;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+  .dev-card {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      margin: 0.5rem 0;
+      color: #222;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+
+      a {
+        color: #555;
+        font-size: 1.4rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #0077b5; // LinkedIn blue or themed color
+        }
+      }
     }
   }
 }

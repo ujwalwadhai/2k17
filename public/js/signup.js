@@ -22,7 +22,20 @@ dots.forEach(dot => {
     });
 });
 
-function checkUsername(username){
+function checkUsername(el, username){
+    let cleanValue = '';
+  for (let i = 0; i < el.value.length; i++) {
+    const char = el.value[i];
+    if ((char >= 'a' && char <= 'z') ||
+        (char >= 'A' && char <= 'Z') ||
+        (char >= '0' && char <= '9')) {
+      cleanValue += char;
+    } else {
+        el.value = el.value.replace(/[^a-zA-Z0-9]/g, '');
+        return
+    }
+  }
+  el.value = cleanValue;
     var status_icon = document.getElementById("status-icon");
     var status_message = document.getElementById("status-message");
     status_icon.classList.remove("fa-user-circle");

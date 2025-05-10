@@ -13,3 +13,7 @@ exports.createAccount = (req, res) => {
 exports.emailLogin = (req, res) => {
   res.render('pages/email-login');
 }
+
+exports.donate = (req, res) => {
+  res.render('pages/donate');
+}

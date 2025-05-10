@@ -11,4 +11,6 @@ router.get('/create-account', getController.createAccount);
 
 router.get('/login/email', getController.emailLogin);
 
+router.get('/donate', getController.donate);
+
 module.exports = router;

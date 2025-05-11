@@ -1,3 +1,5 @@
+var PreUsers = require('../models/PreUser');
+
 exports.indexPage = (req, res) => {
   res.render('pages/index');
 };
@@ -18,6 +20,7 @@ exports.donate = (req, res) => {
   res.render('pages/donate');
 }
 
-exports.members = (req, res) => {
-  res.render('pages/members');
-}
+exports.members = async (req, res) => {
+  var members = await PreUsers.find({});
+    res.render('pages/members', {members});
+  }

@@ -12,154 +12,22 @@
     <input type="text" id="searchInput" placeholder="Search by name, username, or email..." />
 
     <div class="members-container" id="membersContainer">
-      
+      <% members.forEach(member => { %>
 
         <div class="member-card">
             <div class="upper">
-                <img src="/images/ujwal_profile.jpg" class="upper-img" alt="Profile of Ujwal Wadhai">
+                <img src="<%- member.profileUrl ? member.profileUrl : '/images/user.png' %>" class="upper-img" alt="Profile of <%= member.name %>">
                 <div class="upper-info">
-                    <p class="name">Ujwal Wadhai</p>
-                    <span class="username" onclick="window.location.href='/u/ujwalwadhai'">@ujwalwadhai</span>
-                    <p class="year">2017-24 &nbsp;in JNV</p>
+                    <p class="name"><%= member.name %></p>
+                    <% if (member.username) { %>
+                        <span class="username" onclick="window.location.href='/u/<%= member.username %>'"><%= member.username %></span>
+                    <% } else { %>
+                        <span class="username" style="cursor: text;">Not registered</span>
+                    <% } %>
+                    <p class="year"><%- member.year %> &nbsp;in JNV</p>
                 </div>
             </div>
-            <p class="bio">Just a simple developer</p>
-            <div class="social-links">
-                <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="upper">
-                <img src="/images/ujwal_profile.jpg" class="upper-img" alt="Profile of Ujwal Wadhai">
-                <div class="upper-info">
-                    <p class="name">Ujwal Wadhai</p>
-                    <span class="username" onclick="window.location.href='/u/ujwalwadhai'">@ujwalwadhai</span>
-                    <p class="year">2017-24 &nbsp;in JNV</p>
-                </div>
-            </div>
-            <p class="bio">Just a simple developer</p>
-            <div class="social-links">
-                <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="upper">
-                <img src="/images/ujwal_profile.jpg" class="upper-img" alt="Profile of Ujwal Wadhai">
-                <div class="upper-info">
-                    <p class="name">Ujwal Wadhai</p>
-                    <span class="username" onclick="window.location.href='/u/ujwalwadhai'">@ujwalwadhai</span>
-                    <p class="year">2017-24 &nbsp;in JNV</p>
-                </div>
-            </div>
-            <p class="bio">Just a simple developer</p>
-            <div class="social-links">
-                <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="upper">
-                <img src="/images/ujwal_profile.jpg" class="upper-img" alt="Profile of Ujwal Wadhai">
-                <div class="upper-info">
-                    <p class="name">Ujwal Wadhai</p>
-                    <span class="username" onclick="window.location.href='/u/ujwalwadhai'">@ujwalwadhai</span>
-                    <p class="year">2017-24 &nbsp;in JNV</p>
-                </div>
-            </div>
-            <p class="bio">Just a simple developer</p>
-            <div class="social-links">
-                <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="upper">
-                <img src="/images/ujwal_profile.jpg" class="upper-img" alt="Profile of Ujwal Wadhai">
-                <div class="upper-info">
-                    <p class="name">Ujwal Wadhai</p>
-                    <span class="username" onclick="window.location.href='/u/ujwalwadhai'">@ujwalwadhai</span>
-                    <p class="year">2017-24 &nbsp;in JNV</p>
-                </div>
-            </div>
-            <p class="bio">Just a simple developer</p>
-            <div class="social-links">
-                <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="upper">
-                <img src="/images/ujwal_profile.jpg" class="upper-img" alt="Profile of Ujwal Wadhai">
-                <div class="upper-info">
-                    <p class="name">Ujwal Wadhai</p>
-                    <span class="username" onclick="window.location.href='/u/ujwalwadhai'">@ujwalwadhai</span>
-                    <p class="year">2017-24 &nbsp;in JNV</p>
-                </div>
-            </div>
-            <p class="bio">Just a simple developer</p>
-            <div class="social-links">
-                <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="upper">
-                <img src="/images/ujwal_profile.jpg" class="upper-img" alt="Profile of Ujwal Wadhai">
-                <div class="upper-info">
-                    <p class="name">Ujwal Wadhai</p>
-                    <span class="username" onclick="window.location.href='/u/ujwalwadhai'">@ujwalwadhai</span>
-                    <p class="year">2017-24 &nbsp;in JNV</p>
-                </div>
-            </div>
-            <p class="bio">Just a simple developer</p>
-            <div class="social-links">
-                <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="upper">
-                <img src="/images/ujwal_profile.jpg" class="upper-img" alt="Profile of Ujwal Wadhai">
-                <div class="upper-info">
-                    <p class="name">Ujwal Wadhai</p>
-                    <span class="username" onclick="window.location.href='/u/ujwalwadhai'">@ujwalwadhai</span>
-                    <p class="year">2017-24 &nbsp;in JNV</p>
-                </div>
-            </div>
-            <p class="bio">Just a simple developer</p>
-            <div class="social-links">
-                <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="member-card">
-            <div class="upper">
-                <img src="/images/ujwal_profile.jpg" class="upper-img" alt="Profile of Ujwal Wadhai">
-                <div class="upper-info">
-                    <p class="name">Ujwal Wadhai</p>
-                    <span class="username" onclick="window.location.href='/u/ujwalwadhai'">@ujwalwadhai</span>
-                    <p class="year">2017-24 &nbsp;in JNV</p>
-                </div>
-            </div>
-            <p class="bio">Just a simple developer</p>
+            <p class="bio"><%- member.bio ? member.bio : "Nothing here" %></p>
             <div class="social-links">
                 <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
@@ -168,6 +36,7 @@
             </div>
         </div>
         
+      <% }) %>
     </div>
   </section>
 

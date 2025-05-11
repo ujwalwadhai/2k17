@@ -22,7 +22,8 @@ body{
   background: transparent;
   min-height: 100vh;
   text-align: center;
-
+  height: 100vh;
+  overflow-y: scroll;
   h2 {
     font-size: 2.2rem;
     text-align: center;
@@ -90,6 +91,20 @@ body{
       padding: 0;
       margin-bottom: 4px;
       color: white;
+      display: flex;
+      align-items: center;
+
+      span{
+        font-size: 0.8rem;
+        color: $text-muted;
+        margin-left: 8px;
+        background: $primary-dark;
+        color: white;
+        border-radius: 4px;
+        padding: 4px 8px;
+        text-transform: uppercase;
+        font-size: 10px;
+      }
     }
 
     .year{
@@ -120,11 +135,19 @@ body{
 
       a {
         color: rgb(172, 172, 172);
-        font-size: 20px;
+        font-size: 18px;
         transition: color 0.3s ease;
 
         &:hover {
           color: rgb(118, 118, 118);
+        }
+
+        span{
+          font-size: 18px;
+        }
+
+        span.fa-phone-volume{
+          font-size: 17px;
         }
       }
     }

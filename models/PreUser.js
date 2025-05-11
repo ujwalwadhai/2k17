@@ -20,510 +20,159 @@ const PreUser = mongoose.model('PreUser', preUserSchema);
 const preUsersData = [
   {
     "name": "Aditi Khobragade",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "07/10/2006"
   },
   {
     "name": "Aditi Zade",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "24/10/2006"
   },
   {
     "name": "Akshita Ray",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "01/07/2006"
   },
   {
     "name": "Ashish Sopankar",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "16/07/2006"
   },
   {
     "name": "Bhavishya Rangari",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "04/09/2006"
   },
   {
     "name": "Himanshu Mangam",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "18/12/2005"
   },
   {
     "name": "Ketan Mongarkar",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "05/07/2005"
   },
   {
     "name": "Khushi Ramteke",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "31/03/2007"
   },
   {
     "name": "Manasvi Borkar",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "01/05/2006"
   },
   {
     "name": "Naina Khadsang",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "28/06/2006"
   },
   {
     "name": "Prajwal Chaudhari",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "14/07/2005"
   },
   {
     "name": "Prajwali Tajane",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "07/09/2006"
   },
   {
     "name": "Prajyot Meshram",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "21/05/2006"
   },
   {
     "name": "Prajyot Raut",
-    "username": "",
-    "profileUrl": "",
-    "year": "2020-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "06/10/2005"
   },
   {
     "name": "Ritik Madavi",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "28/04/2006"
   },
   {
     "name": "Rutuja Kamdi",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "08/07/2006"
   },
   {
     "name": "Samiksha Chunarkar",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "28/04/2006"
   },
   {
     "name": "Samyak Sakhare",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "22/10/2005"
   },
   {
     "name": "Shankar Bharde",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
-  },
-  {
-    "name": "Shraddha Pakhmode",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "08/09/2006"
   },
   {
     "name": "Sneha Togare",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "01/01/2006"
   },
   {
     "name": "Trupti Raut",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "28/10/2005"
   },
   {
     "name": "Ujwal Wadhai",
-    "username": "",
-    "profileUrl": "/images/ujwal_profile.jpg",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "wadhaiujwal@gmail.com",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "13/09/2006"
   },
   {
     "name": "Vivekanand Puram",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "08/02/2006"
   },
   {
     "name": "Aditya Patil",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "24/02/2006"
   },
   {
     "name": "Bhairavi Gedam",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "01/10/2006"
   },
   {
     "name": "Manali Humane",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "25/10/2006"
   },
   {
     "name": "Manthan Suryawanshi",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "12/03/2006"
   },
   {
     "name": "Monali Chandanbawane",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "18/10/2006"
   },
   {
     "name": "Paresh Nimje",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "13/04/2006"
   },
   {
     "name": "Pranjal Madkam",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "26/10/2005"
   },
   {
     "name": "Rhutik Kunbhare",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "22/03/2006"
   },
   {
     "name": "Sejal Ragit",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "28/04/2006"
   },
   {
     "name": "Shrishant Bagale",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "06/11/2005"
   },
   {
     "name": "Shrushti Khandare",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "25/04/2006"
   },
   {
     "name": "Suhani Chaudhary",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "31/05/2006"
   },
   {
     "name": "Vaishnavi Shedala",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "05/11/2006"
   },
   {
     "name": "Vedanti Fukat",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "18/10/2006"
   },
   {
     "name": "Yash Magare",
-    "username": "",
-    "profileUrl": "",
-    "year": "2017-24",
-    "bio": "",
-    "code": "",
-    "phone": "",
-    "email": "",
-    "used": false,
-    "emailVerified": false,
-    "emailVerificationExpires": ""
+    "dob": "02/10/2006"
+  },
+  {
+    "name": "Shraddha Pakhmode",
+    "dob": "27/10/2006"
   }
 ]
 

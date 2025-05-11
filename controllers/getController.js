@@ -1,4 +1,4 @@
-var PreUsers = require('../models/PreUser');
+var Users = require('../models/User');
 
 exports.indexPage = (req, res) => {
   res.render('pages/index');
@@ -20,7 +20,45 @@ exports.donate = (req, res) => {
   res.render('pages/donate');
 }
 
-exports.members = async (req, res) => {
-  var members = await PreUsers.find({});
-    res.render('pages/members', {members});
+async function getSortedUsers() {
+  try {
+    var users = await Users.aggregate([
+      {
+        $addFields: {
+          roleOrder: {
+            $cond: [
+              { $eq: ["$role", "admin"] }, 1,
+              {
+                $cond: [
+                  { $eq: ["$role", "moderator"] }, 2,
+                  3 // All other roles (like user, guest, etc.)
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        $sort: {
+          roleOrder: 1,
+          name: 1
+        }
+      },
+      {
+        $project: {
+          roleOrder: 0 // optional: remove temp field
+        }
+      }
+    ]);
+
+    return users;
+  } catch (err) {
+    console.error("Error fetching sorted users:", err);
+    return [];
   }
+}
+
+exports.members = async (req, res) => {
+  var members = await getSortedUsers();
+  res.render('pages/members', {members});
+}

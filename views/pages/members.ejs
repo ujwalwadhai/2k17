@@ -16,11 +16,15 @@
 
         <div class="member-card">
             <div class="upper">
-                <img src="<%- member.profileUrl ? member.profileUrl : '/images/user.png' %>" class="upper-img" alt="Profile of <%= member.name %>">
+                <img src="<%- member.profilePicture %>" class="upper-img" alt="Profile of <%= member.name %>">
                 <div class="upper-info">
-                    <p class="name"><%= member.name %></p>
-                    <% if (member.username) { %>
-                        <span class="username" onclick="window.location.href='/u/<%= member.username %>'"><%= member.username %></span>
+                    <p class="name"><%= member.name %>
+                    <% if (member.role !== 'user') { %>
+                        <span><%= member.role %></span>
+                    <% } %>
+                    </p>
+                    <% if (member.username && member.username !== member.name.replace(/\s+/g, '').toLowerCase()) { %>
+                        <span class="username" onclick="window.location.href='/u/<%= member.username %>'">@<%= member.username %></span>
                     <% } else { %>
                         <span class="username" style="cursor: text;">Not registered</span>
                     <% } %>
@@ -28,12 +32,33 @@
                 </div>
             </div>
             <p class="bio"><%- member.bio ? member.bio : "Nothing here" %></p>
+            <% if ((member.email || member.phone) || (typeof member.socialLinks !== 'undefined' && (member.socialLinks.instagram || member.socialLinks.linkedin || member.socialLinks.github || member.socialLinks.other))) { %>
             <div class="social-links">
-                <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
+              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.instagram ) { %>
+                <a href="<%= member.socialLinks.instagram %>" target="_blank"><span class="fab fa-instagram"></span></a>
+              <% } %>
+              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.linkedin ) { %>
+                <a href="<%= member.socialLinks.linkedin %>" target="_blank"><span class="fab fa-linkedin"></span></a>
+              <% } %>
+              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.github ) { %>
+                <a href="<%= member.socialLinks.github %>" target="_blank"><span class="fab fa-github"></span></a>
+              <% } %>
+              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.facebook ) { %>
+                <a href="<%= member.socialLinks.facebook %>" target="_blank"><span class="fab fa-facebook"></span></a>
+              <% } %>
+              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.other ) { %>
+                <a href="<%= member.socialLinks.other %>" target="_blank"><span class="fal fa-link-simple"></span></a>
+              <% } %>
+              <% if (member.email) { %>
+                <a href="mailto:<%= member.email %>" target="_blank"><span class="fal fa-envelope"></span></a>
+              <% } %>
+              <% if (member.phone) { %>
+                <a href="tel:<%= member.phone %>" target="_blank"><span class="fal fa-phone-volume"></span></a>
+              <% } %>
             </div>
+            <% } else { %>
+            <div class="grey-2">No contact details available</div>
+            <% } %>
         </div>
         
       <% }) %>

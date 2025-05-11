@@ -15,8 +15,20 @@ function createDate(){
   var year = new Date().getFullYear();
   if (hour > 12){
     hour = hour - 12;
+    if (hour < 10) {
+      hour = "0" + hour;
+    }
+    if (mins < 10) {
+      mins = "0" + mins;
+    }
     var time = hour + ":" + mins + " PM";
   } else {
+    if (hour < 10) {
+      hour = "0" + hour;
+    }
+    if (mins < 10) {
+      mins = "0" + mins;
+    }
     var time = hour + ":" + mins + " AM"
   }
   if (month < 10) {

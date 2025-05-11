@@ -6,22 +6,7 @@
     <title>Make a change by donating ❤️</title>
 </head>
 <body>
-    <div class="header">
-        <nav class="large-and-medium">
-        <h1>2k17 ❤️</h1>
-        <ul>
-            <li><a href="/donate">Donate</a></li>
-            <li><a href="/members">Members</a></li>
-            <li><a href="/create-account">Register</a></li>
-            <li><a href="/login" class="login-btn">Login</a></li>
-        </ul>
-        </nav>
-        <nav class="small-only">
-        <span class="menu-icon fas fa-bars-sort" onclick="toggleMenu()"></span>
-        <p class="brand">2k17 ❤️</p>
-        <button class="login-btn" onclick="window.location.href = '/login'">Login</button>
-        </nav>
-    </div>
+    <%- include('../partials/navbar.ejs') %>
 
     <section class="donate-section">
         <div class="donate-container">

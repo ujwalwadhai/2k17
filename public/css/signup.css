@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
   background: #1f1c2e;
   color: #fff;
 }
@@ -57,6 +56,10 @@ body {
   z-index: 3;
   padding: 12px;
   bottom: 8px;
+  background: transparent;
+}
+.left-pane .carousel .header {
+  margin-top: 16px;
 }
 .left-pane .carousel .image-caption {
   margin-left: 8px;
@@ -99,6 +102,7 @@ body {
   display: inline-block;
   border-radius: 3px;
   margin-right: 6px;
+  cursor: pointer;
 }
 .left-pane .image-caption .dots .dot.active {
   background: #fff;
@@ -271,6 +275,7 @@ body {
   .left-pane .carousel .image-caption {
     position: relative;
     z-index: 3;
+    background: transparent;
   }
   .left-pane .header .logo {
     font-size: 1.2rem;

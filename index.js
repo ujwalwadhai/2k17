@@ -31,6 +31,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/', getRoutes);
 app.use('/', postRoutes);
 
+app.use((req, res) => {
+    res.redirect("/")
+})
+
 // Utility functions for frontend
 var { formatDate, createDate, getWeekDay } = require('./utils/dateFunctions');
 app.locals.formatDate = formatDate;

@@ -1,0 +1,59 @@
+<div class="header">
+    <nav class="large-and-medium">
+      <h1>2k17 ❤️</h1>
+      <ul>
+        <li><a href="/donate">Donate</a></li>
+        <li><a href="/members">Members</a></li>
+        <li><a href="/create-account">Register</a></li>
+        <li><a href="/login" class="login-btn">Login</a></li>
+      </ul>
+    </nav>
+    <nav class="small-only">
+      <span class="menu-icon fas fa-bars-sort" onclick="toggleMenu()"></span>
+      <p class="brand">2k17 ❤️</p>
+      <button class="login-btn" onclick="window.location.href = '/login'">Login</button>
+    </nav>
+
+    <div id="mobileSidebar">
+      <div id="sidebarContent">
+        <div class="close-icon" id="close-icon">
+          <span class="fas fa-xmark"></span>
+        </div>
+        <img src="/images/jnv-bg-4.jpg" alt="">
+        <ul>
+          <li onclick="window.location.href = '/donate'"><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span> Donate</a></li>
+          <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span> Members</a></li>
+          <li onclick="window.location.href = '/create-account'"><a href="/create-account"><span class="fal fa-user-plus"></span> Register</a></li>
+          <li onclick="window.location.href = '/login'"><a href="/login"><span class="fal fa-right-to-bracket"></span> Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+  const sidebar = document.getElementById('mobileSidebar');
+  const sidebarContent = document.getElementById('sidebarContent');
+
+  function toggleMenu() {
+    sidebar.style.display = 'block';
+    requestAnimationFrame(() => {
+      sidebarContent.style.transform = 'translateX(0)';
+    });
+  }
+
+  window.addEventListener('click', function (e) {
+    if (sidebar.style.display === 'block' && !sidebarContent.contains(e.target) && !e.target.classList.contains('menu-icon')) {
+      sidebarContent.style.transform = 'translateX(-100%)';
+      setTimeout(() => {
+        sidebar.style.display = 'none';
+      }, 300); // Match transition duration
+    }
+  });
+
+  document.getElementById('close-icon').addEventListener('click', function () {
+    sidebarContent.style.transform = 'translateX(-100%)';
+    setTimeout(() => {
+      sidebar.style.display = 'none';
+    }, 300); // Match transition duration
+  })
+</script>

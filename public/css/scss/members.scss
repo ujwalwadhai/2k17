@@ -1,0 +1,146 @@
+$primary: #7b5cf0;
+$primary-dark: #6342d8;
+$bg-dark: #1f1c2e;
+$bg-dark2: #2b273f;
+$text-light: rgb(172, 172, 172);
+$text-muted: #888;
+$input-bg: #2c283d;
+
+body, html{
+    margin: 0;
+    padding: 0;
+    
+}
+
+body{
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-4.jpg') center center / cover no-repeat;
+}
+
+.members-page {
+  padding: 40px 20px;
+  background: transparent;
+  min-height: 100vh;
+  text-align: center;
+
+  h2 {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-top: 84px;
+    margin-bottom: 20px;
+    color: $primary-dark;
+  }
+
+  #searchInput {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 8px;
+    margin-bottom: 72px;
+    border: none;
+    border-radius: 8px;
+    background: $input-bg;
+    color: #fff;
+    outline: none;
+    max-width: 400px;
+        
+    &:focus {
+        border: 1px solid $primary;
+    }
+  }
+
+  .members-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1.2fr));
+    gap: 24px;
+    padding: 0 10px;
+  }
+
+  .member-card {
+    background: $bg-dark2;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .upper{
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+
+    .name {
+      font-size: 1.2rem;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 4px;
+      color: white;
+    }
+
+    .year{
+        padding: 0;
+        margin: 0;
+        margin-top: 8px;
+        color: $text-light;
+        font-size: 14px;
+    }
+
+    .username{
+        color: $text-light;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .bio {
+      font-size: 0.9rem;
+      color: $text-light;
+      margin-bottom: 16px;
+    }
+
+    .social-links {
+      display: flex;
+      margin-top: 8px;
+      justify-content: left;
+      gap: 1rem;
+
+      a {
+        color: rgb(172, 172, 172);
+        font-size: 20px;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: rgb(118, 118, 118);
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 501px) {
+    .members-container{
+        display: block;
+        text-align: center;
+
+        .member-card{
+            margin: auto;
+            width: 80vw;
+            max-width: none;
+        }
+    }
+}

@@ -6,7 +6,6 @@ $input-bg: #2c283d;
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
   background: $bg-dark;
   color: #fff;
 }
@@ -64,6 +63,11 @@ body {
       z-index: 3;
       padding:12px;
       bottom: 8px;
+      background: transparent;
+    }
+
+    .header{
+      margin-top: 16px;
     }
 
     .image-caption {
@@ -115,6 +119,7 @@ body {
         display: inline-block;
         border-radius: 3px;
         margin-right: 6px;
+        cursor: pointer;
 
         &.active {
           background: #fff;
@@ -318,6 +323,7 @@ body {
         .image-caption {
           position: relative;
           z-index: 3;
+          background:transparent;
         }
       }
       

@@ -17,3 +17,7 @@ exports.emailLogin = (req, res) => {
 exports.donate = (req, res) => {
   res.render('pages/donate');
 }
+
+exports.members = (req, res) => {
+  res.render('pages/members');
+}

@@ -16,7 +16,7 @@
 
         <div class="member-card">
             <div class="upper">
-                <img src="<%- member.profilePicture %>" class="upper-img" alt="Profile of <%= member.name %>">
+                <img src="<%- member.profilePicture ? member.profilePicture : '/images/user.png' %>" class="upper-img" alt="Profile of <%= member.name %>">
                 <div class="upper-info">
                     <p class="name"><%= member.name %>
                     <% if (member.role !== 'user') { %>

@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const getController = require('../controllers/getController');
+const { isLoggedIn } = require('../middlewares/auth');
 
-// Example GET route — Home Page
 router.get('/', getController.indexPage);
+
+router.get('/home', isLoggedIn, getController.home);
 
 router.get('/login', getController.login);
 

@@ -8,6 +8,10 @@ exports.login = (req, res) => {
   res.render('pages/login');
 }
 
+exports.home = (req, res) => {
+  res.send("This is home")
+}
+
 exports.createAccount = (req, res) => {
   res.render('pages/signup');
 }

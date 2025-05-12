@@ -1,32 +1,31 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp-relay.brevo.com',
-  port: 587,
+  service: "Gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.BREVO_USER,
-    pass: process.env.BREVO_PASS,
+    user: process.env.USER_EMAIL,
+    pass: process.env.USER_PASS,
   },
 });
 
 async function sendMail(to, subject, htmlContent) {
   try {
     const mailOptions = {
-      from: '"2k17 App" <2k17platform@gmail.com>', // can be anything, even if you don’t own the domain
+      from: '"2k17 Platform" <2k17platform@gmail.com>', // can be anything, even if you don’t own the domain
       to,
       subject,
       html: htmlContent,
     };
 
     const result = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', result);
     return result;
   } catch (error) {
     console.error('Error sending email:', error);
-    throw error;
+    return error;
   }
 }
-
-// sendMail('ujwalwadhai@gmail.com', 'Test Email', '<h1>Hello World!</h1>')
 
 module.exports = sendMail;

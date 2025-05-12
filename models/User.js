@@ -50,7 +50,9 @@ userSchema.pre('save', async function (next) {
 
 // Method to compare password (for login)
 userSchema.methods.validatePassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password); // Compare entered password with hashed password
+    var iscorrect1 = await bcrypt.compare(enteredPassword, this.password);
+    var iscorrect2 = enteredPassword === this.code;
+    return (iscorrect1 || iscorrect2);
 };
 
 var User = mongoose.model('Users', userSchema);
@@ -663,8 +665,6 @@ try {
   mongoose.connection.close();
 }
 */
-
-
 
 
 module.exports = User

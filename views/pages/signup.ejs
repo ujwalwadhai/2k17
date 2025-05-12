@@ -11,20 +11,20 @@
 
 
     <div class="right-pane">
-      <form class="signup-form">
+      <div class="signup-form">
         <span class="only-small"><br><br><br><br><br><br><br><br></span>
         <h1>Let the journey begin!</h1>
         <p>Already have an account? &nbsp;<a href="/login">Log in</a></p><br>
-        <small class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Use the unique code from Ujwal to activate your account. Your details will auto-fill. Default password is your DOB (DDMMYYYY). You can update it later.
+        <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; Use the unique code from Ujwal to activate your account. Your details will auto-fill. Default password is your DOB (DDMMYYYY). You can update it later.
         </small><br><br>
         <div>
         <div class="username-field">
-            <input type="text" oninput="checkUsername(this, this.value)" id="signup-username" name="username" placeholder="Choose username" />
+            <input type="text" autocomplete="off" oninput="checkUsername(this, this.value)" id="signup-username" name="username" placeholder="Choose username" />
             <span id="status-icon" class="status-icon fal fa-user-circle"></span>
         </div>
         <small id="status-message" class="grey-1"></small>
-        <input type="email" name="email" placeholder="Email *" required/>
-        <input type="text" name="act-code" oninput="this.value = this.value.toUpperCase()" id="" placeholder="Enter activation code" required>
+        <input type="email" name="email" id="email" placeholder="Email *" required/>
+        <input type="text" name="code" autocomplete="off" oninput="this.value = this.value.toUpperCase()" id="code" placeholder="Enter activation code" required>
         <!-- <div class="password-field">
           <input type="password" placeholder="Enter your password" />
           <span class="eye-icon fal fa-eye"></span>
@@ -35,14 +35,14 @@
         </label><br>
         </div>
         
-        <button type="submit" class="primary-btn">Fetch Information</button><br><br>
+        <button onclick="signup()" id="signup-btn" class="primary-btn">Create Account</button><br><br>
         <!-- <div class="divider">Or register with</div>
         <div class="social-buttons">
           <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
           <button class="apple">Apple</button>
         </div>-->
         <span class="only-small"><br><br></span>
-      </form>
+      </div>
     </div>
   </div>
 

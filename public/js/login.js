@@ -56,18 +56,20 @@ function sendOTP(){
         })
         .then(res => res.json())
         .then(data => {
-            if(data.success){
-                send_otp_btn.style.display = "none";
-                email_inp.style.display = "none";
-                status_message.innerHTML = `<span style='color:green'>OTP sent to ${email_inp.value}</span>`;
-                login_btn.style.display = "block";
-                otp.style.display = "block";
-                otp.disabled = false;
-                otpEmail = email_inp.value;
-            } else {
-                status_message.innerHTML = `<span style='color: red'>${data.message}</span>`;
-                send_otp_btn.innerHTML = "Send OTP";
-            }
+            setTimeout(() => {
+                if(data.success){
+                    send_otp_btn.style.display = "none";
+                    email_inp.style.display = "none";
+                    status_message.innerHTML = `<span style='color:green'>OTP sent to ${email_inp.value}</span>`;
+                    login_btn.style.display = "block";
+                    otp.style.display = "block";
+                    otp.disabled = false;
+                    otpEmail = email_inp.value;
+                } else {
+                    status_message.innerHTML = `<span style='color: red'>${data.message}</span>`;
+                    send_otp_btn.innerHTML = "Send OTP";
+                }
+            }, 1500)
         })
     }
 }
@@ -96,7 +98,7 @@ function email_login(){
                 login_btn.innerHTML = "Redirecting...";
                 setTimeout(() => {
                     window.location.href = data.redirect;
-                }, 800)
+                }, 1000)
             } else {
                 status_message.innerHTML = `<span style='color: red'>${data.message}, please try again!</span>`;
                 setTimeout(() => {

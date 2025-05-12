@@ -8,4 +8,8 @@ router.post('/send/otp', postController.sendOTP);
 
 router.post('/login/email', postController.loginEmail);
 
+router.post('/signup', postController.register);
+
+router.post('/check/username', postController.checkUsername);
+
 module.exports = router;

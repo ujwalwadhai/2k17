@@ -16,6 +16,7 @@ exports.loginPassword = async (req, res) => {
       }
 
       const isMatch = await user.validatePassword(password);
+      console.log("Password match : "+isMatch);
       if (!isMatch) {
         return res.json({success: false, message:'Incorrect password'});
       }
@@ -144,3 +145,45 @@ exports.sendOTP = async (req, res) => {
       res.json({success: false, message:'Something went wrong'});
     }
 };
+
+exports.register = async (req, res) => {
+  const { username, email, code } = req.body;
+  try {
+    const user = await Users.findOne({ code });
+    if (!user) {
+      return res.json({success: false, message:'Invalid code or already registered'});
+    }
+    const user2 = await Users.findOne({ username: username });
+    if (user2) {
+      return res.json({success: false, message:'Username already taken'});
+    }
+
+    user.username = username;
+    user.email = email;
+    await user.save();
+    req.login(user, (err) => {
+        if (err) {
+          console.log(err)
+          return res.json({success: false, message:'Something went wrong'});
+        }
+        return res.json({success: true, message:'Registration successful', redirect: '/home'});
+    })
+  } catch (err) {
+    console.log(err);
+    res.json({success: false, message:'Something went wrong'});
+  }
+}
+
+exports.checkUsername = async (req, res) => {
+  const { username } = req.body;
+  try {
+    const user = await Users.findOne({ username: username });
+    if (user) {
+      return res.json({success: false, message:'Username already taken'});
+    }
+    return res.json({success: true, message:'Username available'});
+  } catch (err) {
+    console.log(err);
+    res.json({success: false, message:'Something went wrong'});
+  }                                                      
+}

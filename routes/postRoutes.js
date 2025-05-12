@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/postController');
 
-// Example POST route — Form submission
-router.post('/submit', postController.submitForm);
+router.post('/login/password', postController.loginPassword);
 
+router.post('/send/otp', postController.sendOTP);
+
+router.post('/login/email', postController.loginEmail);
 
 module.exports = router;

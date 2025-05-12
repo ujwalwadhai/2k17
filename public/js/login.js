@@ -1,0 +1,110 @@
+var otpEmail;
+
+function login(){
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    var login = {
+        username: username,
+        password: password
+    }
+    var info = document.getElementById('info');
+    var login_btn = document.getElementById('login_btn');
+    login_btn.disabled = true;
+    info.innerHTML = "<span style='color: green'>Logging in...</span>";
+    login_btn.innerHTML = "<span class='fal fa-spin fa-rotate'></span> &nbsp; Logging in..."
+    setTimeout(() => {
+        fetch('/login/password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(login)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success){
+                info.innerHTML = `<span style='color: green'><span class='fal fa-circle-check'></span> &nbsp; ${data.message}</span>`;
+                login_btn.innerHTML = "Redirecting..."
+                setTimeout(() => {
+                    window.location.href = data.redirect;
+                }, 800)
+            } else {
+                login_btn.disabled = false;
+                info.innerHTML = `<span style='color: red'><span class='fal fa-circle-xmark'></span> &nbsp; ${data.message}</span>`;
+                login_btn.innerHTML = "Continue"
+            }
+        })
+    }, 2000)
+
+}
+
+function sendOTP(){
+    var otp = document.getElementById("otp");
+    var status_message = document.getElementById("otp-status-message");
+    var email_inp = document.getElementById("login-email");
+    var send_otp_btn = document.getElementById("send-otp-btn");
+    var login_btn = document.getElementById("login-btn");
+    if(email_inp.value){
+        send_otp_btn.innerHTML = "<span class='fal fa-spin fa-rotate'><span>"
+        status_message.innerHTML = "Sending OTP...";
+        fetch('/send/otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email: email_inp.value})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success){
+                send_otp_btn.style.display = "none";
+                email_inp.style.display = "none";
+                status_message.innerHTML = `<span style='color:green'>OTP sent to ${email_inp.value}</span>`;
+                login_btn.style.display = "block";
+                otp.style.display = "block";
+                otp.disabled = false;
+                otpEmail = email_inp.value;
+            } else {
+                status_message.innerHTML = `<span style='color: red'>${data.message}</span>`;
+                send_otp_btn.innerHTML = "Send OTP";
+            }
+        })
+    }
+}
+
+function email_login(){
+    var otp = document.getElementById("otp").value;
+    var status_message = document.getElementById("otp-status-message");
+    var login_btn = document.getElementById("login-btn");
+    var email = otpEmail || document.getElementById("login-email").value;
+    var send_otp_btn = document.getElementById("send-otp-btn");
+    login_btn.disabled = true;
+    if(otp){
+        login_btn.innerHTML = "<span class='fal fa-spin fa-rotate'><span>"
+        status_message.innerHTML = "Logging in...";
+        fetch('/login/email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({otp, email})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success){
+                status_message.innerHTML = `<span style='color:green'>${data.message}</span>`;
+                login_btn.innerHTML = "Redirecting...";
+                setTimeout(() => {
+                    window.location.href = data.redirect;
+                }, 800)
+            } else {
+                status_message.innerHTML = `<span style='color: red'>${data.message}, please try again!</span>`;
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2500)
+            }
+        })
+    } else {
+        status_message.innerHTML = `<span style='color: red'>Please enter OTP</span>`;
+    }
+}

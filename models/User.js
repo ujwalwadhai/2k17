@@ -49,12 +49,13 @@ userSchema.pre('save', async function (next) {
 });
 
 // Method to compare password (for login)
-userSchema.methods.matchPassword = async function (enteredPassword) {
+userSchema.methods.validatePassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password); // Compare entered password with hashed password
 };
 
 var User = mongoose.model('Users', userSchema);
 
+/*
 const preUsersData = [
   {
     "name": "Aditi Khobragade",
@@ -661,7 +662,7 @@ try {
   console.error('Insert error:', err);
   mongoose.connection.close();
 }
-
+*/
 
 
 

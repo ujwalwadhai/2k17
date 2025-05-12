@@ -2,6 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const dotenv = require('dotenv');
+dotenv.config();
+
+const session = require('express-session');
+const passport = require('passport');
+require('./config/passport')(passport);
+
+const app = express();
+app.use(session({
+  secret: '2k17-batch',
+  resave: false,
+  saveUninitialized: false,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
@@ -12,11 +27,9 @@ require('./models/Like')
 require('./models/Post')
 require('./models/Notifications')
 require('./models/UserSettings')
-require('./models/PreUser')
 
 dotenv.config();
 
-const app = express();
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -40,6 +53,8 @@ var { formatDate, createDate, getWeekDay } = require('./utils/dateFunctions');
 app.locals.formatDate = formatDate;
 app.locals.createDate = createDate;
 app.locals.getWeekDay = getWeekDay;
+
+require('./config/mailer')
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {}).then(() => {

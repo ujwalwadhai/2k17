@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%- include('../partials/head.ejs') %>
-  <link rel="stylesheet" href="/css/signup.css"/>
+  <link rel="stylesheet" href="/css/signup_login.css"/>
   <title>Log In - 2k17 ❤️</title>
 </head>
 <body>
@@ -11,30 +11,31 @@
 
 
     <div class="right-pane">
-      <form class="signup-form">
+      <div class="signup-form">
         <h1>Log in to 2k17 ❤️</h1>
         <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
-        <small class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; If this is first time, your password is your DOB (DDMMYYYY).</small><br><br>
+        <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; If this is first time, your password is your DOB in dd/mm/yyyy format.</small><br><br>
         <div>
-          <input type="email" placeholder="Email or username *"/>
+          <input type="text" id="username" name="username" placeholder="Email or username *"/>
           <div class="password-field">
-            <input id="password" type="password" placeholder="Enter your password" />
+            <input id="password" name="password" type="password" placeholder="Enter your password" />
             <span onclick="togglePassword()" id="toggle" class="eye-icon fal fa-eye"></span>
           </div><br>
         </div>
         
         <a href="/login/email">Login with Email OTP instead</a><br>
-        <button type="submit" class="primary-btn">Continue</button><br><br>
+        <button onclick="login()" class="primary-btn" id="login_btn">Continue</button><br><br>
         <!-- <div class="divider">Or register with</div>
         <div class="social-buttons">
           <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
           <button class="apple">Apple</button>
         </div>-->
       <span class="only-small"><br><br></span>
-      </form>
+      </div>
     </div>
   </div>
 
   <script src="/js/signup.js"></script>
+  <script src="/js/login.js"></script>
 </body>
 </html>

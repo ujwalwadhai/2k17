@@ -15,10 +15,10 @@
         <h1>Log in to 2k17 ❤️</h1>
         <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
         <div>
+          <small id="otp-status-message" class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; You must have verified email to use this feature.</small><br><br>
           <div class="email-field">
             <input type="email" id="login-email" name="email" placeholder="Enter your email" />
           </div>
-          <small id="otp-status-message" class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; You must have verified email to use this feature.</small><br><br>
           <input oninput="Number(this.value) > 999999 ? this.value = this.value.slice(0, 5) : this.value" type="number" min="0" max="99999" style="display: none;" name="otp" id="otp" placeholder="Enter OTP" />
         </div><br>
         
@@ -35,7 +35,6 @@
     </div>
   </div>
 
-  <script src="/js/signup.js"></script>
   <script src="/js/login.js"></script>
 </body>
 </html>

@@ -60,17 +60,31 @@ function sendOTP(){
                 if(data.success){
                     send_otp_btn.style.display = "none";
                     email_inp.style.display = "none";
-                    status_message.innerHTML = `<span style='color:green'>OTP sent to ${email_inp.value}</span>`;
+                    status_message.innerHTML = `<span style='color:green'><span class='fal fa-circle-check'></span> &nbsp; OTP sent to ${email_inp.value}</span>`;
                     login_btn.style.display = "block";
                     otp.style.display = "block";
                     otp.disabled = false;
                     otpEmail = email_inp.value;
                 } else {
-                    status_message.innerHTML = `<span style='color: red'>${data.message}</span>`;
+                    status_message.innerHTML = `<span style='color: red'><span class='fal fa-circle-xmark'></span> &nbsp; ${data.message}</span>`;
                     send_otp_btn.innerHTML = "Send OTP";
                 }
             }, 1500)
         })
+    }
+}
+
+function togglePassword(){
+    var password = document.getElementById("password");
+    var toggle = document.getElementById("toggle");
+    if(password.type === "password"){
+        password.type = "text";
+        toggle.classList.remove("fa-eye");
+        toggle.classList.add("fa-eye-slash");
+    } else {
+        password.type = "password";
+        toggle.classList.remove("fa-eye-slash");
+        toggle.classList.add("fa-eye");
     }
 }
 

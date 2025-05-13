@@ -43,7 +43,7 @@ exports.loginEmail = async (req, res) => {
       const user = await Users.findOne({ email: email });
 
       if (!user) {
-        return res.json({success: false, message:'User not found'});
+        return res.json({success: false, message:'No user with this email found!'});
       }
 
       const otpRecord = await otps.findOne({ email: email, otp: otp });
@@ -74,7 +74,7 @@ exports.sendOTP = async (req, res) => {
       const user = await Users.findOne({ email: email });
 
       if (!user) {
-        return res.json({success: false, message:'User not found'});
+        return res.json({success: false, message:'No user with this email found!'});
       }
 
       const otp = Math.floor(100000 + Math.random() * 900000);

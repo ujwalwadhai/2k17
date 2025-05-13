@@ -1,0 +1,51 @@
+<input type="file" id="file" multiple />
+<button onclick="uploadFiles()">Upload</button>
+
+<div id="progress-container" style="width: 100%; background: #eee; margin-top: 10px; height: 20px; display: none;">
+  <div id="progress-bar" style="width: 0%; height: 100%; background: green;"></div>
+</div>
+
+
+<script>
+  function uploadFiles() {
+    const input = document.getElementById('file');
+    const files = input.files;
+    if (!files.length) return;
+
+    const formData = new FormData();
+    for (const file of files) {
+      formData.append('media', file);
+    }
+
+    const isSingle = files.length === 1;
+    const endpoint = isSingle ? '/upload/single?folder=posts' : '/upload/multiple?folder=posts';
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.upload.addEventListener('progress', (e) => {
+      if (e.lengthComputable) {
+        const percent = (e.loaded / e.total) * 100;
+        const bar = document.getElementById('progress-bar');
+        const container = document.getElementById('progress-container');
+
+        container.style.display = 'block';
+        bar.style.width = percent + '%';
+      }
+    });
+
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log('Upload complete:', JSON.parse(xhr.responseText));
+      } else {
+        console.error('Upload failed:', xhr.statusText);
+      }
+    };
+
+    xhr.onerror = function () {
+      console.error('Request error');
+    };
+
+    xhr.open('POST', endpoint);
+    xhr.send(formData);
+  }
+</script>

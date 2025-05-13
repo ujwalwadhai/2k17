@@ -17,4 +17,6 @@ router.get('/donate', getController.donate);
 
 router.get('/members', getController.members);
 
+router.get('/upload', (req, res) => res.render('pages/upload'))
+
 module.exports = router;

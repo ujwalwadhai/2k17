@@ -1,10 +1,7 @@
 <input type="file" id="file" multiple />
 <button onclick="uploadFiles()">Upload</button>
 
-<div id="progress-container" style="width: 100%; background: #eee; margin-top: 10px; height: 20px; display: none;">
-  <div id="progress-bar" style="width: 0%; height: 100%; background: green;"></div>
-</div>
-
+<div id="progress-container" style="margin-top: 10px;"></div>
 
 <script>
   function uploadFiles() {
@@ -12,40 +9,69 @@
     const files = input.files;
     if (!files.length) return;
 
-    const formData = new FormData();
-    for (const file of files) {
+    const container = document.getElementById('progress-container');
+    container.innerHTML = ''; // Clear previous progress bars
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      // Create a new FormData for each file
+      const formData = new FormData();
       formData.append('media', file);
+
+      // Create progress bar
+      const wrapper = document.createElement('div');
+      wrapper.style.marginBottom = '10px';
+
+      const label = document.createElement('p');
+      label.innerText = file.name;
+      label.style.margin = '0 0 4px 0';
+      label.style.fontSize = '14px';
+
+      const barContainer = document.createElement('div');
+      barContainer.style.width = '100%';
+      barContainer.style.height = '20px';
+      barContainer.style.background = '#eee';
+      barContainer.style.borderRadius = '4px';
+
+      const bar = document.createElement('div');
+      bar.style.width = '0%';
+      bar.style.height = '100%';
+      bar.style.background = 'green';
+      bar.style.borderRadius = '4px';
+      barContainer.appendChild(bar);
+
+      wrapper.appendChild(label);
+      wrapper.appendChild(barContainer);
+      container.appendChild(wrapper);
+
+      // Send the request
+      const xhr = new XMLHttpRequest();
+
+      xhr.upload.addEventListener('progress', (e) => {
+        if (e.lengthComputable) {
+          const percent = (e.loaded / e.total) * 100;
+          bar.style.width = percent + '%';
+        }
+      });
+
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          bar.style.background = 'blue';
+          console.log('Upload complete:', JSON.parse(xhr.responseText));
+        } else {
+          bar.style.background = 'red';
+          console.error('Upload failed:', xhr.statusText);
+        }
+      };
+
+      xhr.onerror = function () {
+        bar.style.background = 'red';
+        console.error('Request error');
+      };
+
+      xhr.open('POST', '/upload/single?folder=gallery');
+      xhr.send(formData);
     }
-
-    const isSingle = files.length === 1;
-    const endpoint = isSingle ? '/upload/single?folder=posts' : '/upload/multiple?folder=posts';
-
-    const xhr = new XMLHttpRequest();
-
-    xhr.upload.addEventListener('progress', (e) => {
-      if (e.lengthComputable) {
-        const percent = (e.loaded / e.total) * 100;
-        const bar = document.getElementById('progress-bar');
-        const container = document.getElementById('progress-container');
-
-        container.style.display = 'block';
-        bar.style.width = percent + '%';
-      }
-    });
-
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        console.log('Upload complete:', JSON.parse(xhr.responseText));
-      } else {
-        console.error('Upload failed:', xhr.statusText);
-      }
-    };
-
-    xhr.onerror = function () {
-      console.error('Request error');
-    };
-
-    xhr.open('POST', endpoint);
-    xhr.send(formData);
   }
 </script>

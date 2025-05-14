@@ -1,4 +1,5 @@
 var Users = require('../models/User');
+var Files = require('../models/Files');
 
 exports.indexPage = (req, res) => {
   res.render('pages/index');
@@ -23,6 +24,20 @@ exports.emailLogin = (req, res) => {
 exports.donate = (req, res) => {
   res.render('pages/donate');
 }
+
+exports.logout = (req, res) => {
+  req.logout(err => {
+    if (err) {
+      console.log('Logout error:', err);
+      return res.status(500).send('Logout failed');
+    }
+
+    req.session.destroy(() => {
+      res.clearCookie('connect.sid');
+      res.redirect('/login');
+    });
+  });
+};
 
 async function getSortedUsers() {
   try {
@@ -65,4 +80,9 @@ async function getSortedUsers() {
 exports.members = async (req, res) => {
   var members = await getSortedUsers();
   res.render('pages/members', {members});
+}
+
+exports.gallery = async (req, res) => {
+  var media = await Files.find();
+  res.render('pages/gallery', {media});
 }

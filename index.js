@@ -17,6 +17,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(require('./middlewares/user'))
 
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');

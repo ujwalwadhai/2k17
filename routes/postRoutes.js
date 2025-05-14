@@ -13,4 +13,6 @@ router.post('/signup', postController.register);
 
 router.post('/check/username', postController.checkUsername);
 
+router.post('/upload/single', upload.single('media'), postController.upload);
+
 module.exports = router;

@@ -19,4 +19,8 @@ router.get('/members', getController.members);
 
 router.get('/upload', (req, res) => res.render('pages/upload'))
 
+router.get('/logout', getController.logout);
+
+router.get('/gallery', getController.gallery);
+
 module.exports = router;

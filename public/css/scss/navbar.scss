@@ -166,7 +166,7 @@ $input-bg: #2c283d;
   }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 641px) {
   .small-only{
     display: none !important;
   }
@@ -176,7 +176,7 @@ $input-bg: #2c283d;
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
   .large-and-medium{
     display: none !important;
   }

@@ -59,6 +59,11 @@ html {
 a {
   color: #7b5cf0;
   text-decoration: none;
+  user-select: none;
+}
+
+img, button {
+  user-select: none;
 }
 
 /*# sourceMappingURL=all.css.map */

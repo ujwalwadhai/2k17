@@ -138,7 +138,7 @@
   background-color: #2b273f;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 641px) {
   .small-only {
     display: none !important;
   }
@@ -146,7 +146,7 @@
     padding: 0 24px;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
   .large-and-medium {
     display: none !important;
   }

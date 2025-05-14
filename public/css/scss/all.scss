@@ -66,6 +66,11 @@ html {
 }
 
 a {
-  color: #7b5cf0;
+  color: $primary;
   text-decoration: none;
+  user-select: none;
+}
+
+img, button{
+    user-select: none;
 }

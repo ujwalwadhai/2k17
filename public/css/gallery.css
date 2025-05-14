@@ -1,0 +1,83 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow: hidden;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/jnv-bg-4.jpg") center center/cover no-repeat;
+}
+
+.gallery-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  padding-top: 96px;
+  height: 100vh;
+  overflow-x: scroll;
+}
+.gallery-container h1 {
+  text-align: center;
+  margin-bottom: 36px;
+  color: #6342d8;
+}
+.gallery-container .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+.gallery-container .gallery-grid .media-card {
+  background: #f5f5f5;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+.gallery-container .gallery-grid .media-card:hover {
+  transform: translateY(-5px);
+}
+.gallery-container .gallery-grid .media-card img, .gallery-container .gallery-grid .media-card video {
+  width: 100%;
+  height: auto;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+.gallery-container .gallery-grid .info-card {
+  text-align: center;
+  padding: 24px 20px;
+  border: 0.5px solid grey;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/images/jnv-bg-6.jpg") center center/cover no-repeat;
+}
+.gallery-container .gallery-grid .info-card:hover {
+  transform: translateY(-5px);
+}
+.gallery-container .gallery-grid .info-card p {
+  color: white;
+  line-height: 24px;
+  font-size: 18px;
+  text-align: center;
+}
+.gallery-container .gallery-grid .info-card button.redirect_btn {
+  background-color: #6342d8;
+  color: white;
+  padding: 12px 24px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.gallery-container .gallery-grid .info-card button.redirect_btn:hover {
+  background-color: #7b5cf0;
+}
+
+/*# sourceMappingURL=gallery.css.map */

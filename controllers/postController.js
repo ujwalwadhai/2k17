@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const Users = require('../models/User');
+const Files = require('../models/Files');
 const otps = require('../models/OTP');
 var sendMail = require('../config/mailer');
 
@@ -16,7 +17,6 @@ exports.loginPassword = async (req, res) => {
       }
 
       const isMatch = await user.validatePassword(password);
-      console.log("Password match : "+isMatch);
       if (!isMatch) {
         return res.json({success: false, message:'Incorrect password'});
       }
@@ -186,4 +186,26 @@ exports.checkUsername = async (req, res) => {
     console.log(err);
     res.json({success: false, message:'Something went wrong'});
   }                                                      
+}
+
+
+exports.upload = async (req, res) => {
+  const { file } = req;
+  if(!file) {
+    return res.json({success: false, message:'No file uploaded'});
+  }
+  try {
+    const newFile = new Files({
+      name: file.originalname,
+      url: file.path,
+      folder: req.query.folder,
+      size: file.size,
+      type: file.mimetype
+    });
+    await newFile.save();
+    return res.json({success: true, message:'File uploaded successfully'});
+  } catch (err) {
+    console.log(err);
+    return res.json({success: false, message:'Something went wrong'});
+  }
 }

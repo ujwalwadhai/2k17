@@ -30,6 +30,7 @@ body{
     text-align: center;
     margin-bottom: 36px;
     color: $primary-dark;
+    user-select: none;
   }
 
   .gallery-grid {
@@ -43,6 +44,7 @@ body{
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       transition: transform 0.3s ease;
+      cursor: pointer;
 
       &:hover {
         transform: translateY(-5px);

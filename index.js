@@ -50,10 +50,11 @@ app.use((req, res) => {
 })
 
 // Utility functions for frontend
-var { formatDate, createDate, getWeekDay } = require('./utils/dateFunctions');
+var { formatDate, formatDate2, createDate, getWeekDay } = require('./utils/dateFunctions');
 app.locals.formatDate = formatDate;
 app.locals.createDate = createDate;
 app.locals.getWeekDay = getWeekDay;
+app.locals.formatDate2 = formatDate2;
 
 require('./config/mailer')
 

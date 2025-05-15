@@ -17,14 +17,14 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4rem 2rem;
+  padding: 4rem 24px;
   background: transparent;
-  min-height: 100vh;
+  min-height: 90vh;
 
   .donate-container {
     background: $bg-dark;
-    padding: 3rem;
-    padding-top: 2rem;
+    padding: 16px;
+    padding-top: 12px;
     border-radius: 1.5rem;
     max-width: 500px;
     width: 100%;
@@ -32,7 +32,7 @@ body{
     box-shadow: 0 12px 32px rgba(0, 0, 0, 1);
 
     h1 {
-      font-size: 2rem;
+      font-size: 28px;
       color: white;
       margin-bottom: 2rem;
     }

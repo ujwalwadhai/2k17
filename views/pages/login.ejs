@@ -6,6 +6,7 @@
   <title>Log In - 2k17 ❤️</title>
 </head>
 <body>
+  <%- include('../partials/loader.ejs') %>
   <div class="container">
     <%- include('../partials/login-carousel.ejs') %>
 
@@ -16,9 +17,9 @@
         <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
         <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; If this is first time, your password is the code used for registering. You can get it from Ujwal.</small><br><br>
         <div>
-          <input type="text" id="username" name="username" placeholder="Email or username *"/>
+          <input type="text" id="username" name="username" placeholder="Email or username *" onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()"/>
           <div class="password-field">
-            <input id="password" name="password" type="password" placeholder="Enter your password" />
+            <input id="password" name="password" type="password" placeholder="Enter your password" onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()"/>
             <span onclick="togglePassword()" id="toggle" class="eye-icon fal fa-eye"></span>
           </div><br>
         </div>

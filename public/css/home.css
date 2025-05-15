@@ -9,9 +9,45 @@ body {
   background-color: #1f1c2e;
 }
 
-.hero {
-  height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
+.events-container {
+  padding: 0 6%;
+  min-width: 300px;
+}
+
+.events {
+  padding: 12px 24px;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 48px;
+  background-color: #2b273f;
+  border-radius: 12px;
+}
+.events .heading {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.events .event {
+  display: flex;
+  align-items: center;
+}
+.events .event p.title {
+  font-size: 16px;
+  margin-bottom: 0;
+  margin-top: 12px;
+}
+.events .event p.description {
+  font-size: 14px;
+  color: #888;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+.events .event img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 16px;
 }
 
 .hero {
@@ -19,7 +55,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 10%;
-  gap: 2rem;
+  gap: 3rem;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
 }
 .hero .hero-text {
   flex: 1;
@@ -58,6 +96,10 @@ body {
   max-width: 40vw;
   border: 1px solid #888;
   border-radius: 12px;
+  transition: 0.3s transform ease;
+}
+.hero .featured-photo:hover {
+  transform: scale(1.01);
 }
 .hero .featured-photo img.featured-photo-img {
   height: 100%;
@@ -157,29 +199,21 @@ footer {
     margin-top: 108px;
     transform: scale(1.1);
   }
+  .hero .featured-photo:hover {
+    transform: scale(1.1);
+  }
 }
 @media screen and (min-width: 890px) {
   #greeting {
     margin-top: 0;
   }
-  .about-and-newsletter {
+  .posts-and-events {
     display: flex;
   }
-  .about-and-newsletter .about {
+  .posts-and-events .about {
     width: 70%;
   }
-  .about-and-newsletter .newsletter-sub {
-    background: #1f1c2e;
-  }
-}
-@media screen and (min-width: 890px) {
-  .about-and-newsletter {
-    display: flex;
-  }
-  .about-and-newsletter .about {
-    width: 70%;
-  }
-  .about-and-newsletter .newsletter-sub {
+  .posts-and-events .newsletter-sub {
     background: #1f1c2e;
     box-sizing: border-box;
     border: 3px solid #7b5cf0;
@@ -192,7 +226,7 @@ footer {
     width: auto;
     max-width: 400px;
   }
-  .about-and-newsletter .newsletter-sub input {
+  .posts-and-events .newsletter-sub input {
     width: 100%;
     padding: 0.8rem;
     margin: 0.5rem 0;
@@ -202,10 +236,10 @@ footer {
     color: #fff;
     outline: none;
   }
-  .about-and-newsletter .newsletter-sub input:focus {
+  .posts-and-events .newsletter-sub input:focus {
     border: 1px solid #7b5cf0;
   }
-  .about-and-newsletter .newsletter-sub button {
+  .posts-and-events .newsletter-sub button {
     background: #7b5cf0;
     color: #fff;
     padding: 0.8rem;
@@ -217,7 +251,7 @@ footer {
     margin-top: 4px;
     width: 100%;
   }
-  .about-and-newsletter .newsletter-sub button:hover {
+  .posts-and-events .newsletter-sub button:hover {
     background: #6342d8;
   }
 }
@@ -362,4 +396,4 @@ footer {
   }
 }
 
-/*# sourceMappingURL=index.css.map */
+/*# sourceMappingURL=home.css.map */

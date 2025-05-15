@@ -6,6 +6,7 @@
   <title>Log In - 2k17 ❤️</title>
 </head>
 <body>
+  <%- include('../partials/loader.ejs') %>
   <div class="container">
     <%- include('../partials/login-carousel.ejs') %>
 
@@ -17,9 +18,9 @@
         <div>
           <small id="otp-status-message" class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; You must have verified email to use this feature.</small><br><br>
           <div class="email-field">
-            <input type="email" id="login-email" name="email" placeholder="Enter your email" />
+            <input type="email" id="login-email" name="email" placeholder="Enter your email" onkeyup="if(event.key === 'Enter') document.getElementById('send-otp-btn').click()"/>
           </div>
-          <input oninput="Number(this.value) > 999999 ? this.value = this.value.slice(0, 5) : this.value" type="number" min="0" max="99999" style="display: none;" name="otp" id="otp" placeholder="Enter OTP" />
+          <input oninput="Number(this.value) > 999999 ? this.value = this.value.slice(0, 6) : this.value" type="number" min="0" max="99999" style="display: none;" name="otp" id="otp" placeholder="Enter OTP" onkeyup="if(event.key === 'Enter') document.getElementById('login-btn').click()"/>
         </div><br>
         
         <a href="/login">Login with Password instead</a>

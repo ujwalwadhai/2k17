@@ -22,6 +22,7 @@ body {
   text-align: center;
   margin-bottom: 36px;
   color: #6342d8;
+  user-select: none;
 }
 .gallery-container .gallery-grid {
   display: grid;
@@ -34,6 +35,7 @@ body {
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 .gallery-container .gallery-grid .media-card:hover {
   transform: translateY(-5px);

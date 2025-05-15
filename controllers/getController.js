@@ -10,7 +10,7 @@ exports.login = (req, res) => {
 }
 
 exports.home = (req, res) => {
-  res.send("This is home")
+  res.render('pages/home')
 }
 
 exports.createAccount = (req, res) => {
@@ -39,37 +39,68 @@ exports.logout = (req, res) => {
   });
 };
 
-async function getSortedUsers() {
+async function getSortedUsers(loggedInUserId = null) {
   try {
-    var users = await Users.aggregate([
-      {
-        $addFields: {
-          roleOrder: {
-            $cond: [
-              { $eq: ["$role", "admin"] }, 1,
-              {
-                $cond: [
-                  { $eq: ["$role", "moderator"] }, 2,
-                  3 // All other roles (like user, guest, etc.)
-                ]
+    let pipeline = [];
+
+    if (loggedInUserId) {
+      pipeline = [
+        {
+          $addFields: {
+            roleOrder: {
+              $switch: {
+                branches: [
+                  { case: { $eq: ["$role", "admin"] }, then: 1 },
+                  { case: { $eq: ["$role", "moderator"] }, then: 2 },
+                  { case: { $eq: ["$_id", loggedInUserId] }, then: 3 }
+                ],
+                default: 4
               }
-            ]
+            }
+          }
+        },
+        {
+          $sort: {
+            roleOrder: 1,
+            name: 1
+          }
+        },
+        {
+          $project: {
+            roleOrder: 0
           }
         }
-      },
-      {
-        $sort: {
-          roleOrder: 1,
-          name: 1
+      ];
+    } else {
+      pipeline = [
+        {
+          $addFields: {
+            roleOrder: {
+              $switch: {
+                branches: [
+                  { case: { $eq: ["$role", "admin"] }, then: 1 },
+                  { case: { $eq: ["$role", "moderator"] }, then: 2 }
+                ],
+                default: 3
+              }
+            }
+          }
+        },
+        {
+          $sort: {
+            roleOrder: 1,
+            name: 1
+          }
+        },
+        {
+          $project: {
+            roleOrder: 0
+          }
         }
-      },
-      {
-        $project: {
-          roleOrder: 0 // optional: remove temp field
-        }
-      }
-    ]);
+      ];
+    }
 
+    const users = await Users.aggregate(pipeline);
     return users;
   } catch (err) {
     console.error("Error fetching sorted users:", err);
@@ -77,8 +108,13 @@ async function getSortedUsers() {
   }
 }
 
+
 exports.members = async (req, res) => {
-  var members = await getSortedUsers();
+  if(req.user){
+    var members = await getSortedUsers(req.user._id);
+  } else {
+    var members = await getSortedUsers();
+  }
   res.render('pages/members', {members});
 }
 

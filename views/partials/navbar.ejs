@@ -1,20 +1,50 @@
 <div class="header">
     <nav class="large-and-medium">
       <h1>2k17 ❤️</h1>
-      <ul>
+      <ul class="nav-items">
         <li><a href="/gallery">Gallery</a></li>
         <li><a href="/donate">Donate</a></li>
         <li><a href="/members">Members</a></li>
         <% if (!user) { %>
-        <li><a href="/create-account">Register</a></li>
-        <li><a href="/login" class="login-btn">Login</a></li>
+          <li><a href="/create-account">Register</a></li>
+          <li><a href="/login" class="login-btn">Login</a></li>
+        <% } else { %>
+          <li><a href="/home">Home</a></li>
+          <li class="user-capsule-wrapper">
+            <div class="user-capsule">
+              <img src="<%- user.profilePicture ? user.profilePicture : '/images/user.png' %>" alt="@">
+              <p><%= user.name.split(' ')[0] + ' ' + user.name.split(' ')[1].split('')[0] + '.' %></p>
+            </div>
+
+            <ul class="user-dropdown">
+              <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>Profile</a></li>
+              <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
+              <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>
+            </ul>
+          </li>
         <% } %>
       </ul>
     </nav>
     <nav class="small-only">
       <span class="menu-icon fas fa-bars-sort" onclick="toggleMenu()"></span>
       <p class="brand">2k17 ❤️</p>
-      <button class="login-btn" onclick="window.location.href = '/login'">Login</button>
+      <% if (user) { %>
+        <li class="user-capsule-wrapper">
+            <div class="user-capsule user-capsule-2">
+              <img src="<%- user.profilePicture ? user.profilePicture : '/images/user.png' %>" alt="@">
+              <p><%= user.name.split(' ')[0] + ' ' + user.name.split(' ')[1].split('')[0] + '.' %></p>
+            </div>
+
+            <ul class="user-dropdown user-dropdown-2">
+
+              <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>Profile</a></li>
+              <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
+              <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>
+            </ul>
+          </li>
+      <% } else { %>
+        <button class="login-btn" onclick="window.location.href = '/login'">Login</button>
+      <% } %>
     </nav>
 
     <div id="mobileSidebar">
@@ -23,13 +53,18 @@
           <span class="fas fa-xmark"></span>
         </div>
         <img src="/images/jnv-bg-4.jpg" alt="">
-        <ul>
-          <li onclick="window.location.href = '/gallery'"><a href="/gallery"><span class="fal fa-images"></span> Gallery</a></li>
-          <li onclick="window.location.href = '/donate'"><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span> Donate</a></li>
-          <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span> Members</a></li>
+        <ul class="nav-items">
+          <% if(user) { %>
+          <li onclick="window.location.href = '/home'"><a href="/home"><span class="fal fa-house"></span>Home</a></li>
+          <% } %>
+          <li onclick="window.location.href = '/gallery'"><a href="/gallery"><span class="fal fa-images"></span>Gallery</a></li>
+          <li onclick="window.location.href = '/donate'"><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span>Donate</a></li>
+          <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>
           <% if (!user) { %>
-          <li onclick="window.location.href = '/create-account'"><a href="/create-account"><span class="fal fa-user-plus"></span> Register</a></li>
-          <li onclick="window.location.href = '/login'"><a href="/login"><span class="fal fa-right-to-bracket"></span> Login</a></li>
+            <li onclick="window.location.href = '/create-account'"><a href="/create-account"><span class="fal fa-user-plus"></span>Register</a></li>
+            <li onclick="window.location.href = '/login'"><a href="/login"><span class="fal fa-right-to-bracket"></span>Login</a></li>
+          <% } else { %>
+            <li><a href="/settings"><span class="fal fa-gear"></span> Settings</a></li>
           <% } %>
         </ul>
       </div>
@@ -61,5 +96,31 @@
     setTimeout(() => {
       sidebar.style.display = 'none';
     }, 300); // Match transition duration
-  })
+  });
+  
+    var capsule = document.querySelector(".user-capsule");
+    var dropdown = document.querySelector(".user-dropdown");
+
+    capsule.addEventListener("click", () => {
+      dropdown.classList.toggle("show");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!capsule.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove("show");
+      }
+    });
+
+    var capsule2 = document.querySelector(".user-capsule-2");
+    var dropdown2 = document.querySelector(".user-dropdown-2");
+
+    capsule2.addEventListener("click", () => {
+      dropdown2.classList.toggle("show");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!capsule2.contains(e.target) && !dropdown2.contains(e.target)) {
+        dropdown2.classList.remove("show");
+      }
+    });
 </script>

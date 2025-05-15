@@ -19,15 +19,9 @@ const userSchema = new mongoose.Schema({
     facebook: String,
     other: String
   },
-
-  // Temporary fields for one-time use
-  code: { type: String }, // Deleted after user activates
-  emailVerificationToken: { type: String }, // Deleted after email is verified
-
-  // Roles
-  role: { type: String, enum: ['user', 'admin', 'moderator'], default: 'user' },
-
-  // Metadata
+  code: { type: String },
+  emailVerificationToken: { type: String },
+  role: { type: String, enum: ['admin', 'moderator']},
   joinedAt: { type: String },
   updatedAt: { type: String }
 });

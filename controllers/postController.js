@@ -195,8 +195,9 @@ exports.upload = async (req, res) => {
     return res.json({success: false, message:'No file uploaded'});
   }
   try {
+    console.log(file)
     const newFile = new Files({
-      name: file.originalname,
+      pid: file.filename,
       url: file.path,
       folder: req.query.folder,
       size: file.size,

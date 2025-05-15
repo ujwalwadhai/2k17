@@ -3,9 +3,17 @@ const moment = require('moment');
 function formatDate(dateString) {
   const parsed = moment(dateString, 'DD/MM/YYYY, hh:mm A');
   if (!parsed.isValid()) return 'Invalid date';
-  console.log(parsed)
   return parsed.fromNow();
 }
+
+function formatDate2(dateString) {
+  const [day, month, year] = dateString.split('/').map(Number);
+  const date = new Date(year, month - 1, day);
+
+  const options = { day: '2-digit', month: 'long'};
+  return date.toLocaleDateString('en-In', options);
+}
+
 
 function createDate(){
   var hour = new Date().getHours();
@@ -66,4 +74,4 @@ function convertTo24Hour(timeStr) {
     return `${hours}:${minutes}`;
 }
 
-module.exports = { formatDate, createDate, getWeekDay };
+module.exports = { formatDate, formatDate2, createDate, getWeekDay };

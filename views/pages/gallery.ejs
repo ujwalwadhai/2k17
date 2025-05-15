@@ -6,15 +6,16 @@
   <link rel="stylesheet" href="/css/gallery.css" />
 </head>
 <body>
+  <%- include('../partials/loader.ejs') %>
   <%- include('../partials/navbar') %>
   <div class="gallery-container">
     <h1>2k17 Batch Gallery</h1>
 
     <div class="gallery-grid" id="gallery">
       <% media.forEach(item => { %>
-        <div class="media-card" onclick="window.open('<%= item.url %>', '_blank')" data-type="<%= item.type %>">
+        <div class="media-card" onclick="window.open('<%= item.url %>', '_blank')">
           <% if (item.type.includes('image')) { %>
-            <img src="<%= item.url %>" alt="media" />
+            <img src="<%= item.url %>" alt="<%= item.pid %>" />
           <% } else if (item.type.includes('video')) { %>
             <video controls>
               <source src="<%= item.url %>" type="<%= item.type %>" />

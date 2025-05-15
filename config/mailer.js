@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 async function sendMail(to, subject, htmlContent) {
   try {
     const mailOptions = {
-      from: '"2k17 Platform" <2k17platform@gmail.com>', // can be anything, even if you don’t own the domain
+      from: '"2k17 Platform" <2k17platform@gmail.com>',
       to,
       subject,
       html: htmlContent,

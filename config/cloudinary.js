@@ -19,10 +19,32 @@ const storage = new CloudinaryStorage({
     return {
       folder: `2k17/${folder}`,
       resource_type: resourceType,
+      transformation: [
+        { quality: 'auto', fetch_format: 'auto' }
+      ]
     };
   },
 });
 
-const upload = multer({ storage });
+// File size limit in bytes
+const FILE_LIMITS = {
+  image: 10 * 1024 * 1024,  // 10MB
+  video: 30 * 1024 * 1024,  // 30MB
+};
+
+// File filter to reject large files before upload
+const fileFilter = (req, file, cb) => {
+  const isImage = file.mimetype.startsWith('image');
+  const isVideo = file.mimetype.startsWith('video');
+  const maxSize = isImage ? FILE_LIMITS.image : isVideo ? FILE_LIMITS.video : Infinity;
+
+  if (file.size > maxSize) {
+    return cb(new Error(`File ${file.originalname} exceeds limit of ${maxSize / 1024 / 1024}MB`), false);
+  }
+
+  cb(null, true);
+};
+
+const upload = multer({ storage, fileFilter });
 
 module.exports = { upload };

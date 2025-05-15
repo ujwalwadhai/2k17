@@ -3,7 +3,7 @@
 <head>
   <%- include('../partials/head.ejs') %>
   <title>2k17 — Class Social Space</title>
-  <link rel="stylesheet" href="/css/index.css" />
+  <link rel="stylesheet" href="/css/home.css" />
 </head>
 <body>
   <%- include('../partials/loader.ejs') %>
@@ -12,18 +12,32 @@
   <main>
     <!-- Hero Section -->
     <section class="hero">
-      <div class="hero-text">
-        <h2>Welcome to <span style="color: blue;">2</span><span style="color: green;">k</span><span style="color: red;">1</span><span style="color: yellow;">7</span></h2>
-        <p>Private space to reconnect, share moments, and relive memories for the 2017-24 batch of JNV Chandrapur</p><br>
-        <a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
-      </div>
-      <div class="featured-photo" onclick="window.open()">
-        <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
-        <div class="overlay-text">Photo of the Day</div>
-      </div>
+        <div class="hero-text">
+          <h2 id="greeting"><span id="greeting-msg"></span>, <%= user.name.split(' ')[0] %></h2>
+          <p>Private space to reconnect, share moments, and relive memories for the 2017-24 batch of JNV Chandrapur</p><br>
+          <a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
+        </div>
+        <div class="featured-photo" onclick="window.open()">
+          <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
+          <div class="overlay-text">Photo of the Day</div>
+        </div>
+    
     </section>
 
-    <div class="about-and-newsletter">
+    <div class="events-container">
+    <section id="events" class="events">
+      <p class="heading">Upcoming Events</p>
+      <div class="event">
+        <img src="<%= user.profilePicture %>" alt="" class="event-img">
+        <div class="event-info">
+          <p class="title"><%= user.name %>'s birthday 🎂</p>
+          <p class="description">on <%- formatDate2(user.dob) %></p>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <div class="posts-and-events">
     <!-- About Section -->
     <section id="about" class="about">
       <h3>What is 2k17?</h3>
@@ -31,15 +45,6 @@
 </p>
     </section>
 
-    <section id="newsletter-sub" class="newsletter-sub">
-      <h3>Subscribe to our Newsletter &nbsp; <span class="fal fa-envelope-dot"></span></h3>
-      <p>Stay updated with the latest news and updates from 2k17 with a monthly email.</p>
-      <form action="/subscribe" method="POST">
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <button type="submit">Subscribe</button>
-      </form>
-      <br><br>
-    </section>
 
     </div>
 
@@ -76,7 +81,7 @@
         <div class="dev-card">
           <img src="/images/ujwal_profile.jpg" alt="Ujwal Wadhai Profile IMG">
           <h3>Ujwal Wadhai</h3>
-          <p>Creator of 2k17 platform <br> Aspiring Full Stack Developer</p>
+          <p>Creator and member of 2k17 platform <br> Aspiring Full Stack Developer</p>
           <div class="social-links">
             <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
             <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
@@ -88,7 +93,7 @@
 
       <section class="contact" id="contact">
         <h3>Contact Us</h3>
-        <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17platform@gmail.com">2k17batch@gmail.com</a></p><br>
+        <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17batch@gmail.com">2k17batch@gmail.com</a></p><br>
         <form>
           <input type="text" placeholder="Your name or email" required>
           <input type="text" name="" id="" placeholder="Say hi ...">
@@ -101,6 +106,8 @@
   <footer>
     <p>Created with ❤️ by Ujwal W.</p>
   </footer>
+
+  <script src="/js/home.js"></script>
 
 </body>
 </html>

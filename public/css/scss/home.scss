@@ -17,9 +17,50 @@ body {
   background-color: $bg-dark;
 }
 
-.hero{
-    height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+.events-container{
+  padding: 0 6%;
+  min-width: 300px;
+}
+
+.events{
+  padding: 12px 24px;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 48px;
+  background-color: $bg-dark2;
+  border-radius: 12px;
+
+  .heading{
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .event{
+    display: flex;
+    align-items: center;
+
+    p.title{
+      font-size: 16px;
+      margin-bottom: 0;
+      margin-top: 12px;
+    }
+
+    p.description{
+      font-size: 14px;
+      color: $text-muted;
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+
+    img{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 16px;
+    }
+  }
 }
 
 
@@ -28,7 +69,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 10%;
-  gap: 2rem;
+  gap: 3rem;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 
   .hero-text {
     flex: 1;
@@ -71,7 +114,11 @@ body {
     max-width: 40vw;
     border: 1px solid $text-muted;
     border-radius: 12px;
+    transition: 0.3s transform ease;
     
+    &:hover{
+      transform: scale(1.01);
+    }
 
     img.featured-photo-img{
       height: 100%;
@@ -181,33 +228,20 @@ footer {
       width: 100%;
       margin-top: 108px;
       transform: scale(1.1);
+
+      &:hover{
+        transform: scale(1.1);
+      }
     }
   }
 }
+
 
 @media screen and (min-width: 890px) {
   #greeting{
     margin-top: 0;
   }
-  .about-and-newsletter{
-  display: flex;
-
-
-  .about{
-    width: 70%;
-  }
-
-  .newsletter-sub{
-    background: $bg-dark;
-    }
-  }
-}
-
-
-
-
-@media screen and (min-width: 890px) {
-  .about-and-newsletter{
+  .posts-and-events{
   display: flex;
 
   .about{

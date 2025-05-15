@@ -1,0 +1,57 @@
+#full-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #1f1c2e;
+  color: #fff;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+}
+#full-loader .loader-text {
+  font-size: 3rem;
+  font-family: "Lato";
+  display: flex;
+  gap: 8px;
+}
+#full-loader .loader-text .letter {
+  display: inline-block;
+  animation: jump 1s infinite ease-in-out;
+}
+#full-loader .loader-text .letter span {
+  text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+}
+#full-loader .loader-text .letter .letter-blue {
+  color: blue;
+}
+#full-loader .loader-text .letter .letter-green {
+  color: green;
+  -webkit-text-stroke: 0.005px white;
+}
+#full-loader .loader-text .letter .letter-red {
+  color: red;
+  -webkit-text-stroke: 0.005px white;
+}
+#full-loader .loader-text .letter .letter-yellow {
+  color: yellow;
+  -webkit-text-stroke: 0.005px white;
+}
+#full-loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes jump {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+/*# sourceMappingURL=loader.css.map */

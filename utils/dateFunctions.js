@@ -74,4 +74,8 @@ function convertTo24Hour(timeStr) {
     return `${hours}:${minutes}`;
 }
 
-module.exports = { formatDate, formatDate2, createDate, getWeekDay };
+function formatTimeFromNow(dateString){
+  return moment(dateString).fromNow()
+}
+
+module.exports = { formatDate, formatDate2, createDate, getWeekDay, formatTimeFromNow};

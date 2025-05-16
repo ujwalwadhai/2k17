@@ -1,14 +1,16 @@
-const bcrypt = require('bcryptjs');
-const Users = require('../models/User');
-const Files = require('../models/Files');
-const otps = require('../models/OTP');
+var bcrypt = require('bcryptjs');
+var Users = require('../models/User');
+var Files = require('../models/Files');
+var otps = require('../models/OTP');
+var Posts = require('../models/Post');
 var sendMail = require('../config/mailer');
+var moment = require('moment');
 
 exports.loginPassword = async (req, res) => {
-    const { username, password } = req.body;
+    var { username, password } = req.body;
 
     try {
-      const user = await Users.findOne({
+      var user = await Users.findOne({
         $or: [{ email: username }, { username: username }]
       });
 
@@ -16,7 +18,7 @@ exports.loginPassword = async (req, res) => {
         return res.json({success: false, message:'User not found'});
       }
 
-      const isMatch = await user.validatePassword(password);
+      var isMatch = await user.validatePassword(password);
       if (!isMatch) {
         return res.json({success: false, message:'Incorrect password'});
       }
@@ -37,16 +39,16 @@ exports.loginPassword = async (req, res) => {
 }
 
 exports.loginEmail = async (req, res) => {
-    const { email, otp } = req.body;
+    var { email, otp } = req.body;
 
     try {
-      const user = await Users.findOne({ email: email });
+      var user = await Users.findOne({ email: email });
 
       if (!user) {
         return res.json({success: false, message:'No user with this email found!'});
       }
 
-      const otpRecord = await otps.findOne({ email: email, otp: otp });
+      var otpRecord = await otps.findOne({ email: email, otp: otp });
 
       if (!otpRecord) {
         return res.json({success: false, message:'Invalid or expired OTP'});
@@ -68,16 +70,16 @@ exports.loginEmail = async (req, res) => {
 }
   
 exports.sendOTP = async (req, res) => {
-    const { email } = req.body;
+    var { email } = req.body;
 
     try {
-      const user = await Users.findOne({ email: email });
+      var user = await Users.findOne({ email: email });
 
       if (!user) {
         return res.json({success: false, message:'No user with this email found!'});
       }
 
-      const otp = Math.floor(100000 + Math.random() * 900000);
+      var otp = Math.floor(100000 + Math.random() * 900000);
 
       var otp_temp = `<!DOCTYPE html>
 <html lang="en">
@@ -147,13 +149,13 @@ exports.sendOTP = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-  const { username, email, code } = req.body;
+  var { username, email, code } = req.body;
   try {
-    const user = await Users.findOne({ code });
+    var user = await Users.findOne({ code });
     if (!user) {
       return res.json({success: false, message:'Invalid code or already registered'});
     }
-    const user2 = await Users.findOne({ username: username });
+    var user2 = await Users.findOne({ username: username });
     if (user2) {
       return res.json({success: false, message:'Username already taken'});
     }
@@ -175,9 +177,9 @@ exports.register = async (req, res) => {
 }
 
 exports.checkUsername = async (req, res) => {
-  const { username } = req.body;
+  var { username } = req.body;
   try {
-    const user = await Users.findOne({ username: username });
+    var user = await Users.findOne({ username: username });
     if (user) {
       return res.json({success: false, message:'Username already taken'});
     }
@@ -190,13 +192,13 @@ exports.checkUsername = async (req, res) => {
 
 
 exports.upload = async (req, res) => {
-  const { file } = req;
+  var { file } = req;
   if(!file) {
     return res.json({success: false, message:'No file uploaded'});
   }
   try {
     console.log(file)
-    const newFile = new Files({
+    var newFile = new Files({
       pid: file.filename,
       url: file.path,
       folder: req.query.folder,
@@ -208,5 +210,105 @@ exports.upload = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.json({success: false, message:'Something went wrong'});
+  }
+}
+
+exports.fetchPosts = async (req, res) => {
+  try {
+    var posts = await Posts.find();
+    return res.json({success: true, posts: posts});
+  } catch (err) {
+    console.log(err);
+    return res.json({success: false, message:'Something went wrong'});
+  }
+}
+
+exports.likePost = async (req, res) => {
+  var userId = req.user._id;
+  var { postId } = req.params;
+
+  try {
+    var post = await Posts.findById(postId);
+    if (!post) return res.status(404).json({ success: false, message: 'Post not found' });
+
+    var alreadyLiked = post.likes.includes(userId);
+
+    if (alreadyLiked) {
+      // Unlike
+      post.likes.pull(userId);
+    } else {
+      // Like
+      post.likes.push(userId);
+    }
+
+    await post.save();
+
+    res.json({ 
+      success: true, 
+      liked: !alreadyLiked,
+      likesCount: post.likes.length 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+}
+
+exports.fetchComments = async (req, res) =>{
+  try {
+    var post = await Posts.findById(req.params.postId)
+      .populate('comments.user', 'name profilePicture');
+
+      const commentsWithTime = post.comments.map(comment => {
+        return {
+          ...comment.toObject(),
+          timeAgo: moment(comment.createdAt).fromNow().replace('ago', '')
+        };
+      });
+    res.json(commentsWithTime);
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ error: 'Failed to fetch comments' });
+  }
+}
+
+exports.newComment = async (req, res) => {
+  try {
+    var post = await Posts.findById(req.params.postId);
+    console.log(post)
+    if(post.comments){
+      post.comments.push({
+        user: req.user._id,
+        text: req.body.text
+      });
+    } else {
+      post.comments = []
+      post.comments.push({
+        user: req.user._id,
+        text: req.body.text
+      });
+    }
+    await post.save();
+    console.log("Comment added")
+    res.json({ success: true ,commentsLength: post.comments.length , message: 'Comment added' });
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ error: 'Failed to add comment' });
+  }
+}
+
+exports.deleteComment = async (req, res) => {
+  try {
+    var post = await Posts.findById(req.params.postId);
+    if (!post) return res.status(404).json({ success: false, message: 'Post not found' });
+
+    post.comments = post.comments.filter(comment => comment._id.toString() !== req.params.commentId);
+
+    await post.save();
+
+    res.json({commentsLength: post.comments.length, success: true, message: 'Comment deleted' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 }

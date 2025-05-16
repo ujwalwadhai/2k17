@@ -3,6 +3,7 @@ const router = express.Router();
 const getController = require('../controllers/getController');
 const { isLoggedIn } = require('../middlewares/auth');
 var hasRole = require('../middlewares/role');
+var Posts = require('../models/Post');
 
 router.get('/', getController.indexPage);
 
@@ -24,12 +25,17 @@ router.get('/logout', getController.logout);
 
 router.get('/gallery', getController.gallery);
 
-router.get('/admin', isLoggedIn, hasRole('admin'), (re1, res) => {
-    res.send("Admin page")
-});
-
-router.get('/moderator', isLoggedIn, hasRole('moderator'), (req, res) => {
-    res.send("Moderator page")
+router.get('/create/post', isLoggedIn, async (req, res) => {
+    var post = new Posts({
+        text: 'Hey there',
+        author: req.user._id,
+        media: {
+            url: '/images/ujwal_profile.jpg',
+            type: 'image/jpeg'
+        }
+    })
+    await post.save()
+    res.redirect('/home?post=true')
 })
 
 module.exports = router;

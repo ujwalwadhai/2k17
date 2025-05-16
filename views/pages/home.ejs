@@ -21,7 +21,6 @@
           <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
           <div class="overlay-text">Photo of the Day</div>
         </div>
-    
     </section>
 
     <div class="events-container">
@@ -35,77 +34,70 @@
         </div>
       </div>
     </section>
-    </div>
+    </div><br><br><br>
 
-    <div class="posts-and-events">
-    <!-- About Section -->
-    <section id="about" class="about">
-      <h3>What is 2k17?</h3>
-      <p>This isn’t just another social media site — it’s a digital time capsule. 2k17 exists for the quiet moments — when you’re feeling a little nostalgic, when you want to see a familiar face or check where someone is, or when a memory from school suddenly resurfaces. It’s not about daily posts or endless scrolling. It’s about checking in once in a while, smiling at something someone shared, and remembering the chaos, laughter, and friendships that shaped those seven years. This place will be here — quietly, patiently — whenever you feel like coming home for a bit.
-</p>
-    </section>
+    <section class="posts" id="posts">
+      <p class="heading">Posts in last 30 days</p>
 
+      <% if(posts){ %>
+        <% posts.forEach(post => { %>
+          <div class="post">
+            <div class="user-info">
+              <img src="<%= post.author.profilePicture %>" alt="" class="user-profile">
+              <div class="user-info-helper">
+                <span class="name"><%= post.author.name %></span><br>
+                <span class="username">@<%= post.author.username %> (<%= post.timeAgo %>)</span>
+              </div>
+            </div>
+            <div class="post-data">
+              <p class="post-text"><%= post.text %></p>
+              <% if(post.media){ %>
+                <% if(post.media.type.startsWith('image')) { %>
+                  <img src="<%= post.media.url %>" alt="" class="post-img">
+                <% } else if(post.media.type.startsWith('video')) { %>
+                  <video controls class="post-video">
+                    <source src="<%= post.media.url %>" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                <% } %>
+              <% } %>
+            </div>
+            <div class="post-buttons">
+              <% if(user) { %>
+              <% var isLiked = post.likes.some(u => u._id.toString() === user._id.toString()) %>
+              <% } else { var isLiked = false } %>
+              <button class="like-btn" onclick="toggleLike('<%= post._id %>')" id="like-btn-<%=post._id %>">
+                <span class="<%- isLiked ? 'fas' : 'fal' %> fa-heart" id="like-icon-<%= post._id %>"></span>
+                <span id="like-count-<%= post._id %>"><%= post.likes.length %></span>
+              </button>
 
-    </div>
-
-    <!-- Features Section -->
-    <section id="features" class="features no-select">
-      <h3>Features</h3>
-      <div class="features-grid">
-        <div class="feature-card">
-          <span class="fal feature-icon fa-shield-keyhole"></span>
-          <h4>Private & Secure</h4>
-          <p>Access limited to classmates only — no outsiders allowed.</p>
-        </div>
-        <div class="feature-card">
-          <span class="fal feature-icon fa-layer-group"></span>
-          <h4>Share Posts</h4>
-          <p>Post text and pictures to remember our best moments.</p>
-        </div>
-        <div class="feature-card">
-          <span class="fal feature-icon fa-square-heart"></span>
-          <h4>Comment & Like</h4>
-          <p>Engage with your batchmates' posts like never before.</p>
-        </div>
-        <div class="feature-card">
-          <span class="fal feature-icon fa-images"></span>
-          <h4>Class Memories</h4>
-          <p>A living scrapbook — from class 6 to whole life</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="developer-and-contact">
-      <section id="developer" class="developer-section">
-        <h2>Meet the Developer</h2>
-        <div class="dev-card">
-          <img src="/images/ujwal_profile.jpg" alt="Ujwal Wadhai Profile IMG">
-          <h3>Ujwal Wadhai</h3>
-          <p>Creator and member of 2k17 platform <br> Aspiring Full Stack Developer</p>
-          <div class="social-links">
-            <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
+              <button class="comment-btn" onclick="loadComments('<%= post._id %>', '<%= user._id %>')" id="comment-btn-<%= post._id %>"><span class="fal fa-comment"></span><%= post.comments.length %></button>
+              <div class="btns-right">
+                <button class="report-btn"><span class="fal fa-triangle-exclamation"></span></button>
+                <button class="save-btn"><span class="fal fa-bookmark"></span></button>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        <% }) %>
+      <% } %>
+    </section>
 
-      <section class="contact" id="contact">
-        <h3>Contact Us</h3>
-        <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17batch@gmail.com">2k17batch@gmail.com</a></p><br>
-        <form>
-          <input type="text" placeholder="Your name or email" required>
-          <input type="text" name="" id="" placeholder="Say hi ...">
-          <button type="submit"><span class="fal fa-paper-plane"></span> &nbsp; Send</button>
-        </form>
-      </section>
-    </div>
+    <br><br><br><br><br>
   </main>
 
-  <footer>
-    <p>Created with ❤️ by Ujwal W.</p>
-  </footer>
+  <div id="comments-popup">
+    <div class="overlay" onclick="hidePopup()"></div>
+    <div class="comments-box">
+      <div class="heading"><p>Comments</p><p class="close-icon fas fa-times" onclick="hidePopup()"></p></div>
+      <div class="comments-list" id="comments-list">
+      </div>
+      <div class="input-area">
+        <input id="new-comment" autocomplete="off" placeholder="Write a comment..."/>
+        <button type="button" id="newCommentBtn">Post</button>
+      </div>
+    </div>
+  </div>
+
 
   <script src="/js/home.js"></script>
 

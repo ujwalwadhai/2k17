@@ -1,5 +1,7 @@
 var Users = require('../models/User');
 var Files = require('../models/Files');
+var Posts = require('../models/Post');
+var moment = require('moment');
 
 exports.indexPage = (req, res) => {
   res.render('pages/index');
@@ -9,8 +11,25 @@ exports.login = (req, res) => {
   res.render('pages/login');
 }
 
-exports.home = (req, res) => {
-  res.render('pages/home')
+exports.home = async (req, res) => {
+  try{
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const posts = await Posts.find({ createdAt: { $gte: thirtyDaysAgo } }).sort({ createdAt: -1 });
+
+    const formattedPosts = posts.map(post => {
+      return {
+        ...post.toObject(),
+        timeAgo: moment(post.createdAt).fromNow()  // e.g., "3 hours ago"
+      };
+    });
+
+    res.render('pages/home', { posts: formattedPosts });
+  } catch(err) {
+    console.log('Error fetching posts: ', err);
+    res.redirect("/login")
+  }
 }
 
 exports.createAccount = (req, res) => {

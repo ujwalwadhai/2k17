@@ -22,7 +22,7 @@ app.use(require('./middlewares/user'))
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
 
-require('./models/User')
+require('./models/Users')
 require('./models/Comment')
 require('./models/Like')
 require('./models/Post')
@@ -34,13 +34,19 @@ dotenv.config();
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+/* app.use((req, res, next) => {
+    express.json()
+    console.log(JSON.stringify(req));
+    next();
+}); */
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(express.json('application/json'))
 // Routes
 app.use('/', getRoutes);
 app.use('/', postRoutes);
@@ -48,14 +54,19 @@ app.use('/', postRoutes);
 app.use((req, res) => {
     res.redirect("/")
 })
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+})
 
-// Utility functions for frontend
+
 var { formatDate, formatDate2, createDate, getWeekDay, formatTimeFromNow } = require('./utils/dateFunctions');
 app.locals.formatDate = formatDate;
 app.locals.createDate = createDate;
 app.locals.getWeekDay = getWeekDay;
 app.locals.formatDate2 = formatDate2;
 app.locals.formatTimeFromNow = formatTimeFromNow;
+app.locals.hasUnreadNotifications = false
 
 require('./config/mailer')
 

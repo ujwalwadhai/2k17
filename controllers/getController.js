@@ -1,7 +1,10 @@
-var Users = require('../models/User');
+var Users = require('../models/Users');
 var Files = require('../models/Files');
 var Posts = require('../models/Post');
+var Notifications = require('../models/Notifications');
 var moment = require('moment');
+var getUpcomingBirthdays = require('../utils/upcomingBirthdays');
+
 
 exports.indexPage = (req, res) => {
   res.render('pages/index');
@@ -13,21 +16,14 @@ exports.login = (req, res) => {
 
 exports.home = async (req, res) => {
   try{
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-    const posts = await Posts.find({ createdAt: { $gte: thirtyDaysAgo } }).sort({ createdAt: -1 });
-
-    const formattedPosts = posts.map(post => {
-      return {
-        ...post.toObject(),
-        timeAgo: moment(post.createdAt).fromNow()  // e.g., "3 hours ago"
-      };
-    });
-
-    res.render('pages/home', { posts: formattedPosts });
+    res.locals.hasUnreadNotifications = false;
+    var birthdays = await getUpcomingBirthdays();
+    var hasUnreadNotifications = await Notifications.findOne({ user: req.user._id, seen: false });
+    if (hasUnreadNotifications) {
+      res.locals.hasUnreadNotifications = true;
+    }
+    res.render('pages/home', { birthdays, isHome: true });
   } catch(err) {
-    console.log('Error fetching posts: ', err);
     res.redirect("/login")
   }
 }
@@ -47,7 +43,6 @@ exports.donate = (req, res) => {
 exports.logout = (req, res) => {
   req.logout(err => {
     if (err) {
-      console.log('Logout error:', err);
       return res.status(500).send('Logout failed');
     }
 

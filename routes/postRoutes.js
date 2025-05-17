@@ -26,4 +26,14 @@ router.post('/post/:postId/new/comment', isLoggedIn, postController.newComment)
 
 router.post('/post/:postId/comment/:commentId/delete', isLoggedIn, postController.deleteComment)
 
+router.post('/notifications', isLoggedIn, postController.fetchNotifications)
+
+router.post('/notifications/read', isLoggedIn, postController.markReadNotifications)
+
+router.post('/posts', isLoggedIn, postController.fetchPosts)
+
+router.post('/new/post/file', isLoggedIn, upload.single('media'), postController.newPost)
+
+router.post('/new/post', isLoggedIn, postController.newPost)
+
 module.exports = router;

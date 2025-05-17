@@ -128,7 +128,7 @@ body {
   font-size: 17px;
 }
 
-@media screen and (max-width: 501px) {
+@media (max-width: 680px) {
   .members-container {
     display: block;
     text-align: center;

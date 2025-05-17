@@ -14,11 +14,16 @@ function getGreeting() {
 }
 
 var greeting = getGreeting();
-document.getElementById("greeting-msg").innerHTML = greeting;
+var greetingElement = document.getElementById("greeting-msg")
+if(greetingElement) greetingElement.innerHTML = greeting;
 
 
 async function toggleLike(postId) {
   try {
+    var icon = document.getElementById(`like-icon-${postId}`);
+    icon.classList.remove("fa-heart")
+    icon.classList.add("fa-circle-notch")
+    icon.classList.add("fa-spin")
     var res = await fetch(`/post/${postId}/like`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
@@ -32,11 +37,16 @@ async function toggleLike(postId) {
     countElem.textContent = data.likesCount;
 
     // Toggle icon style
-    var icon = document.getElementById(`like-icon-${postId}`);
     if (data.liked) {
+      icon.classList.remove('fa-spin');
+      icon.classList.remove('fa-circle-notch');
+      icon.classList.add('fa-heart');
       icon.classList.remove('fal');
       icon.classList.add('fas');
     } else {
+      icon.classList.remove('fa-spin');
+      icon.classList.remove('fa-circle-notch');
+      icon.classList.add('fa-heart');
       icon.classList.remove('fas');
       icon.classList.add('fal');
     }
@@ -48,13 +58,20 @@ async function toggleLike(postId) {
 }
 
 function hidePopup() {
-  document.getElementById('comments-popup').style.display = 'none';
-}
+  var commentsPopup = document.getElementById('comments-popup')
+  var overlay = document.getElementById('overlay')
+  commentsPopup.classList.remove('show');
+    overlay.classList.remove('show');
+} 
 
 
 async function loadComments(postId, userId) {
   var commentsPopup = document.getElementById('comments-popup')
-  commentsPopup.style.display = 'block';
+  var overlay = document.getElementById('overlay')
+    commentsPopup.classList.add('show');
+    overlay.classList.add('show');
+
+    
   commentsPopup.querySelector('#newCommentBtn').removeEventListener('click', ()=> { submitComment(postId) })
   commentsPopup.querySelector('#newCommentBtn').addEventListener('click', ()=> { submitComment(postId) })
   document.getElementById('new-comment').value = ''
@@ -83,7 +100,7 @@ async function loadComments(postId, userId) {
         } else {
           var trashIcon = ''
         }
-        list.innerHTML += `<div class="comment">
+        list.innerHTML += `<div class="comment" id="comment-${c._id}">
                                   <img src="${c.user.profilePicture ? c.user.profilePicture : '/images/user.png'}" alt="" class="user-profile">
                                   <div class="comment-info">
                                   <p class="name">${c.user.name} &nbsp; <span class="time">${c.timeAgo}</span></p>
@@ -144,7 +161,219 @@ async function deleteComment(commentId, postId, userId) {
     var id = `comment-btn-${postId}`
     document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${ data.commentsLength }`
   } else {
-    console.log(JSON.stringify(data))
     alert('Failed to delete comment! Please try again later.')
   }
+}
+
+function loadNotifications() {
+  var notificationsPopup = document.getElementById('notifications-popup');
+  var notificationsOverlay = document.querySelector('#notifications-popup .overlay');
+  notificationsPopup.classList.add('show');
+  notificationsOverlay.classList.add('show');
+  var list = document.getElementById('notifications-list');
+  list.innerHTML = '';
+  list.innerHTML = `<div id="notifications-loader">
+    <div class="notifications-loader-text" id="notifications-loader-text">
+        <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
+        <span class="letter" style="animation-delay: 0.15s"><span class='letter-green'>k</span></span>
+        <span class="letter" style="animation-delay: 0.3s"><span class='letter-red'>1</span></span>
+        <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
+    </div>
+  </div>`;
+  fetch('/notifications',{
+    method: 'POST'
+  })
+    .then(res => res.json())
+    .then(data => {
+      setTimeout(()=> {
+        if(data.notifications.length > 0){
+          document.getElementById('notifications-loader').classList.add('hidden');
+          fetch('/notifications/read', {method: "POST"})
+          document.querySelectorAll('.fa-bell').forEach(el => {
+            el.classList.remove('has-unread')
+          })
+          setTimeout(()=>{
+            data.notifications.forEach(n => {
+              if(n.seen){
+                list.innerHTML += `<div class="notification" onclick="window.location.href = '${n.url}'">
+          <img class="notification-img" src="${n.image ? n.image : '/images/bell.png'}" alt="Icon">
+          <div class="content">
+            <div class="text">${n.message}</div>
+            <div class="time">${n.timeAgo}</div>
+          </div>
+          <div class="action-buttons">
+            <span class="fal fa-triangle-exclamation grey-1"></span>
+            <span class="fal fa-trash red"></span>
+          </div>
+        </div>`
+              } else {
+                list.innerHTML += `<div class="notification unread" onclick="window.location.href = '${n.url}'">
+                        <img class="notification-img" src="${n.image ? n.image : '/images/bell.png'}" alt="Icon">
+                        <div class="content">
+                          <div class="text">${n.message}</div>
+                          <div class="time">${n.timeAgo}</div>
+                        </div>
+                        <div class="action-buttons">
+                          <span class="fal fa-triangle-exclamation grey-1"></span>
+                          <span class="fal fa-trash red"></span>
+                        </div>
+                      </div>`
+              }
+            })
+            }, 100)
+        } else {
+          list.innerHTML = `<div class="no-notifications grey-1">
+          <span class="fal fa-bell-slash"></span><br><br>
+          <p>No notifications yet!</p>
+          </div>`
+        } 
+
+        }, 2000)
+    })
+}
+
+function closeNotifications() {
+  var notificationsPopup = document.getElementById('notifications-popup');
+  var notificationsOverlay = document.querySelector('#notifications-popup .overlay');
+  notificationsPopup.classList.remove('show');
+  notificationsOverlay.classList.remove('show');
+}
+
+function loadPosts(userId) {
+  var posts = document.getElementById('posts');
+  posts.innerHTML = '<p class="heading">Posts in last 6 months</p>';
+  posts.innerHTML += `<div id="posts-loader">
+    <div class="posts-loader-text" id="posts-loader-text">
+        <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
+        <span class="letter" style="animation-delay: 0.15s"><span class='letter-green'>k</span></span>
+        <span class="letter" style="animation-delay: 0.3s"><span class='letter-red'>1</span></span>
+        <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
+    </div>
+  </div>`
+  fetch('/posts', {
+    method: 'POST'
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      setTimeout(()=> {
+        if(data.posts.length > 0){
+          document.getElementById('posts-loader').classList.add('hidden');
+          data.posts.forEach(post => {
+            var isLiked = post.likes.includes(userId)
+            if(post.media){
+              if(post.media.type.startsWith('image')) {
+                var mediaItem = `<img src="${post.media.url}" alt="" class="post-img">`
+              } else if(post.media.type.startsWith('video')) {
+                var mediaItem = `<video controls class="post-video">
+                  <source src="${post.media.url}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>`
+              } else {
+                var mediaItem = ``
+              }
+            } else {
+              var mediaItem = ``
+            }
+            posts.innerHTML += `<div class="post" id="post-${post._id}">
+            <div class="user-info">
+              <img src="${post.author.profilePicture}" alt="" class="user-profile">
+              <div class="user-info-helper">
+                <span class="name">${post.author.name}</span><br>
+                <span class="username">@${post.author.username} (${post.timeAgo})</span>
+              </div>
+            </div>
+            <div class="post-data">
+              <p class="post-text">${post.text}</p>
+              ${mediaItem}
+            </div>
+            <div class="post-buttons">
+              <button class="like-btn" onclick="toggleLike('${ post._id }')" id="like-btn-${post._id }">
+                <span class="${ isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${ post._id }"></span>
+                <span id="like-count-${ post._id }">${ post.likes.length }</span>
+              </button> &nbsp; 
+
+              <button class="comment-btn" onclick="loadComments('${ post._id }', '${ userId }')" id="comment-btn-${ post._id }"><span class="fal fa-messages"></span>${ post.comments.length }</button>
+              <div class="btns-right">
+                <button class="report-btn"><span class="fal fa-triangle-exclamation"></span></button>
+                <button class="save-btn"><span class="fal fa-bookmark"></span></button>
+              </div>
+            </div>
+          </div>`
+          })
+        } else {
+          posts.innerHTML = `<div class="no-posts grey-1">
+          <span class="fal fa-file-lines"></span><br><br>
+          <p>No posts yet!</p>
+          </div>`
+        }
+      }, 3000)
+    } else {
+      alert("Can't load posts at the moment. Please try again later.")
+    }
+  })
+}
+
+
+
+  function openPostPopup() {
+    document.getElementById('post-popup').classList.add('show');
+  }
+
+  function closePostPopup() {
+    document.getElementById('post-popup').classList.remove('show');
+  }
+
+function createPost(userId) {
+  var text = document.getElementById('post-text').value;
+  var media = document.getElementById('media-input').files;
+  if(media.length > 0){
+  var formData = new FormData();
+  formData.append('text', text);
+  formData.append('media', media[0]);
+  closePostPopup()
+  alert("Uploading the file. Please wait...")
+  fetch('/new/post/file?folder=posts', {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      document.getElementById('post-text').value = '';
+      document.getElementById('media-input').value = '';
+      document.getElementById('media-preview').innerHTML = '';
+      
+      document.getElementById('posts').scrollIntoView({
+        behavior: 'smooth'
+      });
+      loadPosts(userId)
+    } else {
+      alert("Can't create post at the moment. Please try again later.")
+    }
+  })
+} else {
+  fetch('/new/post', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ text })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      document.getElementById('post-text').value = '';
+      document.getElementById('media-input').value = '';
+      document.getElementById('media-preview').innerHTML = '';
+      closePostPopup()
+      document.getElementById('posts').scrollIntoView({
+        behavior: 'smooth'
+      });
+      loadPosts(userId);
+    } else {
+      alert("Can't create post at the moment. Please try again later.")
+    }
+  })
+}
 }

@@ -1,8 +1,9 @@
 var bcrypt = require('bcryptjs');
-var Users = require('../models/User');
+var Users = require('../models/Users');
 var Files = require('../models/Files');
 var otps = require('../models/OTP');
 var Posts = require('../models/Post');
+var Notifications = require('../models/Notifications');
 var sendMail = require('../config/mailer');
 var moment = require('moment');
 
@@ -25,14 +26,12 @@ exports.loginPassword = async (req, res) => {
 
       req.login(user, (err) => {
         if (err) {
-          console.log(err)
           return res.json({success: false, message:'Something went wrong'});
         }
         return res.json({success: true, message:'Login successful', redirect: '/home'});
       });
 
     } catch (err) {
-      console.log(err);
       res.json({success: false, message:'Something went wrong'});
     }
 
@@ -56,7 +55,6 @@ exports.loginEmail = async (req, res) => {
 
       req.login(user, (err) => {
         if (err) {
-          console.log(err)
           return res.json({success: false, message:'Something went wrong'});
         }
         return res.json({success: true, message:'Login successful', redirect: '/members'});
@@ -64,7 +62,6 @@ exports.loginEmail = async (req, res) => {
 
     }
     catch (err) {
-      console.log(err);
       res.json({success: false, message:'Something went wrong'});
     }
 }
@@ -143,7 +140,6 @@ exports.sendOTP = async (req, res) => {
       await newOtp.save()
       return res.json({success: true, message:'OTP sent successfully'});
     } catch (err) {
-      console.log(err);
       res.json({success: false, message:'Something went wrong'});
     }
 };
@@ -165,13 +161,11 @@ exports.register = async (req, res) => {
     await user.save();
     req.login(user, (err) => {
         if (err) {
-          console.log(err)
           return res.json({success: false, message:'Something went wrong'});
         }
         return res.json({success: true, message:'Registration successful', redirect: '/home'});
     })
   } catch (err) {
-    console.log(err);
     res.json({success: false, message:'Something went wrong'});
   }
 }
@@ -185,7 +179,6 @@ exports.checkUsername = async (req, res) => {
     }
     return res.json({success: true, message:'Username available'});
   } catch (err) {
-    console.log(err);
     res.json({success: false, message:'Something went wrong'});
   }                                                      
 }
@@ -197,7 +190,6 @@ exports.upload = async (req, res) => {
     return res.json({success: false, message:'No file uploaded'});
   }
   try {
-    console.log(file)
     var newFile = new Files({
       pid: file.filename,
       url: file.path,
@@ -208,7 +200,6 @@ exports.upload = async (req, res) => {
     await newFile.save();
     return res.json({success: true, message:'File uploaded successfully'});
   } catch (err) {
-    console.log(err);
     return res.json({success: false, message:'Something went wrong'});
   }
 }
@@ -218,7 +209,6 @@ exports.fetchPosts = async (req, res) => {
     var posts = await Posts.find();
     return res.json({success: true, posts: posts});
   } catch (err) {
-    console.log(err);
     return res.json({success: false, message:'Something went wrong'});
   }
 }
@@ -258,16 +248,17 @@ exports.fetchComments = async (req, res) =>{
   try {
     var post = await Posts.findById(req.params.postId)
       .populate('comments.user', 'name profilePicture');
+      post.comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-      const commentsWithTime = post.comments.map(comment => {
+      var commentsWithTime = post.comments.map(comment => {
         return {
           ...comment.toObject(),
           timeAgo: moment(comment.createdAt).fromNow().replace('ago', '')
         };
       });
+
     res.json(commentsWithTime);
   } catch (err) {
-    console.log(err)
     res.status(500).json({ error: 'Failed to fetch comments' });
   }
 }
@@ -275,7 +266,6 @@ exports.fetchComments = async (req, res) =>{
 exports.newComment = async (req, res) => {
   try {
     var post = await Posts.findById(req.params.postId);
-    console.log(post)
     if(post.comments){
       post.comments.push({
         user: req.user._id,
@@ -289,26 +279,115 @@ exports.newComment = async (req, res) => {
       });
     }
     await post.save();
-    console.log("Comment added")
     res.json({ success: true ,commentsLength: post.comments.length , message: 'Comment added' });
   } catch (err) {
-    console.log(err)
     res.status(500).json({ error: 'Failed to add comment' });
   }
 }
 
 exports.deleteComment = async (req, res) => {
+  var { postId, commentId } = req.params;
+  var userId = req.user._id;
+
   try {
-    var post = await Posts.findById(req.params.postId);
-    if (!post) return res.status(404).json({ success: false, message: 'Post not found' });
+    var post = await Posts.findById(postId);
+    if (!post) return res.status(404).json({ message: 'Post not found' });
 
-    post.comments = post.comments.filter(comment => comment._id.toString() !== req.params.commentId);
+    var comment = post.comments.id(commentId);
+    if (!comment) return res.status(404).json({ message: 'Comment not found' });
 
+    if (String(comment.user._id) !== String(userId) || req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    post.comments = post.comments.filter(comment => comment._id.toString() !== commentId);
     await post.save();
-
     res.json({commentsLength: post.comments.length, success: true, message: 'Comment deleted' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+exports.fetchNotifications = async (req, res) => {
+  try {
+    const notifications = await Notifications.find({
+      $or: [
+        { user: req.user._id },
+        { user: { $exists: false } }
+      ]
+    }).sort({ createdAt: -1 });
+    const formattedNotifications = notifications.map(notification => {
+          return {
+            ...notification.toObject(),
+            timeAgo: moment(notification.createdAt).fromNow()
+          };
+        });
+
+    return res.json({ success: true, notifications: formattedNotifications });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, message: 'Something went wrong' });
+  }
+};
+
+
+exports.markReadNotifications = async (req, res) => {
+  try {
+    await Notifications.updateMany(
+      { user: req.user._id, seen: false },
+      { $set: { seen: true } }
+    );
+    return res.json({ success: true, message: 'Notifications marked as read' });
+  } catch (err) {
+    console.error(err);
+    return res.json({ success: false, message: 'Something went wrong' });
+  }
+}
+
+exports.fetchPosts = async (req, res) => {
+  try {
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+    const posts = await Posts.find({ createdAt: { $gte: sixMonthsAgo } }).sort({ createdAt: -1 });
+    const formattedPosts = posts.map(post => {
+      return {
+        ...post.toObject(),
+        timeAgo: moment(post.createdAt).fromNow()
+      };
+    });
+    return res.json({success: true, posts: formattedPosts});
+  } catch (err) {
+    return res.json({success: false, message:'Something went wrong'});
+  }
+}
+
+exports.newPost = async (req, res) => {
+  try {
+    if(req.file){
+      var newPost = new Posts({
+        author: req.user._id,
+        text: req.body.text,
+        media: {
+          url: req.file.path,
+          type: req.file.mimetype
+        },
+        likes: [req.user._id],
+        comments: []
+      });
+      await newPost.save();
+    } else {
+      var newPost = new Posts({
+        author: req.user._id,
+        text: req.body.text,
+        likes: [req.user._id],
+        comments: []
+      });
+      await newPost.save();
+    }
+    return res.json({ success: true, message: 'Post created' });
+  } catch (err) {
+    console.log(err)
+    return res.json({ success: false, message: 'Something went wrong' });
   }
 }

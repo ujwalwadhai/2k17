@@ -50,6 +50,6 @@ userSchema.methods.validatePassword = async function (enteredPassword) {
   return enteredPassword === this.code;
 };
 
-var User = mongoose.model('Users', userSchema);
+var Users = mongoose.model('Users', userSchema);
 
-module.exports = User
+module.exports = Users

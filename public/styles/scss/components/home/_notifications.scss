@@ -1,0 +1,276 @@
+@use '../../global' as *;
+
+#notifications-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+
+  .notifications-box {
+    width: 85vw;
+    max-width: 1000px;
+    height: 70vh;
+    max-height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $bg-dark;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    #notifications-loader {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background-color: transparent;
+      color: #fff;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.7s ease;
+
+      .notifications-loader-text {
+        font-size: 2rem;
+        font-family: 'Lato';
+        display: flex;
+        gap: 8px;
+
+        .letter {
+          display: inline-block;
+          animation: jump 1s infinite ease-in-out;
+
+          span {
+            text-shadow:
+              -1px -1px 0 white,
+              1px -1px 0 white,
+              -1px 1px 0 white,
+              1px 1px 0 white;
+          }
+
+          .letter-blue {
+            color: blue;
+
+          }
+
+          .letter-green {
+            color: green;
+            -webkit-text-stroke: 0.005px white;
+          }
+
+          .letter-red {
+            color: red;
+            -webkit-text-stroke: 0.005px white;
+          }
+
+          .letter-yellow {
+            color: yellow;
+            -webkit-text-stroke: 0.005px white;
+          }
+
+        }
+      }
+
+      &.hidden {
+        opacity: 0;
+        pointer-events: none;
+        display: none;
+      }
+    }
+
+    @keyframes jump {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-16px);
+      }
+    }
+
+    .heading {
+      font-size: 20px;
+      font-weight: bold;
+      padding: 16px;
+      border-bottom: 1px solid #686868;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .title {
+        color: white;
+      }
+
+      .close-icon {
+        background-color: $bg-dark2;
+        padding: 8px;
+        font-size: 14px;
+        width: 32px;
+        height: 32px;
+        border: 0.2px solid $text-muted;
+        color: white;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+
+    .notifications-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+
+      .notification {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #444;
+
+        .icon {
+          margin-right: 1rem;
+          color: $primary;
+          font-size: 1.2rem;
+        }
+
+        .content {
+          flex: 1;
+
+          .text {
+            font-size: 0.95rem;
+            color: rgb(220, 220, 220);
+          }
+
+          .time {
+            font-size: 0.75rem;
+            color: grey;
+            margin-top: 4px;
+          }
+        }
+      }
+
+      .empty {
+        color: #aaa;
+        text-align: center;
+        margin-top: 3rem;
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .notifications-box {
+      width: 100vw !important;
+      max-height: 100vh !important;
+      height: 100vh !important;
+      border-radius: 0 !important;
+    }
+  }
+}
+
+@media (min-width: 639px) {
+    #notifications-popup {
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+
+        &.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .overlay {
+            background-color: transparent;
+        }
+    
+        .notifications-box {
+            width: 400px !important;
+            height: 500px !important;
+            top: 116px !important;
+            right: 136px !important;
+            transform: translate(-10%, -10%) !important;
+            left: auto !important;
+        }
+    }
+}
+
+
+// Notification designs by type
+#notifications-list{
+  .no-notifications{
+    text-align: center;
+    color: grey;
+    margin-top: 44px;
+    span{
+      font-size: 48px;
+    }
+
+    p{
+      font-size: 18px;
+    }
+  }
+
+  .notification{
+    border-radius: 4px;
+    padding: 12px 10px;
+    cursor: pointer;
+    img.notification-img{
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .content{
+      .text{
+        font-size: 15px;
+      }
+    }
+
+    .action-buttons{
+      visibility: hidden;
+      span{
+        margin-left: 8px;
+        cursor: pointer;
+      }
+    }
+
+    &:hover .action-buttons{
+      visibility: visible;
+    }
+
+    &:hover{
+      background-color: $bg-dark2;
+    }
+
+    &.unread{
+      background-color: $bg-dark2;
+    }
+  }
+}

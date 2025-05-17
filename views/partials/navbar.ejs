@@ -3,13 +3,19 @@
       <h1>2k17 ❤️</h1>
       <ul class="nav-items">
         <li><a href="/gallery">Gallery</a></li>
-        <li><a href="/donate">Donate</a></li>
         <li><a href="/members">Members</a></li>
         <% if (!user) { %>
+        <li><a href="/donate">Donate</a></li>
           <li><a href="/create-account">Register</a></li>
           <li><a href="/login" class="login-btn">Login</a></li>
         <% } else { %>
-          <li><a href="/home">Home</a></li>
+        <% if(typeof isHome !== 'undefined' && isHome) { %>
+          <li><a onclick="openPostPopup()"><span class="fal fa-square-plus"></span></a></li>
+          <li><a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a></li>
+        <% } else { %>
+          <li><a href="/home"><span class="fal fa-house"></span></a></li>
+        <% } %>
+          <li><a href=""><span class="fal fa-messages"></span></a></li>
           <li class="user-capsule-wrapper">
             <div class="user-capsule">
               <img src="<%- user.profilePicture ? user.profilePicture : '/images/user.png' %>" alt="@">
@@ -31,8 +37,10 @@
       <% if (user) { %>
         <li class="user-capsule-wrapper">
             <div class="user-capsule user-capsule-2">
-              <img src="<%- user.profilePicture ? user.profilePicture : '/images/user.png' %>" alt="@">
-              <p><%= user.name.split(' ')[0] + ' ' + user.name.split(' ')[1].split('')[0] + '.' %></p>
+              <a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a>
+              <a href="/chat"><span class="fal fa-message-lines"></span></a>
+              <img id="user-capsule-img" src="<%- user.profilePicture ? user.profilePicture : '/images/user.png' %>" alt="@">
+              <!--<p><%= user.name.split(' ')[0] + ' ' + user.name.split(' ')[1].split('')[0] + '.' %></p>-->
             </div>
 
             <ul class="user-dropdown user-dropdown-2">
@@ -64,13 +72,25 @@
             <li onclick="window.location.href = '/create-account'"><a href="/create-account"><span class="fal fa-user-plus"></span>Register</a></li>
             <li onclick="window.location.href = '/login'"><a href="/login"><span class="fal fa-right-to-bracket"></span>Login</a></li>
           <% } else { %>
-            <li><a href="/settings"><span class="fal fa-gear"></span> Settings</a></li>
+            <li><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
           <% } %>
         </ul>
       </div>
     </div>
   </div>
   
+<div id="notifications-popup">
+  <div class="overlay" onclick="closeNotifications()"></div>
+  <div class="notifications-box">
+    <div class="heading">
+      <span class="title">Notifications</span>
+      <span class="close-icon fal fa-xmark" onclick="closeNotifications()"></span>
+    </div>
+    <div class="notifications-list" id="notifications-list">
+      
+    </div>
+  </div>
+</div>
   <script>
   const sidebar = document.getElementById('mobileSidebar');
   const sidebarContent = document.getElementById('sidebarContent');
@@ -98,8 +118,8 @@
     }, 300); // Match transition duration
   });
   
-    var capsule = document.querySelector(".user-capsule");
-    var dropdown = document.querySelector(".user-dropdown");
+    var capsule = document.querySelector(".large-and-medium .user-capsule");
+    var dropdown = document.querySelector(".large-and-medium .user-dropdown");
 
     capsule.addEventListener("click", () => {
       dropdown.classList.toggle("show");
@@ -111,7 +131,7 @@
       }
     });
 
-    var capsule2 = document.querySelector(".user-capsule-2");
+    var capsule2 = document.querySelector("#user-capsule-img");
     var dropdown2 = document.querySelector(".user-dropdown-2");
 
     capsule2.addEventListener("click", () => {
@@ -124,3 +144,5 @@
       }
     });
 </script>
+
+<script src="/js/home.js"></script>

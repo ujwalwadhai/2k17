@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%- include('../partials/head.ejs') %>
-  <link rel="stylesheet" href="/css/signup_login.css"/>
+  <link rel="stylesheet" href="/styles/css/signup_login.css"/>
   <title>Log In - 2k17 ❤️</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
         <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
         <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; If this is first time, your password is the code used for registering. You can get it from Ujwal.</small><br><br>
         <div>
-          <input type="text" id="username" name="username" placeholder="Email or username *" onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()"/>
+          <input type="text" id="username" name="username" placeholder="Email or username *" oninput="this.value = this.value.replace(' ', '')" onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()"/>
           <div class="password-field">
             <input id="password" value="UW0000" name="password" type="password" placeholder="Enter your password" onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()"/>
             <span onclick="togglePassword()" id="toggle" class="eye-icon fal fa-eye"></span>

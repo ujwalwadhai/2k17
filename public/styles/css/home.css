@@ -240,6 +240,11 @@
   justify-content: center;
   transition: opacity 0.7s ease;
 }
+.posts #posts-loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+  display: none;
+}
 .posts #posts-loader .posts-loader-text {
   font-size: 2rem;
   font-family: "Lato";
@@ -253,25 +258,20 @@
 .posts #posts-loader .posts-loader-text .letter span {
   text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
 }
-.posts #posts-loader .posts-loader-text .letter .letter-blue {
+.posts #posts-loader .posts-loader-text .letter span.letter-blue {
   color: blue;
 }
-.posts #posts-loader .posts-loader-text .letter .letter-green {
+.posts #posts-loader .posts-loader-text .letter span.letter-green {
   color: green;
   -webkit-text-stroke: 0.005px white;
 }
-.posts #posts-loader .posts-loader-text .letter .letter-red {
+.posts #posts-loader .posts-loader-text .letter span.letter-red {
   color: red;
   -webkit-text-stroke: 0.005px white;
 }
-.posts #posts-loader .posts-loader-text .letter .letter-yellow {
+.posts #posts-loader .posts-loader-text .letter span.letter-yellow {
   color: yellow;
   -webkit-text-stroke: 0.005px white;
-}
-.posts #posts-loader.hidden {
-  opacity: 0;
-  pointer-events: none;
-  display: none;
 }
 @keyframes jump {
   0%, 100% {
@@ -293,6 +293,7 @@
 .posts .post .user-info {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .posts .post .user-info .username {
   font-size: 14px;
@@ -317,8 +318,10 @@
   margin-left: auto;
 }
 .posts .post .post-buttons .btns-right button {
+  margin-left: 10px;
+}
+.posts .post .post-buttons .btns-right button.save-btn {
   margin-right: 0;
-  margin-left: 14px;
 }
 .posts .post .post-buttons button {
   background-color: transparent;
@@ -333,8 +336,7 @@
 .posts .post .post-buttons button:hover {
   color: #888;
 }
-.posts .post .post-buttons button span.fal,
-.posts .post .post-buttons button span.fas {
+.posts .post .post-buttons button span.fal, .posts .post .post-buttons button span.fas {
   margin-right: 6px;
 }
 
@@ -370,7 +372,7 @@
   max-width: 800px;
   background: #1f1c2e;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   padding-top: 0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -426,7 +428,8 @@
   flex-wrap: wrap;
   gap: 8px;
 }
-#post-popup.popup-wrapper .post-box .preview img, #post-popup.popup-wrapper .post-box .preview video {
+#post-popup.popup-wrapper .post-box .preview img,
+#post-popup.popup-wrapper .post-box .preview video {
   max-width: 100px;
   max-height: 100px;
   border-radius: 8px;
@@ -435,29 +438,24 @@
 #post-popup.popup-wrapper .post-box .action-buttons {
   text-align: right;
 }
-#post-popup.popup-wrapper .post-box .action-buttons button.create-post-btn {
+#post-popup.popup-wrapper .post-box .action-buttons button {
   align-self: flex-end;
-  background: #6342d8;
   color: white;
   border: none;
   padding: 10px 12px;
   font-size: 15px;
   border-radius: 4px;
   cursor: pointer;
+}
+#post-popup.popup-wrapper .post-box .action-buttons button.create-post-btn {
+  background: #6342d8;
   margin-left: 8px;
 }
 #post-popup.popup-wrapper .post-box .action-buttons button.create-post-btn:hover {
   background: #7b5cf0;
 }
 #post-popup.popup-wrapper .post-box .action-buttons button.cancel-btn {
-  align-self: flex-end;
   background: #2b273f;
-  color: white;
-  border: none;
-  padding: 10px 12px;
-  font-size: 15px;
-  border-radius: 4px;
-  cursor: pointer;
 }
 #post-popup.popup-wrapper .post-box .action-buttons button.cancel-btn:hover {
   background: #7b5cf0;
@@ -471,6 +469,40 @@
     border-radius: 0 !important;
   }
 }
+.create-post-box.small-only {
+  background-color: #2b273f;
+  padding: 12px 20px;
+  margin: 0 6%;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.create-post-box.small-only p.heading {
+  margin: 8px 0 12px;
+  font-size: 18px;
+}
+.create-post-box.small-only .pseudo-post-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.create-post-box.small-only input {
+  width: 100%;
+  padding: 10px 8px;
+  margin: 0.5rem 0;
+  border: 1px solid rgb(55, 55, 55);
+  border-radius: 6px;
+  background: #1f1c2e;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+.create-post-box.small-only input:focus {
+  border: 1px solid #7b5cf0;
+}
+.create-post-box.small-only span.fal {
+  font-size: 20px;
+}
+
 #notifications-popup {
   position: fixed;
   top: 0;
@@ -718,7 +750,7 @@ body {
   margin: auto;
   margin-top: 48px;
   background-color: #2b273f;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 .events-container .events .heading {
   font-size: 20px;
@@ -781,6 +813,7 @@ body {
   text-decoration: none;
   border-radius: 8px;
   transition: 0.3s;
+  cursor: pointer;
 }
 .hero .hero-text .cta-btn:hover {
   background: #7b5cf0;

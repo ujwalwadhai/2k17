@@ -1,10 +1,4 @@
-$primary: #7b5cf0;
-$primary-dark: #6342d8;
-$bg-dark: #1f1c2e;
-$bg-dark2: #2b273f;
-$text-light: #ffffffcc;
-$text-muted: #888;
-$input-bg: #2c283d;
+@use 'global' as *;
 
 html {
   box-sizing: border-box;

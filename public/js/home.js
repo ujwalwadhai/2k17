@@ -17,12 +17,36 @@ var greeting = getGreeting();
 var greetingElement = document.getElementById("greeting-msg")
 if(greetingElement) greetingElement.innerHTML = greeting;
 
+async function sharePost(button){
+    var title = button.getAttribute('data-title');
+    var text = button.getAttribute('data-text');
+    var url = button.getAttribute('data-url');
+    var media = button.getAttribute('data-media');
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url, media });
+        console.log('Post shared successfully');
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        alert('Link copied to clipboard!');
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        prompt('Copy this link manually:', url);
+      }
+    }
+  }
+
 
 async function toggleLike(postId) {
   try {
     var icon = document.getElementById(`like-icon-${postId}`);
     icon.classList.remove("fa-heart")
-    icon.classList.add("fa-circle-notch")
+    icon.classList.add("fa-spinner-third")
     icon.classList.add("fa-spin")
     var res = await fetch(`/post/${postId}/like`, {
       method: 'POST',
@@ -37,16 +61,13 @@ async function toggleLike(postId) {
     countElem.textContent = data.likesCount;
 
     // Toggle icon style
+    icon.classList.remove('fa-spin');
+    icon.classList.remove('fa-spinner-third');
+    icon.classList.add('fa-heart');
     if (data.liked) {
-      icon.classList.remove('fa-spin');
-      icon.classList.remove('fa-circle-notch');
-      icon.classList.add('fa-heart');
       icon.classList.remove('fal');
       icon.classList.add('fas');
     } else {
-      icon.classList.remove('fa-spin');
-      icon.classList.remove('fa-circle-notch');
-      icon.classList.add('fa-heart');
       icon.classList.remove('fas');
       icon.classList.add('fal');
     }
@@ -65,7 +86,7 @@ function hidePopup() {
 } 
 
 
-async function loadComments(postId, userId) {
+async function loadComments(postId, userId = '') {
   var commentsPopup = document.getElementById('comments-popup')
   var overlay = document.getElementById('overlay')
     commentsPopup.classList.add('show');
@@ -125,7 +146,7 @@ async function loadComments(postId, userId) {
 }
 
 
-async function submitComment(postId, userId) {
+async function submitComment(postId, userId, isHomePage = true) {
   document.querySelector('#newCommentBtn').disabled = true;
   var text = document.getElementById('new-comment').value;
   var res = await fetch(`/post/${postId}/new/comment`, {
@@ -135,10 +156,15 @@ async function submitComment(postId, userId) {
   });
   var data = await res.json()
   if (data.success){
+    if(isHomePage){
     loadComments(postId, userId);
     document.getElementById('new-comment').value = ''
     var id = `comment-btn-${postId}`
     document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${ data.commentsLength }`
+    } else {
+      alert('Comment added successfully')
+      window.location.reload()
+    }
     document.querySelector('#newCommentBtn').disabled = false;
   } else {
     alert('Failed to add comment! Please try again later.')
@@ -146,7 +172,7 @@ async function submitComment(postId, userId) {
   }
 }
 
-async function deleteComment(commentId, postId, userId) {
+async function deleteComment(commentId, postId, userId, isHomePage= true) {
   var conf = confirm('Are you sure you want to delete this comment?')
   if (!conf) {
     return
@@ -157,9 +183,13 @@ async function deleteComment(commentId, postId, userId) {
   });
   var data = await res.json();
   if (data.success) {
+    if(isHomePage){
     loadComments(postId, userId);
     var id = `comment-btn-${postId}`
     document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${ data.commentsLength }`
+    } else {
+      document.getElementById(`comment-${commentId}`).style.display = 'none'
+    }
   } else {
     alert('Failed to delete comment! Please try again later.')
   }
@@ -296,6 +326,7 @@ function loadPosts(userId) {
               <button class="comment-btn" onclick="loadComments('${ post._id }', '${ userId }')" id="comment-btn-${ post._id }"><span class="fal fa-messages"></span>${ post.comments.length }</button>
               <div class="btns-right">
                 <button class="report-btn"><span class="fal fa-triangle-exclamation"></span></button>
+                <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${ post.author.name } on 2k17" data-title="2k17 Platform" data-media="${ post.media ? post.media.url : '' }" data-url="https://yourdomain.com/post/123"><span class="fal fa-share"></span></button>
                 <button class="save-btn"><span class="fal fa-bookmark"></span></button>
               </div>
             </div>
@@ -318,6 +349,7 @@ function loadPosts(userId) {
 
   function openPostPopup() {
     document.getElementById('post-popup').classList.add('show');
+    document.getElementById('post-text').focus();
   }
 
   function closePostPopup() {
@@ -377,3 +409,6 @@ function createPost(userId) {
   })
 }
 }
+
+
+

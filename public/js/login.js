@@ -13,7 +13,7 @@ function login(){
     var login_btn = document.getElementById('login_btn');
     login_btn.disabled = true;
     info.innerHTML = "<span style='color: green'>Logging in...</span>";
-    login_btn.innerHTML = "<span class='fal fa-spin fa-rotate'></span> &nbsp; Logging in..."
+    login_btn.innerHTML = "<span class='fal fa-spin fa-spinner-third'></span> &nbsp; Logging in..."
     setTimeout(() => {
         fetch('/login/password', {
             method: 'POST',
@@ -47,7 +47,7 @@ function sendOTP(){
     var send_otp_btn = document.getElementById("send-otp-btn");
     var login_btn = document.getElementById("login-btn");
     if(email_inp.value){
-        send_otp_btn.innerHTML = "<span class='fal fa-spin fa-rotate'><span>"
+        send_otp_btn.innerHTML = "<span class='fal fa-spin fa-spinner-third'><span>"
         status_message.innerHTML = "Sending OTP...";
         fetch('/send/otp', {
             method: 'POST',
@@ -98,7 +98,7 @@ function email_login(){
     var send_otp_btn = document.getElementById("send-otp-btn");
     login_btn.disabled = true;
     if(otp){
-        login_btn.innerHTML = "<span class='fal fa-spin fa-rotate'><span>"
+        login_btn.innerHTML = "<span class='fal fa-spin fa-spinner-third'><span>"
         status_message.innerHTML = "Logging in...";
         fetch('/login/email', {
             method: 'POST',

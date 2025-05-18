@@ -2,8 +2,9 @@ var Users = require('../models/Users');
 var Files = require('../models/Files');
 var Posts = require('../models/Post');
 var Notifications = require('../models/Notifications');
-var moment = require('moment');
 var getUpcomingBirthdays = require('../utils/upcomingBirthdays');
+var { formatTimeFromNow } = require('../utils/dateFunctions');
+var moment = require('moment');
 
 
 exports.indexPage = (req, res) => {
@@ -135,4 +136,18 @@ exports.members = async (req, res) => {
 exports.gallery = async (req, res) => {
   var media = await Files.find();
   res.render('pages/gallery', {media});
+}
+
+exports.viewPost = async (req, res) => {
+  var post = await Posts.findOne({ _id: req.params.id }).populate('comments.user', 'name profilePicture')
+  if(!post) return res.redirect('/');
+  var comments = post.comments;
+  const formattedComments = comments.map(comment => {
+        return {
+          ...comment.toObject(),
+          timeAgo: moment(comment.createdAt).fromNow()
+        };
+      });
+  post.timeAgo = formatTimeFromNow(post.createdAt);
+  res.render('pages/post', {post, comments: formattedComments});
 }

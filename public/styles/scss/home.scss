@@ -14,43 +14,43 @@ body {
   background-color: $bg-dark;
 }
 
-.events-container{
+.events-container {
   padding: 0 6%;
   min-width: 300px;
 
-  .events{
+  .events {
     padding: 12px 24px;
     width: 100%;
     max-width: 600px;
     margin: auto;
     margin-top: 48px;
     background-color: $bg-dark2;
-    border-radius: 12px;
+    border-radius: 8px;
 
-    .heading{
+    .heading {
       font-size: 20px;
       font-weight: 600;
       margin-bottom: 12px;
     }
 
-    .event{
+    .event {
       display: flex;
       align-items: center;
 
-      p.title{
+      p.title {
         font-size: 16px;
         margin-bottom: 0;
         margin-top: 12px;
       }
 
-      p.description{
+      p.description {
         font-size: 14px;
         color: $text-muted;
         margin-top: 4px;
         margin-bottom: 12px;
       }
 
-      img{
+      img {
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -72,15 +72,17 @@ body {
 
   .hero-text {
     flex: 1;
+
     h2 {
       font-size: 42px;
       color: white;
       margin-bottom: 16px;
 
-      span{
+      span {
         -webkit-text-stroke: 0.005px white;
       }
     }
+
     p {
       margin: 1rem 0;
       font-size: 1.2rem;
@@ -96,6 +98,7 @@ body {
       text-decoration: none;
       border-radius: 8px;
       transition: 0.3s;
+      cursor: pointer;
 
       &:hover {
         background: $primary;
@@ -103,7 +106,7 @@ body {
     }
   }
 
-  .featured-photo{
+  .featured-photo {
     padding: 0;
     position: relative;
     display: inline-block;
@@ -112,12 +115,12 @@ body {
     border: 1px solid $text-muted;
     border-radius: 12px;
     transition: 0.3s transform ease;
-    
-    &:hover{
+
+    &:hover {
       transform: scale(1.01);
     }
 
-    img.featured-photo-img{
+    img.featured-photo-img {
       height: 100%;
       object-fit: cover;
       border-radius: 12px;
@@ -145,13 +148,14 @@ body {
   .hero {
     flex-direction: column-reverse;
     gap: auto;
-    .hero-text{
-        margin-top: 12px;
 
-        #greeting{
-          margin-top: 24px;
-          font-size: 32px;
-        }
+    .hero-text {
+      margin-top: 12px;
+
+      #greeting {
+        margin-top: 24px;
+        font-size: 32px;
+      }
     }
 
     .featured-photo {
@@ -161,7 +165,7 @@ body {
       margin-top: 108px;
       transform: scale(1.1);
 
-      &:hover{
+      &:hover {
         transform: scale(1.1);
       }
     }
@@ -170,7 +174,7 @@ body {
 
 
 @media (min-width: 899px) {
-  #greeting{
+  #greeting {
     margin-top: 0;
   }
 }

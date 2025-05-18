@@ -1,10 +1,4 @@
-$primary: #7b5cf0;
-$primary-dark: #6342d8;
-$bg-dark: #1f1c2e;
-$bg-dark2: #2b273f;
-$text-light: #ffffffcc;
-$text-muted: #888;
-$input-bg: #2c283d;
+@use 'global' as *;
 
 #full-loader {
   position: fixed;
@@ -30,31 +24,34 @@ $input-bg: #2c283d;
       display: inline-block;
       animation: jump 1s infinite ease-in-out;
 
-      span{
+      span {
         text-shadow:
-            -1px -1px 0 white,
-            1px -1px 0 white,
-            -1px 1px 0 white,
-            1px 1px 0 white;
-        }
-      
-      .letter-blue{
-          color:blue;
-          
-        }
-        .letter-green{
-          color: green;
-          -webkit-text-stroke: 0.005px white;
-        }
-        .letter-red{
-          color:red;
-          -webkit-text-stroke: 0.005px white;
-        }
-        .letter-yellow{
-          color:yellow;
-          -webkit-text-stroke: 0.005px white;
-        }
-      
+          -1px -1px 0 white,
+          1px -1px 0 white,
+          -1px 1px 0 white,
+          1px 1px 0 white;
+      }
+
+      .letter-blue {
+        color: blue;
+
+      }
+
+      .letter-green {
+        color: green;
+        -webkit-text-stroke: 0.005px white;
+      }
+
+      .letter-red {
+        color: red;
+        -webkit-text-stroke: 0.005px white;
+      }
+
+      .letter-yellow {
+        color: yellow;
+        -webkit-text-stroke: 0.005px white;
+      }
+
     }
   }
 
@@ -65,9 +62,12 @@ $input-bg: #2c283d;
 }
 
 @keyframes jump {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-16px);
   }

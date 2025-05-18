@@ -213,7 +213,7 @@ body {
   cursor: pointer;
 }
 .right-pane .signup-form .primary-btn:hover {
-  background: rgb(104.0898876404, 68.6488764045, 237.8511235955);
+  background: #6342d8;
 }
 .right-pane .signup-form .divider {
   text-align: center;
@@ -234,7 +234,7 @@ body {
   cursor: pointer;
 }
 .right-pane .signup-form .social-buttons button:hover {
-  background: rgb(55.1089108911, 50.099009901, 76.400990099);
+  background: #888;
 }
 
 @media (max-width: 1024px) {

@@ -10,77 +10,64 @@
   box-sizing: border-box;
 
   #posts-loader {
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 350px;
-      background-color: transparent;
-      color: #fff;
-      z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 350px;
+    background-color: transparent;
+    color: #fff;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.7s ease;
+
+    &.hidden {
+      opacity: 0;
+      pointer-events: none;
+      display: none;
+    }
+
+    .posts-loader-text {
+      font-size: 2rem;
+      font-family: 'Lato';
       display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.7s ease;
+      gap: 8px;
 
-      .posts-loader-text {
-        font-size: 2rem;
-        font-family: 'Lato';
-        display: flex;
-        gap: 8px;
+      .letter {
+        display: inline-block;
+        animation: jump 1s infinite ease-in-out;
 
-        .letter {
-          display: inline-block;
-          animation: jump 1s infinite ease-in-out;
+        span {
+          text-shadow:
+            -1px -1px 0 white,
+            1px -1px 0 white,
+            -1px 1px 0 white,
+            1px 1px 0 white;
+        
 
-          span {
-            text-shadow:
-              -1px -1px 0 white,
-              1px -1px 0 white,
-              -1px 1px 0 white,
-              1px 1px 0 white;
-          }
-
-          .letter-blue {
-            color: blue;
-
-          }
-
-          .letter-green {
-            color: green;
-            -webkit-text-stroke: 0.005px white;
-          }
-
-          .letter-red {
-            color: red;
-            -webkit-text-stroke: 0.005px white;
-          }
-
-          .letter-yellow {
-            color: yellow;
-            -webkit-text-stroke: 0.005px white;
-          }
-
+        &.letter-blue { color: blue; }
+        &.letter-green {
+          color: green;
+          -webkit-text-stroke: 0.005px white;
+        }
+        &.letter-red {
+          color: red;
+          -webkit-text-stroke: 0.005px white;
+        }
+        &.letter-yellow {
+          color: yellow;
+          -webkit-text-stroke: 0.005px white;
         }
       }
-
-      &.hidden {
-        opacity: 0;
-        pointer-events: none;
-        display: none;
       }
     }
+  }
 
-    @keyframes jump {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-16px);
-      }
-    }
+  @keyframes jump {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
 
   .heading {
     font-size: 20px;
@@ -95,6 +82,7 @@
     .user-info {
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       .username {
         font-size: 14px;
@@ -109,11 +97,9 @@
       }
     }
 
-    .post-data {
-      .post-img {
-        width: 100%;
-        border-radius: 4px;
-      }
+    .post-data .post-img {
+      width: 100%;
+      border-radius: 4px;
     }
 
     .post-buttons {
@@ -125,8 +111,11 @@
         margin-left: auto;
 
         button {
-          margin-right: 0;
-          margin-left: 14px;
+          margin-left: 10px;
+
+          &.save-btn{
+            margin-right: 0;
+          }
         }
       }
 
@@ -140,20 +129,15 @@
         margin-right: 16px;
         padding: 0;
 
-        &:hover {
-          color: $text-muted;
-        }
+        &:hover { color: $text-muted; }
 
-        span.fal,
-        span.fas {
+        span.fal, span.fas {
           margin-right: 6px;
-
         }
       }
     }
   }
 }
-
 
 #post-popup.popup-wrapper {
   position: fixed;
@@ -189,7 +173,7 @@
     max-width: 800px;
     background: $bg-dark;
     border-radius: 12px;
-    padding: 1rem;
+    padding: 1rem 1rem 1rem 1rem;
     padding-top: 0;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -242,7 +226,7 @@
       }
     }
 
-    input[type="file"] {
+    input[type='file'] {
       display: none;
     }
 
@@ -251,7 +235,8 @@
       flex-wrap: wrap;
       gap: 8px;
 
-      img, video {
+      img,
+      video {
         max-width: 100px;
         max-height: 100px;
         border-radius: 8px;
@@ -259,44 +244,38 @@
       }
     }
 
-    .action-buttons{
+    .action-buttons {
       text-align: right;
 
-      button.create-post-btn {
+      button {
         align-self: flex-end;
-        background: $primary-dark;
         color: white;
         border: none;
         padding: 10px 12px;
         font-size: 15px;
         border-radius: 4px;
         cursor: pointer;
-        margin-left: 8px;
-  
-        &:hover {
-          background: $primary;
-        }
-      }
 
-      button.cancel-btn {
-        align-self: flex-end;
-        background: $bg-dark2;
-        color: white;
-        border: none;
-        padding: 10px 12px;
-        font-size: 15px;
-        border-radius: 4px;
-        cursor: pointer;
-  
-        &:hover {
-          background: $primary;
+        &.create-post-btn {
+          background: $primary-dark;
+          margin-left: 8px;
+
+          &:hover {
+            background: $primary;
+          }
+        }
+
+        &.cancel-btn {
+          background: $bg-dark2;
+
+          &:hover {
+            background: $primary;
+          }
         }
       }
     }
-
   }
 }
-
 
 @media (max-width: 600px) {
   .post-box {
@@ -304,5 +283,44 @@
     max-height: 100vh !important;
     height: 100vh !important;
     border-radius: 0 !important;
+  }
+}
+
+.create-post-box.small-only {
+  background-color: $bg-dark2;
+  padding: 12px 20px;
+  margin: 0 6%;
+  border-radius: 8px;
+  cursor: pointer;
+
+  p.heading {
+    margin: 8px 0 12px;
+    font-size: 18px;
+  }
+
+  .pseudo-post-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 8px;
+    margin: 0.5rem 0;
+    border: 1px solid rgb(55, 55, 55);
+    border-radius: 6px;
+    background: $bg-dark;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+
+    &:focus {
+      border: 1px solid $primary;
+    }
+  }
+
+  span.fal {
+    font-size: 20px;
   }
 }

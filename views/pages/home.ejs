@@ -14,8 +14,8 @@
     <section class="hero">
         <div class="hero-text">
           <h2 id="greeting"><span id="greeting-msg"></span>, <%= user.name.split(' ')[0] %></h2>
-          <p>Private space to reconnect, share moments, and relive memories for the 2017-24 batch of JNV Chandrapur</p><br>
-          <a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
+          <p>Ready to catch up with your batchmates and relive the best moments of 2k17?</p><br>
+          <a class="cta-btn" onclick="document.getElementById('posts').scrollIntoView({behavior: 'smooth'})">Explore &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
         </div>
         <div class="featured-photo" onclick="window.open()">
           <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
@@ -41,6 +41,15 @@
       <% } %>
     </section>
     </div><br><br><br>
+
+    <div class="create-post-box small-only" onclick="openPostPopup()">
+      <p class="heading">Create a new post</p>
+      <div class="pseudo-post-box">
+        <input readonly type="text" placeholder="What's on your mind?">
+        <span class="fal fa-image"></span>
+      </div>
+    </div>
+    <span class="small-only"><br><br></span>
 
     <section class="posts" id="posts">
       <p class="heading">Posts in last 6 months</p>

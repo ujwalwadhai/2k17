@@ -79,17 +79,23 @@ body {
   border-radius: 12px;
 }
 
-.about, .features, .contact {
+.about,
+.features,
+.contact {
   padding: 4rem 10%;
   text-align: left;
   background: #1f1c2e;
 }
-.about h3, .features h3, .contact h3 {
+.about h3,
+.features h3,
+.contact h3 {
   font-size: 2rem;
   color: white;
   margin-bottom: 1rem;
 }
-.about p, .features p, .contact p {
+.about p,
+.features p,
+.contact p {
   font-size: 1.1rem;
   max-width: 700px;
   margin: 0;

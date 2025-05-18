@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -31,23 +30,13 @@ require('./models/UserSettings')
 
 dotenv.config();
 
-
-// Middleware
 app.use(express.urlencoded({ extended: true }));
-/* app.use((req, res, next) => {
-    express.json()
-    console.log(JSON.stringify(req));
-    next();
-}); */
+app.use(express.static(__dirname+'/public'));
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Set EJS as the view engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', __dirname+'/views');
 
 app.use(express.json('application/json'))
-// Routes
 app.use('/', getRoutes);
 app.use('/', postRoutes);
 

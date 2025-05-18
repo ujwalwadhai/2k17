@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+        <title>Post by <%= post.author.name %> on 2k17</title>
+        <link rel="stylesheet" href="/styles/css/home.css">
+        <link rel="stylesheet" href="/styles/css/post.css">
+        <link rel="icon" href="/images/web_logo.png" type="image/png">
+
+        <!-- Open Graph tags for social sharing -->
+        <meta property="og:title" content="View post by <%= post.author.name %> on 2k17">
+        <meta property="og:description" content="2k17 Platform">
+        <meta property="og:image" content="/images/web_logo.png">
+        <meta property="og:url" content="/post/<%= post._id %>">
+        <meta property="og:type" content="website">
+</head>
+
+
+<body>
+    <%- include('../partials/navbar') %>
+    <br><br>
+    <div class="posts">
+        <div class="post" style="border-top: none;">
+            <div class="user-info">
+                <img src="<%= post.author.profilePicture %>" alt="" class="user-profile">
+                <div class="user-info-helper">
+                    <span class="name">
+                        <%= post.author.name %>
+                    </span><br>
+                    <span class="username">@<%= post.author.username %> (<%= post.timeAgo %>)</span>
+                </div>
+            </div>
+            <div class="post-data">
+                <p class="post-text">
+                    <%= post.text %>
+                </p>
+                <% if(post.media){ %>
+                    <% if(post.media.type.startsWith('image')) { %>
+                        <img src="<%= post.media.url %>" alt="" class="post-img">
+                        <% } else if(post.media.type.startsWith('video')) { %>
+                            <video controls class="post-video">
+                                <source src="<%= post.media.url %>" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <% } %>
+                                <% } %>
+            </div>
+            <div class="post-buttons">
+                <% if(user) { %>
+                    <% var isLiked=post.likes.some(u=> u._id.toString() === user._id.toString()) %>
+                    <button class="like-btn" onclick="toggleLike('<%= post._id %>')" id="like-btn-<%=post._id %>">
+                        <span class="<%- isLiked ? 'fas' : 'fal' %> fa-heart" id="like-icon-<%= post._id %>"></span>
+                        <span id="like-count-<%= post._id %>">
+                            <%= post.likes.length %>
+                        </span>
+                    </button>
+                <% } else { %>
+                    <button class="like-btn" id="like-btn-<%=post._id %>">
+                        <span class="fal fa-heart" id="like-icon-<%= post._id %>"></span>
+                        <span id="like-count-<%= post._id %>">
+                            <%= post.likes.length %>
+                        </span>
+                    </button>
+                <% } %>
+        
+                    <button class="comment-btn" onclick="document.getElementById('comments').scrollIntoView({behavior: 'smooth'}); " id="comment-btn-<%= post._id %>"><span class="fal fa-comment"></span>
+                        <%= post.comments.length %>
+                    </button>
+                    <div class="btns-right">
+                        <button class="report-btn"><span class="fal fa-triangle-exclamation"></span></button>
+                        <button class="share-btn" onclick="sharePost(this)" data-text="See this post by <%= post.author.name %> on 2k17" data-title="2k17 Platform" data-media="<%= post.media ? post.media.url : '' %>" data-url="https://yourdomain.com/post/123"><span class="fal fa-share"></span></button>
+                        <button class="save-btn"><span class="fal fa-bookmark"></span></button>
+                    </div>
+            </div>
+        </div>
+
+        <div class="comments-box" id="comments">
+            <p class="heading">Comments</p>
+        <div class="comments-list">
+            <% if(comments.length > 0){ %>
+                <% comments.forEach(comment => { %>
+                    <div class="comment" id="comment-<%= comment._id %>">
+                        <img src="<%= comment.user.profilePicture ? comment.user.profilePicture : '/images/user.png' %>" alt="" class="user-profile">
+                        <div class="comment-info">
+                            <p class="name"><%= comment.user.name %> &nbsp; <span class="time"><%= comment.timeAgo %></span></p>
+                            <span class="text"><%= comment.text %></span>
+                        </div>
+                        <div class="action-buttons">
+                            <span class="fal fa-triangle-exclamation"></span>
+                            <% if (user) { %>
+                                <% if (user._id.toString() === comment.user._id.toString()) { %>
+                                    <span class="fal fa-trash-alt" onclick="deleteComment('<%= comment._id %>','<%= post._id %>','<%= user._id %>', false)"></span>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p class="no-comments"></p>
+            <% } %>
+        </div>
+        <% if(user) { %>
+            <div class="input-area">
+                <input id="new-comment" autocomplete="off" placeholder="Write a comment..."/>
+                <button type="button" onclick="submitComment('<%= post._id %>', '<%= user._id %>', false)" id="newCommentBtn">Post</button>
+            </div>
+        <% } %>
+        </div>
+    </div>
+
+    <script src="/js/home.js"></script>
+</body>
+</html>

@@ -30,7 +30,7 @@ body {
 }
 .donate-section .donate-container .description {
   font-size: 0.95rem;
-  color: rgb(172, 172, 172);
+  color: rgba(255, 255, 255, 0.8);
   margin-bottom: 2rem;
   line-height: 22px;
 }
@@ -71,7 +71,7 @@ body {
 .donate-section .donate-container .custom-input label {
   display: block;
   margin-bottom: 0.5rem;
-  color: rgb(172, 172, 172);
+  color: rgba(255, 255, 255, 0.8);
 }
 .donate-section .donate-container .donate-btn {
   background: #7b5cf0;

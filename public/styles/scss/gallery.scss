@@ -1,21 +1,16 @@
-$primary: #7b5cf0;
-$primary-dark: #6342d8;
-$bg-dark: #1f1c2e;
-$bg-dark2: #2b273f;
-$text-light: rgb(172, 172, 172);
-$text-muted: #888;
-$input-bg: #2c283d;
+@use 'global' as *;
 
-body, html{
-    margin: 0;
-    padding: 0;
+body,
+html {
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    height: 100vh;
-    overflow-x: hidden;
-    overflow: hidden;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/jnv-bg-4.jpg') center center / cover no-repeat;
+body {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow: hidden;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/jnv-bg-4.jpg') center center / cover no-repeat;
 }
 
 .gallery-container {
@@ -42,7 +37,7 @@ body{
       background: #f5f5f5;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       transition: transform 0.3s ease;
       cursor: pointer;
 
@@ -50,7 +45,8 @@ body{
         transform: translateY(-5px);
       }
 
-      img, video {
+      img,
+      video {
         width: 100%;
         height: auto;
         display: block;
@@ -61,41 +57,41 @@ body{
       }
     }
 
-    .info-card{
+    .info-card {
+      text-align: center;
+      padding: 24px 20px;
+      border: 0.5px solid grey;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/jnv-bg-6.jpg') center center / cover no-repeat;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      p {
+        color: white;
+        line-height: 24px;
+        font-size: 18px;
         text-align: center;
-        padding: 24px 20px;
-        border: 0.5px solid grey;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        transition: transform 0.3s ease;
-        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/jnv-bg-6.jpg') center center / cover no-repeat;
+      }
+
+      button.redirect_btn {
+        background-color: $primary-dark;
+        color: white;
+        padding: 12px 24px;
+        margin-top: 8px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
 
         &:hover {
-            transform: translateY(-5px);
+          background-color: $primary;
         }
-
-        p{
-            color: white;
-            line-height: 24px;
-            font-size: 18px;
-            text-align: center;
-        }
-
-        button.redirect_btn {
-            background-color: $primary-dark;
-            color: white;
-            padding: 12px 24px;
-            margin-top: 8px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-
-            &:hover{
-                background-color: $primary;
-            }
-        }
+      }
     }
   }
 }

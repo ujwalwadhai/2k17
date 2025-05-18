@@ -15,14 +15,14 @@ function checkUsername(el, username){
     var status_icon = document.getElementById("status-icon");
     var status_message = document.getElementById("status-message");
     status_icon.classList.remove("fa-user-circle");
-    status_icon.classList.remove("fa-rotate");
+    status_icon.classList.remove("fa-spinner-third");
     status_icon.classList.remove("fa-check-circle");
     status_icon.classList.remove("fa-spin");
     status_icon.classList.remove("fa-circle-xmark");
     if(username){
         status_icon.classList.add("fa-spin");
         status_message.innerHTML = "Checking username availability...";
-        status_icon.classList.add("fa-rotate");
+        status_icon.classList.add("fa-spinner-third");
         status_icon.classList.add("status-icon");
         setTimeout(()=>{
             fetch('/check/username', {
@@ -37,7 +37,7 @@ function checkUsername(el, username){
                 res.json()
             ).then((data)=>{
                 status_icon.classList.remove("fa-spin");
-                status_icon.classList.remove("fa-rotate");
+                status_icon.classList.remove("fa-spinner-third");
                 if(data.success){
                     status_icon.classList.add("fa-check-circle");
                     status_message.innerHTML = "<span class='green'>Username available!</span>";
@@ -76,7 +76,7 @@ function signup(){
     var info = document.getElementById("info");
     var signup_btn = document.getElementById("signup-btn");
     if(username && email && code){
-        signup_btn.innerHTML = "<span class='fal fa-spin fa-rotate'></span> &nbsp; Creating account...";
+        signup_btn.innerHTML = "<span class='fal fa-spin fa-spinner-third'></span> &nbsp; Creating account...";
         fetch('/signup', {
             method: 'POST',
             headers: {
@@ -102,5 +102,7 @@ function signup(){
                 }, 1500)
             }
         })
+    } else {
+        info.innerHTML = "<span class='red'><span class='fal fa-triangle-exclamation'></span> &nbsp; Please fill all fields!</span>"
     }
 }

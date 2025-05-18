@@ -1,20 +1,15 @@
-$primary: #7b5cf0;
-$primary-dark: #6342d8;
-$bg-dark: #1f1c2e;
-$bg-dark2: #2b273f;
-$text-light: rgb(172, 172, 172);
-$text-muted: #888;
-$input-bg: #2c283d;
+@use 'global' as *;
 
-body, html{
-    margin: 0;
-    padding: 0;
-    
+body,
+html {
+  margin: 0;
+  padding: 0;
+
 }
 
-body{
-    height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-4.jpg') center center / cover no-repeat;
+body {
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-4.jpg') center center / cover no-repeat;
 }
 
 .members-page {
@@ -24,6 +19,7 @@ body{
   text-align: center;
   height: 100vh;
   overflow-y: scroll;
+
   h2 {
     font-size: 2.2rem;
     text-align: center;
@@ -43,9 +39,9 @@ body{
     color: #fff;
     outline: none;
     max-width: 400px;
-        
+
     &:focus {
-        border: 1px solid $primary;
+      border: 1px solid $primary;
     }
   }
 
@@ -59,7 +55,7 @@ body{
   .member-card {
     background: $bg-dark2;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     padding: 20px;
     width: 100%;
     max-width: 400px;
@@ -70,11 +66,11 @@ body{
       transform: translateY(-5px);
     }
 
-    .upper{
-        padding: 0;
-        margin: 0;
-        display: flex;
-        align-items: center;
+    .upper {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: center;
     }
 
     img {
@@ -94,7 +90,7 @@ body{
       display: flex;
       align-items: center;
 
-      span{
+      span {
         font-size: 0.8rem;
         color: $text-muted;
         margin-left: 8px;
@@ -107,18 +103,18 @@ body{
       }
     }
 
-    .year{
-        padding: 0;
-        margin: 0;
-        margin-top: 8px;
-        color: $text-light;
-        font-size: 14px;
+    .year {
+      padding: 0;
+      margin: 0;
+      margin-top: 8px;
+      color: $text-light;
+      font-size: 14px;
     }
 
-    .username{
-        color: $text-light;
-        font-size: 14px;
-        cursor: pointer;
+    .username {
+      color: $text-light;
+      font-size: 14px;
+      cursor: pointer;
     }
 
     .bio {
@@ -142,11 +138,11 @@ body{
           color: rgb(118, 118, 118);
         }
 
-        span{
+        span {
           font-size: 18px;
         }
 
-        span.fa-phone-volume{
+        span.fa-phone-volume {
           font-size: 17px;
         }
       }
@@ -156,14 +152,14 @@ body{
 
 
 @media (max-width: 680px) {
-    .members-container{
-        display: block;
-        text-align: center;
+  .members-container {
+    display: block;
+    text-align: center;
 
-        .member-card{
-            margin: auto;
-            width: 80vw;
-            max-width: none;
-        }
+    .member-card {
+      margin: auto;
+      width: 80vw;
+      max-width: none;
     }
+  }
 }

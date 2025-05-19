@@ -26,5 +26,6 @@ router.get('/logout', isLoggedIn, getController.logout);
 router.get('/gallery', getController.gallery);
 
 router.get('/post/:id', getController.viewPost);
+router.get('/u/:username', getController.viewProfile);
 
 module.exports = router;

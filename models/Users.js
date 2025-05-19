@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String }, // DOB for now
   profilePicture: { type: String, default: '/images/user.png' }, // Cloudinary URL
   bio: { type: String },
+  registered: { type: Boolean, default: false },
+  verified: { type: Boolean, default: false },
   socialLinks: {
     instagram: String,
     linkedin: String,

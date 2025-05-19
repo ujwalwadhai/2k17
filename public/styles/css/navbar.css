@@ -128,12 +128,15 @@
   z-index: 10;
   height: 0;
   user-select: none;
+  position: absolute;
 }
 .header nav.large-and-medium {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 14px;
+  width: 100vw;
+  padding-right: 36px;
 }
 .header nav.large-and-medium h1 {
   color: white;
@@ -201,6 +204,7 @@
   margin: 0;
   padding: 0 20px;
   min-width: 300px;
+  width: 100vw;
 }
 .header nav.small-only span.menu-icon {
   font-size: 20px;

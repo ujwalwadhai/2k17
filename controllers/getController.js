@@ -151,3 +151,16 @@ exports.viewPost = async (req, res) => {
   post.timeAgo = formatTimeFromNow(post.createdAt);
   res.render('pages/post', {post, comments: formattedComments});
 }
+
+exports.viewProfile = async (req, res) => {
+  var user = await Users.findOne({ username: req.params.username });
+  if(!user) return res.redirect('/');
+  var posts = await Posts.find({ author: user._id }).populate("likes", "username profilePicture").sort({ createdAt: -1 });
+  var formattedPosts = posts.map(post => {
+    return {
+      ...post.toObject(),
+      timeAgo: formatTimeFromNow(post.createdAt)
+    };
+  });
+  res.render('pages/profile', {account: user, posts: formattedPosts});
+}

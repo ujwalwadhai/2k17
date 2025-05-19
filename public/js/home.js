@@ -78,9 +78,9 @@ async function toggleLike(postId) {
   }
 }
 
-function hidePopup() {
-  var commentsPopup = document.getElementById('comments-popup')
-  var overlay = document.getElementById('overlay')
+function hidePopup(popupId='comments-popup') {
+  var commentsPopup = document.getElementById(popupId)
+  var overlay = commentsPopup.querySelector('.overlay')
   commentsPopup.classList.remove('show');
     overlay.classList.remove('show');
 } 
@@ -92,7 +92,7 @@ async function loadComments(postId, userId = '') {
     commentsPopup.classList.add('show');
     overlay.classList.add('show');
 
-    
+     
   commentsPopup.querySelector('#newCommentBtn').removeEventListener('click', ()=> { submitComment(postId) })
   commentsPopup.querySelector('#newCommentBtn').addEventListener('click', ()=> { submitComment(postId) })
   document.getElementById('new-comment').value = ''

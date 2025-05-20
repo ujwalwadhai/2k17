@@ -391,3 +391,32 @@ exports.newPost = async (req, res) => {
     return res.json({ success: false, message: 'Something went wrong' });
   }
 }
+
+
+exports.editProfile = async (req, res) => {
+  try {
+    const { username, phone, bio, facebook, linkedin, github, instagram, other } = req.body;
+    const update = { username, phone, bio, 
+      socialLinks: {
+        facebook,
+        linkedin,
+        github,
+        instagram,
+        other
+      }
+     };
+
+    var userCheck = await Users.findOne({ username });
+    if (userCheck && String(userCheck._id) !== String(req.user._id)) {
+      return res.json({ success: false, message: 'Username already exists' });
+    }
+
+    if (req.file.path) update.profilePicture = req.file.path;
+
+    await Users.findByIdAndUpdate(req.user._id, update);
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Edit profile error:", err);
+    res.json({ success: false, message: "Failed to update profile." });
+  }
+};

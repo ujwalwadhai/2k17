@@ -31,3 +31,4 @@ function showLoginBanner() {
   popup.classList.add("show");
   popup.querySelector(".overlay").classList.add("show");
 }
+

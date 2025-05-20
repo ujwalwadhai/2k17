@@ -48,6 +48,8 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 })
 
+/* const cron = require('node-cron');*/
+
 
 var { formatDate, formatDate2, createDate, getWeekDay, formatTimeFromNow } = require('./utils/dateFunctions');
 app.locals.formatDate = formatDate;

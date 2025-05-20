@@ -79,6 +79,7 @@ body {
       object-fit: cover;
       border-radius: 50%;
       margin-right: 12px;
+      cursor: pointer;
     }
 
     .name {
@@ -89,6 +90,7 @@ body {
       color: white;
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       span {
         font-size: 0.8rem;

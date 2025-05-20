@@ -15,31 +15,31 @@ function getGreeting() {
 
 var greeting = getGreeting();
 var greetingElement = document.getElementById("greeting-msg")
-if(greetingElement) greetingElement.innerHTML = greeting;
+if (greetingElement) greetingElement.innerHTML = greeting;
 
-async function sharePost(button){
-    var title = button.getAttribute('data-title');
-    var text = button.getAttribute('data-text');
-    var url = button.getAttribute('data-url');
-    var media = button.getAttribute('data-media');
+async function sharePost(button) {
+  var title = button.getAttribute('data-title');
+  var text = button.getAttribute('data-text');
+  var url = button.getAttribute('data-url');
+  var media = button.getAttribute('data-media');
 
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, text, url, media });
-        console.log('Post shared successfully');
-      } catch (err) {
-        console.error('Error sharing:', err);
-      }
-    } else {
-      try {
-        await navigator.clipboard.writeText(url);
-        alert('Link copied to clipboard!');
-      } catch (err) {
-        console.error('Failed to copy:', err);
-        prompt('Copy this link manually:', url);
-      }
+  if (navigator.share) {
+    try {
+      await navigator.share({ title, text, url, media });
+      console.log('Post shared successfully');
+    } catch (err) {
+      console.error('Error sharing:', err);
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(url);
+      alert('Link copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      prompt('Copy this link manually:', url);
     }
   }
+}
 
 
 async function toggleLike(postId) {
@@ -78,23 +78,23 @@ async function toggleLike(postId) {
   }
 }
 
-function hidePopup(popupId='comments-popup') {
+function hidePopup(popupId = 'comments-popup') {
   var commentsPopup = document.getElementById(popupId)
   var overlay = commentsPopup.querySelector('.overlay')
   commentsPopup.classList.remove('show');
-    overlay.classList.remove('show');
-} 
+  overlay.classList.remove('show');
+}
 
 
 async function loadComments(postId, userId = '') {
   var commentsPopup = document.getElementById('comments-popup')
   var overlay = document.getElementById('overlay')
-    commentsPopup.classList.add('show');
-    overlay.classList.add('show');
+  commentsPopup.classList.add('show');
+  overlay.classList.add('show');
 
-     
-  commentsPopup.querySelector('#newCommentBtn').removeEventListener('click', ()=> { submitComment(postId) })
-  commentsPopup.querySelector('#newCommentBtn').addEventListener('click', ()=> { submitComment(postId) })
+
+  commentsPopup.querySelector('#newCommentBtn').removeEventListener('click', () => { submitComment(postId) })
+  commentsPopup.querySelector('#newCommentBtn').addEventListener('click', () => { submitComment(postId) })
   document.getElementById('new-comment').value = ''
   var list = document.getElementById('comments-list');
   list.innerHTML = '';
@@ -111,20 +111,20 @@ async function loadComments(postId, userId = '') {
     headers: { 'Content-Type': 'application/json' }
   });
   var comments = await res.json();
-  setTimeout(()=> {
-    if(comments.length > 0){
+  setTimeout(() => {
+    if (comments.length > 0) {
 
       document.getElementById('comments-loader').classList.add('hidden');
       comments.forEach(c => {
-        if(c.user._id.toString() === userId.toString()){
+        if (c.user._id.toString() === userId.toString()) {
           var trashIcon = `<span class='fal fa-trash' onclick='deleteComment("${c._id}", "${postId}", "${userId}")'></span>`
         } else {
           var trashIcon = ''
         }
         list.innerHTML += `<div class="comment" id="comment-${c._id}">
-                                  <img src="${c.user.profilePicture ? c.user.profilePicture : '/images/user.png'}" alt="" class="user-profile">
+                                  <img src="${c.user.profilePicture ? c.user.profilePicture : '/images/user.png'}" alt="" onclick="window.location.href='/u/${c.user.username}'" class="user-profile">
                                   <div class="comment-info">
-                                  <p class="name">${c.user.name} &nbsp; <span class="time">${c.timeAgo}</span></p>
+                                  <p class="name" onclick="window.location.href='/u/${c.user.username}'">${c.user.name} &nbsp; <span class="time">${c.timeAgo}</span></p>
                               <span class="text">${c.text}</span>
                             </div>
                             <div class="action-buttons">
@@ -134,7 +134,7 @@ async function loadComments(postId, userId = '') {
                           </div>`;
       });
 
-      setTimeout(()=> {
+      setTimeout(() => {
         document.querySelectorAll('.comment').forEach(c => {
           c.style.display = 'flex'
         })
@@ -155,12 +155,12 @@ async function submitComment(postId, userId, isHomePage = true) {
     body: JSON.stringify({ text })
   });
   var data = await res.json()
-  if (data.success){
-    if(isHomePage){
-    loadComments(postId, userId);
-    document.getElementById('new-comment').value = ''
-    var id = `comment-btn-${postId}`
-    document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${ data.commentsLength }`
+  if (data.success) {
+    if (isHomePage) {
+      loadComments(postId, userId);
+      document.getElementById('new-comment').value = ''
+      var id = `comment-btn-${postId}`
+      document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${data.commentsLength}`
     } else {
       alert('Comment added successfully')
       window.location.reload()
@@ -172,7 +172,7 @@ async function submitComment(postId, userId, isHomePage = true) {
   }
 }
 
-async function deleteComment(commentId, postId, userId, isHomePage= true) {
+async function deleteComment(commentId, postId, userId, isHomePage = true) {
   var conf = confirm('Are you sure you want to delete this comment?')
   if (!conf) {
     return
@@ -183,10 +183,10 @@ async function deleteComment(commentId, postId, userId, isHomePage= true) {
   });
   var data = await res.json();
   if (data.success) {
-    if(isHomePage){
-    loadComments(postId, userId);
-    var id = `comment-btn-${postId}`
-    document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${ data.commentsLength }`
+    if (isHomePage) {
+      loadComments(postId, userId);
+      var id = `comment-btn-${postId}`
+      document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${data.commentsLength}`
     } else {
       document.getElementById(`comment-${commentId}`).style.display = 'none'
     }
@@ -210,21 +210,21 @@ function loadNotifications() {
         <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
     </div>
   </div>`;
-  fetch('/notifications',{
+  fetch('/notifications', {
     method: 'POST'
   })
     .then(res => res.json())
     .then(data => {
-      setTimeout(()=> {
-        if(data.notifications.length > 0){
+      setTimeout(() => {
+        if (data.notifications.length > 0) {
           document.getElementById('notifications-loader').classList.add('hidden');
-          fetch('/notifications/read', {method: "POST"})
+          fetch('/notifications/read', { method: "POST" })
           document.querySelectorAll('.fa-bell').forEach(el => {
             el.classList.remove('has-unread')
           })
-          setTimeout(()=>{
+          setTimeout(() => {
             data.notifications.forEach(n => {
-              if(n.seen){
+              if (n.seen) {
                 list.innerHTML += `<div class="notification" onclick="window.location.href = '${n.url}'">
           <img class="notification-img" src="${n.image ? n.image : '/images/bell.png'}" alt="Icon">
           <div class="content">
@@ -250,15 +250,15 @@ function loadNotifications() {
                       </div>`
               }
             })
-            }, 100)
+          }, 100)
         } else {
           list.innerHTML = `<div class="no-notifications grey-1">
           <span class="fal fa-bell-slash"></span><br><br>
           <p>No notifications yet!</p>
           </div>`
-        } 
+        }
 
-        }, 2000)
+      }, 2000)
     })
 }
 
@@ -283,33 +283,33 @@ function loadPosts(userId) {
   fetch('/posts', {
     method: 'POST'
   })
-  .then(res => res.json())
-  .then(data => {
-    if(data.success){
-      setTimeout(()=> {
-        if(data.posts.length > 0){
-          document.getElementById('posts-loader').classList.add('hidden');
-          data.posts.forEach(post => {
-            var isLiked = post.likes.includes(userId)
-            if(post.media){
-              if(post.media.type.startsWith('image')) {
-                var mediaItem = `<img src="${post.media.url}" alt="" class="post-img">`
-              } else if(post.media.type.startsWith('video')) {
-                var mediaItem = `<video controls class="post-video">
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        setTimeout(() => {
+          if (data.posts.length > 0) {
+            document.getElementById('posts-loader').classList.add('hidden');
+            data.posts.forEach(post => {
+              var isLiked = post.likes.includes(userId)
+              if (post.media) {
+                if (post.media.type.startsWith('image')) {
+                  var mediaItem = `<img src="${post.media.url}" alt="" class="post-img">`
+                } else if (post.media.type.startsWith('video')) {
+                  var mediaItem = `<video controls class="post-video">
                   <source src="${post.media.url}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>`
+                } else {
+                  var mediaItem = ``
+                }
               } else {
                 var mediaItem = ``
               }
-            } else {
-              var mediaItem = ``
-            }
-            posts.innerHTML += `<div class="post" id="post-${post._id}">
+              posts.innerHTML += `<div class="post" id="post-${post._id}">
             <div class="user-info">
               <img src="${post.author.profilePicture}" alt="" class="user-profile">
-              <div class="user-info-helper">
-                <span class="name">${post.author.name}</span><br>
+              <div class="user-info-helper" onclick="window.location.href='/u/${post.author.username}'">
+                <span class="name" >${post.author.name}</span><br>
                 <span class="username">@${post.author.username} (${post.timeAgo})</span>
               </div>
             </div>
@@ -318,96 +318,96 @@ function loadPosts(userId) {
               ${mediaItem}
             </div>
             <div class="post-buttons">
-              <button class="like-btn" onclick="toggleLike('${ post._id }')" id="like-btn-${post._id }">
-                <span class="${ isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${ post._id }"></span>
-                <span id="like-count-${ post._id }">${ post.likes.length }</span>
+              <button class="like-btn" onclick="toggleLike('${post._id}')" id="like-btn-${post._id}">
+                <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${post._id}"></span>
+                <span id="like-count-${post._id}">${post.likes.length}</span>
               </button> &nbsp; 
 
-              <button class="comment-btn" onclick="loadComments('${ post._id }', '${ userId }')" id="comment-btn-${ post._id }"><span class="fal fa-messages"></span>${ post.comments.length }</button>
+              <button class="comment-btn" onclick="loadComments('${post._id}', '${userId}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span>${post.comments.length}</button>
               <div class="btns-right">
                 <button class="report-btn"><span class="fal fa-triangle-exclamation"></span></button>
-                <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${ post.author.name } on 2k17" data-title="2k17 Platform" data-media="${ post.media ? post.media.url : '' }" data-url="https://yourdomain.com/post/123"><span class="fal fa-share"></span></button>
+                <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://yourdomain.com/post/123"><span class="fal fa-share"></span></button>
                 <button class="save-btn"><span class="fal fa-bookmark"></span></button>
               </div>
             </div>
           </div>`
-          })
-        } else {
-          posts.innerHTML = `<div class="no-posts grey-1">
+            })
+          } else {
+            posts.innerHTML = `<div class="no-posts grey-1">
           <span class="fal fa-file-lines"></span><br><br>
           <p>No posts yet!</p>
           </div>`
-        }
-      }, 3000)
-    } else {
-      alert("Can't load posts at the moment. Please try again later.")
-    }
-  })
+          }
+        }, 3000)
+      } else {
+        alert("Can't load posts at the moment. Please try again later.")
+      }
+    })
 }
 
 
 
-  function openPostPopup() {
-    document.getElementById('post-popup').classList.add('show');
-    document.getElementById('post-text').focus();
-  }
+function openPostPopup() {
+  document.getElementById('post-popup').classList.add('show');
+  document.getElementById('post-text').focus();
+}
 
-  function closePostPopup() {
-    document.getElementById('post-popup').classList.remove('show');
-  }
+function closePostPopup() {
+  document.getElementById('post-popup').classList.remove('show');
+}
 
 function createPost(userId) {
   var text = document.getElementById('post-text').value;
   var media = document.getElementById('media-input').files;
-  if(media.length > 0){
-  var formData = new FormData();
-  formData.append('text', text);
-  formData.append('media', media[0]);
-  closePostPopup()
-  alert("Uploading the file. Please wait...")
-  fetch('/new/post/file?folder=posts', {
-    method: 'POST',
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => {
-    if(data.success){
-      document.getElementById('post-text').value = '';
-      document.getElementById('media-input').value = '';
-      document.getElementById('media-preview').innerHTML = '';
-      
-      document.getElementById('posts').scrollIntoView({
-        behavior: 'smooth'
-      });
-      loadPosts(userId)
-    } else {
-      alert("Can't create post at the moment. Please try again later.")
-    }
-  })
-} else {
-  fetch('/new/post', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ text })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if(data.success){
-      document.getElementById('post-text').value = '';
-      document.getElementById('media-input').value = '';
-      document.getElementById('media-preview').innerHTML = '';
-      closePostPopup()
-      document.getElementById('posts').scrollIntoView({
-        behavior: 'smooth'
-      });
-      loadPosts(userId);
-    } else {
-      alert("Can't create post at the moment. Please try again later.")
-    }
-  })
-}
+  if (media.length > 0) {
+    var formData = new FormData();
+    formData.append('text', text);
+    formData.append('media', media[0]);
+    closePostPopup()
+    alert("Uploading the file. Please wait...")
+    fetch('/new/post/file?folder=posts', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('post-text').value = '';
+          document.getElementById('media-input').value = '';
+          document.getElementById('media-preview').innerHTML = '';
+
+          document.getElementById('posts').scrollIntoView({
+            behavior: 'smooth'
+          });
+          loadPosts(userId)
+        } else {
+          alert("Can't create post at the moment. Please try again later.")
+        }
+      })
+  } else {
+    fetch('/new/post', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ text })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('post-text').value = '';
+          document.getElementById('media-input').value = '';
+          document.getElementById('media-preview').innerHTML = '';
+          closePostPopup()
+          document.getElementById('posts').scrollIntoView({
+            behavior: 'smooth'
+          });
+          loadPosts(userId);
+        } else {
+          alert("Can't create post at the moment. Please try again later.")
+        }
+      })
+  }
 }
 
 

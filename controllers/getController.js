@@ -155,7 +155,11 @@ exports.viewPost = async (req, res) => {
 exports.viewProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.params.username });
   if(!user) return res.redirect('/');
-  var posts = await Posts.find({ author: user._id }).populate("likes", "username profilePicture").sort({ createdAt: -1 });
+  if(req.user){
+    var posts = await Posts.find({ author: user._id }).populate("likes", "username profilePicture").sort({ createdAt: -1 });
+  } else {
+    var posts = await Posts.find({ author: user._id }).populate("likes", "username profilePicture").sort({ createdAt: -1 }).limit(5); 
+  }
   var formattedPosts = posts.map(post => {
     return {
       ...post.toObject(),
@@ -163,4 +167,26 @@ exports.viewProfile = async (req, res) => {
     };
   });
   res.render('pages/profile', {account: user, posts: formattedPosts});
+}
+exports.myProfile = async (req, res) => {
+  var user = await Users.findOne({ username: req.user.username });
+  if(!user) return res.redirect('/');
+  if(req.user){
+    var posts = await Posts.find({ author: user._id }).populate("likes", "username profilePicture").sort({ createdAt: -1 });
+  } else {
+    var posts = await Posts.find({ author: user._id }).populate("likes", "username profilePicture").sort({ createdAt: -1 }).limit(5); 
+  }
+  var formattedPosts = posts.map(post => {
+    return {
+      ...post.toObject(),
+      timeAgo: formatTimeFromNow(post.createdAt)
+    };
+  });
+  res.render('pages/profile', {account: user, posts: formattedPosts});
+}
+
+exports.editProfile = async (req, res) => {
+  var user = await Users.findOne({ username: req.user.username });
+  if(!user) return res.redirect('/');
+  res.render('pages/edit-profile', {account: user});
 }

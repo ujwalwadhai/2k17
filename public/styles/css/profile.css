@@ -470,4 +470,12 @@
   background: rgba(111, 111, 111, 0.4);
 }
 
+.login-box {
+  text-align: center;
+  margin-top: 48px;
+}
+.login-box p {
+  font-size: 18px;
+}
+
 /*# sourceMappingURL=profile.css.map */

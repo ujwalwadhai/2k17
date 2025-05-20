@@ -26,6 +26,11 @@ router.get('/logout', isLoggedIn, getController.logout);
 router.get('/gallery', getController.gallery);
 
 router.get('/post/:id', getController.viewPost);
+
 router.get('/u/:username', getController.viewProfile);
+
+router.get('/profile', isLoggedIn, getController.myProfile);
+
+router.get('/profile/edit', isLoggedIn, getController.editProfile);
 
 module.exports = router;

@@ -66,4 +66,8 @@ img, button, ::placeholder {
   user-select: none;
 }
 
+input:disabled {
+  cursor: no-drop;
+}
+
 /*# sourceMappingURL=all.css.map */

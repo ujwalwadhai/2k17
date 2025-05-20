@@ -36,4 +36,6 @@ router.post('/new/post/file', isLoggedIn, upload.single('media'), postController
 
 router.post('/new/post', isLoggedIn, postController.newPost)
 
+router.post('/profile/edit', isLoggedIn, upload.single('profilePicture'), postController.editProfile)
+
 module.exports = router;

@@ -1,0 +1,100 @@
+.edit-profile-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 2rem;
+  background: #1f1c2e;
+  border-radius: 12px;
+  color: white;
+}
+.edit-profile-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #7b5cf0;
+}
+.edit-profile-container .photo-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.edit-profile-container .photo-section label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+}
+.edit-profile-container .photo-section label img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+.edit-profile-container .photo-section label span {
+  background-color: #2b273f;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+.edit-profile-container .photo-section label input[type=file] {
+  display: none;
+}
+.edit-profile-container .form-group {
+  margin-bottom: 1.5rem;
+}
+.edit-profile-container .form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.edit-profile-container .form-group input,
+.edit-profile-container .form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #888;
+  border-radius: 6px;
+  background: #2c283d;
+  color: white;
+  font-family: inherit;
+}
+.edit-profile-container .form-group input:focus,
+.edit-profile-container .form-group textarea:focus {
+  outline: none;
+  border-color: #6342d8;
+}
+.edit-profile-container .form-group input + input {
+  margin-top: 0.75rem;
+}
+.edit-profile-container .btn-save {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #7b5cf0;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.edit-profile-container .btn-save:hover {
+  background-color: #6342d8;
+}
+
+@media (max-width: 600px) {
+  .edit-profile-container {
+    padding: 1rem;
+  }
+  .edit-profile-container .photo-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  .edit-profile-container .photo-section label img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/*# sourceMappingURL=edit-profile.css.map */

@@ -4,81 +4,82 @@ var Files = require('../models/Files');
 var otps = require('../models/OTP');
 var Posts = require('../models/Post');
 var Notifications = require('../models/Notifications');
+var Settings = require('../models/Settings');
 var sendMail = require('../config/mailer');
 var moment = require('moment');
 
 exports.loginPassword = async (req, res) => {
-    var { username, password } = req.body;
+  var { username, password } = req.body;
 
-    try {
-      var user = await Users.findOne({
-        $or: [{ email: username }, { username: username }]
-      });
+  try {
+    var user = await Users.findOne({
+      $or: [{ email: username }, { username: username }]
+    });
 
-      if (!user) {
-        return res.json({success: false, message:'User not found'});
-      }
-
-      var isMatch = await user.validatePassword(password);
-      if (!isMatch) {
-        return res.json({success: false, message:'Incorrect password'});
-      }
-
-      req.login(user, (err) => {
-        if (err) {
-          return res.json({success: false, message:'Something went wrong'});
-        }
-        return res.json({success: true, message:'Login successful', redirect: '/home'});
-      });
-
-    } catch (err) {
-      res.json({success: false, message:'Something went wrong'});
+    if (!user) {
+      return res.json({ success: false, message: 'User not found' });
     }
+
+    var isMatch = await user.validatePassword(password);
+    if (!isMatch) {
+      return res.json({ success: false, message: 'Incorrect password' });
+    }
+
+    req.login(user, (err) => {
+      if (err) {
+        return res.json({ success: false, message: 'Something went wrong' });
+      }
+      return res.json({ success: true, message: 'Login successful', redirect: '/home' });
+    });
+
+  } catch (err) {
+    res.json({ success: false, message: 'Something went wrong' });
+  }
 
 }
 
 exports.loginEmail = async (req, res) => {
-    var { email, otp } = req.body;
+  var { email, otp } = req.body;
 
-    try {
-      var user = await Users.findOne({ email: email });
+  try {
+    var user = await Users.findOne({ email: email });
 
-      if (!user) {
-        return res.json({success: false, message:'No user with this email found!'});
-      }
-
-      var otpRecord = await otps.findOne({ email: email, otp: otp });
-
-      if (!otpRecord) {
-        return res.json({success: false, message:'Invalid or expired OTP'});
-      }
-
-      req.login(user, (err) => {
-        if (err) {
-          return res.json({success: false, message:'Something went wrong'});
-        }
-        return res.json({success: true, message:'Login successful', redirect: '/members'});
-      })
-
+    if (!user) {
+      return res.json({ success: false, message: 'No user with this email found!' });
     }
-    catch (err) {
-      res.json({success: false, message:'Something went wrong'});
+
+    var otpRecord = await otps.findOne({ email: email, otp: otp });
+
+    if (!otpRecord) {
+      return res.json({ success: false, message: 'Invalid or expired OTP' });
     }
+
+    req.login(user, (err) => {
+      if (err) {
+        return res.json({ success: false, message: 'Something went wrong' });
+      }
+      return res.json({ success: true, message: 'Login successful', redirect: '/members' });
+    })
+
+  }
+  catch (err) {
+    res.json({ success: false, message: 'Something went wrong' });
+  }
 }
-  
+
 exports.sendOTP = async (req, res) => {
-    var { email } = req.body;
+  var { email } = req.body;
 
-    try {
-      var user = await Users.findOne({ email: email });
+  try {
+    var user = await Users.findOne({ email: email });
 
-      if (!user) {
-        return res.json({success: false, message:'No user with this email found!'});
-      }
+    if (!user) {
+      return res.json({ success: false, message: 'No user with this email found!' });
+    }
 
-      var otp = Math.floor(100000 + Math.random() * 900000);
+    var otp = Math.floor(100000 + Math.random() * 900000);
 
-      var otp_temp = `<!DOCTYPE html>
+    var otp_temp = `<!DOCTYPE html>
 <html lang="en">
 <head>
         <meta charset="UTF-8" />
@@ -131,17 +132,17 @@ exports.sendOTP = async (req, res) => {
       </html>
 `
 
-      sendMail(email, "OTP for login at 2k17 platform", otp_temp)
-      var newOtp = new otps({
-        email: email,
-        otp: otp
-      });
+    sendMail(email, "OTP for login at 2k17 platform", otp_temp)
+    var newOtp = new otps({
+      email: email,
+      otp: otp
+    });
 
-      await newOtp.save()
-      return res.json({success: true, message:'OTP sent successfully'});
-    } catch (err) {
-      res.json({success: false, message:'Something went wrong'});
-    }
+    await newOtp.save()
+    return res.json({ success: true, message: 'OTP sent successfully' });
+  } catch (err) {
+    res.json({ success: false, message: 'Something went wrong' });
+  }
 };
 
 exports.register = async (req, res) => {
@@ -149,24 +150,24 @@ exports.register = async (req, res) => {
   try {
     var user = await Users.findOne({ code });
     if (!user) {
-      return res.json({success: false, message:'Invalid code or already registered'});
+      return res.json({ success: false, message: 'Invalid code or already registered' });
     }
     var user2 = await Users.findOne({ username: username });
     if (user2) {
-      return res.json({success: false, message:'Username already taken'});
+      return res.json({ success: false, message: 'Username already taken' });
     }
 
     user.username = username;
     user.email = email;
     await user.save();
     req.login(user, (err) => {
-        if (err) {
-          return res.json({success: false, message:'Something went wrong'});
-        }
-        return res.json({success: true, message:'Registration successful', redirect: '/home'});
+      if (err) {
+        return res.json({ success: false, message: 'Something went wrong' });
+      }
+      return res.json({ success: true, message: 'Registration successful', redirect: '/home' });
     })
   } catch (err) {
-    res.json({success: false, message:'Something went wrong'});
+    res.json({ success: false, message: 'Something went wrong' });
   }
 }
 
@@ -175,19 +176,19 @@ exports.checkUsername = async (req, res) => {
   try {
     var user = await Users.findOne({ username: username });
     if (user) {
-      return res.json({success: false, message:'Username already taken'});
+      return res.json({ success: false, message: 'Username already taken' });
     }
-    return res.json({success: true, message:'Username available'});
+    return res.json({ success: true, message: 'Username available' });
   } catch (err) {
-    res.json({success: false, message:'Something went wrong'});
-  }                                                      
+    res.json({ success: false, message: 'Something went wrong' });
+  }
 }
 
 
 exports.upload = async (req, res) => {
   var { file } = req;
-  if(!file) {
-    return res.json({success: false, message:'No file uploaded'});
+  if (!file) {
+    return res.json({ success: false, message: 'No file uploaded' });
   }
   try {
     var newFile = new Files({
@@ -198,18 +199,18 @@ exports.upload = async (req, res) => {
       type: file.mimetype
     });
     await newFile.save();
-    return res.json({success: true, message:'File uploaded successfully'});
+    return res.json({ success: true, message: 'File uploaded successfully' });
   } catch (err) {
-    return res.json({success: false, message:'Something went wrong'});
+    return res.json({ success: false, message: 'Something went wrong' });
   }
 }
 
 exports.fetchPosts = async (req, res) => {
   try {
     var posts = await Posts.find();
-    return res.json({success: true, posts: posts});
+    return res.json({ success: true, posts: posts });
   } catch (err) {
-    return res.json({success: false, message:'Something went wrong'});
+    return res.json({ success: false, message: 'Something went wrong' });
   }
 }
 
@@ -233,10 +234,10 @@ exports.likePost = async (req, res) => {
 
     await post.save();
 
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       liked: !alreadyLiked,
-      likesCount: post.likes.length 
+      likesCount: post.likes.length
     });
   } catch (err) {
     console.error(err);
@@ -244,18 +245,18 @@ exports.likePost = async (req, res) => {
   }
 }
 
-exports.fetchComments = async (req, res) =>{
+exports.fetchComments = async (req, res) => {
   try {
     var post = await Posts.findById(req.params.postId)
       .populate('comments.user', 'name profilePicture');
-      post.comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    post.comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-      var commentsWithTime = post.comments.map(comment => {
-        return {
-          ...comment.toObject(),
-          timeAgo: moment(comment.createdAt).fromNow().replace('ago', '')
-        };
-      });
+    var commentsWithTime = post.comments.map(comment => {
+      return {
+        ...comment.toObject(),
+        timeAgo: moment(comment.createdAt).fromNow().replace('ago', '')
+      };
+    });
 
     res.json(commentsWithTime);
   } catch (err) {
@@ -266,7 +267,7 @@ exports.fetchComments = async (req, res) =>{
 exports.newComment = async (req, res) => {
   try {
     var post = await Posts.findById(req.params.postId);
-    if(post.comments){
+    if (post.comments) {
       post.comments.push({
         user: req.user._id,
         text: req.body.text
@@ -279,7 +280,7 @@ exports.newComment = async (req, res) => {
       });
     }
     await post.save();
-    res.json({ success: true ,commentsLength: post.comments.length , message: 'Comment added' });
+    res.json({ success: true, commentsLength: post.comments.length, message: 'Comment added' });
   } catch (err) {
     res.status(500).json({ error: 'Failed to add comment' });
   }
@@ -302,7 +303,7 @@ exports.deleteComment = async (req, res) => {
 
     post.comments = post.comments.filter(comment => comment._id.toString() !== commentId);
     await post.save();
-    res.json({commentsLength: post.comments.length, success: true, message: 'Comment deleted' });
+    res.json({ commentsLength: post.comments.length, success: true, message: 'Comment deleted' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
@@ -318,11 +319,11 @@ exports.fetchNotifications = async (req, res) => {
       ]
     }).sort({ createdAt: -1 });
     const formattedNotifications = notifications.map(notification => {
-          return {
-            ...notification.toObject(),
-            timeAgo: moment(notification.createdAt).fromNow()
-          };
-        });
+      return {
+        ...notification.toObject(),
+        timeAgo: moment(notification.createdAt).fromNow()
+      };
+    });
 
     return res.json({ success: true, notifications: formattedNotifications });
   } catch (err) {
@@ -356,15 +357,15 @@ exports.fetchPosts = async (req, res) => {
         timeAgo: moment(post.createdAt).fromNow()
       };
     });
-    return res.json({success: true, posts: formattedPosts});
+    return res.json({ success: true, posts: formattedPosts });
   } catch (err) {
-    return res.json({success: false, message:'Something went wrong'});
+    return res.json({ success: false, message: 'Something went wrong' });
   }
 }
 
 exports.newPost = async (req, res) => {
   try {
-    if(req.file){
+    if (req.file) {
       var newPost = new Posts({
         author: req.user._id,
         text: req.body.text,
@@ -393,10 +394,11 @@ exports.newPost = async (req, res) => {
 }
 
 
-exports.editProfile = async (req, res) => {
+exports.updateProfile = async (req, res) => {
   try {
     const { username, phone, bio, facebook, linkedin, github, instagram, other } = req.body;
-    const update = { username, phone, bio, 
+    const update = {
+      username, phone, bio,
       socialLinks: {
         facebook,
         linkedin,
@@ -404,7 +406,7 @@ exports.editProfile = async (req, res) => {
         instagram,
         other
       }
-     };
+    };
 
     var userCheck = await Users.findOne({ username });
     if (userCheck && String(userCheck._id) !== String(req.user._id)) {
@@ -418,5 +420,28 @@ exports.editProfile = async (req, res) => {
   } catch (err) {
     console.error("Edit profile error:", err);
     res.json({ success: false, message: "Failed to update profile." });
+  }
+};
+
+exports.updateSettings = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const updates = {
+      emailNotifications: req.body.emailNotifications || true,
+      loginAlerts: req.body.loginAlerts || false,
+      emailUpdates: req.body.emailUpdates || false,
+    };
+
+    const settings = await Settings.findOneAndUpdate(
+      { user: userId },
+      { $set: updates },
+      { new: true, upsert: true }
+    );
+
+    return res.json({ success: true, settings });
+  } catch (err) {
+    console.error('Error updating settings:', err);
+    return res.json({ success: false, message: 'Something went wrong' });
   }
 };

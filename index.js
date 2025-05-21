@@ -22,11 +22,9 @@ const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
 
 require('./models/Users')
-require('./models/Comment')
-require('./models/Like')
 require('./models/Post')
 require('./models/Notifications')
-require('./models/UserSettings')
+require('./models/Settings')
 
 dotenv.config();
 

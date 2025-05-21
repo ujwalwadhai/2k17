@@ -33,4 +33,6 @@ router.get('/profile', isLoggedIn, getController.myProfile);
 
 router.get('/profile/edit', isLoggedIn, getController.editProfile);
 
+router.get('/settings', isLoggedIn, getController.settings);
+
 module.exports = router;

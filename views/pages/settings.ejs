@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <title>Settings</title>
+    <link rel="stylesheet" href="/styles/css/settings.css">
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+<br><br><br>
+    <div class="settings-container">
+  <h2>Settings</h2><br>
+  <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Notifications for OTPs are always sent.</span>
+  <form id="settings-form">
+    
+    <div class="form-section">
+      <h3>Notifications</h3>
+      <label>
+        <input type="checkbox" name="emailNotifications" <%= settings.emailNotifications ? 'checked' : '' %>>
+        Email notifications
+      </label>
+    </div>
+
+    <div class="form-section">
+      <h3>Security</h3>
+      <label>
+        <input type="checkbox" name="loginAlerts" <%= settings.loginAlerts ? 'checked' : '' %>>
+        Email login alerts
+      </label>
+    </div>
+
+    <div class="form-section">
+      <h3>Communication</h3>
+      <label>
+        <input type="checkbox" name="emailUpdates" <%= settings.emailUpdates ? 'checked' : '' %>>
+        Receive email updates from us
+      </label>
+    </div>
+
+    <div id="settings-status"></div>
+    <button type="submit">Save Settings</button>
+  </form>
+</div>
+
+<script src="/js/settings.js"></script>
+</body>
+</html>

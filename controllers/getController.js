@@ -2,6 +2,7 @@ var Users = require('../models/Users');
 var Files = require('../models/Files');
 var Posts = require('../models/Post');
 var Notifications = require('../models/Notifications');
+var Settings = require('../models/Settings');
 var getUpcomingBirthdays = require('../utils/upcomingBirthdays');
 var { formatTimeFromNow } = require('../utils/dateFunctions');
 var moment = require('moment');
@@ -189,4 +190,11 @@ exports.editProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.user.username });
   if(!user) return res.redirect('/');
   res.render('pages/edit-profile', {account: user});
+}
+
+exports.settings = async (req, res) => {
+  var user = await Users.findOne({ username: req.user.username });
+  if(!user) return res.redirect('/');
+  var settings = await Settings.findOne({ user: user._id });
+  res.render('pages/settings', {account: user, settings});
 }

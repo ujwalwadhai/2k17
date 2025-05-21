@@ -15,7 +15,7 @@
 
     <div class="photo-section">
       <label for="profilePhoto">
-        <img class="profile-pic" src="<%= user.profilePicture || '/images/user.png' %>" alt="Profile Photo">
+        <img class="profile-pic" src="<%= user.profile || '/images/user.png' %>" alt="Profile Photo">
         <input type="file" id="profilePhoto" accept="image/jpg, image/jpeg, image/png">
         <span>Change Profile Photo</span>
       </label>

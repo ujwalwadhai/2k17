@@ -25,7 +25,7 @@ const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
 
 require('./models/Users')
-require('./models/Post')
+require('./models/Posts')
 require('./models/Notifications')
 require('./models/Settings')
 
@@ -54,12 +54,10 @@ app.use((err, req, res, next) => {
 /* const cron = require('node-cron');*/
 
 
-var { formatDate, formatDate2, createDate, getWeekDay, formatTimeFromNow } = require('./utils/dateFunctions');
-app.locals.formatDate = formatDate;
+var { getRelativeTime, formatDate2, createDate } = require('./utils/dateFunctions');
+app.locals.getRelativeTime = getRelativeTime;
 app.locals.createDate = createDate;
-app.locals.getWeekDay = getWeekDay;
 app.locals.formatDate2 = formatDate2;
-app.locals.formatTimeFromNow = formatTimeFromNow;
 app.locals.hasUnreadNotifications = false
 
 require('./config/mailer')

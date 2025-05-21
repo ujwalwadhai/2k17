@@ -1,18 +1,22 @@
 const mongoose = require('mongoose');
+var { getRelativeTime } = require('../utils/dateFunctions');
 
 const notificationSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' }, // This will be missing if Notification is issued to all users
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   type: { type: String, enum: ['like', 'comment', 'tag', 'reply', 'report', 'security', 'birthday'], required: true },
   fromUser: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
-  message: { type: String },   // e.g., "Ujwal commented: Nice one!"
-  url: { type: String },       // e.g., "/post/123" to navigate directly,
-  icon: {type: String},
+  message: { type: String },
+  url: { type: String },
+  icon: { type: String },
   seen: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 
-var Notifications = mongoose.model('Notifications', notificationSchema);
+notificationSchema.virtual('timeAgo').get(function () {
+  return getRelativeTime(this.createdAt);
+});
 
-module.exports = Notifications
+notificationSchema.set('toJSON', { virtuals: true });
+notificationSchema.set('toObject', { virtuals: true });
 
- 
+module.exports = mongoose.model('Notifications', notificationSchema); 

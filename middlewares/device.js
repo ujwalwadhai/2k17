@@ -1,3 +1,4 @@
+// Returns device info from user agent
 function deviceInfo(ua) {
   const browser = ua.browser || "Unknown browser";
   const version = ua.version || "";

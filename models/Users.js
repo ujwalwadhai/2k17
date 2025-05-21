@@ -4,13 +4,13 @@ var bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  username: { type: String, required: true, unique: true }, // e.g. ujwal.wadhai
+  username: { type: String, required: true, unique: true },
   email: { type: String },
   year: { type: String },
-  phone: { type: String }, // Optional
-  dob: { type: String }, // Stored in DD/MM/YYYY format
-  password: { type: String }, // DOB for now
-  profilePicture: { type: String, default: '/images/user.png' }, // Cloudinary URL
+  phone: { type: String }, 
+  dob: { type: String },
+  password: { type: String },
+  profile: { type: String },
   bio: { type: String },
   registered: { type: Boolean, default: false },
   verified: { type: Boolean, default: false },
@@ -24,8 +24,8 @@ const userSchema = new mongoose.Schema({
   code: { type: String },
   emailVerificationToken: { type: String },
   role: { type: String, enum: ['admin', 'moderator']},
-  joinedAt: { type: String },
-  updatedAt: { type: String }
+  joinedAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
 
@@ -39,7 +39,7 @@ userSchema.pre('save', async function (next) {
         }
     }
 
-    this.updatedAt = createDate();
+    this.updatedAt = Date.now();
     next();
 });
 
@@ -51,6 +51,4 @@ userSchema.methods.validatePassword = async function (enteredPassword) {
   return enteredPassword === this.code;
 };
 
-var Users = mongoose.model('Users', userSchema);
-
-module.exports = Users
+module.exports = mongoose.model('Users', userSchema);

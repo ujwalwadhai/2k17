@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var formData = new FormData(form);
 
     if (profileInput.files.length > 0) {
-      formData.append("profilePicture", profileInput.files[0]);
+      formData.append("profile", profileInput.files[0]);
     }
 
     fetch("/profile/update?folder=profile", {

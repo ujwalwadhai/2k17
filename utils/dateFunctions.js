@@ -1,12 +1,48 @@
-const moment = require('moment');
+function getRelativeTime(date) {
+  let inputDate;
 
-function formatDate(dateString) {
-  const parsed = moment(dateString, 'DD/MM/YYYY, hh:mm A');
-  if (!parsed.isValid()) return 'Invalid date';
-  return parsed.fromNow();
+  date = date.toString()
+  if (date.includes('T') && date.includes('+')) {
+    inputDate = new Date(date);
+  } else {
+    const [datePart, timePart] = date.split(',');
+    const [day, month, year] = datePart.trim().split('/').map(Number);
+    let hours = 0, minutes = 0;
+
+    if (timePart) {
+      const [time, ampm] = timePart.trim().split(' ');
+      [hours, minutes] = time.split(':').map(Number);
+      if (ampm.toLowerCase() === 'pm' && hours !== 12) hours += 12;
+      if (ampm.toLowerCase() === 'am' && hours === 12) hours = 0;
+    }
+
+    inputDate = new Date(year, month - 1, day, hours, minutes);
+  }
+
+  const now = new Date();
+  let diffMs = now - inputDate;
+  const isFuture = diffMs < 0;
+  diffMs = Math.abs(diffMs);
+
+  const diffMin = Math.round(diffMs / (60 * 1000));
+  const diffHr = Math.round(diffMin / 60);
+  const diffDay = Math.round(diffHr / 24);
+  const diffMo = Math.round(diffDay / 30);
+  const diffYr = Math.round(diffDay / 365);
+
+  let result = '';
+  if (diffMin < 1) result = 'just now';
+  else if (diffMin < 60) result = `${diffMin}m`;
+  else if (diffHr < 24) result = `${diffHr}h`;
+  else if (diffDay < 30) result = `${diffDay}d`;
+  else if (diffDay < 365) result = `${diffMo}mo`;
+  else result = `${diffYr}y`;
+
+  return result === 'just now' ? result : (isFuture ? `in ${result}` : result);
 }
 
 function formatDate2(dateString) {
+  // returns date in format "Date Month" i.e. '12 July' etc
   const [day, month, year] = dateString.split('/').map(Number);
   const date = new Date(year, month - 1, day);
 
@@ -49,16 +85,6 @@ function createDate(){
   var FinalDate = date + "/" + month + "/" + year + ", " + time;
   return FinalDate;
 }
-
-function getWeekDay(dateStr) {
-    const [datePart, timePart] = dateStr.split(', ');
-    const [day, month, year] = datePart.split('-');
-    const formattedDateStr = `${year}-${month}-${day}T${convertTo24Hour(timePart)}`;
-  
-    const date = new Date(formattedDateStr);
-    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    return weekdays[date.getDay()];
-  }
   
 function convertTo24Hour(timeStr) {
     const [time, modifier] = timeStr.split(' ');
@@ -74,8 +100,4 @@ function convertTo24Hour(timeStr) {
     return `${hours}:${minutes}`;
 }
 
-function formatTimeFromNow(dateString){
-  return moment(dateString).fromNow()
-}
-
-module.exports = { formatDate, formatDate2, createDate, getWeekDay, formatTimeFromNow};
+module.exports = { getRelativeTime, formatDate2, createDate };

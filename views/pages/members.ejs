@@ -17,7 +17,7 @@
 
         <div class="member-card">
             <div class="upper">
-                <img onclick="window.location.href='/u/<%= member.username %>'" src="<%- member.profilePicture ? member.profilePicture : '/images/user.png' %>" class="upper-img" alt="Profile of <%= member.name %>">
+                <img onclick="window.location.href='/u/<%= member.username %>'" src="<%- member.profile ? member.profile : '/images/user.png' %>" class="upper-img" alt="Profile of <%= member.name %>">
                 <div class="upper-info">
                     <p class="name" onclick="window.location.href='/u/<%= member.username %>'"><%= member.name %>
                     <% if (member.role) { %>

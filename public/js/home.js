@@ -118,7 +118,7 @@ async function loadComments(postId, userId = '') {
           var trashIcon = ''
         }
         list.innerHTML += `<div class="comment" id="comment-${c._id}">
-                                  <img src="${c.user.profilePicture ? c.user.profilePicture : '/images/user.png'}" alt="" onclick="window.location.href='/u/${c.user.username}'" class="user-profile">
+                                  <img src="${c.user.profile ? c.user.profile : '/images/user.png'}" alt="" onclick="window.location.href='/u/${c.user.username}'" class="user-profile">
                                   <div class="comment-info">
                                   <p class="name" onclick="window.location.href='/u/${c.user.username}'">${c.user.name} &nbsp; <span class="time">${c.timeAgo}</span></p>
                               <span class="text">${c.text}</span>
@@ -212,7 +212,7 @@ function loadNotifications() {
     .then(res => res.json())
     .then(data => {
       setTimeout(() => {
-        if (data.notifications.length > 0) {
+        if (data.notifications && data.notifications.length > 0) {
           document.getElementById('notifications-loader').classList.add('hidden');
           fetch('/notifications/read', { method: "POST" })
           document.querySelectorAll('.fa-bell').forEach(el => {
@@ -222,7 +222,7 @@ function loadNotifications() {
             data.notifications.forEach(n => {
               if (n.seen) {
                 list.innerHTML += `<div class="notification" onclick="window.location.href = '${n.url}'">
-          <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profilePicture || '/images/user.png') : '/images/bell.png'}" alt="Icon">
+          <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
           <div class="content">
             <div class="text">${['like', 'comment'].includes(n.type)
               ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>` 
@@ -236,7 +236,7 @@ function loadNotifications() {
         </div>`
               } else {
                 list.innerHTML += `<div class="notification unread" onclick="window.location.href = '${n.url}'">
-                        <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profilePicture || '/images/user.png') : '/images/bell.png'}" alt="Icon">
+                        <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
                         <div class="content">
                           <div class="text">${['like', 'comment'].includes(n.type)
               ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>` 
@@ -307,7 +307,7 @@ function loadPosts(userId) {
               }
               posts.innerHTML += `<div class="post" id="post-${post._id}">
             <div class="user-info">
-              <img src="${post.author.profilePicture}" alt="" class="user-profile">
+              <img src="${post.author.profile}" alt="" class="user-profile">
               <div class="user-info-helper" onclick="window.location.href='/u/${post.author.username}'">
                 <span class="name" >${post.author.name}</span><br>
                 <span class="username">@${post.author.username} (${post.timeAgo})</span>

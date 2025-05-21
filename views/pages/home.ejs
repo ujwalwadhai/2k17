@@ -29,7 +29,7 @@
       <% if(birthdays.length > 0){ %>
       <% birthdays.forEach(member => { %>
       <div class="event">
-        <img src="<%= member.profilePicture ? member.profilePicture : '/images/user.png' %>" alt="" class="event-img">
+        <img src="<%= member.profile ? member.profile : '/images/user.png' %>" alt="" class="event-img">
         <div class="event-info">
           <p class="title"><%= member.name %> 🎂</p>
           <p class="description">on <%- formatDate2(member.dob) %></p>

@@ -2,11 +2,11 @@ var bcrypt = require('bcryptjs');
 var Users = require('../models/Users');
 var Files = require('../models/Files');
 var otps = require('../models/OTP');
-var Posts = require('../models/Post');
+var Posts = require('../models/Posts');
 var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
 var sendMail = require('../config/mailer');
-var moment = require('moment');
+var { getRelativeTime } = require('../utils/dateFunctions');
 
 exports.loginPassword = async (req, res) => {
   var { username, password } = req.body;
@@ -206,16 +206,8 @@ exports.likePost = async (req, res) => {
 exports.fetchComments = async (req, res) => {
   try {
     var post = await Posts.findById(req.params.postId)
-      .populate('comments.user', 'name profilePicture');
-    post.comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-    var commentsWithTime = post.comments.map(comment => {
-      return {
-        ...comment.toObject(),
-        timeAgo: moment(comment.createdAt).fromNow().replace('ago', '')
-      };
-    });
-
+      .populate('comments.user', 'name profile');
+    post.comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     res.json(commentsWithTime);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch comments' });
@@ -285,16 +277,10 @@ exports.fetchNotifications = async (req, res) => {
         { user: req.user._id },
         { user: { $exists: false } }
       ]
-    }).sort({ createdAt: -1 }).populate('fromUser', 'username profilePicture');
-    const formattedNotifications = notifications.map(notification => {
-      return {
-        ...notification.toObject(),
-        timeAgo: moment(notification.createdAt).fromNow()
-      };
-    });
-
-    return res.json({ success: true, notifications: formattedNotifications });
+    }).sort({ createdAt: -1 }).populate('fromUser', 'username profile');
+    return res.json({ success: true, notifications });
   } catch (err) {
+    console.log(err);
     res.json({ success: false, message: 'Something went wrong' });
   }
 };
@@ -317,14 +303,9 @@ exports.fetchPosts = async (req, res) => {
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
     const posts = await Posts.find({ createdAt: { $gte: sixMonthsAgo } }).sort({ createdAt: -1 });
-    const formattedPosts = posts.map(post => {
-      return {
-        ...post.toObject(),
-        timeAgo: moment(post.createdAt).fromNow()
-      };
-    });
-    return res.json({ success: true, posts: formattedPosts });
+    return res.json({ success: true, posts });
   } catch (err) {
+    console.log(err);
     return res.json({ success: false, message: 'Something went wrong' });
   }
 }
@@ -378,7 +359,7 @@ exports.updateProfile = async (req, res) => {
       return res.json({ success: false, message: 'Username already exists' });
     }
 
-    if (req.file.path) update.profilePicture = req.file.path;
+    if (req.file.path) update.profile = req.file.path;
 
     await Users.findByIdAndUpdate(req.user._id, update);
     res.json({ success: true });

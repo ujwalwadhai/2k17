@@ -23,8 +23,8 @@ const FilesSchema = mongoose.Schema({
         required: true
     },
     uploadedAt: {
-        type: String,
-        default: createDate()
+        type: Date,
+        default: Date.now
     }
 })
 

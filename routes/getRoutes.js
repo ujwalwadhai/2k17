@@ -3,7 +3,7 @@ const router = express.Router();
 const getController = require('../controllers/getController');
 const { isLoggedIn } = require('../middlewares/auth');
 var hasRole = require('../middlewares/role');
-var Posts = require('../models/Post');
+var Posts = require('../models/Posts');
 
 router.get('/', getController.indexPage);
 

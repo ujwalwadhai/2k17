@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
-const { createDate } = require('../utils/dateFunctions');
+const { getRelativeTime } = require('../utils/dateFunctions');
+
+const commentSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
+  text: String,
+  createdAt: { type: Date, default: Date.now }
+})
 
 const postSchema = new mongoose.Schema({
   text: {
@@ -27,11 +33,7 @@ const postSchema = new mongoose.Schema({
     default: Date.now
   },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
-  comments: [{
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
-    text: String,
-    createdAt: { type: Date, default: Date.now }
-  }]
+  comments: [commentSchema]
 });
 
 function autoPopulateAuthor(next) {
@@ -45,4 +47,19 @@ postSchema
   .pre('findOneAndUpdate', autoPopulateAuthor)
   .pre('findById', autoPopulateAuthor);
 
+commentSchema.virtual('timeAgo').get(function () {
+  return getRelativeTime(this.createdAt);
+});
+
+postSchema.virtual('timeAgo').get(function () {
+  return getRelativeTime(this.createdAt);
+});
+
+postSchema.set('toJSON', { virtuals: true });
+postSchema.set('toObject', { virtuals: true });
+commentSchema.set('toJSON', { virtuals: true });
+commentSchema.set('toObject', { virtuals: true })
+
+
 module.exports = mongoose.model('Posts', postSchema);
+ 

@@ -18,7 +18,7 @@
           <li><a href=""><span class="fal fa-messages"></span></a></li>
           <li class="user-capsule-wrapper">
             <div class="user-capsule">
-              <img src="<%- user.profilePicture ? user.profilePicture : '/images/user.png' %>" alt="@">
+              <img src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
               <p><%= user.name.split(' ')[0] + ' ' + user.name.split(' ')[1].split('')[0] + '.' %></p>
             </div>
 
@@ -39,12 +39,10 @@
             <div class="user-capsule user-capsule-2">
               <a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a>
               <a href="/chat"><span class="fal fa-message-lines"></span></a>
-              <img id="user-capsule-img" src="<%- user.profilePicture ? user.profilePicture : '/images/user.png' %>" alt="@">
-              <!--<p><%= user.name.split(' ')[0] + ' ' + user.name.split(' ')[1].split('')[0] + '.' %></p>-->
+              <img id="user-capsule-img" src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
             </div>
 
             <ul class="user-dropdown user-dropdown-2">
-
               <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>Profile</a></li>
               <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
               <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>
@@ -107,7 +105,7 @@
       sidebarContent.style.transform = 'translateX(-100%)';
       setTimeout(() => {
         sidebar.style.display = 'none';
-      }, 300); // Match transition duration
+      }, 300);
     }
   });
 
@@ -115,7 +113,7 @@
     sidebarContent.style.transform = 'translateX(-100%)';
     setTimeout(() => {
       sidebar.style.display = 'none';
-    }, 300); // Match transition duration
+    }, 300);
   });
   
     var capsule = document.querySelector(".large-and-medium .user-capsule");

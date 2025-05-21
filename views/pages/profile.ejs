@@ -8,7 +8,7 @@
     <!-- Open Graph tags for social sharing -->
         <meta property="og:title" content="<%= account.name %> on 2k17 Platform">
         <meta property="og:description" content="2k17 Platform">
-        <meta property="og:image" content="<%= account.profilePicture || '/images/user.png' %>">
+        <meta property="og:image" content="<%= account.profile || '/images/user.png' %>">
         <meta property="og:url" content="/u/<%= account.username %>">
         <meta property="og:type" content="website">
 </head>
@@ -23,7 +23,7 @@
   <!-- Profile Info -->
   <div class="profile-info-container">
     <div class="profile-photo">
-      <img src="<%= account.profilePicture || '/images/user.png' %>" alt="Profile">
+      <img src="<%= account.profile || '/images/user.png' %>" alt="Profile">
     </div>
     <div class="user-details">
       <p class="name"><%= account.name %><br><span class="username">@<%= account.username %></span></p>
@@ -95,7 +95,7 @@
             <% posts.forEach(post => { %>
             <div class="post" style="border-top: none;">
             <div class="user-info">
-                <img src="<%= post.author.profilePicture %>" alt="" class="user-profile">
+                <img src="<%= post.author.profile %>" alt="" class="user-profile">
                 <div class="user-info-helper">
                     <span class="name">
                         <%= post.author.name %>
@@ -142,7 +142,7 @@
                     </div>
             </div>
             <% if(post.likes.length > 1) { %>
-              <p class="extend-like-msg"><img src="<%- (post.likes[0].username == post.author.username ? post.likes[1].profilePicture : post.likes[0].profilePicture) || '/images/user.png' %>" alt="" class="user-profile"> Liked by &nbsp;<span><%- post.likes[0].username == post.author.username ? post.likes[1].username : post.likes[0].username %></span>&nbsp; and <%= post.likes.length - 1 %> other<%- post.likes.length == 2 ? '': 's'%></p>
+              <p class="extend-like-msg"><img src="<%- (post.likes[0].username == post.author.username ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png' %>" alt="" class="user-profile"> Liked by &nbsp;<span><%- post.likes[0].username == post.author.username ? post.likes[1].username : post.likes[0].username %></span>&nbsp; and <%= post.likes.length - 1 %> other<%- post.likes.length == 2 ? '': 's'%></p>
             <% } %>
             </div>
             <% }) %>
@@ -244,7 +244,7 @@
   <div class="overlay"></div>
   <div class="login-required-box">
     <span onclick="hidePopup('login-banner')" class="fal fa-xmark"></span>
-    <img src="<%= account.profilePicture || '/images/user.png' %>" alt="" class="user-profile"/>
+    <img src="<%= account.profile || '/images/user.png' %>" alt="" class="user-profile"/>
     <p id="title"></p>
     <span class="grey-1">You must log in to do this.</span><br>
     <span class="grey-1">See much more about <%= account.name %><br>on 2k17 Platform.</span><br><br>

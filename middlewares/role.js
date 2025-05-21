@@ -1,4 +1,5 @@
-module.exports = function hasRole(...allowedRoles) {
+// Checks if user is allowed to visit a restricted route based on role
+function hasRole(...allowedRoles) {
   return (req, res, next) => {
     if (!req.isAuthenticated || !req.isAuthenticated()) {
       return res.redirect(`/login?url=${req.originalUrl}`);
@@ -16,3 +17,5 @@ module.exports = function hasRole(...allowedRoles) {
     next();
   };
 };
+
+module.exports = hasRole;

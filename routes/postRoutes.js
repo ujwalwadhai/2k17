@@ -36,7 +36,7 @@ router.post('/new/post/file', isLoggedIn, upload.single('media'), postController
 
 router.post('/new/post', isLoggedIn, postController.newPost)
 
-router.post('/profile/update', isLoggedIn, upload.single('profilePicture'), postController.updateProfile)
+router.post('/profile/update', isLoggedIn, upload.single('profile'), postController.updateProfile)
 
 router.post('/settings/update', isLoggedIn, postController.updateSettings)
 

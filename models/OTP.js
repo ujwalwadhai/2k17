@@ -6,6 +6,4 @@ const otpSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now(), expires: 600 }
 })
 
-var OTP = mongoose.model('OTP', otpSchema);
-
-module.exports = OTP;
+module.exports = mongoose.model('OTP', otpSchema);

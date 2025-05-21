@@ -22,7 +22,7 @@
     <div class="posts">
         <div class="post" style="border-top: none;">
             <div class="user-info" onclick="window.location.href='/u/<%= post.author.username %>'">
-                <img src="<%= post.author.profilePicture %>" alt="" class="user-profile">
+                <img src="<%= post.author.profile %>" alt="" class="user-profile">
                 <div class="user-info-helper">
                     <span class="name">
                         <%= post.author.name %>
@@ -78,7 +78,7 @@
             <% if(comments.length > 0){ %>
                 <% comments.forEach(comment => { %>
                     <div class="comment" id="comment-<%= comment._id %>">
-                        <img src="<%= comment.user.profilePicture ? comment.user.profilePicture : '/images/user.png' %>" alt="" class="user-profile">
+                        <img src="<%= comment.user.profile ? comment.user.profile : '/images/user.png' %>" alt="" class="user-profile">
                         <div class="comment-info">
                             <p class="name"><%= comment.user.name %> &nbsp; <span class="time"><%= comment.timeAgo %></span></p>
                             <span class="text"><%= comment.text %></span>

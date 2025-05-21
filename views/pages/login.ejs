@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('../partials/head.ejs') %>
-  <link rel="stylesheet" href="/styles/css/signup_login.css"/>
-  <title>Log In - 2k17 ❤️</title>
+    <link rel="stylesheet" href="/styles/css/signup_login.css" />
+    <title>Log In - 2k17 ❤️</title>
 </head>
+
 <body>
   <%- include('../partials/loader.ejs') %>
-  <div class="container">
-    <%- include('../partials/login-carousel.ejs') %>
+    <div class="container">
+      <%- include('../partials/login-carousel.ejs') %>
+        <div class="right-pane">
+          <div class="signup-form">
+            <h1>Log in to 2k17 ❤️</h1>
+            <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
+            <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; If this is first time, your
+              password is the code used for registering. You can get it from Ujwal.</small><br><br>
+            <div>
+              <input type="text" id="username" name="username" placeholder="Email or username *"
+                oninput="this.value = this.value.replace(' ', '')"
+                onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()" />
+              <div class="password-field">
+                <input id="password" value="UW0000" name="password" type="password" placeholder="Enter your password"
+                  onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()" />
+                <span onclick="togglePassword()" id="toggle" class="eye-icon fal fa-eye"></span>
+              </div><br>
+            </div>
 
-
-    <div class="right-pane">
-      <div class="signup-form">
-        <h1>Log in to 2k17 ❤️</h1>
-        <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
-        <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; If this is first time, your password is the code used for registering. You can get it from Ujwal.</small><br><br>
-        <div>
-          <input type="text" id="username" name="username" placeholder="Email or username *" oninput="this.value = this.value.replace(' ', '')" onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()"/>
-          <div class="password-field">
-            <input id="password" value="UW0000" name="password" type="password" placeholder="Enter your password" onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()"/>
-            <span onclick="togglePassword()" id="toggle" class="eye-icon fal fa-eye"></span>
-          </div><br>
+            <a href="/login/email">Login with Email OTP instead</a><br>
+            <button onclick="login('<%= redirectURL %>')" class="primary-btn" id="login_btn">Continue</button><br><br>
+            <span class="only-small"><br><br></span>
+          </div>
         </div>
-        
-        <a href="/login/email">Login with Email OTP instead</a><br>
-        <button onclick="login()" class="primary-btn" id="login_btn">Continue</button><br><br>
-        <!-- <div class="divider">Or register with</div>
-        <div class="social-buttons">
-          <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
-          <button class="apple">Apple</button>
-        </div>-->
-      <span class="only-small"><br><br></span>
-      </div>
     </div>
-  </div>
 
-  <script src="/js/login.js"></script>
+    <script src="/js/login.js"></script>
 </body>
+
 </html>

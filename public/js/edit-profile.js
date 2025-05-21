@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       })
       .catch(err => {
-        console.error(err);
         statusBox.innerHTML = "<span class='fal fa-circle-xmark'></span> &nbsp;Something went wrong.";
         statusBox.style.color = "red";
       });

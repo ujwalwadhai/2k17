@@ -2,7 +2,7 @@ var otpEmail;
 
 
 
-function login(){
+function login(redirectURL){
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     var login = {
@@ -28,7 +28,7 @@ function login(){
                 info.innerHTML = `<span style='color: green'><span class='fal fa-circle-check'></span> &nbsp; ${data.message}</span>`;
                 login_btn.innerHTML = "Redirecting..."
                 setTimeout(() => {
-                    window.location.href = data.redirect;
+                    window.location.href = redirectURL;
                 }, 800)
             } else {
                 login_btn.disabled = false;

@@ -249,7 +249,7 @@
     <span class="grey-1">You must log in to do this.</span><br>
     <span class="grey-1">See much more about <%= account.name %><br>on 2k17 Platform.</span><br><br>
     <button class="signup-btn" onclick="window.location.href='/create-account'">Create account</button>
-    <button class="login-btn" onclick="window.location.href='/login'">Log in</button>
+    <button class="login-btn" onclick="window.location.href='/login?url=/u/<%= account.username %>'">Log in</button>
   </div>
 </div>
 

@@ -29,6 +29,7 @@ exports.loginPassword = async (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
+      sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     });
 
@@ -58,7 +59,8 @@ exports.loginEmail = async (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      return res.json({ success: true, message: 'Login successful', redirect: '/members' });
+      sendMail('login', user.email, {useragent: req.useragent, method: 'Email OTP'});
+      return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     })
 
   }
@@ -79,60 +81,7 @@ exports.sendOTP = async (req, res) => {
 
     var otp = Math.floor(100000 + Math.random() * 900000);
 
-    var otp_temp = `<!DOCTYPE html>
-<html lang="en">
-<head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            background-color: #f6f9fc;
-            padding: 20px;
-            color: #333;
-          }
-          .container {
-            background-color: #ffffff;
-            max-width: 500px;
-            margin: auto;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-          }
-          .otp {
-            font-size: 28px;
-            font-weight: bold;
-            color: #0056d2;
-            margin: 20px 0;
-          }
-          .footer {
-            font-size: 12px;
-            color: #888;
-            margin-top: 30px;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <h2>Verify your email address</h2>
-          <p>Hi there,</p>
-          <p>To complete your signup to <strong>2k17</strong>, please enter the following One-Time Password (OTP):</p>
-          
-          <div class="otp">${otp}</div>
-
-          <p>This OTP is valid for the next 10 minutes. If you didn’t request this, you can ignore this email.</p>
-
-          <p>Thanks,<br/>The 2k17 Team</p>
-
-          <div class="footer">
-            Please do not reply to this email. If you have questions, contact us at <a href='mailto:2k17platform@gmail.com'>2k17platform@gmail.com</a>.
-          </div>
-        </div>
-      </body>
-      </html>
-`
-
-    sendMail(email, "OTP for login at 2k17 platform", otp_temp)
+    sendMail('otp', email, {otp, useragent: req.useragent});
     var newOtp = new otps({
       email: email,
       otp: otp
@@ -233,6 +182,16 @@ exports.likePost = async (req, res) => {
     }
 
     await post.save();
+    if(post.author.toString() !== userId.toString() && !alreadyLiked){
+      var notification = new Notifications({
+        user: post.author,
+        type: 'like',
+        fromUser: userId,
+        message: `${req.user.username} liked your post.`,
+        url: `/post/${post._id}`
+      })
+      await notification.save();
+    }
 
     res.json({
       success: true,
@@ -240,7 +199,6 @@ exports.likePost = async (req, res) => {
       likesCount: post.likes.length
     });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 }
@@ -266,7 +224,7 @@ exports.fetchComments = async (req, res) => {
 
 exports.newComment = async (req, res) => {
   try {
-    var post = await Posts.findById(req.params.postId);
+    var post = await Posts.findById(req.params.postId).populate('author', 'name email');
     if (post.comments) {
       post.comments.push({
         user: req.user._id,
@@ -280,6 +238,17 @@ exports.newComment = async (req, res) => {
       });
     }
     await post.save();
+    if(post.author._id.toString() !== req.user._id.toString() && post.author.email){
+      sendMail('newcomment', post.author.email, { user: req.user, comment: req.body.text, postLink: `http://localhost:3000/post/${post._id}` });
+      var notification = new Notifications({
+        user: post.author._id,
+        type: 'comment',
+        fromUser: req.user._id,
+        message: `commented on your post.`,
+        url: `/post/${post._id}`
+      })
+      await notification.save();
+    }
     res.json({ success: true, commentsLength: post.comments.length, message: 'Comment added' });
   } catch (err) {
     res.status(500).json({ error: 'Failed to add comment' });
@@ -305,7 +274,6 @@ exports.deleteComment = async (req, res) => {
     await post.save();
     res.json({ commentsLength: post.comments.length, success: true, message: 'Comment deleted' });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -317,7 +285,7 @@ exports.fetchNotifications = async (req, res) => {
         { user: req.user._id },
         { user: { $exists: false } }
       ]
-    }).sort({ createdAt: -1 });
+    }).sort({ createdAt: -1 }).populate('fromUser', 'username profilePicture');
     const formattedNotifications = notifications.map(notification => {
       return {
         ...notification.toObject(),
@@ -327,7 +295,6 @@ exports.fetchNotifications = async (req, res) => {
 
     return res.json({ success: true, notifications: formattedNotifications });
   } catch (err) {
-    console.error(err);
     res.json({ success: false, message: 'Something went wrong' });
   }
 };
@@ -341,7 +308,6 @@ exports.markReadNotifications = async (req, res) => {
     );
     return res.json({ success: true, message: 'Notifications marked as read' });
   } catch (err) {
-    console.error(err);
     return res.json({ success: false, message: 'Something went wrong' });
   }
 }
@@ -388,7 +354,6 @@ exports.newPost = async (req, res) => {
     }
     return res.json({ success: true, message: 'Post created' });
   } catch (err) {
-    console.log(err)
     return res.json({ success: false, message: 'Something went wrong' });
   }
 }
@@ -418,11 +383,10 @@ exports.updateProfile = async (req, res) => {
     await Users.findByIdAndUpdate(req.user._id, update);
     res.json({ success: true });
   } catch (err) {
-    console.error("Edit profile error:", err);
     res.json({ success: false, message: "Failed to update profile." });
   }
 };
-
+ 
 exports.updateSettings = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -441,7 +405,6 @@ exports.updateSettings = async (req, res) => {
 
     return res.json({ success: true, settings });
   } catch (err) {
-    console.error('Error updating settings:', err);
     return res.json({ success: false, message: 'Something went wrong' });
   }
 };

@@ -33,7 +33,6 @@ document.getElementById("settings-form").addEventListener("submit", function (e)
       }
     })
     .catch(err => {
-      console.error(err);
       statusBox.style.color = "red";
       statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
     });

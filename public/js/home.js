@@ -26,16 +26,13 @@ async function sharePost(button) {
   if (navigator.share) {
     try {
       await navigator.share({ title, text, url, media });
-      console.log('Post shared successfully');
     } catch (err) {
-      console.error('Error sharing:', err);
     }
   } else {
     try {
       await navigator.clipboard.writeText(url);
       alert('Link copied to clipboard!');
     } catch (err) {
-      console.error('Failed to copy:', err);
       prompt('Copy this link manually:', url);
     }
   }
@@ -73,7 +70,6 @@ async function toggleLike(postId) {
     }
 
   } catch (err) {
-    console.error('Like error:', err);
     alert('Error while liking post');
   }
 }
@@ -226,9 +222,11 @@ function loadNotifications() {
             data.notifications.forEach(n => {
               if (n.seen) {
                 list.innerHTML += `<div class="notification" onclick="window.location.href = '${n.url}'">
-          <img class="notification-img" src="${n.image ? n.image : '/images/bell.png'}" alt="Icon">
+          <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profilePicture || '/images/user.png') : '/images/bell.png'}" alt="Icon">
           <div class="content">
-            <div class="text">${n.message}</div>
+            <div class="text">${['like', 'comment'].includes(n.type)
+              ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>` 
+              : '' } ${n.message}</div>
             <div class="time">${n.timeAgo}</div>
           </div>
           <div class="action-buttons">
@@ -238,9 +236,11 @@ function loadNotifications() {
         </div>`
               } else {
                 list.innerHTML += `<div class="notification unread" onclick="window.location.href = '${n.url}'">
-                        <img class="notification-img" src="${n.image ? n.image : '/images/bell.png'}" alt="Icon">
+                        <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profilePicture || '/images/user.png') : '/images/bell.png'}" alt="Icon">
                         <div class="content">
-                          <div class="text">${n.message}</div>
+                          <div class="text">${['like', 'comment'].includes(n.type)
+              ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>` 
+              : '' } ${n.message}</div>
                           <div class="time">${n.timeAgo}</div>
                         </div>
                         <div class="action-buttons">

@@ -7,13 +7,18 @@ var getUpcomingBirthdays = require('../utils/upcomingBirthdays');
 var { formatTimeFromNow } = require('../utils/dateFunctions');
 var moment = require('moment');
 
-
 exports.indexPage = (req, res) => {
   res.render('pages/index');
 };
   
 exports.login = (req, res) => {
-  res.render('pages/login');
+  var { url } = req.query;
+  if(!url) url = '/home'
+  var exclude = ['/login', '/signup', '/email-login', '/forgot-password', '/reset-password', '/donate', '/logout', '/home']
+  if(url[0] !== "/" || exclude.includes(url)) {
+    url='/home'
+  }
+  res.render('pages/login', {redirectURL : url});
 }
 
 exports.home = async (req, res) => {
@@ -119,7 +124,6 @@ async function getSortedUsers(loggedInUserId = null) {
     const users = await Users.aggregate(pipeline);
     return users;
   } catch (err) {
-    console.error("Error fetching sorted users:", err);
     return [];
   }
 }
@@ -169,6 +173,7 @@ exports.viewProfile = async (req, res) => {
   });
   res.render('pages/profile', {account: user, posts: formattedPosts});
 }
+
 exports.myProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.user.username });
   if(!user) return res.redirect('/');

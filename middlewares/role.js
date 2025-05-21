@@ -1,7 +1,7 @@
 module.exports = function hasRole(...allowedRoles) {
   return (req, res, next) => {
     if (!req.isAuthenticated || !req.isAuthenticated()) {
-      return res.redirect('/login');
+      return res.redirect(`/login?url=${req.originalUrl}`);
     }
 
     const userRole = req.user.role;

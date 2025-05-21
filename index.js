@@ -3,15 +3,18 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const useragent = require('express-useragent');
+
+
 const session = require('express-session');
 const passport = require('passport');
 require('./config/passport')(passport);
 
 const app = express();
 app.use(session({
-  secret: '2k17-batch',
-  resave: false,
-  saveUninitialized: false,
+    secret: '2k17-batch',
+    resave: false,
+    saveUninitialized: false,
 }));
 
 app.use(passport.initialize());
@@ -30,6 +33,7 @@ dotenv.config();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname+'/public'));
+app.use(useragent.express());
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname+'/views');
@@ -45,6 +49,7 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 })
+
 
 /* const cron = require('node-cron');*/
 
@@ -65,7 +70,7 @@ mongoose.connect(process.env.MONGO_URI, {}).then(() => {
     // Start server only after DB is connected
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
-        console.log(`🚀 Server is running on http://localhost:${PORT}\n`);
+        console.log(`🚀 Server is running\n`);
     });
 }).catch((err) => {
     console.error('❌ MongoDB connection error:', err);

@@ -1,10 +1,10 @@
 // plugins/timeAgoPlugin.js
-const { getRelativeTime } = require('../utils/dateFunctions');
+var { getRelativeTime } = require('../utils/dateFunctions');
 
 function timeAgoPlugin(schema, options = {}) {
-  const timeField = options.timeField || 'createdAt';
-  const outputField = options.outputField || 'timeAgo';
-  const nestedPaths = options.nestedPaths || [];
+  var timeField = options.timeField || 'createdAt';
+  var outputField = options.outputField || 'timeAgo';
+  var nestedPaths = options.nestedPaths || [];
 
   function addTimeAgoTo(doc) {
     if (!doc || typeof doc !== 'object') return;
@@ -17,7 +17,7 @@ function timeAgoPlugin(schema, options = {}) {
 
     // Add to nested paths (like comments)
     nestedPaths.forEach(path => {
-      const nested = doc[path];
+      var nested = doc[path];
       if (Array.isArray(nested)) {
         nested.forEach(n => {
           if (n[timeField] && !n[outputField]) {

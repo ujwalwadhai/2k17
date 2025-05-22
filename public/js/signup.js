@@ -1,7 +1,7 @@
 function checkUsername(el, username){
     let cleanValue = '';
   for (let i = 0; i < el.value.length; i++) {
-    const char = el.value[i];
+    var char = el.value[i];
     if ((char >= 'a' && char <= 'z') ||
         (char >= 'A' && char <= 'Z') ||
         (char >= '0' && char <= '9')) {

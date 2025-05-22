@@ -98,11 +98,11 @@
     document.addEventListener('DOMContentLoaded', () => {
       loadPosts('<%= user._id %>');
       document.getElementById('media-input').addEventListener('change', function () {
-        const preview = document.getElementById('media-preview');
+        var preview = document.getElementById('media-preview');
         preview.innerHTML = '';
         Array.from(this.files).forEach(file => {
-          const url = URL.createObjectURL(file);
-          const el = file.type.startsWith('image')
+          var url = URL.createObjectURL(file);
+          var el = file.type.startsWith('image')
             ? `<img src="${url}" />`
             : `<video src="${url}" muted autoplay loop />`;
           preview.innerHTML += el;

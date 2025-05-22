@@ -1,5 +1,5 @@
-const slides = document.querySelectorAll(".slide");
-const dots = document.querySelectorAll(".dot");
+var slides = document.querySelectorAll(".slide");
+var dots = document.querySelectorAll(".dot");
 let index = 0;
 
 function showSlide(i) {

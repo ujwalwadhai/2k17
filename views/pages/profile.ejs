@@ -159,7 +159,7 @@
 
       <!-- Media Tab -->
       <div class="tab-panel" id="media">
-        <% const media = posts.filter(p => p.media?.type); %>
+        <% var media = posts.filter(p => p.media?.type); %>
         <% if (media.length === 0) { %>
           <p class="empty-msg">No media found.</p>
         <% } else { %>

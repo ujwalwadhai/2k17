@@ -105,7 +105,7 @@
   align-items: center;
   border-bottom: 1px solid #686868;
 }
-#comments-popup .comments-box .heading p.close-icon {
+#comments-popup .comments-box .heading .close-icon {
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;

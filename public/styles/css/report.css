@@ -1,0 +1,59 @@
+.report-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #2b273f;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.report-container h2 {
+  margin-bottom: 10px;
+  color: #7b5cf0;
+}
+.report-container p {
+  font-size: 0.95rem;
+  color: #888;
+  margin-bottom: 20px;
+}
+.report-container .form-group {
+  margin-bottom: 18px;
+}
+.report-container .form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.report-container .form-group input,
+.report-container .form-group textarea,
+.report-container .form-group select {
+  width: 100%;
+  background: #2c283d;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+.report-container .form-group input:focus,
+.report-container .form-group textarea:focus,
+.report-container .form-group select:focus {
+  border-color: #7b5cf0;
+  outline: none;
+}
+.report-container #report-status {
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+.report-container .btn-submit {
+  background: #7b5cf0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+.report-container .btn-submit:hover {
+  background: #6342d8;
+}
+
+/*# sourceMappingURL=report.css.map */

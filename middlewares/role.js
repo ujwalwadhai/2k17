@@ -5,7 +5,7 @@ function hasRole(...allowedRoles) {
       return res.redirect(`/login?url=${req.originalUrl}`);
     }
 
-    const userRole = req.user.role;
+    var userRole = req.user.role;
     if(userRole === 'admin') {
       return next();
     }

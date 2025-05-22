@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const postController = require('../controllers/postController');
-const { upload } = require('../config/cloudinary');
+var express = require('express');
+var router = express.Router();
+var postController = require('../controllers/postController');
+var { upload } = require('../config/cloudinary');
 var { isLoggedIn } = require('../middlewares/auth');
 
 router.post('/login/password', postController.loginPassword);
@@ -39,5 +39,9 @@ router.post('/new/post', isLoggedIn, postController.newPost)
 router.post('/profile/update', isLoggedIn, upload.single('profile'), postController.updateProfile)
 
 router.post('/settings/update', isLoggedIn, postController.updateSettings)
+
+router.post('/report', postController.report)
+
+router.post('/change-password', isLoggedIn, postController.changePassword)
 
 module.exports = router;

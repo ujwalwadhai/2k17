@@ -14,45 +14,548 @@
     text-align: center;
   }
 
-  .form-section {
-    margin-bottom: 2rem;
-
-    h3 {
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
+  .links{
+    width: 100%;
+    text-align: left;
+    ul{
+      text-decoration: none;
+      list-style: none;
+      padding: 0;
+      padding-bottom: 12px;
       border-bottom: 1px solid $text-muted;
-      padding-bottom: 0.5rem;
+
+      &:last-of-type{
+        border-bottom: none;
+      }
+
+      &#account{
+        li{
+          a{
+            color: red !important
+          }
+        }
+      }
+
+      li{
+        padding: 8px 12px;
+        padding-left: 0;
+        line-height: 30px;
+        margin-top: 8px;
+        border-radius: 4px;
+        min-width: 250px !important;
+        cursor: pointer;
+        
+        &:hover{
+          background-color: rgba(81, 81, 81, 0.2);
+        }
+        a{
+          padding-left: 16px;
+          color:white;
+
+          span{
+            width: 28px;
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  } 
+}
+
+#notification-settings-popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+
+  .notification-settings-box {
+    width: 85vw;
+    max-width: 700px;
+    height: auto;
+    max-height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $bg-dark;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+    
+    .heading {
+      margin-bottom: 0;
+      font-size: 20px;
+      font-weight: bold;
+      padding-left: 16px;
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      border-bottom: 1px solid #686868;
+
+      .title{
+        span{
+          margin-right: 16px;
+        }
+      }
+
+      p.close-icon {
+        margin: 12px;
+        margin-left: auto;
+        margin-right: 16px;
+        background-color: $bg-dark2;
+        padding: 8px;
+        font-size: 14px;
+        width: 32px;
+        height: 32px;
+        border: 0.2px solid $text-muted;
+        color: white;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+      }
     }
 
-    label {
-      display: block;
-      margin-bottom: 0.75rem;
-      cursor: pointer;
+    .notification-settings-list{
+      padding: 20px;
 
-      input[type="checkbox"] {
-        margin-right: 10px;
+      .form-section {
+        line-height: 28px;
+        
+        label {
+          display: block;
+          margin-bottom: 0.75rem;
+          cursor: pointer;
+
+          input[type="checkbox"] {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      #settings-status {
+        margin: 1rem 0;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        background-color: $primary-dark;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        width: 100%;
+        transition: background 0.3s;
+
+        &:hover {
+          background-color: $primary;
+        }
       }
     }
   }
+}
 
-  #settings-status {
-    margin: 1rem 0;
-    font-weight: 500;
+#change-password-popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
   }
 
-  button[type="submit"] {
-    background-color: $primary-dark;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
+  .overlay {
+    position: absolute;
     width: 100%;
-    transition: background 0.3s;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
 
-    &:hover {
-      background-color: $primary;
+    &.show {
+      opacity: 1;
     }
+  }
+
+  .change-password-box {
+    width: 85vw;
+    max-width: 700px;
+    height: auto;
+    max-height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $bg-dark;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+    
+    .heading {
+      margin-bottom: 0;
+      font-size: 20px;
+      font-weight: bold;
+      padding-left: 16px;
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      border-bottom: 1px solid #686868;
+
+      .title{
+        span{
+          margin-right: 16px;
+        }
+      }
+
+      p.close-icon {
+        margin: 12px;
+        margin-left: auto;
+        margin-right: 16px;
+        background-color: $bg-dark2;
+        padding: 8px;
+        font-size: 14px;
+        width: 32px;
+        height: 32px;
+        border: 0.2px solid $text-muted;
+        color: white;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+
+    .change-password-list{
+      padding: 20px;
+
+      input {
+        width: 100%;
+        padding: 0.8rem;
+        margin: 0.5rem 0;
+        border: none;
+        border-radius: 8px;
+        background: $input-bg;
+        color: #fff;
+        outline: none;
+
+        &:focus {
+          border: 1px solid $primary;
+        }
+      }
+
+      #change-password-status {
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        background-color: $primary-dark;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        width: 100%;
+        transition: background 0.3s;
+
+        &:hover {
+          background-color: $primary;
+        }
+      }
+    }
+  }
+}
+
+#report-problem-popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+
+  .report-problem-box {
+    width: 85vw;
+    max-width: 700px;
+    height: auto;
+    max-height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $bg-dark;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+    
+    .heading {
+      margin-bottom: 0;
+      font-size: 20px;
+      font-weight: bold;
+      padding-left: 16px;
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      border-bottom: 1px solid #686868;
+
+      .title{
+        span{
+          margin-right: 16px;
+        }
+      }
+
+      p.close-icon {
+        margin: 12px;
+        margin-left: auto;
+        margin-right: 16px;
+        background-color: $bg-dark2;
+        padding: 8px;
+        font-size: 14px;
+        width: 32px;
+        height: 32px;
+        border: 0.2px solid $text-muted;
+        color: white;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+
+    .report-problem-list{
+      padding: 20px;
+
+      input, textarea{
+        width: 100%;
+        padding: 0.8rem;
+        margin: 0.5rem 0;
+        border: none;
+        border-radius: 8px;
+        background: $input-bg;
+        color: #fff;
+        outline: none;
+        resize: vertical;
+
+        &:focus {
+          border: 1px solid $primary;
+        }
+      }
+
+      #report-problem-status {
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        background-color: $primary-dark;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        width: 100%;
+        transition: background 0.3s;
+
+        &:hover {
+          background-color: $primary;
+        }
+      }
+    }
+  }
+}
+
+#give-suggestion-popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+
+  .give-suggestion-box {
+    width: 85vw;
+    max-width: 700px;
+    height: auto;
+    max-height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $bg-dark;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+    
+    .heading {
+      margin-bottom: 0;
+      font-size: 20px;
+      font-weight: bold;
+      padding-left: 16px;
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      border-bottom: 1px solid #686868;
+
+      .title{
+        span{
+          margin-right: 16px;
+        }
+      }
+
+      p.close-icon {
+        margin: 12px;
+        margin-left: auto;
+        margin-right: 16px;
+        background-color: $bg-dark2;
+        padding: 8px;
+        font-size: 14px;
+        width: 32px;
+        height: 32px;
+        border: 0.2px solid $text-muted;
+        color: white;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+
+    .give-suggestion-list{
+      padding: 20px;
+
+      input, textarea {
+        width: 100%;
+        padding: 0.8rem;
+        margin: 0.5rem 0;
+        border: none;
+        border-radius: 8px;
+        background: $input-bg;
+        color: #fff;
+        outline: none;
+        resize: vertical;
+
+        &:focus {
+          border: 1px solid $primary;
+        }
+      }
+
+      #give-suggestion-status {
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        background-color: $primary-dark;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        width: 100%;
+        transition: background 0.3s;
+
+        &:hover {
+          background-color: $primary;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .notification-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box {
+    width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
   }
 }

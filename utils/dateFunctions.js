@@ -5,12 +5,12 @@ function getRelativeTime(date) {
   if (date.includes('T') && date.includes('+')) {
     inputDate = new Date(date);
   } else {
-    const [datePart, timePart] = date.split(',');
-    const [day, month, year] = datePart.trim().split('/').map(Number);
+    var [datePart, timePart] = date.split(',');
+    var [day, month, year] = datePart.trim().split('/').map(Number);
     let hours = 0, minutes = 0;
 
     if (timePart) {
-      const [time, ampm] = timePart.trim().split(' ');
+      var [time, ampm] = timePart.trim().split(' ');
       [hours, minutes] = time.split(':').map(Number);
       if (ampm.toLowerCase() === 'pm' && hours !== 12) hours += 12;
       if (ampm.toLowerCase() === 'am' && hours === 12) hours = 0;
@@ -19,16 +19,16 @@ function getRelativeTime(date) {
     inputDate = new Date(year, month - 1, day, hours, minutes);
   }
 
-  const now = new Date();
+  var now = new Date();
   let diffMs = now - inputDate;
-  const isFuture = diffMs < 0;
+  var isFuture = diffMs < 0;
   diffMs = Math.abs(diffMs);
 
-  const diffMin = Math.round(diffMs / (60 * 1000));
-  const diffHr = Math.round(diffMin / 60);
-  const diffDay = Math.round(diffHr / 24);
-  const diffMo = Math.round(diffDay / 30);
-  const diffYr = Math.round(diffDay / 365);
+  var diffMin = Math.round(diffMs / (60 * 1000));
+  var diffHr = Math.round(diffMin / 60);
+  var diffDay = Math.round(diffHr / 24);
+  var diffMo = Math.round(diffDay / 30);
+  var diffYr = Math.round(diffDay / 365);
 
   let result = '';
   if (diffMin < 1) result = 'just now';
@@ -43,10 +43,10 @@ function getRelativeTime(date) {
 
 function formatDate2(dateString) {
   // returns date in format "Date Month" i.e. '12 July' etc
-  const [day, month, year] = dateString.split('/').map(Number);
-  const date = new Date(year, month - 1, day);
+  var [day, month, year] = dateString.split('/').map(Number);
+  var date = new Date(year, month - 1, day);
 
-  const options = { day: '2-digit', month: 'long'};
+  var options = { day: '2-digit', month: 'long'};
   return date.toLocaleDateString('en-In', options);
 }
 
@@ -87,7 +87,7 @@ function createDate(){
 }
   
 function convertTo24Hour(timeStr) {
-    const [time, modifier] = timeStr.split(' ');
+    var [time, modifier] = timeStr.split(' ');
     let [hours, minutes] = time.split(':');
   
     if (modifier === 'PM' && hours !== '12') {

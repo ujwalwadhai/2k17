@@ -5,6 +5,7 @@ var otps = require('../models/OTP');
 var Posts = require('../models/Posts');
 var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
+var Reports = require('../models/Reports');
 var sendMail = require('../config/mailer');
 var { getRelativeTime } = require('../utils/dateFunctions');
 
@@ -29,7 +30,7 @@ exports.loginPassword = async (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
+      sendMail('login', [user.email], {useragent: req.useragent, method: 'Password'});
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     });
 
@@ -59,7 +60,7 @@ exports.loginEmail = async (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      sendMail('login', user.email, {useragent: req.useragent, method: 'Email OTP'});
+      sendMail('login', [user.email], {useragent: req.useragent, method: 'Email OTP'});
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     })
 
@@ -81,7 +82,7 @@ exports.sendOTP = async (req, res) => {
 
     var otp = Math.floor(100000 + Math.random() * 900000);
 
-    sendMail('otp', email, {otp, useragent: req.useragent});
+    sendMail('otp', [email], {otp, useragent: req.useragent});
     var newOtp = new otps({
       email: email,
       otp: otp
@@ -119,6 +120,35 @@ exports.register = async (req, res) => {
     res.json({ success: false, message: 'Something went wrong' });
   }
 }
+
+exports.changePassword = async (req, res) => {
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    return res.json({ success: false, message: "All fields are required." });
+  }
+
+  if (newPassword !== confirmPassword) {
+    return res.json({ success: false, message: "New passwords do not match." });
+  }
+
+  try {
+    const user = await Users.findById(req.user._id).select('+password');
+
+    const isMatch = await user.validatePassword(currentPassword);
+    if (!isMatch) {
+      return res.json({ success: false, message: "Current password is incorrect." });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    return res.json({ success: true, message: "Password updated successfully." });
+  } catch (err) {
+    console.error(err);
+    return res.json({ success: false, message: "Something went wrong." });
+  }
+};
 
 exports.checkUsername = async (req, res) => {
   var { username } = req.body;
@@ -231,7 +261,7 @@ exports.newComment = async (req, res) => {
     }
     await post.save();
     if(post.author._id.toString() !== req.user._id.toString() && post.author.email){
-      sendMail('newcomment', post.author.email, { user: req.user, comment: req.body.text, postLink: `http://localhost:3000/post/${post._id}` });
+      sendMail('newcomment', [post.author.email], { user: req.user, comment: req.body.text, postLink: `http://localhost:3000/post/${post._id}` });
       var notification = new Notifications({
         user: post.author._id,
         type: 'comment',
@@ -272,7 +302,7 @@ exports.deleteComment = async (req, res) => {
 
 exports.fetchNotifications = async (req, res) => {
   try {
-    const notifications = await Notifications.find({
+    var notifications = await Notifications.find({
       $or: [
         { user: req.user._id },
         { user: { $exists: false } }
@@ -300,9 +330,9 @@ exports.markReadNotifications = async (req, res) => {
 
 exports.fetchPosts = async (req, res) => {
   try {
-    const sixMonthsAgo = new Date();
+    var sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-    const posts = await Posts.find({ createdAt: { $gte: sixMonthsAgo } }).sort({ createdAt: -1 });
+    var posts = await Posts.find({ createdAt: { $gte: sixMonthsAgo } }).sort({ createdAt: -1 });
     return res.json({ success: true, posts });
   } catch (err) {
     console.log(err);
@@ -342,8 +372,8 @@ exports.newPost = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { username, phone, bio, facebook, linkedin, github, instagram, other } = req.body;
-    const update = {
+    var { username, phone, bio, facebook, linkedin, github, instagram, other } = req.body;
+    var update = {
       username, phone, bio,
       socialLinks: {
         facebook,
@@ -370,15 +400,15 @@ exports.updateProfile = async (req, res) => {
  
 exports.updateSettings = async (req, res) => {
   try {
-    const userId = req.user._id;
+    var userId = req.user._id;
 
-    const updates = {
+    var updates = {
       emailNotifications: req.body.emailNotifications || true,
       loginAlerts: req.body.loginAlerts || false,
       emailUpdates: req.body.emailUpdates || false,
     };
 
-    const settings = await Settings.findOneAndUpdate(
+    var settings = await Settings.findOneAndUpdate(
       { user: userId },
       { $set: updates },
       { new: true, upsert: true }
@@ -389,3 +419,32 @@ exports.updateSettings = async (req, res) => {
     return res.json({ success: false, message: 'Something went wrong' });
   }
 };
+
+exports.report = async (req, res) => {
+  try {
+    var { subject, details } = req.body;
+    if (!subject || !details) {
+      return res.json({ success: false, message: "All fields are required." });
+    }
+
+    var newReport = new Reports({
+      user: req.user?._id || null,
+      subject,
+      details
+    });
+
+    await newReport.save();
+
+    var admins = await Users.find({ role: 'admin' }).select('email -_id');
+    var adminEmails = admins.map(user => user.email);
+
+    if(req.user?.email) {
+      await sendMail('report_user', [req.user.email], { subject, details, name: req.user.name });
+    }
+    await sendMail('report_admins', adminEmails, { subject, details, name: req.user?.name || ''});
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, message: "Error saving report." });
+  }
+}

@@ -15,14 +15,14 @@ const transporter = nodemailer.createTransport({
 
 async function sendEmail(to, subject, htmlContent) {
   try {
-    const mailOptions = {
+    var mailOptions = {
       from: '"2k17 Platform" <2k17platform@gmail.com>',
       to,
       subject,
       html: htmlContent,
     };
 
-    const result = await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     return result;
   } catch (error) {
     return error;
@@ -106,10 +106,52 @@ async function NewCommentMail(to, data) {
   sendEmail(to, 'New comment on your post • 2k17 Platform', template);
 }
 
+async function UserReportMail(to, data) {
+  var template = `<div style="font-family: Arial, sans-serif; background-color: #1f1c2e; color: #ffffffcc; padding: 20px;">
+    <h3 style="color: #7b5cf0;">We've received your report</h3>
+    <p>Hi <strong>${data.name}</strong>,</p>
+    <p>Thanks for taking the time to let me know. I've received your report as follows :</p>
+
+    <div style="background-color: #2b273f; padding: 15px; border-left: 4px solid #7b5cf0; margin: 20px 0;">
+      <p style="margin-top: 5px; color: #ffffffcc;"><b>Subject : </b> ${data.subject}</p>
+      <p style="margin-top: 5px; color: #ffffffcc;"><b>Details : </b> ${data.details}</p>
+      <p style="margin-top: 5px; color: #ffffffcc;"><b>Submission Time : </b> ${createDate()}</p>
+    </div>
+
+    <p>We'll look into it as soon as possible.</p>
+    <p style="color: #888;">Regards,<br>Ujwal W.<br>2k17 Platform</p>
+  </div>`
+
+  sendEmail(to, "Report received • 2k17 Platform", template);
+}
+
+async function AdminReportMail(to, data) {
+  var template = `<div style="font-family: Arial, sans-serif; background-color: #1f1c2e; color: #ffffffcc; padding: 20px;">
+    <h3 style="color: #7b5cf0;">New Report Submitted</h3>
+    <p>A new report has been submitted:</p>
+
+    <div style="background-color: #2b273f; padding: 15px; border-left: 4px solid #7b5cf0; margin: 20px 0;">
+      <p><strong>From:</strong> ${data.name || "Anonymous"}</p>
+      <p style="margin-top: 5px;"><strong>Subject:</strong> ${data.subject}</p>
+      <p style="margin-top: 5px;"><strong>Details:</strong> ${data.details}</p>
+      <p style="margin-top: 5px;"><strong>Time:</strong> ${createDate()}</p>
+    </div>
+
+    <p style="color: #888;">Login to the admin panel to manage this report.</p>
+    <p style="color: #888;">Automated Report System<br>2k17 Platform</p>
+  </div>`
+
+  sendEmail(to, "New Report Submitted • 2k17 Platform", template);
+}
+
 async function sendMail(type, to, data) {
   /* if (type == 'login') LoginMail(to, data);
   if (type == 'otp') OTPMail(to, data);
-  if (type == 'newcomment') NewCommentMail(to, data); // stopped to avoid sending emails during development */
+  if (type == 'newcomment') NewCommentMail(to, data); 
+  // stopped to avoid sending emails during development */
+  if (type == 'report_user') UserReportMail(to, data);
+  if (type == 'report_admins') AdminReportMail(to, data);
+
 }
 
 module.exports = sendMail;

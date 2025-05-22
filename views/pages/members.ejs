@@ -67,13 +67,13 @@
   </section>
 
   <script>
-    const input = document.getElementById('searchInput');
-    const cards = document.querySelectorAll('.member-card');
+    var input = document.getElementById('searchInput');
+    var cards = document.querySelectorAll('.member-card');
 
     input.addEventListener('input', () => {
-      const val = input.value.toLowerCase();
+      var val = input.value.toLowerCase();
       cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
+        var text = card.innerText.toLowerCase();
         card.style.display = text.includes(val) ? 'block' : 'none';
       });
     });

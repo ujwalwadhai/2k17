@@ -11,28 +11,134 @@
   margin-bottom: 1.5rem;
   text-align: center;
 }
-.settings-container .form-section {
-  margin-bottom: 2rem;
+.settings-container .links {
+  width: 100%;
+  text-align: left;
 }
-.settings-container .form-section h3 {
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
+.settings-container .links ul {
+  text-decoration: none;
+  list-style: none;
+  padding: 0;
+  padding-bottom: 12px;
   border-bottom: 1px solid #888;
-  padding-bottom: 0.5rem;
 }
-.settings-container .form-section label {
+.settings-container .links ul:last-of-type {
+  border-bottom: none;
+}
+.settings-container .links ul#account li a {
+  color: red !important;
+}
+.settings-container .links ul li {
+  padding: 8px 12px;
+  padding-left: 0;
+  line-height: 30px;
+  margin-top: 8px;
+  border-radius: 4px;
+  min-width: 250px !important;
+  cursor: pointer;
+}
+.settings-container .links ul li:hover {
+  background-color: rgba(81, 81, 81, 0.2);
+}
+.settings-container .links ul li a {
+  padding-left: 16px;
+  color: white;
+}
+.settings-container .links ul li a span {
+  width: 28px;
+  margin-right: 4px;
+}
+
+#notification-settings-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#notification-settings-popup.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+#notification-settings-popup .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+#notification-settings-popup .overlay.show {
+  opacity: 1;
+}
+#notification-settings-popup .notification-settings-box {
+  width: 85vw;
+  max-width: 700px;
+  height: auto;
+  max-height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1f1c2e;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#notification-settings-popup .notification-settings-box .heading {
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 16px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #686868;
+}
+#notification-settings-popup .notification-settings-box .heading .title span {
+  margin-right: 16px;
+}
+#notification-settings-popup .notification-settings-box .heading p.close-icon {
+  margin: 12px;
+  margin-left: auto;
+  margin-right: 16px;
+  background-color: #2b273f;
+  padding: 8px;
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0.2px solid #888;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+#notification-settings-popup .notification-settings-box .notification-settings-list {
+  padding: 20px;
+}
+#notification-settings-popup .notification-settings-box .notification-settings-list .form-section {
+  line-height: 28px;
+}
+#notification-settings-popup .notification-settings-box .notification-settings-list .form-section label {
   display: block;
   margin-bottom: 0.75rem;
   cursor: pointer;
 }
-.settings-container .form-section label input[type=checkbox] {
+#notification-settings-popup .notification-settings-box .notification-settings-list .form-section label input[type=checkbox] {
   margin-right: 10px;
 }
-.settings-container #settings-status {
+#notification-settings-popup .notification-settings-box .notification-settings-list #settings-status {
   margin: 1rem 0;
   font-weight: 500;
 }
-.settings-container button[type=submit] {
+#notification-settings-popup .notification-settings-box .notification-settings-list button[type=submit] {
   background-color: #6342d8;
   color: white;
   border: none;
@@ -43,8 +149,337 @@
   width: 100%;
   transition: background 0.3s;
 }
-.settings-container button[type=submit]:hover {
+#notification-settings-popup .notification-settings-box .notification-settings-list button[type=submit]:hover {
   background-color: #7b5cf0;
+}
+
+#change-password-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#change-password-popup.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+#change-password-popup .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+#change-password-popup .overlay.show {
+  opacity: 1;
+}
+#change-password-popup .change-password-box {
+  width: 85vw;
+  max-width: 700px;
+  height: auto;
+  max-height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1f1c2e;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#change-password-popup .change-password-box .heading {
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 16px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #686868;
+}
+#change-password-popup .change-password-box .heading .title span {
+  margin-right: 16px;
+}
+#change-password-popup .change-password-box .heading p.close-icon {
+  margin: 12px;
+  margin-left: auto;
+  margin-right: 16px;
+  background-color: #2b273f;
+  padding: 8px;
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0.2px solid #888;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+#change-password-popup .change-password-box .change-password-list {
+  padding: 20px;
+}
+#change-password-popup .change-password-box .change-password-list input {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+  background: #2c283d;
+  color: #fff;
+  outline: none;
+}
+#change-password-popup .change-password-box .change-password-list input:focus {
+  border: 1px solid #7b5cf0;
+}
+#change-password-popup .change-password-box .change-password-list #change-password-status {
+  margin-top: 4px;
+  font-weight: 500;
+}
+#change-password-popup .change-password-box .change-password-list button[type=submit] {
+  background-color: #6342d8;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  transition: background 0.3s;
+}
+#change-password-popup .change-password-box .change-password-list button[type=submit]:hover {
+  background-color: #7b5cf0;
+}
+
+#report-problem-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#report-problem-popup.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+#report-problem-popup .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+#report-problem-popup .overlay.show {
+  opacity: 1;
+}
+#report-problem-popup .report-problem-box {
+  width: 85vw;
+  max-width: 700px;
+  height: auto;
+  max-height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1f1c2e;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#report-problem-popup .report-problem-box .heading {
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 16px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #686868;
+}
+#report-problem-popup .report-problem-box .heading .title span {
+  margin-right: 16px;
+}
+#report-problem-popup .report-problem-box .heading p.close-icon {
+  margin: 12px;
+  margin-left: auto;
+  margin-right: 16px;
+  background-color: #2b273f;
+  padding: 8px;
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0.2px solid #888;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+#report-problem-popup .report-problem-box .report-problem-list {
+  padding: 20px;
+}
+#report-problem-popup .report-problem-box .report-problem-list input, #report-problem-popup .report-problem-box .report-problem-list textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+  background: #2c283d;
+  color: #fff;
+  outline: none;
+  resize: vertical;
+}
+#report-problem-popup .report-problem-box .report-problem-list input:focus, #report-problem-popup .report-problem-box .report-problem-list textarea:focus {
+  border: 1px solid #7b5cf0;
+}
+#report-problem-popup .report-problem-box .report-problem-list #report-problem-status {
+  margin-top: 4px;
+  font-weight: 500;
+}
+#report-problem-popup .report-problem-box .report-problem-list button[type=submit] {
+  background-color: #6342d8;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  transition: background 0.3s;
+}
+#report-problem-popup .report-problem-box .report-problem-list button[type=submit]:hover {
+  background-color: #7b5cf0;
+}
+
+#give-suggestion-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#give-suggestion-popup.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+#give-suggestion-popup .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+#give-suggestion-popup .overlay.show {
+  opacity: 1;
+}
+#give-suggestion-popup .give-suggestion-box {
+  width: 85vw;
+  max-width: 700px;
+  height: auto;
+  max-height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1f1c2e;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#give-suggestion-popup .give-suggestion-box .heading {
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 16px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #686868;
+}
+#give-suggestion-popup .give-suggestion-box .heading .title span {
+  margin-right: 16px;
+}
+#give-suggestion-popup .give-suggestion-box .heading p.close-icon {
+  margin: 12px;
+  margin-left: auto;
+  margin-right: 16px;
+  background-color: #2b273f;
+  padding: 8px;
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0.2px solid #888;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list {
+  padding: 20px;
+}
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list input, #give-suggestion-popup .give-suggestion-box .give-suggestion-list textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+  background: #2c283d;
+  color: #fff;
+  outline: none;
+  resize: vertical;
+}
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list input:focus, #give-suggestion-popup .give-suggestion-box .give-suggestion-list textarea:focus {
+  border: 1px solid #7b5cf0;
+}
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list #give-suggestion-status {
+  margin-top: 4px;
+  font-weight: 500;
+}
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list button[type=submit] {
+  background-color: #6342d8;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  transition: background 0.3s;
+}
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list button[type=submit]:hover {
+  background-color: #7b5cf0;
+}
+
+@media (max-width: 600px) {
+  .notification-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box {
+    width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+  }
 }
 
 /*# sourceMappingURL=settings.css.map */

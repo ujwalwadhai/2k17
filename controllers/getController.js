@@ -28,6 +28,7 @@ exports.home = async (req, res) => {
     if (hasUnreadNotifications) {
       res.locals.hasUnreadNotifications = true;
     }
+    console.log(req.user)
     res.render('pages/home', { birthdays, isHome: true });
   } catch(err) {
     res.redirect("/login")
@@ -120,7 +121,7 @@ async function getSortedUsers(loggedInUserId = null) {
       ];
     }
 
-    const users = await Users.aggregate(pipeline);
+    var users = await Users.aggregate(pipeline);
     return users;
   } catch (err) {
     return [];

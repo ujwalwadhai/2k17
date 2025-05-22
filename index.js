@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const sanitizeHtml = require('sanitize-html');
 dotenv.config();
 
 const useragent = require('express-useragent');
@@ -31,6 +32,7 @@ require('./models/Settings')
 
 dotenv.config();
 
+app.use(express.json({type: 'application/json'}))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname+'/public'));
 app.use(useragent.express());
@@ -38,7 +40,19 @@ app.use(useragent.express());
 app.set('view engine', 'ejs');
 app.set('views', __dirname+'/views');
 
-app.use(express.json('application/json'))
+app.use((req, res, next) => {
+  if (req.body) {
+    for (let key in req.body) {
+      if (typeof req.body[key] === 'string') {
+        req.body[key] = sanitizeHtml(req.body[key], {
+          allowedTags: [],
+          allowedAttributes: {}
+        });
+      }
+    }
+  }
+  next();
+});
 app.use('/', getRoutes);
 app.use('/', postRoutes);
 
@@ -49,6 +63,7 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 })
+
 
 
 /* const cron = require('node-cron');*/

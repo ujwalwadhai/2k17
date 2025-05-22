@@ -1,47 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include('../partials/head') %>
+  <%- include('../partials/head') %>
     <title>Settings</title>
     <link rel="stylesheet" href="/styles/css/settings.css">
 </head>
+
 <body>
-    <%- include('../partials/navbar') %>
-<br><br><br>
-    <div class="settings-container">
-  <h2>Settings</h2><br>
-  <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Notifications for OTPs are always sent.</span>
-  <form id="settings-form">
-    
-    <div class="form-section">
-      <h3>Notifications</h3>
-      <label>
-        <input type="checkbox" name="emailNotifications" <%= settings.emailNotifications ? 'checked' : '' %>>
-        Email notifications
-      </label>
-    </div>
+  <%- include('../partials/navbar') %>
+  <br><br>
+  <div class="settings-container">
+    <h2>Settings</h2><br><br>
+    <div class="links">
+      <ul>
+        <li onclick="window.location.href='/profile/edit'"><a href="/profile/edit"><span class="fal fa-user"></span>
+            Update profile</a></li>
+        <li onclick="openChangePassword()"><a><span class="fal fa-unlock-keyhole"></span> Change password</a></li>
+        <li onclick="openNotificationSettings()"><a><span class="fal fa-bell"></span> Notifications</a></li>
+      </ul>
+      <ul>
+        <li onclick="openReportProblem()"><a><span class="fal fa-triangle-exclamation"></span>
+            Report a problem</a></li>
+        <li onclick="openGiveSuggestion()"><a><span class="fal fa-lightbulb-on"></span> Give
+            suggestion</a></li>
+      </ul>
+      <ul id="account">
+        <li onclick="window.location.href='/report'"><a href="/report"><span class="fal fa-trash"></span> Delete
+            account</a></li>
+        <li onclick="window.location.href='/report'"><a href="/report"><span class="fal fa-right-from-bracket"></span>
+            Log out</a></li>
+      </ul>
 
-    <div class="form-section">
-      <h3>Security</h3>
-      <label>
-        <input type="checkbox" name="loginAlerts" <%= settings.loginAlerts ? 'checked' : '' %>>
-        Email login alerts
-      </label>
-    </div>
-
-    <div class="form-section">
-      <h3>Communication</h3>
-      <label>
-        <input type="checkbox" name="emailUpdates" <%= settings.emailUpdates ? 'checked' : '' %>>
-        Monthly newsletter via email
-      </label>
-    </div>
-
-    <div id="settings-status"></div>
-    <button type="submit">Save Settings</button>
-  </form>
+    </div><br><br>
+    <br>
 </div>
+  
+  <div id="notification-settings-popup">
+    <div class="overlay" onclick="closeNotificationSettings()"></div>
+    <div class="notification-settings-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-bell"></span>Notifications settings</p>
+        <p class="close-icon fal fa-xmark" onclick="closeNotificationSettings()"></p>
+      </div>
+      <div class="notification-settings-list" id="notification-settings-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Notifications for OTPs are always
+          sent.</span><br><br><br>
+          <form id="settings-form">
+            <div class="form-section">
+              <label>
+                <input type="checkbox" name="emailNotifications" <%=settings.emailNotifications ? 'checked' : '' %>>
+                Email notifications
+              </label>
+              <label>
+                <input type="checkbox" name="loginAlerts" <%=settings.loginAlerts ? 'checked' : '' %>>
+                Login alerts (via email)
+              </label>
+              <label>
+                <input type="checkbox" name="emailUpdates" <%=settings.emailUpdates ? 'checked' : '' %>>
+                Monthly newsletter via email
+              </label>
+            </div><br>
 
-<script src="/js/settings.js"></script>
+            <div id="settings-status"></div>
+            <button type="submit">Save Settings</button>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+
+  <div id="change-password-popup">
+    <div class="overlay" onclick="closeChangePassword()"></div>
+    <div class="change-password-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-lock"></span> Change password</p>
+        <p class="close-icon fal fa-xmark" onclick="closeChangePassword()"></p>
+      </div>
+      <div class="change-password-list" id="change-password-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Use activation code as current password if you didn't set password before.</span><br><br>
+        <form id="change-password-form">
+          <input type="text" autocomplete="off" name="currentPassword" placeholder="Current password" required id="currentPassword">
+          <input type="text" autocomplete="off" name="newPassword" placeholder="New password" required id="newPassword">
+          <input type="text" autocomplete="off" name="confirmPassword" placeholder="Confirm new password" required id="confirmPassword">
+          <br>
+          <div id="change-password-status"></div><br>
+          <button type="submit">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="report-problem-popup">
+    <div class="overlay" onclick="closeReportProblem()"></div>
+    <div class="report-problem-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-triangle-exclamation"></span> Report a problem</p>
+        <p class="close-icon fal fa-xmark" onclick="closeReportProblem()"></p>
+      </div>
+      <div class="report-problem-list" id="report-problem-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Be as brief as possible so we can understand the issue properly.</span><br><br>
+        <form id="report-problem-form">
+          <input type="text" autocomplete="off" name="subject" required placeholder="Brief subject..." />
+          <textarea name="details" rows="5" required placeholder="Explain the problem you are facing..."></textarea>
+          <br>
+          <div id="report-problem-status"></div><br>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="give-suggestion-popup">
+    <div class="overlay" onclick="closeGiveSuggestion()"></div>
+    <div class="give-suggestion-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-lightbulb-on"></span> Give suggestion</p>
+        <p class="close-icon fal fa-xmark" onclick="closeGiveSuggestion()"></p>
+      </div>
+      <div class="give-suggestion-list" id="give-suggestion-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; You can also email this at <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a>.</span><br><br>
+        <form id="give-suggestion-form">
+          <input type="text" autocomplete="off" name="subject" required placeholder="Brief subject..." />
+          <textarea name="details" rows="5" required placeholder="Explain the marvelous thing in your brain..."></textarea>
+          <br>
+          <div id="give-suggestion-status"></div><br>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
+  <script src="/js/settings.js"></script>
 </body>
+
 </html>

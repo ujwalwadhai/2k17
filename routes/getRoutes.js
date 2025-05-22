@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const getController = require('../controllers/getController');
-const { isLoggedIn } = require('../middlewares/auth');
+var express = require('express');
+var router = express.Router();
+var getController = require('../controllers/getController');
+var { isLoggedIn } = require('../middlewares/auth');
 var hasRole = require('../middlewares/role');
 var Posts = require('../models/Posts');
 

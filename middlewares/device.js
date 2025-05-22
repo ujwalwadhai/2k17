@@ -1,9 +1,9 @@
 // Returns device info from user agent
 function deviceInfo(ua) {
-  const browser = ua.browser || "Unknown browser";
-  const version = ua.version || "";
-  const os = ua.os || "Unknown OS";
-  const platformType = ua.isMobile
+  var browser = ua.browser || "Unknown browser";
+  var version = ua.version || "";
+  var os = ua.os || "Unknown OS";
+  var platformType = ua.isMobile
     ? "Mobile"
     : ua.isTablet
     ? "Tablet"

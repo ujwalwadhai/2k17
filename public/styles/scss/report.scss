@@ -1,0 +1,64 @@
+.report-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #2b273f;
+  border-radius: 8px;
+  color: #ffffffcc;
+
+  h2 {
+    margin-bottom: 10px;
+    color: #7b5cf0;
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: #888;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      background: #2c283d;
+      border: 1px solid #444;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 0.95rem;
+
+      &:focus {
+        border-color: #7b5cf0;
+        outline: none;
+      }
+    }
+  }
+
+  #report-status {
+    margin: 10px 0;
+    font-size: 0.9rem;
+  }
+
+  .btn-submit {
+    background: #7b5cf0;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background: #6342d8;
+    }
+  }
+}

@@ -35,9 +35,9 @@
 
 <script>
   function proceedToPayment() {
-    const selected = document.querySelector(".donate-amount.selected");
-    const customAmount = document.getElementById("customAmount").value;
-    const amount = customAmount || (selected ? selected.textContent.replace("₹", "") : null);
+    var selected = document.querySelector(".donate-amount.selected");
+    var customAmount = document.getElementById("customAmount").value;
+    var amount = customAmount || (selected ? selected.textContent.replace("₹", "") : null);
 
     if (!amount) return alert("Please select or enter an amount.");
 

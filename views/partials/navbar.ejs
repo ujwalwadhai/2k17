@@ -32,7 +32,7 @@
       </ul>
     </nav>
     <nav class="small-only">
-      <span class="menu-icon fas fa-bars-sort" onclick="toggleMenu()"></span>
+      <span class="menu-icon fal fa-bars-sort" onclick="toggleMenu()"></span>
       <p class="brand">2k17 ❤️</p>
       <% if (user) { %>
         <li class="user-capsule-wrapper">
@@ -66,6 +66,7 @@
           <li onclick="window.location.href = '/gallery'"><a href="/gallery"><span class="fal fa-images"></span>Gallery</a></li>
           <li onclick="window.location.href = '/donate'"><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span>Donate</a></li>
           <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>
+          <li onclick="window.location.href = '/report'"><a href="/report"><span class="fal fa-triangle-exclamation"></span>Report a problem</a></li>
           <% if (!user) { %>
             <li onclick="window.location.href = '/create-account'"><a href="/create-account"><span class="fal fa-user-plus"></span>Register</a></li>
             <li onclick="window.location.href = '/login'"><a href="/login"><span class="fal fa-right-to-bracket"></span>Login</a></li>
@@ -90,8 +91,8 @@
   </div>
 </div>
   <script>
-  const sidebar = document.getElementById('mobileSidebar');
-  const sidebarContent = document.getElementById('sidebarContent');
+  var sidebar = document.getElementById('mobileSidebar');
+  var sidebarContent = document.getElementById('sidebarContent');
 
   function toggleMenu() {
     sidebar.style.display = 'block';

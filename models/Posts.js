@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { getRelativeTime } = require('../utils/dateFunctions');
+const { getRelativeTime } = require('../utils/time');
 
 const commentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },

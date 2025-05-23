@@ -12,7 +12,7 @@ document.getElementById("settings-form").addEventListener("submit", function (e)
   }
 
   // Explicitly set unchecked ones to false
-  ['emailNotifications', 'loginAlerts', 'emailUpdates'].forEach(key => {
+  ['email', 'login', 'newsletter'].forEach(key => {
     if (!settings.hasOwnProperty(key)) settings[key] = false;
   });
 
@@ -199,4 +199,49 @@ function closeReportProblem(){
   var reportProblemOverlay = reportProblemPopup.querySelector('.overlay');
   reportProblemPopup.classList.remove('show');
   reportProblemOverlay.classList.remove('show');
+}
+
+document.getElementById("change-email-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var statusBox = document.getElementById("change-email-status");
+  statusBox.style.color = "green";
+  statusBox.innerHTML = "<i class='fal fa-circle-notch fa-rotate'></i> &nbsp;Submitting...";
+
+  fetch("/update-email", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({newEmail : this.elements["newEmail"].value})
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        statusBox.innerHTML = "<i class='fal fa-circle-check'></i> &nbsp; Verification email sent! Please check your spam folder too.";
+        statusBox.style.color = "green";
+        this.reset();
+      } else {
+        statusBox.innerHTML = "<i class='fal fa-circle-xmark'></i> &nbsp;" + (data.message || "Failed to update.");
+        statusBox.style.color = "red";
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong. Please try again later";
+      statusBox.style.color = "red";
+    });
+});
+
+function openChangeEmail(){
+  var ChangeEmailPopup = document.getElementById('change-email-popup');
+  var ChangeEmailOverlay = ChangeEmailPopup.querySelector('.overlay');
+  ChangeEmailPopup.classList.add('show');
+  ChangeEmailOverlay.classList.add('show');
+}
+
+function closeChangeEmail(){
+  var ChangeEmailPopup = document.getElementById('change-email-popup');
+  var ChangeEmailOverlay = ChangeEmailPopup.querySelector('.overlay');
+  ChangeEmailPopup.classList.remove('show');
+  ChangeEmailOverlay.classList.remove('show');
 }

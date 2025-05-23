@@ -41,23 +41,24 @@ function getRelativeTime(date) {
   return result === 'just now' ? result : (isFuture ? `in ${result}` : result);
 }
 
-function formatDate2(dateString) {
+function formatDOB(dateString) {
   // returns date in format "Date Month" i.e. '12 July' etc
   var [day, month, year] = dateString.split('/').map(Number);
   var date = new Date(year, month - 1, day);
 
-  var options = { day: '2-digit', month: 'long'};
+  var options = { day: '2-digit', month: 'long' };
   return date.toLocaleDateString('en-In', options);
 }
 
 
-function createDate(){
+function createDate() {
+  // returns date in format "DD/MM/YYYY, HH:MM AM/PM"
   var hour = new Date().getHours();
   var mins = new Date().getMinutes();
   var date = new Date().getDate();
   var month = new Date().getMonth() + 1;
   var year = new Date().getFullYear();
-  if (hour > 12){
+  if (hour > 12) {
     hour = hour - 12;
     if (hour < 10) {
       hour = "0" + hour;
@@ -85,19 +86,20 @@ function createDate(){
   var FinalDate = date + "/" + month + "/" + year + ", " + time;
   return FinalDate;
 }
-  
+
 function convertTo24Hour(timeStr) {
-    var [time, modifier] = timeStr.split(' ');
-    let [hours, minutes] = time.split(':');
-  
-    if (modifier === 'PM' && hours !== '12') {
-      hours = String(parseInt(hours, 10) + 12);
-    }
-    if (modifier === 'AM' && hours === '12') {
-      hours = '00';
-    }
-  
-    return `${hours}:${minutes}`;
+  // Converts time from 12-hour format to 24-hour format
+  var [time, modifier] = timeStr.split(' ');
+  let [hours, minutes] = time.split(':');
+
+  if (modifier === 'PM' && hours !== '12') {
+    hours = String(parseInt(hours, 10) + 12);
+  }
+  if (modifier === 'AM' && hours === '12') {
+    hours = '00';
+  }
+
+  return `${hours}:${minutes}`;
 }
 
-module.exports = { getRelativeTime, formatDate2, createDate };
+module.exports = { getRelativeTime, formatDOB, createDate };

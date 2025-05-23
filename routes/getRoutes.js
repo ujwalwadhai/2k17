@@ -3,7 +3,6 @@ var router = express.Router();
 var getController = require('../controllers/getController');
 var { isLoggedIn } = require('../middlewares/auth');
 var hasRole = require('../middlewares/role');
-var Posts = require('../models/Posts');
 
 router.get('/', getController.indexPage);
 
@@ -22,6 +21,8 @@ router.get('/members', getController.members);
 // router.get('/upload', (req, res) => res.render('pages/upload'))
 
 router.get('/logout', isLoggedIn, getController.logout);
+
+router.get('/verify-email/:token', getController.verifyEmail);
 
 router.get('/gallery', getController.gallery);
 

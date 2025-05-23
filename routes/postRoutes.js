@@ -44,4 +44,6 @@ router.post('/report', postController.report)
 
 router.post('/change-password', isLoggedIn, postController.changePassword)
 
+router.post('/update-email', isLoggedIn, postController.updateEmail)
+
 module.exports = router;

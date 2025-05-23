@@ -4,7 +4,7 @@ async function getUpcomingBirthdays() {
   var allUsers = await Users.find({ dob: { $ne: "" } });
 
   var today = new Date();
-  var todayMonth = today.getMonth() + 1; // 0-indexed
+  var todayMonth = today.getMonth() + 1;
   var todayDate = today.getDate();
 
   var next30Days = [];

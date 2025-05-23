@@ -7,7 +7,6 @@ var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
 var Reports = require('../models/Reports');
 var sendMail = require('../config/mailer');
-var { getRelativeTime } = require('../utils/dateFunctions');
 
 exports.loginPassword = async (req, res) => {
   var { username, password } = req.body;
@@ -15,7 +14,7 @@ exports.loginPassword = async (req, res) => {
   try {
     var user = await Users.findOne({
       $or: [{ email: username }, { username: username }]
-    });
+    }).select('+code +password');
 
     if (!user) {
       return res.json({ success: false, message: 'User not found' });
@@ -30,7 +29,7 @@ exports.loginPassword = async (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      sendMail('login', [user.email], {useragent: req.useragent, method: 'Password'});
+      sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     });
 
@@ -60,7 +59,7 @@ exports.loginEmail = async (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      sendMail('login', [user.email], {useragent: req.useragent, method: 'Email OTP'});
+      sendMail('login', user.email, {useragent: req.useragent, method: 'Email OTP'});
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     })
 
@@ -82,7 +81,7 @@ exports.sendOTP = async (req, res) => {
 
     var otp = Math.floor(100000 + Math.random() * 900000);
 
-    sendMail('otp', [email], {otp, useragent: req.useragent});
+    sendMail('otp', email, {otp, useragent: req.useragent});
     var newOtp = new otps({
       email: email,
       otp: otp
@@ -150,6 +149,30 @@ exports.changePassword = async (req, res) => {
   }
 };
 
+exports.updateEmail = async (req, res) => {
+  try {
+    const { newEmail } = req.body;
+    if (!newEmail) return res.json({ success: false, message: "Email is required." });
+
+    const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    const expiry = new Date(Date.now() + 1000 * 60 * 30);
+
+    const settings = await Settings.findOneAndUpdate(
+      { user: req.user._id },
+      { emailVerification: { newEmail, token, expiry } },
+      { new: true, upsert: true }
+    );
+
+    const link = `${req.protocol}://${req.get('host')}/verify-email/${token}`;
+
+    await sendMail('verify-new-email', newEmail, {link, name: req.user.name});
+    return res.json({ success: true, message: 'Verification email sent.' });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, message: 'Server error.' });
+  }
+}
+
 exports.checkUsername = async (req, res) => {
   var { username } = req.body;
   try {
@@ -162,7 +185,6 @@ exports.checkUsername = async (req, res) => {
     res.json({ success: false, message: 'Something went wrong' });
   }
 }
-
 
 exports.upload = async (req, res) => {
   var { file } = req;
@@ -261,7 +283,7 @@ exports.newComment = async (req, res) => {
     }
     await post.save();
     if(post.author._id.toString() !== req.user._id.toString() && post.author.email){
-      sendMail('newcomment', [post.author.email], { user: req.user, comment: req.body.text, postLink: `http://localhost:3000/post/${post._id}` });
+      sendMail('newcomment', post.author.email, { user: req.user, comment: req.body.text, postLink: `http://localhost:3000/post/${post._id}` });
       var notification = new Notifications({
         user: post.author._id,
         type: 'comment',
@@ -402,19 +424,19 @@ exports.updateSettings = async (req, res) => {
   try {
     var userId = req.user._id;
 
-    var updates = {
-      emailNotifications: req.body.emailNotifications || true,
-      loginAlerts: req.body.loginAlerts || false,
-      emailUpdates: req.body.emailUpdates || false,
+    var notifications = {
+      email: req.body.email || false,
+      login: req.body.login || false,
+      newsletter: req.body.newsletter || false,
     };
 
     var settings = await Settings.findOneAndUpdate(
       { user: userId },
-      { $set: updates },
+      { $set: {notifications} },
       { new: true, upsert: true }
     );
 
-    return res.json({ success: true, settings });
+    return res.json({ success: true });
   } catch (err) {
     return res.json({ success: false, message: 'Something went wrong' });
   }
@@ -439,7 +461,7 @@ exports.report = async (req, res) => {
     var adminEmails = admins.map(user => user.email);
 
     if(req.user?.email) {
-      await sendMail('report_user', [req.user.email], { subject, details, name: req.user.name });
+      await sendMail('report_user', req.user.email, { subject, details, name: req.user.name });
     }
     await sendMail('report_admins', adminEmails, { subject, details, name: req.user?.name || ''});
     res.json({ success: true });

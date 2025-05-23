@@ -3,12 +3,11 @@ var Files = require('../models/Files');
 var Posts = require('../models/Posts');
 var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
-var getUpcomingBirthdays = require('../utils/upcomingBirthdays');
-var { getRelativeTime } = require('../utils/dateFunctions');
+var getUpcomingBirthdays = require('../utils/birthdays');
 
 exports.indexPage = async (req, res) => {
   res.render('pages/index');
-};
+}; 
   
 exports.login = (req, res) => {
   var { url } = req.query;
@@ -28,7 +27,6 @@ exports.home = async (req, res) => {
     if (hasUnreadNotifications) {
       res.locals.hasUnreadNotifications = true;
     }
-    console.log(req.user)
     res.render('pages/home', { birthdays, isHome: true });
   } catch(err) {
     res.redirect("/login")
@@ -45,6 +43,31 @@ exports.emailLogin = (req, res) => {
 
 exports.donate = (req, res) => {
   res.render('pages/donate');
+}
+
+exports.verifyEmail = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const settings = await Settings.findOne({ 'emailVerification.token': token });
+
+    if (!settings || !settings.emailVerification || new Date() > settings.emailVerification.expiry) {
+      return res.send('<h2 style="color:red;">Invalid or expired link.</h2>');
+    }
+
+    const user = await Users.findById(settings.user);
+    if (!user) return res.send('<h2 style="color:red;">User not found.</h2>');
+
+    user.email = settings.emailVerification.newEmail;
+    await user.save();
+
+    settings.emailVerification = undefined;
+    await settings.save();
+
+    return res.send('<h2 style="color:green;">Email successfully verified and updated!</h2>');
+  } catch (err) {
+    console.error(err);
+    res.send('<h2 style="color:red;">Something went wrong.</h2>');
+  }
 }
 
 exports.logout = (req, res) => {

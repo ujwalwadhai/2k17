@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-var { getRelativeTime } = require('../utils/dateFunctions');
+var { getRelativeTime } = require('../utils/time');
 
 const notificationSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },

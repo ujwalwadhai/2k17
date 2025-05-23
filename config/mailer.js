@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const { createDate } = require('../utils/dateFunctions');
+const { createDate } = require('../utils/time');
 const deviceInfo = require('../middlewares/device');
 
 const transporter = nodemailer.createTransport({
@@ -110,7 +110,7 @@ async function UserReportMail(to, data) {
   var template = `<div style="font-family: Arial, sans-serif; background-color: #1f1c2e; color: #ffffffcc; padding: 20px;">
     <h3 style="color: #7b5cf0;">We've received your report</h3>
     <p>Hi <strong>${data.name}</strong>,</p>
-    <p>Thanks for taking the time to let me know. I've received your report as follows :</p>
+    <p>Thanks for taking the time to let us know. We've received your report as follows :</p>
 
     <div style="background-color: #2b273f; padding: 15px; border-left: 4px solid #7b5cf0; margin: 20px 0;">
       <p style="margin-top: 5px; color: #ffffffcc;"><b>Subject : </b> ${data.subject}</p>
@@ -144,14 +144,35 @@ async function AdminReportMail(to, data) {
   sendEmail(to, "New Report Submitted • 2k17 Platform", template);
 }
 
+async function VerifyNewEmailMail(to, data) {
+  var template = `
+        <div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
+  <h3 style="color: #7b5cf0;">Please Verify Your New Email Address</h3>
+  <p>Hello ${data.name || 'there'},</p>
+  <p>We received a request to update your email address for your 2k17 account.</p>
+  <a href="${data.link}" style="display: inline-block; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Verify Email Address</a>
+  <p style="margin-top: 20px; color: #888;">
+    This link is valid for 30 minutes. If you did not request this change, please ignore this email or contact support.
+  </p>
+  <p style="color: #888;">
+    Regards,<br>
+    Ujwal W.<br>
+    2k17 Platform
+  </p>
+</div>
+
+      `
+  sendEmail(to, 'Verify your new email • 2k17 Platform', template);
+}
+
 async function sendMail(type, to, data) {
   /* if (type == 'login') LoginMail(to, data);
   if (type == 'otp') OTPMail(to, data);
   if (type == 'newcomment') NewCommentMail(to, data); 
-  // stopped to avoid sending emails during development */
   if (type == 'report_user') UserReportMail(to, data);
   if (type == 'report_admins') AdminReportMail(to, data);
-
+  // commented to avoid sending emails during development */
+  if (type == 'verify-new-email') VerifyNewEmailMail(to, data);
 }
 
 module.exports = sendMail;

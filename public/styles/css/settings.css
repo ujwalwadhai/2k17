@@ -78,7 +78,6 @@
 #notification-settings-popup .notification-settings-box {
   width: 85vw;
   max-width: 700px;
-  height: auto;
   max-height: 600px;
   position: absolute;
   top: 50%;
@@ -182,7 +181,6 @@
 #change-password-popup .change-password-box {
   width: 85vw;
   max-width: 700px;
-  height: auto;
   max-height: 600px;
   position: absolute;
   top: 50%;
@@ -236,6 +234,7 @@
   background: #2c283d;
   color: #fff;
   outline: none;
+  resize: vertical;
 }
 #change-password-popup .change-password-box .change-password-list input:focus {
   border: 1px solid #7b5cf0;
@@ -288,7 +287,6 @@
 #report-problem-popup .report-problem-box {
   width: 85vw;
   max-width: 700px;
-  height: auto;
   max-height: 600px;
   position: absolute;
   top: 50%;
@@ -395,7 +393,6 @@
 #give-suggestion-popup .give-suggestion-box {
   width: 85vw;
   max-width: 700px;
-  height: auto;
   max-height: 600px;
   position: absolute;
   top: 50%;
@@ -473,8 +470,114 @@
   background-color: #7b5cf0;
 }
 
+#change-email-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#change-email-popup.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+#change-email-popup .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+#change-email-popup .overlay.show {
+  opacity: 1;
+}
+#change-email-popup .change-email-box {
+  width: 85vw;
+  max-width: 700px;
+  max-height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1f1c2e;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#change-email-popup .change-email-box .heading {
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 16px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #686868;
+}
+#change-email-popup .change-email-box .heading .title span {
+  margin-right: 16px;
+}
+#change-email-popup .change-email-box .heading p.close-icon {
+  margin: 12px;
+  margin-left: auto;
+  margin-right: 16px;
+  background-color: #2b273f;
+  padding: 8px;
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0.2px solid #888;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+#change-email-popup .change-email-box .change-email-list {
+  padding: 20px;
+}
+#change-email-popup .change-email-box .change-email-list input {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+  background: #2c283d;
+  color: #fff;
+  outline: none;
+  resize: vertical;
+}
+#change-email-popup .change-email-box .change-email-list input:focus {
+  border: 1px solid #7b5cf0;
+}
+#change-email-popup .change-email-box .change-email-list #change-email-status {
+  margin-top: 4px;
+  font-weight: 500;
+}
+#change-email-popup .change-email-box .change-email-list button[type=submit] {
+  background-color: #6342d8;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  transition: background 0.3s;
+}
+#change-email-popup .change-email-box .change-email-list button[type=submit]:hover {
+  background-color: #7b5cf0;
+}
+
 @media (max-width: 600px) {
-  .notification-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box {
+  .notification-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box, .change-email-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;

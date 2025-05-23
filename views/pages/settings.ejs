@@ -17,6 +17,7 @@
         <li onclick="window.location.href='/profile/edit'"><a href="/profile/edit"><span class="fal fa-user"></span>
             Update profile</a></li>
         <li onclick="openChangePassword()"><a><span class="fal fa-unlock-keyhole"></span> Change password</a></li>
+        <li onclick="openChangeEmail()"><a><span class="fal fa-envelope"></span> <%- user.email ? 'Change' : 'Add' %> email</a></li>
         <li onclick="openNotificationSettings()"><a><span class="fal fa-bell"></span> Notifications</a></li>
       </ul>
       <ul>
@@ -49,15 +50,15 @@
           <form id="settings-form">
             <div class="form-section">
               <label>
-                <input type="checkbox" name="emailNotifications" <%=settings.emailNotifications ? 'checked' : '' %>>
+                <input type="checkbox" name="email" <%=settings.notifications.email ? 'checked' : '' %>>
                 Email notifications
               </label>
               <label>
-                <input type="checkbox" name="loginAlerts" <%=settings.loginAlerts ? 'checked' : '' %>>
+                <input type="checkbox" name="login" <%=settings.notifications.login ? 'checked' : '' %>>
                 Login alerts (via email)
               </label>
               <label>
-                <input type="checkbox" name="emailUpdates" <%=settings.emailUpdates ? 'checked' : '' %>>
+                <input type="checkbox" name="newsletter" <%=settings.notifications.newsletter ? 'checked' : '' %>>
                 Monthly newsletter via email
               </label>
             </div><br>
@@ -126,6 +127,25 @@
           <br>
           <div id="give-suggestion-status"></div><br>
           <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="change-email-popup">
+    <div class="overlay" onclick="closeChangeEmail()"></div>
+    <div class="change-email-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-envelope"></span> <%- user.email ? 'Change' : 'Add' %> email</p>
+        <p class="close-icon fal fa-xmark" onclick="closeChangeEmail()"></p>
+      </div>
+      <div class="change-email-list" id="change-email-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; A verification link will be sent to this email.</span><br><br>
+        <form id="change-email-form">
+          <input type="email" autocomplete="off" name="newEmail" placeholder="New email" required id="newEmail">
+          <br>
+          <div id="change-email-status"></div><br>
+          <button type="submit">Update</button>
         </form>
       </div>
     </div>

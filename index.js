@@ -69,10 +69,10 @@ app.use((err, req, res, next) => {
 /* const cron = require('node-cron');*/
 
 
-var { getRelativeTime, formatDate2, createDate } = require('./utils/dateFunctions');
+var { getRelativeTime, formatDOB, createDate } = require('./utils/time');
 app.locals.getRelativeTime = getRelativeTime;
 app.locals.createDate = createDate;
-app.locals.formatDate2 = formatDate2;
+app.locals.formatDOB = formatDOB;
 app.locals.hasUnreadNotifications = false
 
 require('./config/mailer')

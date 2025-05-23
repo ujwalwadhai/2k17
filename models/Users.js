@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-var { createDate } = require('../utils/dateFunctions');
 var bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
@@ -21,7 +20,7 @@ const userSchema = new mongoose.Schema({
     facebook: String,
     other: String
   },
-  code: { type: String },
+  code: { type: String, select: false },
   emailVerificationToken: { type: String },
   role: { type: String, enum: ['admin', 'moderator']},
   joinedAt: { type: Date, default: Date.now },

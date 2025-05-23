@@ -32,7 +32,7 @@
         <img src="<%= member.profile ? member.profile : '/images/user.png' %>" alt="" class="event-img">
         <div class="event-info">
           <p class="title"><%= member.name %> 🎂</p>
-          <p class="description">on <%- formatDate2(member.dob) %></p>
+          <p class="description">on <%- formatDOB(member.dob) %></p>
         </div>
       </div>
       <% }) %>

@@ -60,6 +60,7 @@ a {
   color: #7b5cf0;
   text-decoration: none;
   user-select: none;
+  cursor: pointer;
 }
 
 img, button, ::placeholder {

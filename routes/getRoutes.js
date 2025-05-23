@@ -36,4 +36,6 @@ router.get('/profile/edit', isLoggedIn, getController.editProfile);
 
 router.get('/settings', isLoggedIn, getController.settings);
 
+router.get('/reset-password/:token', getController.renderResetPage);
+
 module.exports = router;

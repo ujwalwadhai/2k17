@@ -46,4 +46,8 @@ router.post('/change-password', isLoggedIn, postController.changePassword)
 
 router.post('/update-email', isLoggedIn, postController.updateEmail)
 
+router.post('/forgotten-password', postController.requestPasswordReset)
+
+router.post('/reset-password', postController.resetPassword)
+
 module.exports = router;

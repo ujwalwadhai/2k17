@@ -28,12 +28,32 @@
               </div><br>
             </div>
 
-            <a href="/login/email">Login with Email OTP instead</a><br>
+            <p><a href="/login/email">Login with Email OTP instead</a></p>
+            <p><a style="margin-top: 8px;" onclick="openForgottenPassword()">Forgotten password?</a></p>
             <button onclick="login('<%= redirectURL %>')" class="primary-btn" id="login_btn">Continue</button><br><br>
             <span class="only-small"><br><br></span>
           </div>
         </div>
     </div>
+
+    <div id="forgotten-password-popup">
+    <div class="overlay" onclick="closeForgottenPassword()"></div>
+    <div class="forgotten-password-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-unlock-keyhole"></span> Forgotten password</p>
+        <p class="close-icon fal fa-xmark" onclick="closeForgottenPassword()"></p>
+      </div>
+      <div class="forgotten-password-list" id="forgotten-password-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; A password reset link will be sent to this email.</span><br><br>
+        <form id="forgotten-password-form">
+          <input type="email" autocomplete="email" name="email" placeholder="Email registered with 2k17 Platform *" required>
+          <br>
+          <div id="forgotten-password-status"></div><br>
+          <button type="submit">Send reset link</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
     <script src="/js/login.js"></script>
 </body>

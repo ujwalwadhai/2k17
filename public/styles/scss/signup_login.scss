@@ -1,4 +1,5 @@
 @use 'global' as *;
+@use 'components/popup/mixins' as *;
 
 body {
   margin: 0;
@@ -413,5 +414,39 @@ body {
 @media screen and (min-width: 600px) {
   .only-small {
     display: none;
+  }
+}
+
+#forgotten-password-popup{
+  @include fullscreen-popup;
+
+  .forgotten-password-box {
+    @include popup-box;
+
+    .forgotten-password-list{
+      padding: 20px;
+
+      input {
+        @include popup-inputs;
+      }
+
+      #forgotten-password-status {
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        @include popup-button;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .forgotten-password-box {
+    width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
   }
 }

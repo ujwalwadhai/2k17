@@ -38,7 +38,10 @@ async function LoginMail(to, data) {
     <p style="margin:0;">Authentication Method: ${data.method}</p>
     <p style="margin:0;">Time: ${createDate()}</p>
   </div>
-  <p style="color:#888; margin-top:20px;">Regards,<br>Ujwal W.<br>2k17 Platform</p>
+  <p style="color:#888; margin-top:20px;">
+    Regards,<br>
+    2k17 Platform
+  </p>
 </div>
 `
   sendEmail(to, 'Login Alert • 2k17 Platform', template);
@@ -61,7 +64,8 @@ async function OTPMail(to, data) {
         </p>
 
         <p style="margin-top: 40px; font-size: 13px; color: #888;">
-          Regards,<br>Ujwal W.<br>2k17 Platform
+          Regards,<br>
+          2k17 Platform
         </p>
       </div>
     </div>
@@ -95,7 +99,8 @@ async function NewCommentMail(to, data) {
       </p>
 
       <p style="font-size: 14px; color: #888; line-height: 21px;">
-        Regards,<br>Ujwal W.<br>2k17 Platform
+        Regards,<br>
+        2k17 Platform
       </p>
 
     </div>
@@ -119,7 +124,10 @@ async function UserReportMail(to, data) {
     </div>
 
     <p>We'll look into it as soon as possible.</p>
-    <p style="color: #888;">Regards,<br>Ujwal W.<br>2k17 Platform</p>
+    <p style="color: #888;">
+      Regards,<br>
+      2k17 Platform
+    </p>
   </div>`
 
   sendEmail(to, "Report received • 2k17 Platform", template);
@@ -156,7 +164,6 @@ async function VerifyNewEmailMail(to, data) {
   </p>
   <p style="color: #888;">
     Regards,<br>
-    Ujwal W.<br>
     2k17 Platform
   </p>
 </div>
@@ -165,14 +172,36 @@ async function VerifyNewEmailMail(to, data) {
   sendEmail(to, 'Verify your new email • 2k17 Platform', template);
 }
 
+async function ResetPasswordMail(to, data) {
+  var template = `
+        <div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
+  <h3 style="color: #7b5cf0;">Link to reset your password</h3>
+  <p>Hello ${data.name || 'there'},</p>
+  <p>We received a request to reset password of your 2k17 account.</p>
+  <p>Please click on button below to set new password</p>
+  <a href="${data.link}" style="display: inline-block; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Reset password</a>
+  <p style="margin-top: 20px; color: #888;">
+    This link is valid for 1 hour. If you did not request this change, please ignore this email or contact support.
+  </p>
+  <p style="color: #888;">
+    Regards,<br>
+    2k17 Platform
+  </p>
+</div>
+
+      `
+  sendEmail(to, 'Password reset link • 2k17 Platform', template);
+}
+
 async function sendMail(type, to, data) {
   /* if (type == 'login') LoginMail(to, data);
   if (type == 'otp') OTPMail(to, data);
   if (type == 'newcomment') NewCommentMail(to, data); 
   if (type == 'report_user') UserReportMail(to, data);
   if (type == 'report_admins') AdminReportMail(to, data);
-  // commented to avoid sending emails during development */
   if (type == 'verify-new-email') VerifyNewEmailMail(to, data);
+  if (type == 'reset-password') ResetPasswordMail(to, data);
+  // commented to avoid sending emails during development */
 }
 
 module.exports = sendMail;

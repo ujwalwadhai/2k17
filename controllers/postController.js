@@ -121,7 +121,7 @@ exports.register = async (req, res) => {
 }
 
 exports.changePassword = async (req, res) => {
-  const { currentPassword, newPassword, confirmPassword } = req.body;
+  var { currentPassword, newPassword, confirmPassword } = req.body;
 
   if (!currentPassword || !newPassword || !confirmPassword) {
     return res.json({ success: false, message: "All fields are required." });
@@ -132,9 +132,9 @@ exports.changePassword = async (req, res) => {
   }
 
   try {
-    const user = await Users.findById(req.user._id).select('+password');
+    var user = await Users.findById(req.user._id).select('+password');
 
-    const isMatch = await user.validatePassword(currentPassword);
+    var isMatch = await user.validatePassword(currentPassword);
     if (!isMatch) {
       return res.json({ success: false, message: "Current password is incorrect." });
     }
@@ -151,19 +151,19 @@ exports.changePassword = async (req, res) => {
 
 exports.updateEmail = async (req, res) => {
   try {
-    const { newEmail } = req.body;
+    var { newEmail } = req.body;
     if (!newEmail) return res.json({ success: false, message: "Email is required." });
 
-    const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
-    const expiry = new Date(Date.now() + 1000 * 60 * 30);
+    var token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    var expiry = new Date(Date.now() + 1000 * 60 * 30);
 
-    const settings = await Settings.findOneAndUpdate(
+    var settings = await Settings.findOneAndUpdate(
       { user: req.user._id },
       { emailVerification: { newEmail, token, expiry } },
       { new: true, upsert: true }
     );
 
-    const link = `${req.protocol}://${req.get('host')}/verify-email/${token}`;
+    var link = `${req.protocol}://${req.get('host')}/verify-email/${token}`;
 
     await sendMail('verify-new-email', newEmail, {link, name: req.user.name});
     return res.json({ success: true, message: 'Verification email sent.' });
@@ -205,6 +205,49 @@ exports.upload = async (req, res) => {
     return res.json({ success: false, message: 'Something went wrong' });
   }
 }
+
+exports.requestPasswordReset = async (req, res) => {
+  var { email } = req.body;
+  if(!email) return res.json({ success: false, message: "Please enter email." })
+  try {
+    var user = await Users.findOne({ email });
+    if (!user) return res.json({ success: false, message: "Email not registered." });
+
+    var token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    var expiry = Date.now() + 60 * 60 * 1000;
+
+    await Settings.findOneAndUpdate(
+      { user: user._id },
+      { passwordReset: { token, expiry } }
+    );
+
+    var link = `${req.protocol}://${req.get('host')}/reset-password/${token}`;
+    await sendMail('reset-password', email, {link, name: user.name});
+
+    res.json({ success: true, message: "Reset link sent to your email." });
+  } catch (err) {
+    res.json({ success: false, message: "Something went wrong." });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  var { token, password, confirmPassword } = req.body;
+  var settings = await Settings.findOne({ "passwordReset.token": token }).populate('user');
+
+  if (!settings || settings.passwordReset.expiry < Date.now()) {
+    return res.json({ success: false, message: "Token expired or invalid." });
+  }
+
+  if(password !== confirmPassword) return res.json({ success: false, message: "Passwords do not match." });
+
+  settings.user.password = password;
+  await settings.user.save();
+
+  settings.passwordReset = undefined;
+  await settings.save();
+
+  res.json({ success: true, message: "Password updated successfully." });
+};
 
 exports.fetchPosts = async (req, res) => {
   try {

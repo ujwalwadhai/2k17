@@ -13,9 +13,13 @@ const settingsSchema = new mongoose.Schema({
     newsletter: { type: Boolean, default: true }
   },
   emailVerification: {
-    newEmail: { type: String },
-    token: { type: String },
-    expiry: { type: Date }
+    newEmail: String,
+    token: String,
+    expiry: Date
+  },
+  passwordReset: {
+    token: String,
+    expiry: Date
   }
 }, { timestamps: true });
 

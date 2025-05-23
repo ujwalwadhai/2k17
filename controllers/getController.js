@@ -41,20 +41,32 @@ exports.emailLogin = (req, res) => {
   res.render('pages/email-login');
 }
 
+exports.renderResetPage = async (req, res) => {
+  var { token } = req.params;
+  var settings = await Settings.findOne({ "passwordReset.token": token });
+
+  if (!settings || settings.passwordReset.expiry < Date.now()) {
+    return res.send("Link expired or invalid");
+  }
+
+  res.render("pages/reset-password", { token });
+};
+
+
 exports.donate = (req, res) => {
   res.render('pages/donate');
 }
 
 exports.verifyEmail = async (req, res) => {
   try {
-    const { token } = req.params;
-    const settings = await Settings.findOne({ 'emailVerification.token': token });
+    var { token } = req.params;
+    var settings = await Settings.findOne({ 'emailVerification.token': token });
 
     if (!settings || !settings.emailVerification || new Date() > settings.emailVerification.expiry) {
       return res.send('<h2 style="color:red;">Invalid or expired link.</h2>');
     }
 
-    const user = await Users.findById(settings.user);
+    var user = await Users.findById(settings.user);
     if (!user) return res.send('<h2 style="color:red;">User not found.</h2>');
 
     user.email = settings.emailVerification.newEmail;

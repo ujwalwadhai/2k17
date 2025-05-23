@@ -126,3 +126,49 @@ function email_login(){
         status_message.innerHTML = `<span style='color: red'>Please enter OTP</span>`;
     }
 }
+
+
+document.getElementById("forgotten-password-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var statusBox = document.getElementById("forgotten-password-status");
+  statusBox.style.color = "green";
+  statusBox.innerHTML = "<i class='fal fa-circle-notch fa-rotate'></i> &nbsp;Submitting...";
+
+  fetch("/forgotten-password", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({email : this.elements["email"].value})
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        statusBox.innerHTML = "<i class='fal fa-circle-check'></i> &nbsp; Verification email sent! Please check your spam folder too.";
+        statusBox.style.color = "green";
+        this.reset();
+      } else {
+        statusBox.innerHTML = "<i class='fal fa-circle-xmark'></i> &nbsp;" + (data.message || "Failed to update.");
+        statusBox.style.color = "red";
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong. Please try again later";
+      statusBox.style.color = "red";
+    });
+});
+
+function openForgottenPassword(){
+  var forgottenPasswordPopup = document.getElementById('forgotten-password-popup');
+  var forgottenPasswordOverlay = forgottenPasswordPopup.querySelector('.overlay');
+  forgottenPasswordPopup.classList.add('show');
+  forgottenPasswordOverlay.classList.add('show');
+}
+
+function closeForgottenPassword(){
+  var forgottenPasswordPopup = document.getElementById('forgotten-password-popup');
+  var forgottenPasswordOverlay = forgottenPasswordPopup.querySelector('.overlay');
+  forgottenPasswordPopup.classList.remove('show');
+  forgottenPasswordOverlay.classList.remove('show');
+}

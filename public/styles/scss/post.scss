@@ -16,7 +16,7 @@
       width: 100%;
       flex-direction: row;
       align-items: center;
-      border-top: 1px solid #686868;
+      border-top: 1px solid $text-muted;
       margin-bottom: 8px;
     }
 
@@ -85,7 +85,7 @@
             word-wrap: break-word;
 
             strong {
-                color: #333;
+                color: $text-muted;
             }
         }
     }
@@ -94,7 +94,7 @@
         display: flex;
         gap: 0.5rem;
         align-items: center;
-        border-top: 1px solid #686868;
+        border-top: 1px solid $text-muted;
         padding: 12px 0;
 
         input {

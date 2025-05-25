@@ -30,10 +30,10 @@
     }
 }
 
-@mixin popup-box {
+@mixin popup-box($maxWidth : 700px, $maxHeight: 500px) {
     width: 85vw;
-    max-width: 700px;
-    max-height: 600px;
+    max-width: $maxWidth;
+    max-height: $maxHeight;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -54,7 +54,7 @@
         width: 100%;
         flex-direction: row;
         align-items: center;
-        border-bottom: 1px solid #686868;
+        border-bottom: 1px solid $text-muted;
 
         .title {
             span {
@@ -87,7 +87,7 @@
     border: none;
     border-radius: 8px;
     background: $input-bg;
-    color: #fff;
+    color: $text-light;
     outline: none;
     resize: vertical;
 

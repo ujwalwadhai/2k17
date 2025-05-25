@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%- include('../partials/head.ejs') %>
-  <title>2k17 — Class Social Space</title>
+  <title>Home ❤️ 2k17</title>
   <link rel="stylesheet" href="/styles/css/home.css" />
 </head>
 <body>
@@ -28,7 +28,7 @@
       <p class="heading">Upcoming Birthdays</p>
       <% if(birthdays.length > 0){ %>
       <% birthdays.forEach(member => { %>
-      <div class="event">
+      <div class="event" onclick="window.location.href='/u/<%= member.username %>'">
         <img src="<%= member.profile ? member.profile : '/images/user.png' %>" alt="" class="event-img">
         <div class="event-info">
           <p class="title"><%= member.name %> 🎂</p>
@@ -91,7 +91,7 @@
       
     </div>
   </div>
-
+  <%- include('../partials/footer.ejs') %>
 
   <script src="/js/home.js"></script>
   <script>

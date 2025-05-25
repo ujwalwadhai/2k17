@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%-include('../partials/head') %>
+        <title>Admin Dashboard</title>
+        <link rel="stylesheet" href="/styles/css/admin.css">
+</head>
+
+<body>
+    <%-include('../partials/navbar') %>
+    <%-include('../partials/loader') %>
+        <br><br><br><br>
+ 
+        <div class="activity-logs">
+            <h2>Activity Logs</h2>
+            <input type="text" id="logSearch" placeholder="Search logs..." class="search-bar">
+            <div class="logs-table-wrapper">
+                <table class="logs-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Action</th>
+                            <th>Details</th>
+                            <th>Date & Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% logs.forEach(log=> { %>
+                            <tr>
+                                <td onclick="window.location.href='/u/<%= log.user.username %>'" style="cursor: pointer;">
+                                    <%= log.user.username %>
+                                </td>
+                                <td>
+                                    <%= log.action %>
+                                </td>
+                                <td>
+                                    <%= log.detail || '-' %>
+                                </td>
+                                <td>
+                                    <%= new Date(log.createdAt).toLocaleString() %>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <script>
+  document.getElementById('logSearch').addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll('.logs-table tbody tr');
+
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(filter) ? '' : 'none';
+    });
+  });
+</script>
+</body>
+
+</html>

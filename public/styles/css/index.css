@@ -41,7 +41,7 @@ body {
 }
 .hero .hero-text .cta-btn {
   background: #6342d8;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   padding: 0.75rem 1.5rem;
   text-decoration: none;
   border-radius: 8px;
@@ -56,7 +56,7 @@ body {
   display: inline-block;
   width: 100%;
   max-width: 40vw;
-  border: 1px solid #888;
+  border: 1px solid #888888;
   border-radius: 12px;
 }
 .hero .featured-photo img.featured-photo-img {
@@ -141,7 +141,7 @@ footer {
   background: #1f1c2e;
   color: grey;
   font-size: 0.9rem;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #888888;
 }
 
 @media (max-width: 900px) {
@@ -205,7 +205,7 @@ footer {
     border: none;
     border-radius: 8px;
     background: #2c283d;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
     outline: none;
   }
   .about-and-newsletter .newsletter-sub input:focus {
@@ -213,7 +213,7 @@ footer {
   }
   .about-and-newsletter .newsletter-sub button {
     background: #7b5cf0;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
     padding: 0.8rem;
     border: none;
     border-radius: 8px;
@@ -245,7 +245,7 @@ footer {
     border: none;
     border-radius: 8px;
     background: #2c283d;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
     outline: none;
   }
   .newsletter-sub input:focus {
@@ -253,7 +253,7 @@ footer {
   }
   .newsletter-sub button {
     background: #7b5cf0;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
     padding: 0.8rem;
     border: none;
     border-radius: 8px;
@@ -274,7 +274,7 @@ footer {
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   outline: none;
   max-width: 400px;
 }
@@ -283,7 +283,7 @@ footer {
 }
 .developer-and-contact .contact button {
   background: #7b5cf0;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   padding: 0.8rem;
   border: none;
   border-radius: 8px;

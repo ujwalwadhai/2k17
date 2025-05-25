@@ -1,7 +1,7 @@
 body {
   margin: 0;
   background: #1f1c2e;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .container {
@@ -105,7 +105,7 @@ body {
   cursor: pointer;
 }
 .left-pane .image-caption .dots .dot.active {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .right-pane {
@@ -137,7 +137,7 @@ body {
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   outline: none;
 }
 .right-pane .signup-form input:focus {
@@ -207,7 +207,7 @@ body {
   width: 100%;
   border: none;
   border-radius: 8px;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   font-weight: bold;
   margin-top: 1rem;
   cursor: pointer;
@@ -218,7 +218,7 @@ body {
 .right-pane .signup-form .divider {
   text-align: center;
   margin: 1rem 0;
-  color: #888;
+  color: #888888;
 }
 .right-pane .signup-form .social-buttons {
   display: flex;
@@ -227,14 +227,14 @@ body {
 .right-pane .signup-form .social-buttons button {
   flex: 1;
   background: #2c283d;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   border: none;
   padding: 0.8rem;
   border-radius: 8px;
   cursor: pointer;
 }
 .right-pane .signup-form .social-buttons button:hover {
-  background: #888;
+  background: #888888;
 }
 
 @media (max-width: 1024px) {
@@ -362,7 +362,7 @@ body {
 #forgotten-password-popup .forgotten-password-box {
   width: 85vw;
   max-width: 700px;
-  max-height: 600px;
+  max-height: 500px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -383,7 +383,7 @@ body {
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #686868;
+  border-bottom: 1px solid #888888;
 }
 #forgotten-password-popup .forgotten-password-box .heading .title span {
   margin-right: 16px;
@@ -397,7 +397,7 @@ body {
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #888;
+  border: 0.2px solid #888888;
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -413,7 +413,7 @@ body {
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   outline: none;
   resize: vertical;
 }

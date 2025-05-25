@@ -8,6 +8,8 @@ router.get('/', getController.indexPage);
 
 router.get('/home', isLoggedIn, getController.home);
 
+router.get('/admin', hasRole(['admin']), getController.admin);
+
 router.get('/login', getController.login);
 
 router.get('/create-account', getController.createAccount);

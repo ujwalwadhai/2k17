@@ -32,7 +32,7 @@ body {
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   outline: none;
   max-width: 400px;
 }
@@ -84,7 +84,7 @@ body {
 }
 .members-page .member-card .name span {
   font-size: 0.8rem;
-  color: #888;
+  color: #888888;
   margin-left: 8px;
   background: #6342d8;
   color: white;

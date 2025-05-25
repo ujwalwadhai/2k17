@@ -1,0 +1,102 @@
+@use '../global' as *;
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background-color: $bg-dark;
+  color: $text-light;
+  padding: 12px 16px;
+  margin-top: 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-size: 0.95rem;
+  width: 90vw;
+  min-width: 240px;
+  max-width: 400px;
+  overflow: hidden;
+  border: 2px solid $bg-dark2;
+  border-bottom: none;
+
+  .fa-xmark {
+    color: white !important;
+  }
+
+  i {
+    margin-right: 6px;
+    font-size: 18px;
+  }
+
+  .toast-error {
+    .fal {
+      color: $error;
+    }
+  }
+
+  .toast-info {
+    .fal {
+      color: $info;
+    }
+  }
+
+  .toast-warning {
+    .fal {
+      color: $warning;
+    }
+  }
+
+  .toast-success {
+    .fal {
+      color: $success;
+    }
+  }
+
+  .toast-close {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border: 0.1px solid $bg-dark2;
+    border-radius: 2px;
+  }
+
+  .toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    animation: toastProgress 3.5s linear forwards;
+    width: 100%;
+
+    &.error {
+      background-color: $error;
+    }
+
+    &.info {
+      background-color: $info;
+    }
+
+    &.warning {
+      background-color: $warning;
+    }
+
+    &.success {
+      background-color: $success;
+    }
+  }
+
+}
+
+@keyframes toastProgress {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}

@@ -13,7 +13,6 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => {
     const resourceType = file.mimetype.startsWith('image') ? 'image'
                       : file.mimetype.startsWith('video') ? 'video'
-                      : file.mimetype.startsWith('audio') ? 'video' // audio is treated as video
                       : 'auto';
     var folder = req.query.folder || 'others';
     return {

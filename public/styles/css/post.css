@@ -14,7 +14,7 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-top: 1px solid #686868;
+  border-top: 1px solid #888888;
   margin-bottom: 8px;
 }
 .comments-box .comments-list {
@@ -51,7 +51,7 @@
 }
 .comments-box .comments-list .comment .action-buttons {
   margin-left: auto;
-  color: #888;
+  color: #888888;
   visibility: hidden;
 }
 .comments-box .comments-list .comment .action-buttons span {
@@ -71,13 +71,13 @@
   word-wrap: break-word;
 }
 .comments-box .comments-list p strong {
-  color: #333;
+  color: #888888;
 }
 .comments-box .input-area {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  border-top: 1px solid #686868;
+  border-top: 1px solid #888888;
   padding: 12px 0;
 }
 .comments-box .input-area input {
@@ -85,7 +85,7 @@
   resize: none;
   padding: 0.5rem;
   border-radius: 4px;
-  border: 0.5px solid #888;
+  border: 0.5px solid #888888;
   font-size: 0.95rem;
   font-family: inherit;
   background-color: #2c283d;

@@ -1,15 +1,98 @@
+.toast {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background-color: #1f1c2e;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 12px 16px;
+  margin-top: 10px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-size: 0.95rem;
+  width: 90vw;
+  min-width: 240px;
+  max-width: 400px;
+  overflow: hidden;
+  border: 2px solid #2b273f;
+  border-bottom: none;
+}
+.toast .fa-xmark {
+  color: white !important;
+}
+.toast i {
+  margin-right: 6px;
+  font-size: 18px;
+}
+.toast .toast-error .fal {
+  color: #ff4d4f;
+}
+.toast .toast-info .fal {
+  color: #2db7f5;
+}
+.toast .toast-warning .fal {
+  color: #ffcc00;
+}
+.toast .toast-success .fal {
+  color: #4bb543;
+}
+.toast .toast-close {
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border: 0.1px solid #2b273f;
+  border-radius: 2px;
+}
+.toast .toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  animation: toastProgress 3.5s linear forwards;
+  width: 100%;
+}
+.toast .toast-progress.error {
+  background-color: #ff4d4f;
+}
+.toast .toast-progress.info {
+  background-color: #2db7f5;
+}
+.toast .toast-progress.warning {
+  background-color: #ffcc00;
+}
+.toast .toast-progress.success {
+  background-color: #4bb543;
+}
+
+@keyframes toastProgress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
 html {
   box-sizing: border-box;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 ::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  display: none;
+  /* Safari and Chrome */
 }
 
 @font-face {
@@ -63,7 +146,9 @@ a {
   cursor: pointer;
 }
 
-img, button, ::placeholder {
+img,
+button,
+::placeholder {
   user-select: none;
 }
 

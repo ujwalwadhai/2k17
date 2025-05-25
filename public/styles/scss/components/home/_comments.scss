@@ -1,49 +1,12 @@
 @use '../../global' as *;
+@use '../../components/popup/mixins' as *;
 
 #comments-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1000;
-  margin: auto;
-  transform: translateY(100%);
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-
-  &.show {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    transition: opacity 0.3s ease;
-
-    &.show {
-      opacity: 1; 
-    }
-  }
-
+  @include fullscreen-popup;
+  
   .comments-box {
-    width: 85vw;
-    max-width: 1000px;
-    height: 70vh;
-    max-height: 600px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: $bg-dark;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    @include popup-box;
+    height: 500px;
 
     #comments-loader {
       top: 0;
@@ -51,7 +14,7 @@
       width: 100%;
       height: 350px;
       background-color: transparent;
-      color: #fff;
+      color: $text-light;
       z-index: 9999;
       display: flex;
       align-items: center;
@@ -115,35 +78,6 @@
 
       50% {
         transform: translateY(-16px);
-      }
-    }
-
-
-    .heading {
-      margin-bottom: 0;
-      font-size: 20px;
-      font-weight: bold;
-      padding-left: 16px;
-      display: flex;
-      width: 100%;
-      flex-direction: row;
-      align-items: center;
-      border-bottom: 1px solid #686868;
-
-      .close-icon {
-        margin: 12px;
-        margin-left: auto;
-        margin-right: 16px;
-        background-color: $bg-dark2;
-        padding: 8px;
-        font-size: 14px;
-        width: 32px;
-        height: 32px;
-        border: 0.2px solid $text-muted;
-        color: white;
-        border-radius: 4px;
-        text-align: center;
-        cursor: pointer;
       }
     }
 
@@ -212,7 +146,7 @@
         word-wrap: break-word;
 
         strong {
-          color: #333;
+          color: $input-bg;
         }
       }
     }
@@ -221,7 +155,7 @@
       display: flex;
       gap: 0.5rem;
       align-items: center;
-      border-top: 1px solid #686868;
+      border-top: 1px solid $text-muted;
       padding: 12px;
 
       input {

@@ -87,19 +87,4 @@ function createDate() {
   return FinalDate;
 }
 
-function convertTo24Hour(timeStr) {
-  // Converts time from 12-hour format to 24-hour format
-  var [time, modifier] = timeStr.split(' ');
-  let [hours, minutes] = time.split(':');
-
-  if (modifier === 'PM' && hours !== '12') {
-    hours = String(parseInt(hours, 10) + 12);
-  }
-  if (modifier === 'AM' && hours === '12') {
-    hours = '00';
-  }
-
-  return `${hours}:${minutes}`;
-}
-
 module.exports = { getRelativeTime, formatDOB, createDate };

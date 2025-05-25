@@ -20,7 +20,7 @@
   list-style: none;
   padding: 0;
   padding-bottom: 12px;
-  border-bottom: 1px solid #888;
+  border-bottom: 1px solid #888888;
 }
 .settings-container .links ul:last-of-type {
   border-bottom: none;
@@ -78,7 +78,7 @@
 #notification-settings-popup .notification-settings-box {
   width: 85vw;
   max-width: 700px;
-  max-height: 600px;
+  max-height: 500px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -99,7 +99,7 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #686868;
+  border-bottom: 1px solid #888888;
 }
 #notification-settings-popup .notification-settings-box .heading .title span {
   margin-right: 16px;
@@ -113,7 +113,7 @@
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #888;
+  border: 0.2px solid #888888;
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -181,7 +181,7 @@
 #change-password-popup .change-password-box {
   width: 85vw;
   max-width: 700px;
-  max-height: 600px;
+  max-height: 500px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -202,7 +202,7 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #686868;
+  border-bottom: 1px solid #888888;
 }
 #change-password-popup .change-password-box .heading .title span {
   margin-right: 16px;
@@ -216,7 +216,7 @@
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #888;
+  border: 0.2px solid #888888;
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -232,7 +232,7 @@
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   outline: none;
   resize: vertical;
 }
@@ -287,7 +287,7 @@
 #report-problem-popup .report-problem-box {
   width: 85vw;
   max-width: 700px;
-  max-height: 600px;
+  max-height: 500px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -308,7 +308,7 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #686868;
+  border-bottom: 1px solid #888888;
 }
 #report-problem-popup .report-problem-box .heading .title span {
   margin-right: 16px;
@@ -322,7 +322,7 @@
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #888;
+  border: 0.2px solid #888888;
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -338,7 +338,7 @@
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   outline: none;
   resize: vertical;
 }
@@ -393,7 +393,7 @@
 #give-suggestion-popup .give-suggestion-box {
   width: 85vw;
   max-width: 700px;
-  max-height: 600px;
+  max-height: 500px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -414,7 +414,7 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #686868;
+  border-bottom: 1px solid #888888;
 }
 #give-suggestion-popup .give-suggestion-box .heading .title span {
   margin-right: 16px;
@@ -428,7 +428,7 @@
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #888;
+  border: 0.2px solid #888888;
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -444,7 +444,7 @@
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   outline: none;
   resize: vertical;
 }
@@ -499,7 +499,7 @@
 #change-email-popup .change-email-box {
   width: 85vw;
   max-width: 700px;
-  max-height: 600px;
+  max-height: 500px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -520,7 +520,7 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #686868;
+  border-bottom: 1px solid #888888;
 }
 #change-email-popup .change-email-box .heading .title span {
   margin-right: 16px;
@@ -534,7 +534,7 @@
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #888;
+  border: 0.2px solid #888888;
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -550,7 +550,7 @@
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   outline: none;
   resize: vertical;
 }

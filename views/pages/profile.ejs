@@ -17,7 +17,7 @@
   <%- include('../partials/navbar') %>
     <div class="profile-page">
   <!-- Cover Photo -->
-  <div class="cover-photo" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(<%= account.coverPhoto || '/images/jnv-bg-1.jpg' %>) center center / cover no-repeat;;">
+  <div class="cover-photo" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(<%= account.coverPhoto || '/images/jnv-bg-1.jpg' %>) center center / cover no-repeat;;">
   </div>
 
   <!-- Profile Info -->
@@ -26,7 +26,7 @@
       <img src="<%= account.profile || '/images/user.png' %>" alt="Profile">
     </div>
     <div class="user-details">
-      <p class="name"><%= account.name %><br><span class="username">@<%= account.username %></span></p>
+      <p class="name"><%= account.name %><br><span class="username"><%- account.username === account.name.replace(' ','').toLowerCase() ? 'Not registered' : `@${account.username}`%></span></p>
       
       <% if(account.bio){ %>
         <p class="bio"><%- account.bio || "<span class='grey-1'>Nothing here</span>" %></p>
@@ -107,11 +107,11 @@
                 <p class="post-text">
                     <%= post.text %>
                 </p>
-                <% if(post.media){ %>
+                <% if(post.media !== undefined && post.media !== null && post.media.url !== undefined && post.media.url !== null){ %>
                     <% if(post.media.type.startsWith('image')) { %>
                         <img src="<%= post.media.url %>" alt="" class="post-img">
                         <% } else if(post.media.type.startsWith('video')) { %>
-                            <video controls class="post-video">
+                            <video controls class="post-video"> 
                                 <source src="<%= post.media.url %>" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -131,7 +131,7 @@
                 <% } %>
         
                     <button class="comment-btn" onclick="loadComments('<%= post._id %>', '<%= user ? user._id : '' %>')" id="comment-btn-<%= post._id %>">
-                      <span class="fal fa-comment"></span>
+                      <span class="fal fa-messages"></span>
                     </button>
                     <button class="share-btn" onclick="sharePost(this)" data-text="See this post by <%= post.author.name %> on 2k17" data-title="2k17 Platform" data-media="<%= post.media ? post.media.url : '' %>" data-url="https://yourdomain.com/post/123">
                       <span class="fal fa-share"></span>
@@ -233,10 +233,12 @@
       <div class="heading"><p>Comments</p><p class="close-icon fas fa-times" onclick="hidePopup()"></p></div>
       <div class="comments-list" id="comments-list">
       </div>
+      <% if(user) { %>
       <div class="input-area">
         <input id="new-comment" autocomplete="off" placeholder="Write a comment..."/>
         <button type="button" id="newCommentBtn">Post</button>
       </div>
+      <% } %>
     </div>
   </div>
 

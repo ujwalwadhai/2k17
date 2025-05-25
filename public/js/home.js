@@ -13,9 +13,22 @@ function getGreeting() {
   }
 }
 
+Toast('Welcome to 2k17')
+
 var greeting = getGreeting();
 var greetingElement = document.getElementById("greeting-msg")
 if (greetingElement) greetingElement.innerHTML = greeting;
+
+function partialLoader(id){
+  return `<div id="${id}">
+  <div class="${id}-text" id="${id}-text">
+      <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
+      <span class="letter" style="animation-delay: 0.15s"><span class='letter-green'>k</span></span>
+      <span class="letter" style="animation-delay: 0.3s"><span class='letter-red'>1</span></span>
+      <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
+  </div>
+</div>`
+}
 
 async function sharePost(button) {
   var title = button.getAttribute('data-title');
@@ -31,7 +44,7 @@ async function sharePost(button) {
   } else {
     try {
       await navigator.clipboard.writeText(url);
-      alert('Link copied to clipboard!');
+      Toast('Link copied to clipboard!');
     } catch (err) {
       prompt('Copy this link manually:', url);
     }
@@ -51,11 +64,7 @@ async function toggleLike(postId) {
     });
 
     var data = await res.json();
-    if (!data.success) return alert('Failed to update like');
-
-    // Update count
-    var countElem = document.getElementById(`like-count-${postId}`);
-    countElem.textContent = data.likesCount;
+    if (!data.success) return Toast('Failed to update like', 'error');
 
     // Toggle icon style
     icon.classList.remove('fa-spin');
@@ -70,7 +79,8 @@ async function toggleLike(postId) {
     }
 
   } catch (err) {
-    alert('Error while liking post');
+    console.log(err);
+    Toast('Error while liking post', 'error');
   }
 }
 
@@ -88,20 +98,14 @@ async function loadComments(postId, userId = '') {
   commentsPopup.classList.add('show');
   overlay.classList.add('show');
 
-
-  commentsPopup.querySelector('#newCommentBtn').removeEventListener('click', () => { submitComment(postId) })
-  commentsPopup.querySelector('#newCommentBtn').addEventListener('click', () => { submitComment(postId) })
-  document.getElementById('new-comment').value = ''
+  if (userId) {
+    commentsPopup.querySelector('#newCommentBtn').removeEventListener('click', () => { submitComment(postId) })
+    commentsPopup.querySelector('#newCommentBtn').addEventListener('click', () => { submitComment(postId) })
+    document.getElementById('new-comment').value = ''
+  }
   var list = document.getElementById('comments-list');
   list.innerHTML = '';
-  list.innerHTML = `<div id="comments-loader">
-  <div class="comments-loader-text" id="comments-loader-text">
-      <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
-      <span class="letter" style="animation-delay: 0.15s"><span class='letter-green'>k</span></span>
-      <span class="letter" style="animation-delay: 0.3s"><span class='letter-red'>1</span></span>
-      <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
-  </div>
-</div>`;
+  list.innerHTML = partialLoader('comments-loader');
   var res = await fetch(`/post/${postId}/comments`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
@@ -158,12 +162,11 @@ async function submitComment(postId, userId, isHomePage = true) {
       var id = `comment-btn-${postId}`
       document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${data.commentsLength}`
     } else {
-      alert('Comment added successfully')
       window.location.reload()
     }
     document.querySelector('#newCommentBtn').disabled = false;
   } else {
-    alert('Failed to add comment! Please try again later.')
+    Toast('Failed to add comment! Please try again later.','error')
     document.querySelector('#newCommentBtn').disabled = false;
   }
 }
@@ -187,7 +190,7 @@ async function deleteComment(commentId, postId, userId, isHomePage = true) {
       document.getElementById(`comment-${commentId}`).style.display = 'none'
     }
   } else {
-    alert('Failed to delete comment! Please try again later.')
+    Toast('Failed to delete comment! Please try again later.', 'error')
   }
 }
 
@@ -198,14 +201,7 @@ function loadNotifications() {
   notificationsOverlay.classList.add('show');
   var list = document.getElementById('notifications-list');
   list.innerHTML = '';
-  list.innerHTML = `<div id="notifications-loader">
-    <div class="notifications-loader-text" id="notifications-loader-text">
-        <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
-        <span class="letter" style="animation-delay: 0.15s"><span class='letter-green'>k</span></span>
-        <span class="letter" style="animation-delay: 0.3s"><span class='letter-red'>1</span></span>
-        <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
-    </div>
-  </div>`;
+  list.innerHTML = partialLoader('notifications-loader');
   fetch('/notifications', {
     method: 'POST'
   })
@@ -225,8 +221,8 @@ function loadNotifications() {
           <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
           <div class="content">
             <div class="text">${['like', 'comment'].includes(n.type)
-              ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>` 
-              : '' } ${n.message}</div>
+                    ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>`
+                    : ''} ${n.message}</div>
             <div class="time">${n.timeAgo}</div>
           </div>
           <div class="action-buttons">
@@ -239,8 +235,8 @@ function loadNotifications() {
                         <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
                         <div class="content">
                           <div class="text">${['like', 'comment'].includes(n.type)
-              ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>` 
-              : '' } ${n.message}</div>
+                    ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>`
+                    : ''} ${n.message}</div>
                           <div class="time">${n.timeAgo}</div>
                         </div>
                         <div class="action-buttons">
@@ -272,16 +268,13 @@ function closeNotifications() {
 function loadPosts(userId) {
   var posts = document.getElementById('posts');
   posts.innerHTML = '<p class="heading">Posts in last 6 months</p>';
-  posts.innerHTML += `<div id="posts-loader">
-    <div class="posts-loader-text" id="posts-loader-text">
-        <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
-        <span class="letter" style="animation-delay: 0.15s"><span class='letter-green'>k</span></span>
-        <span class="letter" style="animation-delay: 0.3s"><span class='letter-red'>1</span></span>
-        <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
-    </div>
-  </div>`
+  posts.innerHTML += partialLoader('posts-loader')
   fetch('/posts', {
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ userId })
   })
     .then(res => res.json())
     .then(data => {
@@ -290,7 +283,7 @@ function loadPosts(userId) {
           if (data.posts.length > 0) {
             document.getElementById('posts-loader').classList.add('hidden');
             data.posts.forEach(post => {
-              var isLiked = post.likes.includes(userId)
+              var isLiked = post.likes.some(u => u._id.toString() === userId.toString())
               if (post.media) {
                 if (post.media.type.startsWith('image')) {
                   var mediaItem = `<img src="${post.media.url}" alt="" class="post-img">`
@@ -305,6 +298,9 @@ function loadPosts(userId) {
               } else {
                 var mediaItem = ``
               }
+              if (post.likes.length > 1) {
+                var likedBy = `<p class="extend-like-msg"><img src="${(post.likes[0].username == post.author.username ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'}" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/u/${post.likes[0].username == post.author.username ? post.likes[1].username : post.likes[0].username}"'>${post.likes[0].username == post.author.username ? post.likes[1].username : post.likes[0].username}</span>&nbsp; and ${post.likes.length - 1} other${post.likes.length == 2 ? '' : 's'}</p>`
+              }
               posts.innerHTML += `<div class="post" id="post-${post._id}">
             <div class="user-info">
               <img src="${post.author.profile}" alt="" class="user-profile">
@@ -313,23 +309,23 @@ function loadPosts(userId) {
                 <span class="username">@${post.author.username} (${post.timeAgo})</span>
               </div>
             </div>
-            <div class="post-data">
+            <div class="post-data"> 
               <p class="post-text">${post.text}</p>
               ${mediaItem}
             </div>
             <div class="post-buttons">
               <button class="like-btn" onclick="toggleLike('${post._id}')" id="like-btn-${post._id}">
                 <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${post._id}"></span>
-                <span id="like-count-${post._id}">${post.likes.length}</span>
               </button> &nbsp; 
 
-              <button class="comment-btn" onclick="loadComments('${post._id}', '${userId}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span>${post.comments.length}</button>
+              <button class="comment-btn" onclick="loadComments('${post._id}', '${userId}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span></button>
               <div class="btns-right">
                 <button class="report-btn"><span class="fal fa-triangle-exclamation"></span></button>
                 <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://yourdomain.com/post/123"><span class="fal fa-share"></span></button>
                 <button class="save-btn"><span class="fal fa-bookmark"></span></button>
               </div>
             </div>
+            ${likedBy || ''}
           </div>`
             })
           } else {
@@ -340,7 +336,7 @@ function loadPosts(userId) {
           }
         }, 3000)
       } else {
-        alert("Can't load posts at the moment. Please try again later.")
+        Toast("Can't load posts at the moment. Please try again later.", 'error')
       }
     })
 }
@@ -364,7 +360,7 @@ function createPost(userId) {
     formData.append('text', text);
     formData.append('media', media[0]);
     closePostPopup()
-    alert("Uploading the file. Please wait...")
+    Toast("Uploading the file. Please wait...",'info')
     fetch('/new/post/file?folder=posts', {
       method: 'POST',
       body: formData
@@ -381,7 +377,7 @@ function createPost(userId) {
           });
           loadPosts(userId)
         } else {
-          alert("Can't create post at the moment. Please try again later.")
+          Toast("Can't create post at the moment. Please try again later.", 'error')
         }
       })
   } else {
@@ -404,7 +400,7 @@ function createPost(userId) {
           });
           loadPosts(userId);
         } else {
-          alert("Can't create post at the moment. Please try again later.")
+          Toast("Can't create post at the moment. Please try again later.", 'error')
         }
       })
   }

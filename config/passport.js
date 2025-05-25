@@ -1,4 +1,3 @@
-// config/passport.js
 const LocalStrategy = require('passport-local').Strategy;
 const Users = require('../models/Users');
 

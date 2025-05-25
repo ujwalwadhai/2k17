@@ -1,0 +1,56 @@
+.activity-logs {
+  padding: 8px 16px;
+}
+.activity-logs .search-bar {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #2c283d;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 15px;
+  width: 100%;
+  font-size: 16px;
+}
+.activity-logs .search-bar::placeholder {
+  color: #888888;
+}
+
+.logs-table-wrapper {
+  overflow-x: auto;
+  background: #2b273f;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: rgba(255, 255, 255, 0.8);
+}
+.logs-table thead {
+  background: #1f1c2e;
+}
+.logs-table thead th {
+  text-align: left;
+  padding: 12px;
+  color: #7b5cf0;
+  font-weight: 600;
+  border-top: 2px solid #3e3a50;
+}
+.logs-table thead th:first-of-type {
+  border-left: 2px solid #3e3a50;
+}
+.logs-table thead th:last-of-type {
+  border-right: 2px solid #3e3a50;
+}
+.logs-table tbody tr {
+  border-bottom: 1px solid #1f1c2e;
+}
+.logs-table tbody tr:hover {
+  background: #2b273f;
+}
+.logs-table tbody td {
+  padding: 10px 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+/*# sourceMappingURL=admin.css.map */

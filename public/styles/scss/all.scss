@@ -1,62 +1,68 @@
 @use 'global' as *;
+@use 'components/toast' as *;
 
 html {
   box-sizing: border-box;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
-::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
 }
 
 @font-face {
-    font-family: 'Lato';
-    src: url('/fonts/Lato.ttf');
+  font-family: 'Lato';
+  src: url('/fonts/Lato.ttf');
 }
 
-*{
-    font-family: "Lato", sans-serif;
+* {
+  font-family: "Lato", sans-serif;
 }
 
-.green{
-    color: green;
+.green {
+  color: green;
 }
 
-.red{
-    color: red;
+.red {
+  color: red;
 }
 
-::placeholder{
-    color: gray;
+::placeholder {
+  color: gray;
 }
 
-.grey-1{
-    color: gray;
+.grey-1 {
+  color: gray;
 }
 
-.grey-2{
-    color: #686868;
+.grey-2 {
+  color: #686868;
 }
 
-.grey-3{
-    color: #a2a2a2;
+.grey-3 {
+  color: #a2a2a2;
 }
 
-.grey-4{
-    color: #bbbbbb;
+.grey-4 {
+  color: #bbbbbb;
 }
 
-.grey-5{
-    color: #c0c0c0;
+.grey-5 {
+  color: #c0c0c0;
 }
 
-.grey-6{
-    color: #b0b0b0;
+.grey-6 {
+  color: #b0b0b0;
 }
 
 a {
@@ -66,10 +72,12 @@ a {
   cursor: pointer;
 }
 
-img, button, ::placeholder{
-    user-select: none;
+img,
+button,
+::placeholder {
+  user-select: none;
 }
 
-input:disabled{
-    cursor: no-drop;
+input:disabled {
+  cursor: no-drop;
 }

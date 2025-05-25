@@ -6,6 +6,7 @@ var Posts = require('../models/Posts');
 var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
 var Reports = require('../models/Reports');
+var logActivity = require('../utils/log');
 var sendMail = require('../config/mailer');
 
 exports.loginPassword = async (req, res) => {
@@ -29,6 +30,7 @@ exports.loginPassword = async (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
+      logActivity(user._id, 'User Login', `Logged in with password.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     });
@@ -59,6 +61,7 @@ exports.loginEmail = async (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
+      logActivity(user._id, 'User Login', `Logged in with email OTP.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Email OTP'});
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     })
@@ -108,11 +111,13 @@ exports.register = async (req, res) => {
 
     user.username = username;
     user.email = email;
+    user.registered = true;
     await user.save();
     req.login(user, (err) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
+      logActivity(user._id, 'Account Activation');
       return res.json({ success: true, message: 'Registration successful', redirect: '/home' });
     })
   } catch (err) {
@@ -141,7 +146,7 @@ exports.changePassword = async (req, res) => {
 
     user.password = newPassword;
     await user.save();
-
+    logActivity(user._id, 'Password Change');
     return res.json({ success: true, message: "Password updated successfully." });
   } catch (err) {
     console.error(err);
@@ -166,6 +171,7 @@ exports.updateEmail = async (req, res) => {
     var link = `${req.protocol}://${req.get('host')}/verify-email/${token}`;
 
     await sendMail('verify-new-email', newEmail, {link, name: req.user.name});
+    logActivity(req.user._id, 'Email Update Request', `Requested change of email.`);
     return res.json({ success: true, message: 'Verification email sent.' });
   } catch (err) {
     console.error(err);
@@ -223,7 +229,7 @@ exports.requestPasswordReset = async (req, res) => {
 
     var link = `${req.protocol}://${req.get('host')}/reset-password/${token}`;
     await sendMail('reset-password', email, {link, name: user.name});
-
+    logActivity(user._id, 'Password Reset Request', `Requested password reset.`);
     res.json({ success: true, message: "Reset link sent to your email." });
   } catch (err) {
     res.json({ success: false, message: "Something went wrong." });
@@ -245,18 +251,10 @@ exports.resetPassword = async (req, res) => {
 
   settings.passwordReset = undefined;
   await settings.save();
+  logActivity(settings.user._id, 'Password Reset', `Password reset by email verification.`);
 
   res.json({ success: true, message: "Password updated successfully." });
 };
-
-exports.fetchPosts = async (req, res) => {
-  try {
-    var posts = await Posts.find();
-    return res.json({ success: true, posts: posts });
-  } catch (err) {
-    return res.json({ success: false, message: 'Something went wrong' });
-  }
-}
 
 exports.likePost = async (req, res) => {
   var userId = req.user._id;
@@ -269,10 +267,8 @@ exports.likePost = async (req, res) => {
     var alreadyLiked = post.likes.includes(userId);
 
     if (alreadyLiked) {
-      // Unlike
       post.likes.pull(userId);
     } else {
-      // Like
       post.likes.push(userId);
     }
 
@@ -282,7 +278,7 @@ exports.likePost = async (req, res) => {
         user: post.author,
         type: 'like',
         fromUser: userId,
-        message: `${req.user.username} liked your post.`,
+        message: `liked your post.`,
         url: `/post/${post._id}`
       })
       await notification.save();
@@ -303,8 +299,9 @@ exports.fetchComments = async (req, res) => {
     var post = await Posts.findById(req.params.postId)
       .populate('comments.user', 'name profile');
     post.comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    res.json(commentsWithTime);
+    res.json(post.comments);
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: 'Failed to fetch comments' });
   }
 }
@@ -326,7 +323,7 @@ exports.newComment = async (req, res) => {
     }
     await post.save();
     if(post.author._id.toString() !== req.user._id.toString() && post.author.email){
-      sendMail('newcomment', post.author.email, { user: req.user, comment: req.body.text, postLink: `http://localhost:3000/post/${post._id}` });
+      sendMail('newcomment', post.author.email, { user: req.user, comment: req.body.text, postLink: `${req.protocol}://${req.get('host')}/post/${post._id}` });
       var notification = new Notifications({
         user: post.author._id,
         type: 'comment',
@@ -336,6 +333,7 @@ exports.newComment = async (req, res) => {
       })
       await notification.save();
     }
+    logActivity(req.user._id, 'Post Comment', `Commented on ${post.author.username}'s post (${post._id})`);
     res.json({ success: true, commentsLength: post.comments.length, message: 'Comment added' });
   } catch (err) {
     res.status(500).json({ error: 'Failed to add comment' });
@@ -397,7 +395,7 @@ exports.fetchPosts = async (req, res) => {
   try {
     var sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-    var posts = await Posts.find({ createdAt: { $gte: sixMonthsAgo } }).sort({ createdAt: -1 });
+    var posts = await Posts.find({ createdAt: { $gte: sixMonthsAgo } }).populate("likes", "username profile").sort({ createdAt: -1 });
     return res.json({ success: true, posts });
   } catch (err) {
     console.log(err);
@@ -428,6 +426,7 @@ exports.newPost = async (req, res) => {
       });
       await newPost.save();
     }
+    logActivity(req.user._id, 'New Post', `Created new post (${newPost._id})`);
     return res.json({ success: true, message: 'Post created' });
   } catch (err) {
     return res.json({ success: false, message: 'Something went wrong' });
@@ -457,6 +456,7 @@ exports.updateProfile = async (req, res) => {
     if (req.file.path) update.profile = req.file.path;
 
     await Users.findByIdAndUpdate(req.user._id, update);
+    logActivity(req.user._id, 'Profile Update');
     res.json({ success: true });
   } catch (err) {
     res.json({ success: false, message: "Failed to update profile." });
@@ -507,6 +507,7 @@ exports.report = async (req, res) => {
       await sendMail('report_user', req.user.email, { subject, details, name: req.user.name });
     }
     await sendMail('report_admins', adminEmails, { subject, details, name: req.user?.name || ''});
+    logActivity(req.user._id, 'Filed Report', `Filed a report (${newReport._id})`);
     res.json({ success: true });
   } catch (err) {
     console.error(err);

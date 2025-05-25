@@ -1,7 +1,24 @@
-$primary: #7b5cf0;
-$primary-dark: #6342d8;
-$bg-dark: #1f1c2e;
-$bg-dark2: #2b273f;
-$text-light: #ffffffcc;
-$text-muted: #888;
-$input-bg: #2c283d;
+// Primary Brand Colors
+$primary: #7b5cf0;         // Main accent color
+$primary-dark: #6342d8;    // Darker shade for hover/active states
+$primary-light: #9a7fff;   // Lighter tint for soft accents
+
+// Backgrounds
+$bg-dark: #1f1c2e;         // Main background (dark)
+$bg-dark2: #2b273f;        // Secondary background layer
+$bg-dark3: #332f48;        // Optional third background layer
+
+// Text Colors
+$text-light: #ffffffcc;    // Main readable text (light)
+$text-muted: #888888;      // Muted secondary text
+$text-disabled: #555;      // For disabled or less important text
+
+// Input & Element Backgrounds
+$input-bg: #2c283d;        // Input field backgrounds
+$input-border: #3e3a50;    // Subtle input borders
+
+// Feedback Colors
+$success: #4bb543;         // Success messages/buttons
+$error: #ff4d4f;           // Error or destructive action
+$warning: #ffcc00;         // Warnings or cautions
+$info: #2db7f5;            // Informational tones

@@ -5,57 +5,49 @@
     <link rel="stylesheet" href="/styles/css/donate.css">
     <title>Make a change by donating ❤️</title>
 </head>
-<body>
+<body> 
     <%- include('../partials/loader.ejs') %>
     <%- include('../partials/navbar.ejs') %>
-
+<br>
     <section class="donate-section">
         <div class="donate-container">
             <h1>Support our batch</h1>
             <p class="description">
-            Keeping this site live costs money — from domain renewals to server uptime.
-            Every small contribution helps us preserve these memories and keep our batch connected.
+              Keeping this site live costs money — from domain renewals to server uptime.
+              Every small contribution helps us preserve these memories and keep our batch connected.
             </p>
 
-            <div class="amount-options">
-            <button class="donate-amount">₹10</button>
-            <button class="donate-amount">₹20</button>
-            <button class="donate-amount">₹50</button>
-            <button class="donate-amount">₹100</button>
+            <div class="qr-box">
+              <img class="qr-code" src="/images/donate-qr.png" alt="" srcset="">
+              <p class="help-text">Scan the qr code to donate. </p>
+              <p><a href="/images/donate-qr.png" download="2k17 Platform Donate QR.png"><span class="fal fa-download"></span> &nbsp;Download QR Code</a></p>
             </div>
 
-            <div class="custom-input">
-            <label for="customAmount">Or enter a custom amount</label>
-            <input type="number" id="customAmount" placeholder="₹75 or more maybe :)" min="10">
-            </div>
-
-            <button class="donate-btn" onclick="proceedToPayment()"><span class="fal fa-hand-holding-circle-dollar"></span> &nbsp; Donate Now</button>
+            <button class="donate-btn" onclick="checkAndOpenUpiLink('upi://pay?pa=wadhaiujwal-2@oksbi&pn=2k17%20Platform&cu=INR')"><span class="fal fa-hand-holding-circle-dollar"></span> &nbsp; Donate Now</button>
         </div>
     </section>
 
+  <%- include('../partials/footer') %>
 <script>
-  function proceedToPayment() {
-    var selected = document.querySelector(".donate-amount.selected");
-    var customAmount = document.getElementById("customAmount").value;
-    var amount = customAmount || (selected ? selected.textContent.replace("₹", "") : null);
+  function checkAndOpenUpiLink(upiLink) {
+    // Mobile check
+    var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    if (!amount) return alert("Please select or enter an amount.");
+    if (!isMobile) {
+      Toast("Please scan the QR code instead.", 'warning');
+      return;
+    }
 
-    // You can later replace this with actual payment gateway code
-    alert(`Redirecting to payment gateway for ₹${amount}`);
+    // Try to open UPI intent link
+    var timeout = setTimeout(() => {
+      Toast("Unable to open UPI app. Please scan the QR.", 'warning');
+    }, 3000); // Fallback if user doesn't respond
+
+    window.location.href = upiLink;
+
+    // If user returns, clear timeout
+    window.addEventListener("blur", () => clearTimeout(timeout));
   }
-
-  document.querySelectorAll(".donate-amount").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".donate-amount").forEach(b => b.classList.remove("selected"));
-      btn.classList.add("selected");
-      document.getElementById("customAmount").value = "";
-    });
-  });
-
-  document.getElementById("customAmount").addEventListener("input", () => {
-    document.querySelectorAll(".donate-amount").forEach(b => b.classList.remove("selected"));
-  });
 </script>
 
 </body>

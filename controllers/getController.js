@@ -3,7 +3,9 @@ var Files = require('../models/Files');
 var Posts = require('../models/Posts');
 var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
+var Logs = require('../models/Logs');
 var getUpcomingBirthdays = require('../utils/birthdays');
+var {logActivity} = require('../utils/log');
 
 exports.indexPage = async (req, res) => {
   res.render('pages/index');
@@ -17,6 +19,15 @@ exports.login = (req, res) => {
     url='/home'
   }
   res.render('pages/login', {redirectURL : url});
+}
+
+exports.admin = async (req, res) => {
+  var logs = await Logs.find({})
+    .populate('user', 'name email username')
+    .sort({ createdAt: -1 })
+    .limit(100);
+
+  res.render('pages/admin', { logs });
 }
 
 exports.home = async (req, res) => {
@@ -74,7 +85,7 @@ exports.verifyEmail = async (req, res) => {
 
     settings.emailVerification = undefined;
     await settings.save();
-
+    logActivity(user._id, 'Email Change' ,`Changed email to ${user.email}`);
     return res.send('<h2 style="color:green;">Email successfully verified and updated!</h2>');
   } catch (err) {
     console.error(err);

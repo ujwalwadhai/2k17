@@ -13,8 +13,6 @@ function getGreeting() {
   }
 }
 
-Toast('Welcome to 2k17')
-
 var greeting = getGreeting();
 var greetingElement = document.getElementById("greeting-msg")
 if (greetingElement) greetingElement.innerHTML = greeting;
@@ -128,7 +126,6 @@ async function loadComments(postId, userId = '') {
                               <span class="text">${c.text}</span>
                             </div>
                             <div class="action-buttons">
-                              <span class="fal fa-triangle-exclamation"></span>
                               ${trashIcon}
                             </div>
                           </div>`;
@@ -240,7 +237,6 @@ function loadNotifications() {
                           <div class="time">${n.timeAgo}</div>
                         </div>
                         <div class="action-buttons">
-                          <span class="fal fa-triangle-exclamation grey-1"></span>
                           <span class="fal fa-trash red"></span>
                         </div>
                       </div>`
@@ -299,7 +295,7 @@ function loadPosts(userId) {
                 var mediaItem = ``
               }
               if (post.likes.length > 1) {
-                var likedBy = `<p class="extend-like-msg"><img src="${(post.likes[0].username == post.author.username ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'}" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/u/${post.likes[0].username == post.author.username ? post.likes[1].username : post.likes[0].username}"'>${post.likes[0].username == post.author.username ? post.likes[1].username : post.likes[0].username}</span>&nbsp; and ${post.likes.length - 1} other${post.likes.length == 2 ? '' : 's'}</p>`
+                var likedBy = `<p class="extend-like-msg"><img src="${(post.likes[0]._id.toString() == userId.toString() ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'}" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/u/${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}"'>${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}</span>&nbsp; and ${post.likes.length - 1} other${post.likes.length == 2 ? '' : 's'}</p>`
               }
               posts.innerHTML += `<div class="post" id="post-${post._id}">
             <div class="user-info">
@@ -320,9 +316,7 @@ function loadPosts(userId) {
 
               <button class="comment-btn" onclick="loadComments('${post._id}', '${userId}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span></button>
               <div class="btns-right">
-                <button class="report-btn"><span class="fal fa-triangle-exclamation"></span></button>
                 <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://yourdomain.com/post/123"><span class="fal fa-share"></span></button>
-                <button class="save-btn"><span class="fal fa-bookmark"></span></button>
               </div>
             </div>
             ${likedBy || ''}

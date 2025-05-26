@@ -1,12 +1,21 @@
 var Logs = require('../models/Logs');
 
-async function logActivity(userId, action, detail = '') {
+async function logActivity(userId, action, detail = '', data={}) {
   try {
-    await Logs.create({
-      user: userId,
-      action,
-      detail
+    if(!userId) {
+      await Logs.create({
+        action,
+        detail,
+        system: true,
+        data
+      });
+    } else {
+      await Logs.create({
+        user: userId,
+        action,
+        detail
     });
+    }
   } catch (err) {
     console.error("Failed to log activity:", err);
   }

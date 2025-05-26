@@ -11,52 +11,98 @@
     <%-include('../partials/navbar') %>
     <%-include('../partials/loader') %>
         <br><br><br><br>
- 
-        <div class="activity-logs">
-            <h2>Activity Logs</h2>
-            <input type="text" id="logSearch" placeholder="Search logs..." class="search-bar">
-            <div class="logs-table-wrapper">
-                <table class="logs-table">
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Action</th>
-                            <th>Details</th>
-                            <th>Date & Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% logs.forEach(log=> { %>
-                            <tr>
-                                <td onclick="window.location.href='/u/<%= log.user.username %>'" style="cursor: pointer;">
-                                    <%= log.user.username %>
-                                </td>
-                                <td>
-                                    <%= log.action %>
-                                </td>
-                                <td>
-                                    <%= log.detail || '-' %>
-                                </td>
-                                <td>
-                                    <%= new Date(log.createdAt).toLocaleString() %>
-                                </td>
-                            </tr>
-                        <% }) %>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    <script>
-  document.getElementById('logSearch').addEventListener('input', function () {
-    const filter = this.value.toLowerCase();
-    const rows = document.querySelectorAll('.logs-table tbody tr');
 
-    rows.forEach(row => {
-      const text = row.textContent.toLowerCase();
-      row.style.display = text.includes(filter) ? '' : 'none';
-    });
-  });
-</script>
+    <div class="reports-logs">
+        <h2>Submitted Reports</h2>
+        <input type="text" id="reportSearch" placeholder="Search reports..." class="search-bar" />
+        <div class="logs-table-wrapper">
+            <table class="logs-table" id="reports-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Subject</th>
+                        <th>Details</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(reports.length > 0){ %>
+                    <% reports.forEach(report=> { %>
+                        <tr id="report-<%= report._id %>">
+                            <td onclick="<%- `window.location.href='/u/${report.user?.username}'` %>"
+                                style="cursor: pointer;">
+                                <%= report.user?.username || 'Guest' %>
+                            </td>
+                            <td>
+                                <%= report.subject %>
+                            </td>
+                            <td>
+                                <%= report.details.length> 50 ? report.details.substring(0, 50) + '...' : report.details %>
+                            </td>
+                            <td>
+                                <%= new Date(report.createdAt).toLocaleString() %>
+                            </td>
+                            <td>
+                                <span onclick="openResolveReport('<%= report._id %>')" class="resolve-link">Resolve</span>
+                            </td>
+                        </tr>
+                    <% })} else { %>
+                        <tr>
+                            <td colspan="5" style="text-align: center; color:grey">No reports found.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="activity-logs">
+        <h2>Activity Logs</h2>
+        <input type="text" id="logSearch" placeholder="Search logs..." class="search-bar">
+        <div class="logs-table-wrapper">
+            <table class="logs-table" id="logs-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Details</th>
+                        <th>Date & Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <button id="loadMoreLogsBtn" class="load-more-btn">Load Previous Day</button>
+        </div>
+    </div>
+
+    <div id="resolve-report-popup">
+        <div class="overlay" onclick="closeResolveReport()"></div>
+        <div class="resolve-report-box">
+        <div class="heading">
+            <p class="title"><span class="fal fa-shield-check"></span> Resolve report</p>
+            <p class="close-icon fal fa-xmark" onclick="closeResolveReport()"></p>
+        </div>
+        <div class="resolve-report-list" id="resolve-report-list">
+            <span class="grey-1 info-box">This report (id: <span id="report-id"></span>) is submitted by <span id="report-user"></span> on <span id="report-time"></span>.</span>
+            <p class="subject-box" id="subject-box"></p>
+            <p class="details-box"><b>Details: </b> <span id="report-details"></span></p>
+            <form id="resolve-report-form">
+                <input type="hidden" name="reportId" value="" id="report-id-input">
+            <textarea autocomplete="off" rows="5" name="resolution" placeholder="Enter resolution (Max 1000 characters)" required id="resolution"></textarea>
+            <br>
+            <div id="resolve-report-status"></div><br>
+            <button type="submit">Close report with this resolution</button>
+            </form>
+        </div>
+        </div>
+    </div>
+
+    <div id="toast-container" style="position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;"></div>
+
+    <script src="/js/admin.js"></script>
 </body>
 
 </html>

@@ -6,6 +6,7 @@ var Settings = require('../models/Settings');
 var Logs = require('../models/Logs');
 var getUpcomingBirthdays = require('../utils/birthdays');
 var {logActivity} = require('../utils/log');
+const Reports = require('../models/Reports');
 
 exports.indexPage = async (req, res) => {
   res.render('pages/index');
@@ -22,12 +23,16 @@ exports.login = (req, res) => {
 }
 
 exports.admin = async (req, res) => {
-  var logs = await Logs.find({})
-    .populate('user', 'name email username')
+  var reports = await Reports.find({$or: [
+        { resolution: { $exists: false } }, 
+        { resolution: null },               
+        { resolution: '' }                  
+      ]})
+    .populate('user', 'username')
     .sort({ createdAt: -1 })
     .limit(100);
 
-  res.render('pages/admin', { logs });
+  res.render('pages/admin', { reports });
 }
 
 exports.home = async (req, res) => {
@@ -108,71 +113,58 @@ exports.logout = (req, res) => {
 
 async function getSortedUsers(loggedInUserId = null) {
   try {
-    let pipeline = [];
-
-    if (loggedInUserId) {
-      pipeline = [
-        {
-          $addFields: {
-            roleOrder: {
-              $switch: {
-                branches: [
-                  { case: { $eq: ["$role", "admin"] }, then: 1 },
-                  { case: { $eq: ["$role", "moderator"] }, then: 2 },
-                  { case: { $eq: ["$_id", loggedInUserId] }, then: 3 }
-                ],
-                default: 4
-              }
-            }
-          }
-        },
-        {
-          $sort: {
-            roleOrder: 1,
-            name: 1
-          }
-        },
-        {
-          $project: {
-            roleOrder: 0
+    const pipeline = [];
+    pipeline.push({
+      $addFields: {
+        roleOrder: {
+          $switch: {
+            branches: [
+              { case: { $eq: ["$role", "admin"] }, then: 1 },
+              { case: { $eq: ["$role", "moderator"] }, then: 2 },
+              ...(loggedInUserId
+                ? [{ case: { $eq: ["$_id", loggedInUserId] }, then: 3 }]
+                : [])
+            ],
+            default: 4
           }
         }
-      ];
-    } else {
-      pipeline = [
-        {
-          $addFields: {
-            roleOrder: {
-              $switch: {
-                branches: [
-                  { case: { $eq: ["$role", "admin"] }, then: 1 },
-                  { case: { $eq: ["$role", "moderator"] }, then: 2 }
-                ],
-                default: 3
-              }
-            }
-          }
-        },
-        {
-          $sort: {
-            roleOrder: 1,
-            name: 1
-          }
-        },
-        {
-          $project: {
-            roleOrder: 0
-          }
-        }
-      ];
-    }
+      }
+    });
+    pipeline.push({
+      $sort: {
+        roleOrder: 1
+      }
+    });
+    pipeline.push({
+      $facet: {
+        admins: [
+          { $match: { role: "admin" } },
+          { $sort: { name: -1 } }
+        ],
+        others: [
+          { $match: { role: { $ne: "admin" } } },
+          { $sort: { name: 1 } }
+        ]
+      }
+    });
+    pipeline.push({
+      $project: {
+        users: { $concatArrays: ["$admins", "$others"] }
+      }
+    });
+    pipeline.push({ $unwind: "$users" });
+    pipeline.push({ $replaceRoot: { newRoot: "$users" } });
 
-    var users = await Users.aggregate(pipeline);
+    const users = await Users.aggregate(pipeline);
     return users;
   } catch (err) {
+    console.error(err);
     return [];
   }
 }
+
+
+
 
 
 exports.members = async (req, res) => {
@@ -229,4 +221,15 @@ exports.settings = async (req, res) => {
   if(!user) return res.redirect('/');
   var settings = await Settings.findOne({ user: user._id });
   res.render('pages/settings', {account: user, settings});
+}
+
+exports.fetchReport = async (req, res) => {
+  try{
+  var report = await Reports.findOne({ _id: req.params.id }).populate("user", "username");
+  if(!report) return res.status(404).json({success: false, message: 'Report not found'});
+  res.json({success: true, report});
+  } catch(err){
+    console.log(err);
+    res.status(500).json({success: false, message: 'Something went wrong.'});
+  }
 }

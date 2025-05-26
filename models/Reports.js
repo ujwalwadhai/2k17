@@ -14,10 +14,10 @@ const reportSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
+  resolution: {
+    type: String,
+    required: false
   }
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model('Reports', reportSchema);

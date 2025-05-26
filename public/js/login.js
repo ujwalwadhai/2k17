@@ -6,7 +6,7 @@ function login(redirectURL){
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     var login = {
-        username: username,
+        username: username.toLowerCase(),
         password: password
     }
     var info = document.getElementById('info');

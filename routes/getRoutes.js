@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var getController = require('../controllers/getController');
-var { isLoggedIn } = require('../middlewares/auth');
-var hasRole = require('../middlewares/role');
+var { isLoggedIn, hasRole } = require('../middlewares/auth');
 
 router.get('/', getController.indexPage);
 
@@ -39,5 +38,7 @@ router.get('/profile/edit', isLoggedIn, getController.editProfile);
 router.get('/settings', isLoggedIn, getController.settings);
 
 router.get('/reset-password/:token', getController.renderResetPage);
+
+router.get('/report/:id', isLoggedIn, hasRole(['admin']), getController.fetchReport);
 
 module.exports = router;

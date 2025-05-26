@@ -1,7 +1,7 @@
 <div id="full-loader">
   <div class="loader-text" id="loader-text">
     <% ["<span class='letter-blue'>2</span>", "<span class='letter-green'>k</span>", "<span class='letter-red'>1</span>", "<span class='letter-yellow'>7</span>"].forEach((char, index) => { %>
-      <span class="letter" style="animation-delay: <%= index * 0.1 %>s"><%- char %></span>
+      <span class="letter" style="animation-delay: <%= index * 0.12 %>s"><%- char %></span>
     <% }); %>
   </div>
 </div>
@@ -10,9 +10,8 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var loader = document.getElementById('full-loader');
-
     setTimeout(() => {
       loader.classList.add('hidden');
-    }, 1500);
+    }, 1200);
   });
 </script>

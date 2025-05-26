@@ -4,7 +4,7 @@ const activityLogSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users',
-    required: true
+    required: false
   },
   action: {
     type: String,
@@ -13,10 +13,14 @@ const activityLogSchema = new mongoose.Schema({
   detail: {
     type: String
   },
+  system: {
+    type: Boolean
+  },
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  data: Object
 });
 
 module.exports = mongoose.model('Logs', activityLogSchema);

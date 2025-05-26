@@ -87,4 +87,23 @@ function createDate() {
   return FinalDate;
 }
 
-module.exports = { getRelativeTime, formatDOB, createDate };
+function subDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() - days);
+  return result;
+}
+
+function startOfDay(date) {
+  const result = new Date(date);
+  result.setHours(0, 0, 0, 0);
+  return result;
+}
+
+function endOfDay(date) {
+  const result = new Date(date);
+  result.setHours(23, 59, 59, 999);
+  return result;
+}
+
+
+module.exports = { getRelativeTime, formatDOB, createDate, subDays, startOfDay, endOfDay };

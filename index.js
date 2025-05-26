@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+dotenv.config();
 const sanitizeHtml = require('sanitize-html');
 
 const useragent = require('express-useragent');
@@ -31,7 +32,6 @@ require('./models/Posts')
 require('./models/Notifications')
 require('./models/Settings')
 
-dotenv.config();
 
 app.use(express.json({ type: 'application/json' }))
 app.use(express.urlencoded({ extended: true }));
@@ -67,6 +67,10 @@ app.use((err, req, res, next) => {
 
 // CRON Jobs for recurring events
 require('./cron/logCleanUp')
+require('./cron/birthday')
+
+// Cleans the database when server restarts
+require('./utils/cleanup')()
 
 require('./config/mailer')
 

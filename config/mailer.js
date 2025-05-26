@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const { createDate } = require('../utils/time');
 const deviceInfo = require('../middlewares/device');
+var logActivity = require('../utils/log')
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -23,9 +24,8 @@ async function sendEmail(to, subject, htmlContent) {
     };
 
     await transporter.sendMail(mailOptions);
-    return result;
   } catch (error) {
-    return error;
+    console.log(error);
   }
 }
 
@@ -44,6 +44,7 @@ async function LoginMail(to, data) {
   </p>
 </div>
 `
+  logActivity('', "Sent Email", `to ${to} for login alert`, {device: deviceInfo(data.useragent), method: data.method})
   sendEmail(to, 'Login Alert • 2k17 Platform', template);
 }
 
@@ -70,7 +71,7 @@ async function OTPMail(to, data) {
       </div>
     </div>
   </div>`
-
+  logActivity('', "Sent Email", `to ${to} for OTP`, {device: deviceInfo(data.useragent), otp: data.otp})
   sendEmail(to, 'OTP for login • 2k17 Platform', template);
 }
 
@@ -107,7 +108,7 @@ async function NewCommentMail(to, data) {
   </div>
 
 </body>`
-
+  logActivity('', "Sent Email", `to ${to} for comment on post`, {postLink: data.postLink})
   sendEmail(to, 'New comment on your post • 2k17 Platform', template);
 }
 
@@ -129,7 +130,7 @@ async function UserReportMail(to, data) {
       2k17 Platform
     </p>
   </div>`
-
+  logActivity('', "Sent Email", `to ${to} for report acknowledgement`, {report: data.reportId})
   sendEmail(to, "Report received • 2k17 Platform", template);
 }
 
@@ -148,7 +149,7 @@ async function AdminReportMail(to, data) {
     <p style="color: #888;">Login to the admin panel to manage this report.</p>
     <p style="color: #888;">Automated Report System<br>2k17 Platform</p>
   </div>`
-
+  logActivity('', "Sent Email", `to admins for new report`)
   sendEmail(to, "New Report Submitted • 2k17 Platform", template);
 }
 
@@ -169,6 +170,7 @@ async function VerifyNewEmailMail(to, data) {
 </div>
 
       `
+  logActivity('', "Sent Email", `to ${to} for email verification`, {VerificationLink: data.link})
   sendEmail(to, 'Verify your new email • 2k17 Platform', template);
 }
 
@@ -190,18 +192,30 @@ async function ResetPasswordMail(to, data) {
 </div>
 
       `
+  logActivity('', "Sent Email", `to ${to} for password reset link`, {resetLink: data.link})
   sendEmail(to, 'Password reset link • 2k17 Platform', template);
 }
 
+async function BirthdayMail(to, data) {
+  var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
+              <h3 style="color: #7b5cf0;">🎂 Happy Birthday, ${data.name || 'Friend'}!</h3>
+              <p>Wishing you a fantastic year ahead. Thanks for being part of 2k17!</p>
+              <p style="color: #888;">– Ujwal W.<br>2k17 Platform</p>
+            </div>`
+  logActivity('', "Sent Email", `to ${to} for birthday wish`)
+  sendEmail(to, 'Happy Birthday 🎂 • 2k17 Platform', template);
+}
+
 async function sendMail(type, to, data) {
-  /* if (type == 'login') LoginMail(to, data);
-  if (type == 'otp') OTPMail(to, data);
-  if (type == 'newcomment') NewCommentMail(to, data); 
+  /*if (type == 'otp') OTPMail(to, data);
+  if (type == 'login') LoginMail(to, data);
   if (type == 'report_user') UserReportMail(to, data);
   if (type == 'report_admins') AdminReportMail(to, data);
   if (type == 'verify-new-email') VerifyNewEmailMail(to, data);
   if (type == 'reset-password') ResetPasswordMail(to, data);
+  if (type == 'newcomment') NewCommentMail(to, data); 
   // commented to avoid sending emails during development */
+  if (type == 'birthday') BirthdayMail(to, data); 
 }
 
 module.exports = sendMail;

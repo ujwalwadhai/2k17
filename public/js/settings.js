@@ -76,6 +76,7 @@ document.getElementById("change-password-form").addEventListener("submit", funct
     .then(data => {
       if (data.success) {
         statusBox.innerHTML = "<i class='fal fa-check-circle'></i> &nbsp;Password Changed!";
+        setTimeout(closeChangePassword, 2000);
       } else {
         statusBox.style.color = "red";
         statusBox.innerHTML = `<i class='fal fa-times-circle'></i> &nbsp;${data.message || 'Failed to change password'}`;
@@ -125,6 +126,7 @@ document.getElementById("give-suggestion-form").addEventListener("submit", funct
         statusBox.innerHTML = "<i class='fal fa-circle-check'></i> &nbsp;Feedback submitted! Thank you for your feedback!";
         statusBox.style.color = "green";
         this.reset();
+        setTimeout(closeGiveSuggestion, 2000);
       } else {
         statusBox.innerHTML = "<i class='fal fa-circle-xmark'></i> &nbsp;" + (data.message || "Failed to submit.");
         statusBox.style.color = "red";
@@ -175,6 +177,7 @@ document.getElementById("report-problem-form").addEventListener("submit", functi
         statusBox.innerHTML = "<i class='fal fa-circle-check'></i> &nbsp;Feedback submitted! Thank you for your feedback!";
         statusBox.style.color = "green";
         this.reset();
+        setTimeout(closeReportProblem, 2000);
       } else {
         statusBox.innerHTML = "<i class='fal fa-circle-xmark'></i> &nbsp;" + (data.message || "Failed to submit.");
         statusBox.style.color = "red";

@@ -1,7 +1,27 @@
 @use 'global' as *;
+@use 'components/popup/mixins' as *;
+
+.reports-logs {
+  padding: 8px 20px;
+
+  .search-bar {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: $input-bg;
+    color: $text-light;
+    margin-bottom: 15px;
+    width: 100%;
+    font-size: 16px;
+
+    &::placeholder {
+      color: $text-muted;
+    }
+  }
+}
 
 .activity-logs {
-    padding: 8px 16px;
+    padding: 8px 20px;
 
     .search-bar {
         padding: 10px;
@@ -23,12 +43,31 @@
 .logs-table-wrapper {
     overflow-x: auto;
     background: $bg-dark2;
+    text-align: center;
+
+    #loadMoreLogsBtn{
+      background: $primary-dark;
+      padding: 10px 12px;
+      width: 90%;
+      max-width: 200px;
+      border: none;
+      border-radius: 4px;
+      color: $text-light;
+      font-weight: bold;
+      margin: 12px auto;
+      cursor: pointer;
+
+      &:hover {
+        background: $primary;
+      }
+    }
 }
 
 .logs-table {
     width: 100%;
     border-collapse: collapse;
     color: $text-light;
+    text-align: left;
 
     thead {
         background: $bg-dark;
@@ -63,6 +102,55 @@
             padding: 10px 12px;
             color: $text-light;
             font-size: 14px;
+
+            .resolve-link{
+                color: $primary;
+                cursor: pointer;
+            }
         }
     }
+}
+
+
+#resolve-report-popup{
+  @include fullscreen-popup;
+
+  .resolve-report-box {
+    @include popup-box;
+
+    .resolve-report-list{
+      padding: 20px;
+
+      .info-box{
+        font-size: 14px;
+
+        #report-user{
+          color: $primary;
+          cursor: pointer;
+        }
+      }
+
+      input, textarea {
+        @include popup-inputs;
+      }
+
+      #resolve-report-status {
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        @include popup-button;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .resolve-report-box {
+    width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+  }
 }

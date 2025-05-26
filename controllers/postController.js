@@ -1,4 +1,3 @@
-var bcrypt = require('bcryptjs');
 var Users = require('../models/Users');
 var Files = require('../models/Files');
 var otps = require('../models/OTP');
@@ -6,8 +5,10 @@ var Posts = require('../models/Posts');
 var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
 var Reports = require('../models/Reports');
+var Logs = require('../models/Logs');
 var logActivity = require('../utils/log');
 var sendMail = require('../config/mailer');
+var { startOfDay, endOfDay, subDays } = require('../utils/time');
 
 exports.loginPassword = async (req, res) => {
   var { username, password } = req.body;
@@ -30,7 +31,7 @@ exports.loginPassword = async (req, res) => {
       if (err) {
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      logActivity(user._id, 'User Login', `Logged in with password.`);
+      // logActivity(user._id, 'User Login', `Logged in with password.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     });
@@ -453,12 +454,13 @@ exports.updateProfile = async (req, res) => {
       return res.json({ success: false, message: 'Username already exists' });
     }
 
-    if (req.file.path) update.profile = req.file.path;
+    if (req.file?.path) update.profile = req.file.path;
 
     await Users.findByIdAndUpdate(req.user._id, update);
     logActivity(req.user._id, 'Profile Update');
     res.json({ success: true });
   } catch (err) {
+    console.log(err);
     res.json({ success: false, message: "Failed to update profile." });
   }
 };
@@ -504,7 +506,7 @@ exports.report = async (req, res) => {
     var adminEmails = admins.map(user => user.email);
 
     if(req.user?.email) {
-      await sendMail('report_user', req.user.email, { subject, details, name: req.user.name });
+      await sendMail('report_user', req.user.email, { subject, details, name: req.user.name, reportId: newReport._id });
     }
     await sendMail('report_admins', adminEmails, { subject, details, name: req.user?.name || ''});
     logActivity(req.user._id, 'Filed Report', `Filed a report (${newReport._id})`);
@@ -514,3 +516,42 @@ exports.report = async (req, res) => {
     res.json({ success: false, message: "Error saving report." });
   }
 }
+
+exports.resolveReport = async (req, res) => {
+  try {
+    var { reportId, resolution } = req.body;
+    if (!reportId || !resolution) {
+      return res.json({ success: false, message: "All fields are required." });
+    }
+
+    var report = await Reports.findById(reportId).populate('user', 'email');
+    report.resolution = resolution;
+    await report.save();
+    await logActivity(req.user._id, 'Resolved Report', `Resolved a report (${reportId})`);
+    await sendMail('report_resolved', report.user?.email, { subject: report.subject, details: report.details, resolution });
+    res.json({ success: true, message: 'Report resolved' });
+  } catch(err){
+    console.log(err)
+    res.json({ success: false, message: 'Something went wrong' });
+  }
+}
+
+exports.fetchLogs = async (req, res) => {
+  var dayOffset = parseInt(req.query.dayOffset) || 0;
+  var targetDate = subDays(new Date(), dayOffset);
+
+  var start = startOfDay(targetDate);
+  var end = endOfDay(targetDate);
+
+  try {
+    var logs = await Logs.find({
+      createdAt: { $gte: start, $lte: end }
+    })
+    .populate('user', 'username')
+    .sort({ createdAt: -1 });
+
+    res.json({success:true, logs });
+  } catch (err) {
+    res.status(500).json({success:false, error: 'Failed to load logs' });
+  }
+};

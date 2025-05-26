@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var postController = require('../controllers/postController');
 var { upload } = require('../config/cloudinary');
-var { isLoggedIn } = require('../middlewares/auth');
+var { isLoggedIn, hasRole } = require('../middlewares/auth');
 
 router.post('/login/password', postController.loginPassword);
 
@@ -49,5 +49,9 @@ router.post('/update-email', isLoggedIn, postController.updateEmail)
 router.post('/forgotten-password', postController.requestPasswordReset)
 
 router.post('/reset-password', postController.resetPassword)
+
+router.post('/admin/report/resolve', isLoggedIn, hasRole(['admin']), postController.resolveReport)
+
+router.post('/admin/logs', isLoggedIn, hasRole(['admin']), postController.fetchLogs)
 
 module.exports = router;

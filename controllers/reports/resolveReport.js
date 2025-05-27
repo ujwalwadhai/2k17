@@ -9,11 +9,11 @@ const resolveReport = async (req, res) => {
       return res.json({ success: false, message: "All fields are required." });
     }
 
-    var report = await Reports.findById(reportId).populate('user', 'email');
+    var report = await Reports.findById(reportId).populate('user', 'email name');
     report.resolution = resolution;
     await report.save();
     await logActivity(req.user._id, 'Resolved Report', `Resolved a report (${reportId})`);
-    await sendMail('report_resolved', report.user?.email, { subject: report.subject, details: report.details, resolution });
+    await sendMail('report_resolved', report.user?.email, {reportId: report._id, subject: report.subject, details: report.details, resolution, name: report.user.name });
     res.json({ success: true, message: 'Report resolved' });
   } catch(err){
     console.log(err)

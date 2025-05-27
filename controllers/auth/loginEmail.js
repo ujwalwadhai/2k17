@@ -11,8 +11,10 @@ const loginEmail = async (req, res) => {
     var user = await Users.findOne({ email: email });
 
     if (!user) {
-      return res.json({ success: false, message: 'No user with this email found!' });
+      return res.json({ success: false, message: 'No user with this email found' });
     }
+
+    if(!user.verified) return res.json({ success: false, message: 'Email not verified' });
 
     var otpRecord = await otps.findOne({ email: email, otp: otp });
 

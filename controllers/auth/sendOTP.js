@@ -1,4 +1,5 @@
 var Users = require('../../models/Users');
+var Settings = require('../../models/Settings');
 var otps = require('../../models/OTP');
 var sendMail = require('../../config/mailer');
 
@@ -7,7 +8,9 @@ const sendOTP = async (req, res) => {
   try {
     var user = await Users.findOne({ email: email });
 
-    if (!user) {
+    if (!user) { 
+      var user2 = await Settings.findOne({ 'emailVerification.newEmail': email });
+      if(user2) return res.json({ success: false, message: 'Email not verified' });
       return res.json({ success: false, message: 'No user with this email found!' });
     }
 

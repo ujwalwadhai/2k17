@@ -4,7 +4,7 @@ var logActivity = require('../../utils/log');
 
 const loginPassword = async (req, res) => {
   var { username, password } = req.body;
- 
+  
   try {
     var user = await Users.findOne({
       $or: [{ email: username }, { username: username }]
@@ -13,6 +13,8 @@ const loginPassword = async (req, res) => {
     if (!user) {
       return res.json({ success: false, message: 'User not found' });
     }
+
+    if(!user.registered) return res.json({ success: false, message: 'Email not verified' });
 
     var isMatch = await user.validatePassword(password);
     if (!isMatch) {

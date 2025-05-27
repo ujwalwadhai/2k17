@@ -119,6 +119,7 @@ async function UserReportMail(to, data) {
     <p>Thanks for taking the time to let us know. We've received your report as follows :</p>
 
     <div style="background-color: #2b273f; padding: 15px; border-left: 4px solid #7b5cf0; margin: 20px 0;">
+      <p style="margin-top: 5px; color: #ffffffcc;"><b>Report ID : </b> ${data.reportId}</p>
       <p style="margin-top: 5px; color: #ffffffcc;"><b>Subject : </b> ${data.subject}</p>
       <p style="margin-top: 5px; color: #ffffffcc;"><b>Details : </b> ${data.details}</p>
       <p style="margin-top: 5px; color: #ffffffcc;"><b>Submission Time : </b> ${createDate()}</p>
@@ -132,6 +133,28 @@ async function UserReportMail(to, data) {
   </div>`
   logActivity('', "Sent Email", `to ${to} for report acknowledgement`, {report: data.reportId})
   sendEmail(to, "Report received • 2k17 Platform", template);
+}
+
+async function ReportResolvedMail(to, data) {
+  var template = `<div style="font-family: Arial, sans-serif; background-color: #1f1c2e; color: #ffffffcc; padding: 20px;">
+    <h3 style="color: #7b5cf0;">We've resolved your report</h3>
+    <p>Hi <strong>${data.name}</strong>,</p>
+    <p>We've resolved your report (id: ${data.reportId}) as follows :</p>
+
+    <div style="background-color: #2b273f; padding: 15px; border-left: 4px solid #7b5cf0; margin: 20px 0;">
+      <p style="margin-top: 5px; color: #ffffffcc;"><b>Subject : </b> ${data.subject}</p>
+      <p style="margin-top: 5px; color: #ffffffcc;"><b>Details : </b> ${data.details}</p>
+      <p style="margin-top: 5px; color: #ffffffcc;"><b>Resolution : </b> ${data.resolution}</p>
+    </div>
+
+    <p>You may reply to this email if you're not satisfied with this resolution.</p>
+    <p style="color: #888;">
+      Regards,<br>
+      2k17 Platform
+    </p>
+  </div>`
+  logActivity('', "Sent Email", `to ${to} for report resolution`, {report: data.reportId})
+  sendEmail(to, "Report resolved • 2k17 Platform", template);
 }
 
 async function AdminReportMail(to, data) {
@@ -154,24 +177,40 @@ async function AdminReportMail(to, data) {
 }
 
 async function VerifyNewEmailMail(to, data) {
-  var template = `
-        <div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
-  <h3 style="color: #7b5cf0;">Please Verify Your New Email Address</h3>
-  <p>Hello ${data.name || 'there'},</p>
-  <p>We received a request to update your email address for your 2k17 account.</p>
-  <a href="${data.link}" style="display: inline-block; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Verify Email Address</a>
-  <p style="margin-top: 20px; color: #888;">
-    This link is valid for 30 minutes. If you did not request this change, please ignore this email or contact support.
-  </p>
-  <p style="color: #888;">
-    Regards,<br>
-    2k17 Platform
-  </p>
-</div>
-
-      `
+  var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
+    <h3 style="color: #7b5cf0;">Please Verify Your New Email Address</h3>
+    <p>Hello ${data.name || 'there'},</p>
+    <p>We received a request to update your email address for your 2k17 account.</p>
+    <a href="${data.link}" style="display: inline-block; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Verify Email Address</a>
+    <p style="margin-top: 20px; color: #888;">
+      This link is valid for 30 minutes. If you did not request this change, please ignore this email or contact support.
+    </p>
+    <p style="color: #888;">
+      Regards,<br>
+      2k17 Platform
+    </p>
+  </div>`
   logActivity('', "Sent Email", `to ${to} for email verification`, {VerificationLink: data.link})
   sendEmail(to, 'Verify your new email • 2k17 Platform', template);
+}
+
+async function AccountActivationMail(to, data) {
+  var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
+    <h3 style="color: #7b5cf0;">Verify Your Email Address</h3>
+    <p>Hello ${data.name || 'there'},</p>
+    <p>Welcome to 2k17 Platform ❤️.</p>
+    <p>Please verify your email to activate your account.</p>
+    <a href="${data.link}" style="display: inline-block; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Verify Email Address</a>
+    <p style="margin-top: 20px; color: #888;">
+      This link is valid for 2 days. If you didn't create an account on 2k17 Platform, please ignore this email or contact support.
+    </p>
+    <p style="color: #888;">
+      Regards,<br>
+      2k17 Platform
+    </p>
+  </div>`
+  logActivity('', "Sent Email", `to ${to} for account activation`, {VerificationLink: data.link})
+  sendEmail(to, 'Verify your email • 2k17 Platform', template);
 }
 
 async function ResetPasswordMail(to, data) {
@@ -214,8 +253,10 @@ async function sendMail(type, to, data) {
   if (type == 'verify-new-email') VerifyNewEmailMail(to, data);
   if (type == 'reset-password') ResetPasswordMail(to, data);
   if (type == 'newcomment') NewCommentMail(to, data); 
+  if (type == 'report_resolved') ReportResolvedMail(to, data); 
   // commented to avoid sending emails during development */
   if (type == 'birthday') BirthdayMail(to, data); 
+  if (type == 'account_activation') AccountActivationMail(to, data); 
 }
 
 module.exports = sendMail;

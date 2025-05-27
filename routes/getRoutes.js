@@ -7,6 +7,13 @@ var postsController = require('../controllers/posts');
 var reportsController = require('../controllers/reports');
 var { isLoggedIn } = require('../middlewares/auth');
 
+
+router.get('/logout', isLoggedIn, authController.logout);
+
+
+router.get('/verify-email/:token', emailController.verifyEmail);
+
+
 router.get('/', getController.indexPage);
 
 router.get('/home', isLoggedIn, getController.home);
@@ -23,13 +30,7 @@ router.get('/donate', getController.donate);
 
 router.get('/members', getController.members);
 
-router.get('/logout', isLoggedIn, authController.logout);
-
-router.get('/verify-email/:token', emailController.verifyEmail);
-
 router.get('/gallery', getController.gallery);
-
-router.get('/post/:id', postsController.viewPost);
 
 router.get('/u/:username', getController.viewProfile);
 
@@ -41,8 +42,14 @@ router.get('/settings', isLoggedIn, getController.settings);
 
 router.get('/reset-password/:token', getController.renderResetPage);
 
+
+router.get('/post/:id', postsController.viewPost);
+
+
 router.get('/admin/report/:id', isLoggedIn, reportsController.fetchReport);
 
+
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping
+
 
 module.exports = router;

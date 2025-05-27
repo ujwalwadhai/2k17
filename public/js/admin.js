@@ -104,7 +104,7 @@ function loadLogs() {
           tbody.appendChild(row);
         });
       } else {
-        tbody.innerHTML += `<tr><td colspan="5" style="text-align: center; color:grey">No logs found for ${new Date(data.date).toLocaleDateString('en-IN').split(',')[0]}.</td></tr>`
+        tbody.innerHTML += `<tr><td colspan="5" style="text-align: center; color:grey">No logs found for ${new Date(data.date).toLocaleDateString('en-IN')}.</td></tr>`
       }
     })
     .catch(err => {

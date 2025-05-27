@@ -4,7 +4,7 @@
   "description": "A mini social media project for the batch of 2k17",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node index.js",
     "dev": "nodemon",
     "sass": "sass --watch ./public/styles/scss:./public/styles/css"
   },

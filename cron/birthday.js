@@ -24,7 +24,7 @@ cron.schedule('*/30 * * * *', async () => {
 
             var birthdayUsers = users.filter(user => {
                 if (!user.dob) return false;
-                var [day, month, year] = user.dob.split('/').map(Number); // Split "dd/mm/yyyy"
+                var [day, month, year] = user.dob.split('/').map(Number);
                 var dobMonth = month;
                 var dobDay = day;
                 return dobMonth === currentMonth && dobDay === currentDay;

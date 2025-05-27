@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       formData.append("profile", profileInput.files[0]);
     }
 
-    fetch("/profile/update?folder=profile", {
+    fetch("/profile/update?folder=profiles", {
       method: "POST",
       body: formData
     })
@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       })
       .catch(err => {
+        console.log(err);
         statusBox.innerHTML = "<span class='fal fa-circle-xmark'></span> &nbsp;Something went wrong.";
         statusBox.style.color = "red";
       });

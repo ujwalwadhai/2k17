@@ -1,4 +1,4 @@
- const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
 
@@ -12,8 +12,8 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: async (req, file) => {
     const resourceType = file.mimetype.startsWith('image') ? 'image'
-                      : file.mimetype.startsWith('video') ? 'video'
-                      : 'auto';
+      : file.mimetype.startsWith('video') ? 'video'
+        : 'auto';
     var folder = req.query.folder || 'others';
     return {
       folder: `2k17/${folder}`,
@@ -46,4 +46,19 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-module.exports = { upload };
+const destroy = async (url, type='image') => {
+  var parts = url.split('/upload/')[1];
+  var noVersion = parts.split('/').slice(1).join('/');
+  var publicId = noVersion.replace(/\.[^/.]+$/, '');
+  if (publicId) {
+    try {
+      await cloudinary.uploader.destroy(publicId, {
+        resource_type: type.split('/')[0]
+      });
+    } catch (err) {
+      console.error('Cloudinary deletion failed:', err);
+    }
+  }
+}
+
+module.exports = { upload, destroy };

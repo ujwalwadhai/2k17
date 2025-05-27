@@ -1,57 +1,81 @@
 var express = require('express');
 var router = express.Router();
-var postController = require('../controllers/postController');
+var authController = require('../controllers/auth');
+var usersController = require('../controllers/users');
+var postsController = require('../controllers/posts');
+var commentsController = require('../controllers/comments');
+var notificationsController = require('../controllers/notifications');
+var reportsController = require('../controllers/reports');
+var emailController = require('../controllers/email');
+var adminController = require('../controllers/admin');
 var { upload } = require('../config/cloudinary');
-var { isLoggedIn, hasRole } = require('../middlewares/auth');
+var { isLoggedIn } = require('../middlewares/auth');
 
-router.post('/login/password', postController.loginPassword);
 
-router.post('/send/otp', postController.sendOTP);
 
-router.post('/login/email', postController.loginEmail);
+router.post('/login/password', authController.loginPassword);
 
-router.post('/signup', postController.register);
+router.post('/send/otp', authController.sendOTP);
 
-router.post('/check/username', postController.checkUsername);
+router.post('/login/email', authController.loginEmail);
 
-router.post('/upload/single', isLoggedIn, upload.single('media'), postController.upload);
+router.post('/signup', authController.register);
 
-router.post('/fetch/posts', isLoggedIn, postController.fetchPosts);
 
-router.post('/post/:postId/like', isLoggedIn, postController.likePost);
 
-router.post('/post/:postId/comments', postController.fetchComments)
+router.post('/check/username', usersController.checkUsername);
 
-router.post('/post/:postId/new/comment', isLoggedIn, postController.newComment)
+router.post('/profile/update', isLoggedIn, upload.single('profile'), usersController.updateProfile)
 
-router.post('/post/:postId/comment/:commentId/delete', isLoggedIn, postController.deleteComment)
+router.post('/settings/update', isLoggedIn, usersController.updateSettings)
 
-router.post('/notifications', isLoggedIn, postController.fetchNotifications)
+router.post('/change-password', isLoggedIn, usersController.changePassword)
 
-router.post('/notifications/read', isLoggedIn, postController.markReadNotifications)
 
-router.post('/posts', isLoggedIn, postController.fetchPosts)
 
-router.post('/new/post/file', isLoggedIn, upload.single('media'), postController.newPost)
+router.post('/fetch/posts', isLoggedIn, postsController.fetchPosts);
 
-router.post('/new/post', isLoggedIn, postController.newPost)
+router.post('/post/:postId/like', isLoggedIn, postsController.likePost);
 
-router.post('/profile/update', isLoggedIn, upload.single('profile'), postController.updateProfile)
+router.post('/posts', isLoggedIn, postsController.fetchPosts)
 
-router.post('/settings/update', isLoggedIn, postController.updateSettings)
+router.post('/new/post/file', isLoggedIn, upload.single('media'), postsController.newPost)
 
-router.post('/report', postController.report)
+router.post('/new/post', isLoggedIn, postsController.newPost)
 
-router.post('/change-password', isLoggedIn, postController.changePassword)
+router.post('/post/delete', isLoggedIn, postsController.deletePost)
 
-router.post('/update-email', isLoggedIn, postController.updateEmail)
 
-router.post('/forgotten-password', postController.requestPasswordReset)
 
-router.post('/reset-password', postController.resetPassword)
+router.post('/post/:postId/comments', commentsController.fetchComments)
 
-router.post('/admin/report/resolve', isLoggedIn, hasRole(['admin']), postController.resolveReport)
+router.post('/post/:postId/new/comment', isLoggedIn, commentsController.newComment)
 
-router.post('/admin/logs', isLoggedIn, hasRole(['admin']), postController.fetchLogs)
+router.post('/post/:postId/comment/:commentId/delete', isLoggedIn, commentsController.deleteComment)
+
+
+
+router.post('/notifications', isLoggedIn, notificationsController.fetchNotifications)
+
+router.post('/notifications/read', isLoggedIn, notificationsController.markReadNotifications)
+
+
+
+router.post('/report', reportsController.newReport)
+
+router.post('/admin/report/resolve', isLoggedIn, reportsController.resolveReport)
+
+
+
+router.post('/update-email', isLoggedIn, emailController.updateEmail)
+
+router.post('/forgotten-password', emailController.requestPasswordReset)
+
+router.post('/reset-password', emailController.resetPassword)
+
+
+
+router.post('/admin/logs', adminController.fetchLogs)
+
 
 module.exports = router;

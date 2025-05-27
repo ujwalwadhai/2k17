@@ -3,31 +3,31 @@ var Files = require('../models/Files');
 var Posts = require('../models/Posts');
 var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
-var Logs = require('../models/Logs');
 var getUpcomingBirthdays = require('../utils/birthdays');
-var {logActivity} = require('../utils/log');
 const Reports = require('../models/Reports');
 
 exports.indexPage = async (req, res) => {
   res.render('pages/index');
-}; 
-  
+};
+
 exports.login = (req, res) => {
   var { url } = req.query;
-  if(!url) url = '/home'
+  if (!url) url = '/home'
   var exclude = ['/login', '/signup', '/email-login', '/forgot-password', '/reset-password', '/donate', '/logout', '/home']
-  if(url[0] !== "/" || exclude.includes(url)) {
-    url='/home'
+  if (url[0] !== "/" || exclude.includes(url)) {
+    url = '/home'
   }
-  res.render('pages/login', {redirectURL : url});
+  res.render('pages/login', { redirectURL: url });
 }
 
 exports.admin = async (req, res) => {
-  var reports = await Reports.find({$or: [
-        { resolution: { $exists: false } }, 
-        { resolution: null },               
-        { resolution: '' }                  
-      ]})
+  var reports = await Reports.find({
+    $or: [
+      { resolution: { $exists: false } },
+      { resolution: null },
+      { resolution: '' }
+    ]
+  })
     .populate('user', 'username')
     .sort({ createdAt: -1 })
     .limit(100);
@@ -36,7 +36,7 @@ exports.admin = async (req, res) => {
 }
 
 exports.home = async (req, res) => {
-  try{
+  try {
     res.locals.hasUnreadNotifications = false;
     var birthdays = await getUpcomingBirthdays();
     var hasUnreadNotifications = await Notifications.findOne({ user: req.user._id, seen: false });
@@ -44,7 +44,8 @@ exports.home = async (req, res) => {
       res.locals.hasUnreadNotifications = true;
     }
     res.render('pages/home', { birthdays, isHome: true });
-  } catch(err) {
+  } catch (err) {
+    console.log(err);
     res.redirect("/login")
   }
 }
@@ -72,44 +73,6 @@ exports.renderResetPage = async (req, res) => {
 exports.donate = (req, res) => {
   res.render('pages/donate');
 }
-
-exports.verifyEmail = async (req, res) => {
-  try {
-    var { token } = req.params;
-    var settings = await Settings.findOne({ 'emailVerification.token': token });
-
-    if (!settings || !settings.emailVerification || new Date() > settings.emailVerification.expiry) {
-      return res.send('<h2 style="color:red;">Invalid or expired link.</h2>');
-    }
-
-    var user = await Users.findById(settings.user);
-    if (!user) return res.send('<h2 style="color:red;">User not found.</h2>');
-
-    user.email = settings.emailVerification.newEmail;
-    await user.save();
-
-    settings.emailVerification = undefined;
-    await settings.save();
-    logActivity(user._id, 'Email Change' ,`Changed email to ${user.email}`);
-    return res.send('<h2 style="color:green;">Email successfully verified and updated!</h2>');
-  } catch (err) {
-    console.error(err);
-    res.send('<h2 style="color:red;">Something went wrong.</h2>');
-  }
-}
-
-exports.logout = (req, res) => {
-  req.logout(err => {
-    if (err) {
-      return res.status(500).send('Logout failed');
-    }
-
-    req.session.destroy(() => {
-      res.clearCookie('connect.sid');
-      res.redirect('/login');
-    });
-  });
-};
 
 async function getSortedUsers(loggedInUserId = null) {
   try {
@@ -158,78 +121,56 @@ async function getSortedUsers(loggedInUserId = null) {
     const users = await Users.aggregate(pipeline);
     return users;
   } catch (err) {
-    console.error(err);
+    console.log(err);
     return [];
   }
 }
 
-
-
-
-
 exports.members = async (req, res) => {
-  if(req.user){
+  if (req.user) {
     var members = await getSortedUsers(req.user._id);
   } else {
     var members = await getSortedUsers();
   }
-  res.render('pages/members', {members});
+  res.render('pages/members', { members });
 }
 
 exports.gallery = async (req, res) => {
   var media = await Files.find();
-  res.render('pages/gallery', {media});
-}
-
-exports.viewPost = async (req, res) => {
-  var post = await Posts.findOne({ _id: req.params.id }).populate('comments.user', 'name profile')
-  if(!post) return res.redirect('/');
-  var comments = post.comments;
-  res.render('pages/post', {post, comments});
+  res.render('pages/gallery', { media });
 }
 
 exports.viewProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.params.username });
-  if(!user) return res.redirect('/');
-  if(req.user){
+  if (!user) return res.redirect('/');
+  if (req.user) {
     var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 });
   } else {
-    var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 }).limit(5); 
+    var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 }).limit(5);
   }
-  res.render('pages/profile', {account: user, posts});
+  res.render('pages/profile', { account: user, posts });
 }
 
 exports.myProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.user.username });
-  if(!user) return res.redirect('/');
-  if(req.user){
+  if (!user) return res.redirect('/');
+  if (req.user) {
     var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 });
   } else {
-    var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 }).limit(5); 
+    var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 }).limit(5);
   }
-  res.render('pages/profile', {account: user, posts});
+  res.render('pages/profile', { account: user, posts });
 }
 
 exports.editProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.user.username });
-  if(!user) return res.redirect('/');
-  res.render('pages/edit-profile', {account: user});
+  if (!user) return res.redirect('/');
+  res.render('pages/edit-profile', { account: user });
 }
 
 exports.settings = async (req, res) => {
   var user = await Users.findOne({ username: req.user.username });
-  if(!user) return res.redirect('/');
+  if (!user) return res.redirect('/');
   var settings = await Settings.findOne({ user: user._id });
-  res.render('pages/settings', {account: user, settings});
-}
-
-exports.fetchReport = async (req, res) => {
-  try{
-  var report = await Reports.findOne({ _id: req.params.id }).populate("user", "username");
-  if(!report) return res.status(404).json({success: false, message: 'Report not found'});
-  res.json({success: true, report});
-  } catch(err){
-    console.log(err);
-    res.status(500).json({success: false, message: 'Something went wrong.'});
-  }
+  res.render('pages/settings', { account: user, settings });
 }

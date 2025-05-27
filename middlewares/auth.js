@@ -23,7 +23,7 @@ function hasRole(...allowedRoles) {
     }
 
     if (!allowedRoles.includes(userRole)) {
-      return res.redirect('/login');
+      return res.redirect('/home');
     }
 
     next();

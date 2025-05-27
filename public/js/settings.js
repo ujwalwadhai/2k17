@@ -33,6 +33,7 @@ document.getElementById("settings-form").addEventListener("submit", function (e)
       }
     })
     .catch(err => {
+      console.log(err);
       statusBox.style.color = "red";
       statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
     });
@@ -83,6 +84,7 @@ document.getElementById("change-password-form").addEventListener("submit", funct
       }
     })
     .catch(err => {
+      console.log(err);
       statusBox.style.color = "red";
       statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
     });
@@ -133,7 +135,7 @@ document.getElementById("give-suggestion-form").addEventListener("submit", funct
       }
     })
     .catch(err => {
-      console.error(err);
+      console.log(err);
       statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
       statusBox.style.color = "red";
     });
@@ -184,7 +186,7 @@ document.getElementById("report-problem-form").addEventListener("submit", functi
       }
     })
     .catch(err => {
-      console.error(err);
+      console.log(err);
       statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
       statusBox.style.color = "red";
     });
@@ -229,7 +231,7 @@ document.getElementById("change-email-form").addEventListener("submit", function
       }
     })
     .catch(err => {
-      console.error(err);
+      console.log(err);
       statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong. Please try again later";
       statusBox.style.color = "red";
     });

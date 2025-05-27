@@ -153,7 +153,7 @@ document.getElementById("forgotten-password-form").addEventListener("submit", fu
       }
     })
     .catch(err => {
-      console.error(err);
+      console.log(err);
       statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong. Please try again later";
       statusBox.style.color = "red";
     });

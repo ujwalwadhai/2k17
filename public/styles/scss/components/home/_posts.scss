@@ -109,13 +109,13 @@
 
       .btns-right {
         margin-left: auto;
+        .fa-trash{
+          cursor: pointer;
+        }
 
         button {
           margin-left: 10px;
-
-          &.save-btn{
-            margin-right: 0;
-          }
+          
         }
       }
 

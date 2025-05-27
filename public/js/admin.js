@@ -24,7 +24,7 @@ function openResolveReport(reportId) {
   ResolveReportPopup.classList.add('show');
   ResolveReportOverlay.classList.add('show');
   var subjectBox = document.querySelector('#subject-box');
-    fetch(`/report/${reportId}`)
+    fetch(`/admin/report/${reportId}`)
     .then(res =>  res.json())
     .then(data => {
         document.getElementById('report-id').innerHTML = reportId;
@@ -104,8 +104,7 @@ function loadLogs() {
           tbody.appendChild(row);
         });
       } else {
-        document.querySelector('#loadMoreLogsBtn').style.display = 'none';
-        tbody.innerHTML += `<tr><td colspan="5" style="text-align: center; color:grey">No more logs found.</td></tr>`
+        tbody.innerHTML += `<tr><td colspan="5" style="text-align: center; color:grey">No logs found for ${new Date(data.date).toLocaleDateString('en-IN').split(',')[0]}.</td></tr>`
       }
     })
     .catch(err => {

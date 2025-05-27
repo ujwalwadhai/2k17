@@ -13,6 +13,8 @@ function getGreeting() {
   }
 }
 
+var userid;
+
 var greeting = getGreeting();
 var greetingElement = document.getElementById("greeting-msg")
 if (greetingElement) greetingElement.innerHTML = greeting;
@@ -38,12 +40,14 @@ async function sharePost(button) {
     try {
       await navigator.share({ title, text, url, media });
     } catch (err) {
+      console.log(err);
     }
   } else {
     try {
       await navigator.clipboard.writeText(url);
       Toast('Link copied to clipboard!');
     } catch (err) {
+      console.log(err);
       prompt('Copy this link manually:', url);
     }
   }
@@ -262,6 +266,7 @@ function closeNotifications() {
 }
 
 function loadPosts(userId) {
+  userid= userId;
   var posts = document.getElementById('posts');
   posts.innerHTML = '<p class="heading">Posts in last 6 months</p>';
   posts.innerHTML += partialLoader('posts-loader')
@@ -297,6 +302,9 @@ function loadPosts(userId) {
               if (post.likes.length > 1) {
                 var likedBy = `<p class="extend-like-msg"><img src="${(post.likes[0]._id.toString() == userId.toString() ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'}" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/u/${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}"'>${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}</span>&nbsp; and ${post.likes.length - 1} other${post.likes.length == 2 ? '' : 's'}</p>`
               }
+              if(post.author._id.toString() === userId.toString()){
+                var trashIcon = `<span class="fal fa-trash red" aria-label="Delete this post" onclick="deletePost('${post._id}')"></span>`
+              }
               posts.innerHTML += `<div class="post" id="post-${post._id}">
             <div class="user-info">
               <img src="${post.author.profile}" alt="" class="user-profile">
@@ -316,7 +324,8 @@ function loadPosts(userId) {
 
               <button class="comment-btn" onclick="loadComments('${post._id}', '${userId}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span></button>
               <div class="btns-right">
-                <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://yourdomain.com/post/123"><span class="fal fa-share"></span></button>
+              <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://yourdomain.com/post/123"><span class="fal fa-share"></span></button>
+              ${trashIcon || ''}
               </div>
             </div>
             ${likedBy || ''}
@@ -400,5 +409,25 @@ function createPost(userId) {
   }
 }
 
-
+function deletePost(postId) {
+  var conf = confirm("Are you sure you want to delete this post?");
+  if (!conf) return
+  fetch(`/post/delete`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ postId })
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        Toast("Post deleted!","success")
+        loadPosts(userid)
+      } else {
+        console.log(data.message)
+        Toast("Can't delete post. Try again later.", 'error')
+      }
+    })
+}
 

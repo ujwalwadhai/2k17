@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 const sanitizeHtml = require('sanitize-html');
+var { hasRole, isLoggedIn } = require('./middlewares/auth');
 
 const useragent = require('express-useragent');
 
@@ -54,6 +55,7 @@ app.use((req, res, next) => {
   }
   next();
 });
+app.use('/admin', isLoggedIn, hasRole(['admin']))
 app.use('/', getRoutes);
 app.use('/', postRoutes);
 

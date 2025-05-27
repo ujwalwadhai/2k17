@@ -320,11 +320,11 @@
 .posts .post .post-buttons .btns-right {
   margin-left: auto;
 }
+.posts .post .post-buttons .btns-right .fa-trash {
+  cursor: pointer;
+}
 .posts .post .post-buttons .btns-right button {
   margin-left: 10px;
-}
-.posts .post .post-buttons .btns-right button.save-btn {
-  margin-right: 0;
 }
 .posts .post .post-buttons button {
   background-color: transparent;

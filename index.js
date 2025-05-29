@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo');
 const dotenv = require('dotenv');
 dotenv.config();
 const sanitizeHtml = require('sanitize-html');
@@ -13,11 +14,17 @@ require('./config/passport')(passport);
 
 const app = express();
 app.use(session({
-  secret: '2k17-batch',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    collectionName: 'sessions'
+  }),
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 
+    maxAge: 1000 * 60 * 60 * 24 * 30,
+    secure: process.env.PLATFORM_TYPE === 'production',
+    sameSite: 'lax'
   }
 }));
 
@@ -46,15 +53,26 @@ app.use((req, res, next) => {
   if (req.body) {
     for (let key in req.body) {
       if (typeof req.body[key] === 'string') {
-        req.body[key] = sanitizeHtml(req.body[key], {
-          allowedTags: [],
-          allowedAttributes: {}
-        });
+        if (key === 'newsLetterContent') {
+          req.body[key] = sanitizeHtml(req.body[key], {
+            allowedTags: ['p', 'a', 'b', 'strong', 'div', 'section', 'table', 'tr', 'th', 'tbody', 'thead', 'span', 'em', 'i'],
+            allowedAttributes: false, 
+            disallowedTagsMode: 'discard',
+            nonTextTags: ['script'],
+            allowedSchemes: ['http', 'https', 'mailto', 'tel'],
+          });
+        } else {
+          req.body[key] = sanitizeHtml(req.body[key], {
+            allowedTags: [],
+            allowedAttributes: {}
+          });
+        }
       }
     }
   }
   next();
 });
+
 app.use('/admin', isLoggedIn, hasRole(['admin']))
 app.use('/', getRoutes);
 app.use('/', postRoutes);
@@ -70,6 +88,7 @@ app.use((err, req, res, next) => {
 // CRON Jobs for recurring events
 require('./cron/logCleanUp')
 require('./cron/birthday')
+require('./cron/newsletter')
 
 // Cleans the database when server restarts
 require('./utils/cleanup')()

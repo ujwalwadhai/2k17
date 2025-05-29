@@ -1,3 +1,5 @@
+// Nodemailer configuration for sending emails
+
 const nodemailer = require('nodemailer');
 const { createDate } = require('../utils/time');
 const deviceInfo = require('../middlewares/device');
@@ -176,6 +178,21 @@ async function AdminReportMail(to, data) {
   sendEmail(to, "New Report Submitted • 2k17 Platform", template);
 }
 
+async function ContactFormMail(to, data) {
+  var template = `<div style="font-family: Arial, sans-serif; background-color: #1f1c2e; color: #ffffffcc; padding: 20px;">
+    <h3 style="color: #7b5cf0;">Contact Form used</h3>
+    <p>Someone submitted the contact form:</p>
+
+    <div style="background-color: #2b273f; padding: 15px; border-left: 4px solid #7b5cf0; margin: 20px 0;">
+      <p><strong>From:</strong> ${data.email || "Anonymous"}</p>
+      <p style="margin-top: 5px;"><strong>Message:</strong> ${data.text}</p>
+      <p style="margin-top: 5px;"><strong>Time:</strong> ${createDate()}</p>
+    </div>
+    <p style="color: #888;">Automated Report System<br>2k17 Platform</p>
+  </div>`
+  sendEmail(to, "Contact Form Reachout • 2k17 Platform", template);
+}
+
 async function VerifyNewEmailMail(to, data) {
   var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
     <h3 style="color: #7b5cf0;">Please Verify Your New Email Address</h3>
@@ -239,24 +256,37 @@ async function BirthdayMail(to, data) {
   var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
               <h3 style="color: #7b5cf0;">🎂 Happy Birthday, ${data.name || 'Friend'}!</h3>
               <p>Wishing you a fantastic year ahead. Thanks for being part of 2k17!</p>
-              <p style="color: #888;">– Ujwal W.<br>2k17 Platform</p>
+              <p style="color: #888;">Ujwal W.<br>2k17 Platform</p>
             </div>`
   logActivity('', "Sent Email", `to ${to} for birthday wish`)
   sendEmail(to, 'Happy Birthday 🎂 • 2k17 Platform', template);
 }
 
+async function NewsLetterPreviewMail(to, data) {
+  var template = `<p>Scheduled at ${data.scheduledAt}</p><br>${data.content}`
+  logActivity('', "Sent Email", `to admins for ${data.title} preview`)
+  sendEmail(to, `${data.title} Preview • 2k17 Platform`, template);
+}
+
+async function NewsLetterMail(to, data) {
+  logActivity('', "Sent Email", `to everyone for ${data.title}`)
+  sendEmail(to, `${data.title} • 2k17 Platform`, data.content);
+}
+
 async function sendMail(type, to, data) {
-  /*if (type == 'otp') OTPMail(to, data);
-  if (type == 'login') LoginMail(to, data);
+  if (type == 'otp') OTPMail(to, data);
+  // if (type == 'login') LoginMail(to, data);
   if (type == 'report_user') UserReportMail(to, data);
   if (type == 'report_admins') AdminReportMail(to, data);
   if (type == 'verify-new-email') VerifyNewEmailMail(to, data);
   if (type == 'reset-password') ResetPasswordMail(to, data);
   if (type == 'newcomment') NewCommentMail(to, data); 
   if (type == 'report_resolved') ReportResolvedMail(to, data); 
-  // commented to avoid sending emails during development */
   if (type == 'birthday') BirthdayMail(to, data); 
   if (type == 'account_activation') AccountActivationMail(to, data); 
+  if (type == 'contact_form') ContactFormMail(to, data); 
+  if (type == 'newsletter_preview') NewsLetterPreviewMail(to, data); 
+  if (type == 'newsletter') NewsLetterMail(to, data); 
 }
 
 module.exports = sendMail;

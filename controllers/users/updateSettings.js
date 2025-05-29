@@ -6,8 +6,8 @@ const updateSettings = async (req, res) => {
 
     var notifications = {
       email: req.body.email || false,
-      login: req.body.login || false,
-      newsletter: req.body.newsletter || false,
+      login: req.body.login || false
+      //,newsletter: req.body.newsletter || false,
     };
 
     var settings = await Settings.findOneAndUpdate(

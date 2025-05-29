@@ -8,7 +8,7 @@ const register = async (req, res) => {
   try {
     var user = await Users.findOne({ code });
     if (!user) {
-      return res.json({ success: false, message: 'Invalid code or already registered' });
+      return res.json({ success: false, message: 'Invalid activation code!' });
     }
 
     if(user.registered) {
@@ -25,7 +25,7 @@ const register = async (req, res) => {
       return res.json({ success: false, message: 'Email already registered' });
     }
 
-    user.username = username;
+    user.username = username.toLowerCase().replace(/[^a-zA-Z0-9_]/g, '');
     user.verified = false;
     await user.save();
 
@@ -48,7 +48,7 @@ const register = async (req, res) => {
         return res.json({ success: false, message: 'Something went wrong' });
       }
       logActivity(user._id, 'Account Activation');
-      return res.json({ success: true, message: 'Registration successful', redirect: '/home' });
+      return res.json({ success: true, message: 'Please check your email (spam folder too) to verify your account', redirect: '/home' });
     })
   } catch (err) {
     console.log(err);

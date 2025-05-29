@@ -29,14 +29,14 @@ function login(redirectURL){
                 login_btn.innerHTML = "Redirecting..."
                 setTimeout(() => {
                     window.location.href = redirectURL;
-                }, 800)
+                }, 300)
             } else {
                 login_btn.disabled = false;
                 info.innerHTML = `<span style='color: red'><span class='fal fa-circle-xmark'></span> &nbsp; ${data.message}</span>`;
                 login_btn.innerHTML = "Continue"
             }
         })
-    }, 2000)
+    }, 500)
 
 }
 
@@ -71,7 +71,7 @@ function sendOTP(){
                     status_message.innerHTML = `<span style='color: red'><span class='fal fa-circle-xmark'></span> &nbsp; ${data.message}</span>`;
                     send_otp_btn.innerHTML = "Send OTP";
                 }
-            }, 1500)
+            }, 500)
         })
     }
 }
@@ -114,12 +114,12 @@ function email_login(){
                 login_btn.innerHTML = "Redirecting...";
                 setTimeout(() => {
                     window.location.href = data.redirect;
-                }, 1000)
+                }, 500)
             } else {
                 status_message.innerHTML = `<span style='color: red'>${data.message}, please try again!</span>`;
                 setTimeout(() => {
                     window.location.reload();
-                }, 2500)
+                }, 500)
             }
         })
     } else {

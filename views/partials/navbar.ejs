@@ -11,11 +11,11 @@
         <% } else { %>
         <% if(typeof isHome !== 'undefined' && isHome) { %>
           <li><a onclick="openPostPopup()"><span class="fal fa-square-plus"></span></a></li>
-          <li><a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a></li>
         <% } else { %>
           <li><a href="/home"><span class="fal fa-house"></span></a></li>
         <% } %>
-          <li><a href=""><span class="fal fa-messages"></span></a></li>
+          <li><a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a></li>
+          <li><a href="/settings"><span class="fal fa-cog"></span></a></li>
           <li class="user-capsule-wrapper">
             <div class="user-capsule">
               <img src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
@@ -41,7 +41,7 @@
         <li class="user-capsule-wrapper">
             <div class="user-capsule user-capsule-2">
               <a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a>
-              <a href="/chat"><span class="fal fa-message-lines"></span></a>
+              <a href="/settings"><span class="fal fa-cog"></span></a>
               <img id="user-capsule-img" src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
             </div>
 
@@ -64,7 +64,7 @@
         <div class="close-icon" id="close-icon">
           <span class="fas fa-xmark"></span>
         </div>
-        <img src="/images/jnv-bg-4.jpg" alt="">
+        <img src="/images/jnv-bg-1.jpg" alt="">
         <ul class="nav-items">
           <% if(user) { %>
           <li onclick="window.location.href = '/home'"><a href="/home"><span class="fal fa-house"></span>Home</a></li>

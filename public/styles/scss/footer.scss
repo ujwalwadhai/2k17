@@ -1,0 +1,56 @@
+@use 'global' as *;
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $bg-dark2;
+  color: $text-muted;
+  padding: 14px 20px;
+  font-size: 14px;
+  border-top: 1px solid $bg-dark3;
+
+  a {
+    color: $text-muted;
+    margin-left: 20px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  .footer-left,
+  .footer-right {
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-left {
+    img{
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+    span {
+      color: $text-muted;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 12px;
+    .footer-left{
+        padding-top: 10px;
+    }
+    .footer-right {
+        padding-bottom: 10px;
+        a:first-of-type{
+            margin-left: 0;
+        }
+    }
+  }
+}

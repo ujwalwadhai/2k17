@@ -102,7 +102,7 @@ function checkUsername(el, username, currentUsername) {
           status_message.innerHTML = "<span class='red'>Username already taken!</span>";
         }
       })
-    }, 1500)
+    }, 300)
   } else {
     status_message.innerHTML = "";
   }

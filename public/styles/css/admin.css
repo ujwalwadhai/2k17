@@ -1,3 +1,29 @@
+.admin-btns {
+  padding: 8px 20px;
+}
+.admin-btns .newsletter-btn {
+  background: #332f48;
+  display: flex;
+  gap: 12px;
+  padding: 0.8rem;
+  width: 100%;
+  max-width: 280px;
+  border: none;
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+  align-items: center;
+}
+.admin-btns .newsletter-btn:hover {
+  background: #6342d8;
+}
+.admin-btns .newsletter-btn span.fal {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
 .reports-logs {
   padding: 8px 20px;
 }
@@ -12,7 +38,7 @@
   font-size: 16px;
 }
 .reports-logs .search-bar::placeholder {
-  color: #888888;
+  color: #9e9e9e;
 }
 
 .activity-logs {
@@ -29,7 +55,7 @@
   font-size: 16px;
 }
 .activity-logs .search-bar::placeholder {
-  color: #888888;
+  color: #9e9e9e;
 }
 
 .logs-table-wrapper {
@@ -120,7 +146,7 @@
 #resolve-report-popup .resolve-report-box {
   width: 85vw;
   max-width: 700px;
-  max-height: 500px;
+  max-height: 600px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -141,7 +167,7 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #888888;
+  border-bottom: 1px solid #9e9e9e;
 }
 #resolve-report-popup .resolve-report-box .heading .title span {
   margin-right: 16px;
@@ -155,7 +181,7 @@
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #888888;
+  border: 0.2px solid #9e9e9e;
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -171,7 +197,8 @@
   color: #7b5cf0;
   cursor: pointer;
 }
-#resolve-report-popup .resolve-report-box .resolve-report-list input, #resolve-report-popup .resolve-report-box .resolve-report-list textarea {
+#resolve-report-popup .resolve-report-box .resolve-report-list input,
+#resolve-report-popup .resolve-report-box .resolve-report-list textarea {
   width: 100%;
   padding: 0.8rem;
   margin: 0.5rem 0;
@@ -182,7 +209,8 @@
   outline: none;
   resize: vertical;
 }
-#resolve-report-popup .resolve-report-box .resolve-report-list input:focus, #resolve-report-popup .resolve-report-box .resolve-report-list textarea:focus {
+#resolve-report-popup .resolve-report-box .resolve-report-list input:focus,
+#resolve-report-popup .resolve-report-box .resolve-report-list textarea:focus {
   border: 1px solid #7b5cf0;
 }
 #resolve-report-popup .resolve-report-box .resolve-report-list #resolve-report-status {
@@ -201,6 +229,121 @@
   transition: background 0.3s;
 }
 #resolve-report-popup .resolve-report-box .resolve-report-list button[type=submit]:hover {
+  background-color: #7b5cf0;
+}
+
+#newsletter-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#newsletter-popup.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+#newsletter-popup .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+#newsletter-popup .overlay.show {
+  opacity: 1;
+}
+#newsletter-popup .newsletter-box {
+  width: 85vw;
+  max-width: 700px;
+  max-height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1f1c2e;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#newsletter-popup .newsletter-box .heading {
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 16px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #9e9e9e;
+}
+#newsletter-popup .newsletter-box .heading .title span {
+  margin-right: 16px;
+}
+#newsletter-popup .newsletter-box .heading p.close-icon {
+  margin: 12px;
+  margin-left: auto;
+  margin-right: 16px;
+  background-color: #2b273f;
+  padding: 8px;
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0.2px solid #9e9e9e;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+#newsletter-popup .newsletter-box .newsletter-list {
+  padding: 20px;
+}
+#newsletter-popup .newsletter-box .newsletter-list .info-box {
+  font-size: 14px;
+}
+#newsletter-popup .newsletter-box .newsletter-list .info-box #report-user {
+  color: #7b5cf0;
+  cursor: pointer;
+}
+#newsletter-popup .newsletter-box .newsletter-list input,
+#newsletter-popup .newsletter-box .newsletter-list textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+  background: #2c283d;
+  color: rgba(255, 255, 255, 0.8);
+  outline: none;
+  resize: vertical;
+}
+#newsletter-popup .newsletter-box .newsletter-list input:focus,
+#newsletter-popup .newsletter-box .newsletter-list textarea:focus {
+  border: 1px solid #7b5cf0;
+}
+#newsletter-popup .newsletter-box .newsletter-list #newsletter-status {
+  margin-top: 4px;
+  font-weight: 500;
+}
+#newsletter-popup .newsletter-box .newsletter-list button[type=submit] {
+  background-color: #6342d8;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  transition: background 0.3s;
+}
+#newsletter-popup .newsletter-box .newsletter-list button[type=submit]:hover {
   background-color: #7b5cf0;
 }
 

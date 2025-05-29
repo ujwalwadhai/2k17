@@ -21,24 +21,28 @@
 #full-loader .loader-text .letter {
   display: inline-block;
   animation: jump 1s infinite ease-in-out;
+  /* span {
+    text-shadow:
+      -1px -1px 0 white,
+      1px -1px 0 white,
+      -1px 1px 0 white,
+      1px 1px 0 white;
+  } */
 }
 #full-loader .loader-text .letter span {
-  text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+  font-weight: bold;
 }
 #full-loader .loader-text .letter .letter-blue {
-  color: blue;
+  color: rgb(5, 110, 214);
 }
 #full-loader .loader-text .letter .letter-green {
   color: green;
-  -webkit-text-stroke: 0.005px white;
 }
 #full-loader .loader-text .letter .letter-red {
   color: red;
-  -webkit-text-stroke: 0.005px white;
 }
 #full-loader .loader-text .letter .letter-yellow {
   color: yellow;
-  -webkit-text-stroke: 0.005px white;
 }
 #full-loader.hidden {
   opacity: 0;

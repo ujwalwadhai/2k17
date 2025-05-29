@@ -73,9 +73,12 @@ router.post('/forgotten-password', emailController.requestPasswordReset)
 
 router.post('/reset-password', emailController.resetPassword)
 
+router.post('/contact', emailController.contactForm)
 
 
 router.post('/admin/logs', adminController.fetchLogs)
+
+router.post('/admin/newsletter/new', adminController.createNewsLetter)
 
 
 module.exports = router;

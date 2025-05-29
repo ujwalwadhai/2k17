@@ -10,7 +10,7 @@ body {
   height: 100vh;
   overflow-x: hidden;
   overflow: hidden;
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/jnv-bg-4.jpg') center center / cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 }
 
 .gallery-container {
@@ -19,12 +19,20 @@ body {
   padding: 20px;
   padding-top: 96px;
   height: 100vh;
-  overflow-x: scroll;
+  overflow-x: auto;       
+  overflow-y: scroll;   
+
+  scrollbar-width: none;    
+  -ms-overflow-style: none; 
+
+  &::-webkit-scrollbar {
+    width: 0;               
+  }
 
   h1 {
     text-align: center;
     margin-bottom: 36px;
-    color: $primary-dark;
+    color: $primary;
     user-select: none;
   }
 
@@ -51,7 +59,7 @@ body {
         height: auto;
         display: block;
         height: 100%;
-        object-fit: cover; // 🔥 this is key
+        object-fit: cover;
         object-position: center;
         pointer-events: none;
       }
@@ -65,7 +73,7 @@ body {
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       transition: transform 0.3s ease;
-      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/jnv-bg-6.jpg') center center / cover no-repeat;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 
       &:hover {
         transform: translateY(-5px);

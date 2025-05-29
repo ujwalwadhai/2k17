@@ -218,7 +218,7 @@ body {
 .right-pane .signup-form .divider {
   text-align: center;
   margin: 1rem 0;
-  color: #888888;
+  color: #9e9e9e;
 }
 .right-pane .signup-form .social-buttons {
   display: flex;
@@ -234,7 +234,7 @@ body {
   cursor: pointer;
 }
 .right-pane .signup-form .social-buttons button:hover {
-  background: #888888;
+  background: #9e9e9e;
 }
 
 @media (max-width: 1024px) {
@@ -362,7 +362,7 @@ body {
 #forgotten-password-popup .forgotten-password-box {
   width: 85vw;
   max-width: 700px;
-  max-height: 500px;
+  max-height: 600px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -383,7 +383,7 @@ body {
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #888888;
+  border-bottom: 1px solid #9e9e9e;
 }
 #forgotten-password-popup .forgotten-password-box .heading .title span {
   margin-right: 16px;
@@ -397,7 +397,7 @@ body {
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #888888;
+  border: 0.2px solid #9e9e9e;
   color: white;
   border-radius: 4px;
   text-align: center;

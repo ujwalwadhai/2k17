@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  <%- include('../partials/loader') %>
   <%- include('../partials/navbar') %>
   <br><br>
   <div class="settings-container">
@@ -27,9 +28,9 @@
             suggestion</a></li>
       </ul>
       <ul id="account">
-        <li onclick="window.location.href='/report'"><a href="/report"><span class="fal fa-trash"></span> Delete
-            account</a></li>
-        <li onclick="window.location.href='/report'"><a href="/report"><span class="fal fa-right-from-bracket"></span>
+        <!--<li onclick="window.location.href='/delete-account'"><a href="/delete-account"><span class="fal fa-trash"></span> Delete
+            account</a></li>-->
+        <li onclick="window.location.href='/logout'"><a href="/logout"><span class="fal fa-right-from-bracket"></span>
             Log out</a></li>
       </ul>
 
@@ -45,7 +46,7 @@
         <p class="close-icon fal fa-xmark" onclick="closeNotificationSettings()"></p>
       </div>
       <div class="notification-settings-list" id="notification-settings-list">
-        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Notifications for OTPs are always
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Notifications for OTPs and newsletter are always
           sent.</span><br><br><br>
           <form id="settings-form">
             <div class="form-section">
@@ -57,7 +58,7 @@
                 <input type="checkbox" name="login" <%=settings.notifications.login ? 'checked' : '' %>>
                 Login alerts (via email)
               </label>
-              <label>
+              <label style="color: grey; pointer-events: none;">
                 <input type="checkbox" name="newsletter" <%=settings.notifications.newsletter ? 'checked' : '' %>>
                 Monthly newsletter via email
               </label>

@@ -1,3 +1,4 @@
 module.exports = {
-  fetchLogs: require('./fetchLogs')
+  fetchLogs: require('./fetchLogs'),
+  createNewsLetter: require('./createNewsLetter'),
 };

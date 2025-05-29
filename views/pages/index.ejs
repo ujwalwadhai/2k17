@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%- include('../partials/head.ejs') %>
-  <title>2k17 — Class Social Space</title>
+  <title>2k17 Platform</title>
   <link rel="stylesheet" href="/styles/css/index.css" />
 </head>
 <body>
@@ -19,14 +19,14 @@
       </div>
       <div class="featured-photo" onclick="window.open()">
         <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
-        <div class="overlay-text">Photo of the Day</div>
+        <div class="overlay-text">Featured photo</div>
       </div>
     </section>
 
     <div class="about-and-newsletter">
     <!-- About Section -->
     <section id="about" class="about">
-      <h3>What is 2k17?</h3>
+      <h3>What is 2k17 Platform?</h3>
       <p>This isn’t just another social media site — it’s a digital time capsule. 2k17 exists for the quiet moments — when you’re feeling a little nostalgic, when you want to see a familiar face or check where someone is, or when a memory from school suddenly resurfaces. It’s not about daily posts or endless scrolling. It’s about checking in once in a while, smiling at something someone shared, and remembering the chaos, laughter, and friendships that shaped those seven years. This place will be here — quietly, patiently — whenever you feel like coming home for a bit.
 </p>
     </section>
@@ -43,9 +43,62 @@
 
     </div>
 
+    <!-- Members Section -->
+      <div id="members" class="members no-select">
+        <h3>Members of 2k17</h3>
+        <p class="grey-1">Some random picks here. Visit <a href="/members">members</a> to see all.</p><br><br>
+        <div class="members-grid">
+          <div class="member-card" onclick="window.location.href='/u/ujwalw'">
+            <img src="/images/ujwal_profile.jpg" alt="Profile Picture" class="member-profile-pic">
+            <h4>Ujwal Wadhai</h4>
+            <p style="margin-bottom: 4px;">2017-24 in JNVC</p>
+            <p>@ujwalw</p>
+          </div>
+          <% members.forEach(member => { %>
+            <div class="member-card" onclick="window.location.href='/u/<%= member.username %>'">
+              <img src="<%- member.profile || '/images/user.png' %>" alt="Profile Picture" class="member-profile-pic">
+              <h4><%= member.name %></h4>
+              <p style="margin-bottom: 4px;"><%= member.year %> in JNVC</p>
+              <% if(member.username) { %>
+                <% if(member.username == member.name.toLowerCase().replace(' ', '')) { %>
+                  <p>Not registered</p>
+                <% } else { %>
+                  <p>@<%=member.username%></p>
+                <% } %>
+              <% } else { %>
+                <p>Not registered</p>
+              <% } %>
+            </div>
+          <% }) %>
+          <div class="member-card"  onclick="window.location.href='/members'">
+            <p class="fal fa-users-rectangle" style="color:white; font-size:40px; margin: 2px 2px 16px 2px;"></p>
+            <h4>There are more</h4>
+            <p style="line-height: 24px;">Visit <a href="/members">members</a> to see all of us.</p>
+          </div>
+        </div>
+      </div>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery no-select">
+      <h3>Gallery</h3>
+      <p class="grey-1">For the memories living in our heads. Visit <a href="/gallery">gallery</a> to see all.</p><br><br>
+      <div class="gallery-grid">
+        <% gallery.forEach(image => { %>
+        <div class="image-card" onclick="window.open('<%= image.url %>', '_blank')">
+          <img src="<%= image.url.replace('w_750','w_400') %>" alt="<%= image.pid %>">
+        </div>
+        <% }) %>
+        <div class="image-card" style="padding: 1.2rem;">
+          <span style="color:white; font-size:42px; margin: 2px 2px 18px 2px;" class="fal fa-images"></span>
+          <p style="line-height: 26px;">There's much more,</p><p>Visit <a href="/gallery">gallery</a> to see.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Features Section -->
     <section id="features" class="features no-select">
       <h3>Features</h3>
+      <p class="grey-1">Hard to count :) These are some of those great things you'll see around here</p>
       <div class="features-grid">
         <div class="feature-card">
           <span class="fal feature-icon fa-shield-keyhole"></span>
@@ -54,53 +107,68 @@
         </div>
         <div class="feature-card">
           <span class="fal feature-icon fa-layer-group"></span>
-          <h4>Share Posts</h4>
+          <h4>Share Posts</h4> 
           <p>Post text and pictures to remember our best moments.</p>
         </div>
         <div class="feature-card">
           <span class="fal feature-icon fa-square-heart"></span>
           <h4>Comment & Like</h4>
-          <p>Engage with your batchmates' posts like never before.</p>
+          <p>Engage with your batchmates' posts and show appreciation.</p>
         </div>
         <div class="feature-card">
           <span class="fal feature-icon fa-images"></span>
           <h4>Class Memories</h4>
-          <p>A living scrapbook — from class 6 to whole life</p>
+          <p>A living scrapbook — from class 10 to whole life.</p>
         </div>
       </div>
     </section>
 
-    <div class="developer-and-contact">
-      <section id="developer" class="developer-section">
-        <h2>Meet the Developer</h2>
-        <div class="dev-card">
-          <img src="/images/ujwal_profile.jpg" alt="Ujwal Wadhai Profile IMG">
-          <h3>Ujwal Wadhai</h3>
-          <p>Creator of 2k17 platform <br> Aspiring Full Stack Developer</p>
-          <div class="social-links">
-            <a href="https://github.com/ujwalwadhai" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/ujwalwadhai" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="https://instagram.com/ujwal__w" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="mailto:wadhaiujwal@gmail.com" target="_blank"><i class="fal fa-envelope"></i></a>
-          </div>
-        </div>
-      </section>
-
       <section class="contact" id="contact">
         <h3>Contact Us</h3>
-        <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17platform@gmail.com">2k17batch@gmail.com</a></p><br>
-        <form>
-          <input type="text" placeholder="Your name or email" required>
-          <input type="text" name="" id="" placeholder="Say hi ...">
+        <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a></p><br>
+        <form id="contact-form">
+          <input type="text" placeholder="Your email" name="email" required>
+          <input type="text" name="text" id="" placeholder="Say hi ..." required>
+          <p id="contact-status" style="font-size: 14px;"></p>
           <button type="submit"><span class="fal fa-paper-plane"></span> &nbsp; Send</button>
         </form>
       </section>
-    </div>
   </main>
 
-  <footer>
-    <p>Created with ❤️ by Ujwal W.</p>
-  </footer>
+  <%- include('../partials/footer') %>
+
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var statusBox = document.getElementById("contact-status");
+      statusBox.style.color = "green";
+      statusBox.innerHTML = "<i class='fal fa-circle-notch fa-rotate'></i> &nbsp;Sending email to admin...";
+
+      fetch("/contact", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email : this.elements["email"].value, text : this.elements["text"].value})
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            statusBox.innerHTML = "<i class='fal fa-circle-check'></i> &nbsp; Message sent successfully. We will get back to you soon.";
+            statusBox.style.color = "green";
+            this.reset();
+          } else {
+            statusBox.innerHTML = "<i class='fal fa-circle-xmark'></i> &nbsp;" + (data.message || "Failed to send email.");
+            statusBox.style.color = "red";
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong. Please try again later";
+          statusBox.style.color = "red";
+        });
+    });
+  </script>
 
 </body>
 </html>

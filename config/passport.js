@@ -1,3 +1,5 @@
+// Passport strategy for user auth
+
 const LocalStrategy = require('passport-local').Strategy;
 const Users = require('../models/Users');
 

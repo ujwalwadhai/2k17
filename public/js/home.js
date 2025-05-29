@@ -143,7 +143,7 @@ async function loadComments(postId, userId = '') {
     } else {
       list.innerHTML = "No comments yet"
     }
-  }, 2500)
+  }, 500)
 }
 
 
@@ -254,7 +254,7 @@ function loadNotifications() {
           </div>`
         }
 
-      }, 2000)
+      }, 500)
     })
 }
 
@@ -337,7 +337,7 @@ function loadPosts(userId) {
           <p>No posts yet!</p>
           </div>`
           }
-        }, 3000)
+        }, 500)
       } else {
         Toast("Can't load posts at the moment. Please try again later.", 'error')
       }

@@ -13,7 +13,7 @@ const changePassword = async (req, res) => {
   }
 
   try {
-    var user = await Users.findById(req.user._id).select('+password');
+    var user = await Users.findById(req.user._id).select('+password +code');
 
     var isMatch = await user.validatePassword(currentPassword);
     if (!isMatch) {

@@ -1,3 +1,5 @@
+// Cloudinary configuration
+
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
@@ -25,7 +27,7 @@ const storage = new CloudinaryStorage({
   },
 });
 
-// File size limit in bytes
+// File size limits
 const FILE_LIMITS = {
   image: 10 * 1024 * 1024,  // 10MB
   video: 30 * 1024 * 1024,  // 30MB

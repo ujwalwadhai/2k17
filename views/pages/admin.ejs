@@ -11,6 +11,10 @@
     <%-include('../partials/navbar') %>
     <%-include('../partials/loader') %>
         <br><br><br><br>
+    
+    <div class="admin-btns">
+        <button onclick="openNewsLetter()" class="newsletter-btn"><span class="fal fa-newspaper"></span> Create new newsletter</button>
+    </div>
 
     <div class="reports-logs">
         <h2>Submitted Reports</h2>
@@ -95,6 +99,27 @@
             <br>
             <div id="resolve-report-status"></div><br>
             <button type="submit">Close report with this resolution</button>
+            </form>
+        </div>
+        </div>
+    </div>
+
+    <div id="newsletter-popup">
+        <div class="overlay" onclick="closeNewsLetter()"></div>
+        <div class="newsletter-box">
+        <div class="heading">
+            <p class="title"><span class="fal fa-newspaper"></span> New newsletter</p>
+            <p class="close-icon fal fa-xmark" onclick="closeNewsLetter()"></p>
+        </div>
+        <div class="newsletter-list" id="newsletter-list">
+            <p class="grey-1 info-box">Use unique number inside title to avoid grouping in inbox of users.</p>
+            <p class="grey-1">Newsletter will be sent at 9 AM on the date you choose.</p>
+            <form id="newsletter-form">
+                <input type="text" name="title" placeholder="Title (ex. July Newsletter #1)" id="newsletter-title" required />
+                <textarea name="newsLetterContent" rows="7" placeholder="HTML content (script tag not allowed)" id="newsletter-content" required></textarea>
+                <input type="date" placeholder="Date to send this" name="scheduledAt" id="newsletter-scheduledAt" required /><br><br>
+            <div id="newsletter-status"></div><br>
+            <button type="submit">Save newsletter</button>
             </form>
         </div>
         </div>

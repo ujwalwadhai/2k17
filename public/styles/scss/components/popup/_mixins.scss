@@ -30,7 +30,7 @@
     }
 }
 
-@mixin popup-box($maxWidth : 700px, $maxHeight: 500px) {
+@mixin popup-box($maxWidth : 700px, $maxHeight: 600px) {
     width: 85vw;
     max-width: $maxWidth;
     max-height: $maxHeight;

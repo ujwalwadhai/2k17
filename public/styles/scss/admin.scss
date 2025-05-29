@@ -1,6 +1,34 @@
 @use 'global' as *;
 @use 'components/popup/mixins' as *;
 
+.admin-btns {
+  padding: 8px 20px;
+  .newsletter-btn {
+    background: $bg-dark3;
+    display: flex;
+    gap: 12px;
+    padding: 0.8rem;
+    width: 100%;
+    max-width: 280px;
+    border: none;
+    border-radius: 4px;
+    color: $text-light;
+    font-weight: bold;
+    margin-top: 1rem;
+    cursor: pointer;
+    align-items: center;
+
+    &:hover {
+      background: $primary-dark;
+    }
+
+    span.fal{
+      font-size: 18px;
+      margin-right: 8px;
+    }
+  }
+}
+
 .reports-logs {
   padding: 8px 20px;
 
@@ -21,120 +49,156 @@
 }
 
 .activity-logs {
-    padding: 8px 20px;
+  padding: 8px 20px;
 
-    .search-bar {
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        background: $input-bg;
-        color: $text-light;
-        margin-bottom: 15px;
-        width: 100%;
-        font-size: 16px;
+  .search-bar {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: $input-bg;
+    color: $text-light;
+    margin-bottom: 15px;
+    width: 100%;
+    font-size: 16px;
 
-        &::placeholder {
-            color: $text-muted;
-        }
+    &::placeholder {
+      color: $text-muted;
     }
+  }
 
 }
 
 .logs-table-wrapper {
-    overflow-x: auto;
-    background: $bg-dark2;
-    text-align: center;
+  overflow-x: auto;
+  background: $bg-dark2;
+  text-align: center;
 
-    #loadMoreLogsBtn{
-      background: $primary-dark;
-      padding: 10px 12px;
-      width: 90%;
-      max-width: 200px;
-      border: none;
-      border-radius: 4px;
-      color: $text-light;
-      font-weight: bold;
-      margin: 12px auto;
-      cursor: pointer;
+  #loadMoreLogsBtn {
+    background: $primary-dark;
+    padding: 10px 12px;
+    width: 90%;
+    max-width: 200px;
+    border: none;
+    border-radius: 4px;
+    color: $text-light;
+    font-weight: bold;
+    margin: 12px auto;
+    cursor: pointer;
 
-      &:hover {
-        background: $primary;
-      }
+    &:hover {
+      background: $primary;
     }
+  }
 }
 
 .logs-table {
-    width: 100%;
-    border-collapse: collapse;
-    color: $text-light;
-    text-align: left;
+  width: 100%;
+  border-collapse: collapse;
+  color: $text-light;
+  text-align: left;
 
-    thead {
-        background: $bg-dark;
+  thead {
+    background: $bg-dark;
 
-        th {
-            text-align: left;
-            padding: 12px;
-            color: $primary;
-            font-weight: 600;
-            border-top: 2px solid $input-border;
+    th {
+      text-align: left;
+      padding: 12px;
+      color: $primary;
+      font-weight: 600;
+      border-top: 2px solid $input-border;
 
-            &:first-of-type {
-                border-left: 2px solid $input-border;
-            }
-            
-            &:last-of-type {
-                border-right: 2px solid $input-border;
-            }
-        }
+      &:first-of-type {
+        border-left: 2px solid $input-border;
+      }
+
+      &:last-of-type {
+        border-right: 2px solid $input-border;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $bg-dark;
+
+      &:hover {
+        background: $bg-dark2;
+      }
     }
 
-    tbody {
-        tr {
-            border-bottom: 1px solid $bg-dark;
+    td {
+      padding: 10px 12px;
+      color: $text-light;
+      font-size: 14px;
 
-            &:hover {
-                background: $bg-dark2;
-            }
-        }
-
-        td {
-            padding: 10px 12px;
-            color: $text-light;
-            font-size: 14px;
-
-            .resolve-link{
-                color: $primary;
-                cursor: pointer;
-            }
-        }
+      .resolve-link {
+        color: $primary;
+        cursor: pointer;
+      }
     }
+  }
 }
 
 
-#resolve-report-popup{
+#resolve-report-popup {
   @include fullscreen-popup;
 
   .resolve-report-box {
     @include popup-box;
 
-    .resolve-report-list{
+    .resolve-report-list {
       padding: 20px;
 
-      .info-box{
+      .info-box {
         font-size: 14px;
 
-        #report-user{
+        #report-user {
           color: $primary;
           cursor: pointer;
         }
       }
 
-      input, textarea {
+      input,
+      textarea {
         @include popup-inputs;
       }
 
       #resolve-report-status {
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        @include popup-button;
+      }
+    }
+  }
+}
+
+#newsletter-popup {
+  @include fullscreen-popup;
+
+  .newsletter-box {
+    @include popup-box;
+
+    .newsletter-list {
+      padding: 20px;
+
+      .info-box {
+        font-size: 14px;
+
+        #report-user {
+          color: $primary;
+          cursor: pointer;
+        }
+      }
+
+      input,
+      textarea {
+        @include popup-inputs;
+      }
+
+      #newsletter-status {
         margin-top: 4px;
         font-weight: 500;
       }

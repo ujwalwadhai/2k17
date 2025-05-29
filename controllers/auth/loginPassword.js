@@ -4,7 +4,7 @@ var logActivity = require('../../utils/log');
 
 const loginPassword = async (req, res) => {
   var { username, password } = req.body;
-  
+  username = username.toLowerCase();
   try {
     var user = await Users.findOne({
       $or: [{ email: username }, { username: username }]

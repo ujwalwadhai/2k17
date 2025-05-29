@@ -16,6 +16,8 @@ router.get('/verify-email/:token', emailController.verifyEmail);
 
 router.get('/', getController.indexPage);
 
+router.get('/terms-of-service', getController.termsOfService);
+
 router.get('/home', isLoggedIn, getController.home);
 
 router.get('/admin', getController.admin);

@@ -1,0 +1,56 @@
+body {
+  background-color: #1f1c2e;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: "Lato", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  height: 100vh;
+}
+
+.not-found-container {
+  text-align: center;
+  padding: 2rem;
+  padding-top: 16rem;
+  background-color: #1f1c2e;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  height: calc(100vh - 47px);
+}
+.not-found-container h2 {
+  color: #7b5cf0;
+  font-size: 3.2rem;
+  margin: 0;
+}
+.not-found-container .heading {
+  font-size: 2.4rem;
+  margin: 0;
+  color: #7b5cf0;
+}
+.not-found-container .message {
+  margin: 1rem 0;
+  color: #9e9e9e;
+  font-size: 1.1rem;
+}
+.not-found-container .back-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: #6342d8;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.not-found-container .back-btn:hover {
+  background-color: #7b5cf0;
+}
+.not-found-container .back-btn span {
+  margin-right: 12px;
+}
+
+@media (max-width: 768px) {
+  .not-found-container {
+    padding-top: 12rem;
+    height: calc(88vh - 47px);
+  }
+}
+
+/*# sourceMappingURL=404.css.map */

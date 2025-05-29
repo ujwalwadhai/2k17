@@ -324,7 +324,7 @@ function loadPosts(userId) {
 
               <button class="comment-btn" onclick="loadComments('${post._id}', '${userId}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span></button>
               <div class="btns-right">
-              <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://yourdomain.com/post/123"><span class="fal fa-share"></span></button>
+              <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://twok17.onrender.com/post/${post._id}"><span class="fal fa-share"></span></button>
               ${trashIcon || ''}
               </div>
             </div>

@@ -45,9 +45,13 @@
     gap: 12px;
     .footer-left{
         padding-top: 10px;
+        img{
+          display: none;
+        }
     }
     .footer-right {
         padding-bottom: 10px;
+        line-height: 24px;
         a:first-of-type{
             margin-left: 0;
         }

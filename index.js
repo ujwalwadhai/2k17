@@ -72,7 +72,6 @@ app.use((req, res, next) => {
       }
     }
   }
-  console.log(req.session)
   next();
 });
 
@@ -81,11 +80,11 @@ app.use('/', getRoutes);
 app.use('/', postRoutes);
 
 app.use((req, res) => {
-  res.redirect("/")
+  res.render('pages/404')
 })
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.render('pages/404');
 })
 
 // CRON Jobs for recurring events

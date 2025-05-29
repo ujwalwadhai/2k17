@@ -32,6 +32,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(require('./middlewares/locals'))
 
+app.set('trust proxy', 1)
+
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
 
@@ -70,6 +72,7 @@ app.use((req, res, next) => {
       }
     }
   }
+  console.log(req.session)
   next();
 });
 

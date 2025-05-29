@@ -28,7 +28,7 @@ function login(redirectURL){
                 info.innerHTML = `<span style='color: green'><span class='fal fa-circle-check'></span> &nbsp; ${data.message}</span>`;
                 login_btn.innerHTML = "Redirecting..."
                 setTimeout(() => {
-                    window.location.href = redirectURL;
+                    window.location.href = '/home';
                 }, 300)
             } else {
                 login_btn.disabled = false;

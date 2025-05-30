@@ -108,6 +108,102 @@
         });
       });
     })
+
+
+const VAPID_PUBLIC_KEY = 'BFIJXQLJEa3Y7u8J-15-ApYycloB0kxZyUa6EDmF9lZaJ16p35kVHCqLcnwi-h4dpvZv21xWNO2D3h8z7aelAzg'; // IMPORTANT: Replace this
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/-/g, '+')
+    .replace(/_/g, '/');
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+async function subscribeUserToPush() {
+  try {
+    const registration = await navigator.serviceWorker.ready; // Ensure SW is active
+    const existingSubscription = await registration.pushManager.getSubscription();
+
+    if (existingSubscription) {
+      console.log('User IS already subscribed.');
+      // Optional: You might want to send it to the server again to ensure it's up-to-date
+      // sendSubscriptionToBackend(existingSubscription);
+      return;
+    }
+
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+    });
+    console.log('User is subscribed:', subscription);
+    await sendSubscriptionToBackend(subscription);
+  } catch (error) {
+    console.error('Failed to subscribe the user: ', error);
+    if (Notification.permission === 'denied') {
+      console.warn('Permission for notifications was denied');
+    }
+  }
+}
+
+async function sendSubscriptionToBackend(subscription) {
+  try {
+    const response = await fetch('/subscribe-push', { // We will create this backend route
+      method: 'POST',
+      body: JSON.stringify(subscription),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Backend failed to accept subscription');
+    }
+    console.log('Subscription sent to backend successfully.');
+  } catch (error) {
+    console.error('Error sending subscription to backend: ', error);
+  }
+}
+
+function requestNotificationPermissionAndSubscribe() {
+  if (!('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) {
+    console.warn('Push messaging is not supported');
+    return;
+  }
+  Notification.requestPermission(status => {
+    console.log('Notification permission status:', status);
+    if (status === 'granted') {
+      console.log('Permission granted. Subscribing user...');
+      subscribeUserToPush();
+    } else {
+      console.log('Permission not granted.');
+    }
+  });
+}
+
+// Register Service Worker
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  navigator.serviceWorker.register('/js/sw.js')
+    .then(function(registration) {
+      console.log('Service Worker registered with scope:', registration.scope);
+      if (Notification.permission === 'granted') {
+          subscribeUserToPush();
+      } else if (Notification.permission !== 'denied') {
+          console.log('Notification permission not yet granted. Consider adding a UI element to trigger permission request.');
+          requestNotificationPermissionAndSubscribe();
+      }
+    }).catch(function(error) {
+      console.log('Service Worker registration failed:', error);
+    });
+} else {
+  console.warn('Push messaging is not supported by this browser.');
+}
+
+
   </script>
 
 </body>

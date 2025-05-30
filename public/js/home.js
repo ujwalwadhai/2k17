@@ -224,11 +224,9 @@ function loadNotifications() {
             <div class="text">${['like', 'comment'].includes(n.type)
                     ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
-            <div class="time">${n.timeAgo}</div>
-          </div>
-          <div class="action-buttons">
-            <span class="fal fa-triangle-exclamation grey-1"></span>
-            <span class="fal fa-trash red"></span>
+                    </div>
+                    <div class="action-buttons">
+                    <div class="time">${n.timeAgo}</div>
           </div>
         </div>`
               } else {
@@ -241,8 +239,8 @@ function loadNotifications() {
                           <div class="time">${n.timeAgo}</div>
                         </div>
                         <div class="action-buttons">
-                          <span class="fal fa-trash red"></span>
-                        </div>
+                    <div class="time">${n.timeAgo}</div>
+          </div>
                       </div>`
               }
             })

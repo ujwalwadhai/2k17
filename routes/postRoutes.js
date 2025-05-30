@@ -75,6 +75,8 @@ router.post('/reset-password', emailController.resetPassword)
 
 router.post('/contact', emailController.contactForm)
 
+router.post('/newsletter/subscribe', emailController.newsletterSubscribe)
+
 
 router.post('/admin/logs', adminController.fetchLogs)
 

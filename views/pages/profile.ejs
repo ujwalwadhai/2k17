@@ -52,12 +52,9 @@
             <% } %>
       <div class="action-buttons">
         <% if(account.registered){ %>
-        <% if(user){ %>
-        <% if(user._id.toString() === account._id.toString()){ %>
+        <% if(user && user._id.toString() === account._id.toString()){ %>
           <button class="message-btn" onclick="window.location.href = '/profile/edit'"><span class="fal fa-user-pen"></span> &nbsp;Edit</button>
         <% } else { %>
-          <button class="message-btn">Message</button>
-        <% }} else { %>
         <button class="message-btn" onclick="showLoginBanner()">Message</button>
 
         <% } %>

@@ -665,8 +665,8 @@
   font-size: 0.95rem;
   color: rgb(220, 220, 220);
 }
-#notifications-popup .notifications-box .notifications-list .notification .content .time {
-  font-size: 0.75rem;
+#notifications-popup .notifications-box .notifications-list .notification .time {
+  font-size: 14px;
   color: grey;
   margin-top: 4px;
 }

@@ -2,7 +2,6 @@ var cron = require('node-cron');
 var Newsletters = require('../models/Newsletters');
 var Users = require('../models/Users');
 var sendMail = require('../config/mailer');
-var { DateTime } = require('luxon');
 
 function checkToday(dateToCheck) {
   const now = new Date();

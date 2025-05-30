@@ -33,10 +33,10 @@
 
     <section id="newsletter-sub" class="newsletter-sub">
       <h3>Subscribe to our Newsletter &nbsp; <span class="fal fa-envelope-dot"></span></h3>
-      <p>Stay updated with the latest news and updates from 2k17 with a monthly email.</p>
-      <form action="/subscribe" method="POST">
+      <p>Stay updated with the latest news and updates from 2k17 with an email.</p>
+      <form id="newsletter-form" onsubmit="e=> e.preventDefault()">
         <input type="email" name="email" placeholder="Enter your email" required>
-        <button type="submit">Subscribe</button>
+        <button type="submit" id="newsletter-sub-btn">Subscribe</button>
       </form>
       <br><br>
     </section>
@@ -137,38 +137,7 @@
 
   <%- include('../partials/footer') %>
 
-  <script>
-    document.getElementById("contact-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      var statusBox = document.getElementById("contact-status");
-      statusBox.style.color = "green";
-      statusBox.innerHTML = "<i class='fal fa-circle-notch fa-rotate'></i> &nbsp;Sending email to admin...";
-
-      fetch("/contact", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({email : this.elements["email"].value, text : this.elements["text"].value})
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            statusBox.innerHTML = "<i class='fal fa-circle-check'></i> &nbsp; Message sent successfully. We will get back to you soon.";
-            statusBox.style.color = "green";
-            this.reset();
-          } else {
-            statusBox.innerHTML = "<i class='fal fa-circle-xmark'></i> &nbsp;" + (data.message || "Failed to send email.");
-            statusBox.style.color = "red";
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong. Please try again later";
-          statusBox.style.color = "red";
-        });
-    });
-  </script>
+  <script src="/js/indexPage.js"></script>
 
 </body>
 </html>

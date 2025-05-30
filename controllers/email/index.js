@@ -3,5 +3,6 @@ module.exports = {
   verifyEmail: require('./verifyEmail'),
   requestPasswordReset: require('./requestPasswordReset'),
   resetPassword: require('./resetPassword'),
-  contactForm: require('./contactForm')
+  contactForm: require('./contactForm'),
+  newsletterSubscribe: require('./newsletterSubscribe')
 };

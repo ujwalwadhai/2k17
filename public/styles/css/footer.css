@@ -40,8 +40,12 @@
   .site-footer .footer-left {
     padding-top: 10px;
   }
+  .site-footer .footer-left img {
+    display: none;
+  }
   .site-footer .footer-right {
     padding-bottom: 10px;
+    line-height: 24px;
   }
   .site-footer .footer-right a:first-of-type {
     margin-left: 0;

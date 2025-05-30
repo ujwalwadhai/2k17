@@ -1,0 +1,62 @@
+@use 'global' as *;
+
+body {
+  background-color: $bg-dark;
+  color: $text-light;
+  font-family: 'Lato', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  height: 100vh;
+}
+
+.not-found-container {
+  text-align: center;
+  padding: 2rem;
+  padding-top: 16rem;
+  background-color: $bg-dark;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  height: calc(100vh - 47px);
+
+  h2{
+    color: $primary;
+    font-size: 3.2rem;
+    margin: 0;
+  }
+
+  .heading {
+    font-size: 2.4rem;
+    margin: 0;
+    color: $primary;
+  }
+
+  .message {
+    margin: 1rem 0;
+    color: $text-muted;
+    font-size: 1.1rem;
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    background-color: $primary-dark;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: $primary;
+    }
+
+    span{
+        margin-right: 12px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+    .not-found-container{
+        padding-top: 12rem;
+        height: calc(88vh - 47px);
+    }
+}

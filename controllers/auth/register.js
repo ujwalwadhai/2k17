@@ -35,7 +35,7 @@ const register = async (req, res) => {
     await Settings.findOneAndUpdate(
       { user: user._id },
       { emailVerification: { newEmail:email, token, expiry } },
-      { new: true, upsert: true }
+      { new: true, upsert: true } 
     );
 
     var link = `${req.protocol}://${req.get('host')}/verify-email/${token}`;
@@ -47,7 +47,7 @@ const register = async (req, res) => {
         console.log(err);
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      logActivity(user._id, 'Account Activation');
+      logActivity(user._id, 'Account Activation', `${user.name} activated their account`);
       return res.json({ success: true, message: 'Please check your email (spam folder too) to verify your account', redirect: '/home' });
     })
   } catch (err) {

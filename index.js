@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const dotenv = require('dotenv');
+const { rateLimit } = require('express-rate-limit');
 dotenv.config();
 const sanitizeHtml = require('sanitize-html');
 var { hasRole, isLoggedIn } = require('./middlewares/auth');
@@ -88,7 +89,6 @@ app.use((req, res, next) => {
       }
     }
   }
-  console.log(req.session)
   next();
 });
 
@@ -97,12 +97,27 @@ app.use('/', getRoutes);
 app.use('/', postRoutes);
 
 app.use((req, res) => {
-  res.redirect("/")
+  res.render('pages/404')
 })
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.render('pages/404');
 })
+
+// Rate limits
+const generalLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 100,
+  skipSuccessfulRequests: false,
+  handler: (req, res) => {
+    res.status(429).json({
+      status: 'fail',
+      message: 'You’ve hit the rate limit. Please slow down.'
+    });
+  }
+});
+app.use(generalLimiter);
 
 // CRON Jobs for recurring events
 require('./cron/logCleanUp')

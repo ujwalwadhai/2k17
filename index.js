@@ -7,6 +7,7 @@ const sanitizeHtml = require('sanitize-html');
 var { hasRole, isLoggedIn } = require('./middlewares/auth');
 
 const useragent = require('express-useragent');
+const webpush = require('web-push');
 
 const session = require('express-session');
 const passport = require('passport');
@@ -33,6 +34,21 @@ app.use(passport.session());
 app.use(require('./middlewares/locals'))
 
 app.set('trust proxy', 1)
+
+const vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
+const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+const webPushContactEmail = process.env.WEB_PUSH_CONTACT_EMAIL;
+
+if (!vapidPublicKey || !vapidPrivateKey || !webPushContactEmail) {
+  console.error("VAPID keys or contact email not set. Please generate VAPID keys and set them in your environment variables.");
+} else {
+  webpush.setVapidDetails(
+    `mailto:${webPushContactEmail}`,
+    vapidPublicKey,
+    vapidPrivateKey
+  );
+  console.log("Web Push VAPID details configured.");
+}
 
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');

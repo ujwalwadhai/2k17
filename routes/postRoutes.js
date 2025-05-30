@@ -59,6 +59,10 @@ router.post('/notifications', isLoggedIn, notificationsController.fetchNotificat
 
 router.post('/notifications/read', isLoggedIn, notificationsController.markReadNotifications)
 
+router.post('/notifications/subscribe', isLoggedIn, notificationsController.subscribePush)
+
+router.post('/notifications/unsubscribe', isLoggedIn, notificationsController.unsubscribePush)
+
 
 
 router.post('/report', reportsController.newReport)

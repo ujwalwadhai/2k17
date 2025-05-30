@@ -1,4 +1,6 @@
 module.exports = {
   fetchNotifications: require('./fetchNotifications'),
-  markReadNotifications: require('./markReadNotifications')
+  markReadNotifications: require('./markReadNotifications'),
+  subscribePush: require('./pushSubscription'),
+  unsubscribePush: require('./unsubscribePush'),
 };

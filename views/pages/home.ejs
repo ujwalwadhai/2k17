@@ -90,6 +90,31 @@
       </div>
     </div>
   </div>
+
+<% if(onboarding) { %>
+  <div id="choose-username-popup">
+    <div class="overlay" onclick="closeChooseUsername()"></div>
+    <div class="choose-username-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-user-circle"></span> Choose username</p>
+        <p class="close-icon fal fa-xmark" onclick="closeChooseUsername()"></p>
+      </div>
+      <div class="choose-username-list" id="choose-username-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Adding an username is a creative way to express yourself</span><br><br>
+        <form id="choose-username-form">
+          <input type="text" autocomplete="off" oninput="checkUsername(this)" name="username" placeholder="Choose username" required id="username">
+          <br>
+          <div id="choose-username-status"></div><br>
+          <div class="popup-btns">
+            <button onclick="closeChooseUsername()" class="cancel-btn">I'll do it later</button>
+            <button type="submit">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<% } %>
+
   <%- include('../partials/footer.ejs') %>
 
   <script src="/js/home.js"></script>
@@ -107,6 +132,9 @@
           preview.innerHTML += el;
         });
       });
+      <% if(onboarding) { %>
+        openChooseUsername()
+      <% } %>
     })
   </script>
 

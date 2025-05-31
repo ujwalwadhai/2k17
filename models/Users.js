@@ -21,10 +21,9 @@ const userSchema = new mongoose.Schema({
     other: String
   },
   code: { type: String, select: false },
-  emailVerificationToken: { type: String },
   role: { type: String, enum: ['admin', 'moderator']},
-  joinedAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
+  joinedAt: { type: Date },
+  updatedAt: { type: Date }
 });
 
 

@@ -1,7 +1,7 @@
 body {
   margin: 0;
   background: #1f1c2e;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
 }
 
 .container {
@@ -82,7 +82,7 @@ body {
   user-select: none;
 }
 .left-pane .header .back-button {
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   background: rgba(255, 255, 255, 0.25);
   padding: 0.5rem 1rem;
   border-radius: 999px;
@@ -105,7 +105,7 @@ body {
   cursor: pointer;
 }
 .left-pane .image-caption .dots .dot.active {
-  background: rgba(255, 255, 255, 0.8);
+  background: #ffffff;
 }
 
 .right-pane {
@@ -137,8 +137,9 @@ body {
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   outline: none;
+  border: 1px solid #555;
 }
 .right-pane .signup-form input:focus {
   border: 1px solid #7b5cf0;
@@ -202,18 +203,18 @@ body {
   text-decoration: none;
 }
 .right-pane .signup-form .primary-btn {
-  background: #7b5cf0;
+  background: #6342d8;
   padding: 0.8rem;
   width: 100%;
   border: none;
   border-radius: 8px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   font-weight: bold;
   margin-top: 1rem;
   cursor: pointer;
 }
 .right-pane .signup-form .primary-btn:hover {
-  background: #6342d8;
+  background: #7b5cf0;
 }
 .right-pane .signup-form .divider {
   text-align: center;
@@ -227,7 +228,7 @@ body {
 .right-pane .signup-form .social-buttons button {
   flex: 1;
   background: #2c283d;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   border: none;
   padding: 0.8rem;
   border-radius: 8px;
@@ -353,7 +354,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   transition: opacity 0.3s ease;
 }
 #forgotten-password-popup .overlay.show {
@@ -369,7 +370,7 @@ body {
   transform: translate(-50%, -50%);
   background: #1f1c2e;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -413,7 +414,7 @@ body {
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   outline: none;
   resize: vertical;
 }

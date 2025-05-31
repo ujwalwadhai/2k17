@@ -429,3 +429,80 @@ function deletePost(postId) {
     })
 }
 
+function checkUsername(el){
+    el.value = el.value.toLowerCase().replace(/[^a-zA-Z0-9_]/g, '');
+    var status_message = document.getElementById("choose-username-status");
+    if(el.value){
+        status_message.innerHTML = "Checking username availability...";
+        setTimeout(()=>{
+            fetch('/check/username', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: el.value
+                })  
+            }).then((res)=>
+                res.json()
+            ).then((data)=>{
+                if(data.success){
+                    status_message.innerHTML = "<span class='green'>Username available!</span>";
+                } else {
+                    status_message.innerHTML = "<span class='red'>Username already taken!</span>"; 
+                }
+            })
+        }, 500)
+    } else {
+        status_message.innerHTML = "<span class='grey-1'>Enter username to check</span>";
+    }
+    
+    
+}
+
+document.getElementById("choose-username-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var statusBox = document.getElementById("choose-username-status");
+  statusBox.style.color = "green";
+  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'><span> &nbsp;Updating...";
+  var data = {
+    username: this.elements['username'].value
+  };
+
+  fetch("/profile/update", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        statusBox.innerHTML = "<i class='fal fa-check-circle'></i> &nbsp;Username added!";
+        setTimeout(closeChooseUsername, 2000);
+      } else {
+        statusBox.style.color = "red";
+        statusBox.innerHTML = `<i class='fal fa-times-circle'></i> &nbsp;${data.message || 'Failed to add username'}`;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      statusBox.style.color = "red";
+      statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
+    });
+});
+
+function openChooseUsername(){
+  var chooseUsernamePopup = document.getElementById('choose-username-popup');
+  var chooseUsernameOverlay = chooseUsernamePopup.querySelector('.overlay');
+  chooseUsernamePopup.classList.add('show');
+  chooseUsernameOverlay.classList.add('show');
+}
+
+function closeChooseUsername(){
+  var chooseUsernamePopup = document.getElementById('choose-username-popup');
+  var chooseUsernameOverlay = chooseUsernamePopup.querySelector('.overlay');
+  chooseUsernamePopup.classList.remove('show');
+  chooseUsernameOverlay.classList.remove('show');
+}

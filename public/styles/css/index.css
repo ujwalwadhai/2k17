@@ -41,7 +41,7 @@ body {
 }
 .hero .hero-text .cta-btn {
   background: #6342d8;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   padding: 0.75rem 1.5rem;
   text-decoration: none;
   border-radius: 8px;
@@ -306,7 +306,7 @@ footer {
     border: none;
     border-radius: 8px;
     background: #2c283d;
-    color: rgba(255, 255, 255, 0.8);
+    color: #ffffff;
     outline: none;
   }
   .about-and-newsletter .newsletter-sub input:focus {
@@ -314,7 +314,7 @@ footer {
   }
   .about-and-newsletter .newsletter-sub button {
     background: #7b5cf0;
-    color: rgba(255, 255, 255, 0.8);
+    color: #ffffff;
     padding: 0.8rem;
     border: none;
     border-radius: 8px;
@@ -346,7 +346,7 @@ footer {
     border: none;
     border-radius: 8px;
     background: #2c283d;
-    color: rgba(255, 255, 255, 0.8);
+    color: #ffffff;
     outline: none;
   }
   .newsletter-sub input:focus {
@@ -354,7 +354,7 @@ footer {
   }
   .newsletter-sub button {
     background: #7b5cf0;
-    color: rgba(255, 255, 255, 0.8);
+    color: #ffffff;
     padding: 0.8rem;
     border: none;
     border-radius: 8px;
@@ -375,7 +375,7 @@ footer {
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   outline: none;
   max-width: 400px;
 }
@@ -384,7 +384,7 @@ footer {
 }
 .contact button {
   background: #7b5cf0;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   padding: 0.8rem;
   border: none;
   border-radius: 8px;

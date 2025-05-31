@@ -1,47 +1,4 @@
-function checkUsername(el, username){
-    el.value = el.value.toLowerCase().replace(/[^a-zA-Z0-9_]/g, '');
-    var status_icon = document.getElementById("status-icon");
-    var status_message = document.getElementById("status-message");
-    status_icon.classList.remove("fa-user-circle");
-    status_icon.classList.remove("fa-spinner-third");
-    status_icon.classList.remove("fa-check-circle");
-    status_icon.classList.remove("fa-spin");
-    status_icon.classList.remove("fa-circle-xmark");
-    if(username){
-        status_icon.classList.add("fa-spin");
-        status_message.innerHTML = "Checking username availability...";
-        status_icon.classList.add("fa-spinner-third");
-        status_icon.classList.add("status-icon");
-        setTimeout(()=>{
-            fetch('/check/username', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: cleanValue
-                })  
-            }).then((res)=>
-                res.json()
-            ).then((data)=>{
-                status_icon.classList.remove("fa-spin");
-                status_icon.classList.remove("fa-spinner-third");
-                if(data.success){
-                    status_icon.classList.add("fa-check-circle");
-                    status_message.innerHTML = "<span class='green'>Username available!</span>";
-                } else {
-                    status_icon.classList.add("fa-circle-xmark");
-                    status_message.innerHTML = "<span class='red'>Username already taken!</span>"; 
-                }
-            })
-        }, 500)
-    } else {
-        status_icon.classList.add("fa-user-circle");
-        status_message.innerHTML = "<span class='grey-1'>Enter username to check</span>";
-    }
-    
-    
-}
+
 
 function togglePassword(){
     var password = document.getElementById("password");
@@ -58,7 +15,6 @@ function togglePassword(){
 }
 
 function signup(){
-    var username = document.getElementById("signup-username").value;
     var email = document.getElementById("email").value;
     var code = document.getElementById("code").value;
     var info = document.getElementById("info");
@@ -66,7 +22,7 @@ function signup(){
     if(!document.querySelector('#terms-box').checked){
         return Toast("Please accept terms of service!", 'error')
     }
-    if(username && email && code){
+    if(email && code){
         signup_btn.innerHTML = "<span class='fal fa-spin fa-spinner-third'></span> &nbsp; Creating account...";
         fetch('/signup', {
             method: 'POST',
@@ -74,7 +30,6 @@ function signup(){
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: username,
                 email: email,
                 code: code
             })  
@@ -83,9 +38,11 @@ function signup(){
         ).then((data)=>{
             if(data.success){
                 info.innerHTML = "<span class='green'><span class='fal fa-circle-check'></span> &nbsp; Account created successfully!</span>";
+                signup_btn.innerHTML = "Redirecting to home...";
+                alert('Account created successfully! Please check your email for verification link.')
                 setTimeout(()=>{
-                    window.location.href = "/home";
-                }, 500)
+                    window.location.href = data.redirect;
+                }, 1500)
             } else {
                 setTimeout(()=>{
                     signup_btn.innerHTML = "Create account";

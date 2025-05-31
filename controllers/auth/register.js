@@ -4,7 +4,8 @@ var sendMail = require('../../config/mailer');
 var logActivity = require('../../utils/log');
 
 const register = async (req, res) => {
-  var { username, email, code } = req.body;
+  var { email, code } = req.body;
+  email = email.toLowerCase();
   try {
     var user = await Users.findOne({ code });
     if (!user) {
@@ -15,17 +16,13 @@ const register = async (req, res) => {
       return res.json({ success: false, message: 'You are already registered! Please login to continue' });
     }
 
-    var user2 = await Users.findOne({ username });
+    var user2 = await Users.findOne({ email });
     if (user2) {
-      return res.json({ success: false, message: 'Username already taken' });
-    }
-
-    var user3 = await Users.findOne({ email });
-    if (user3) {
       return res.json({ success: false, message: 'Email already registered' });
     }
 
-    user.username = username.toLowerCase().replace(/[^a-zA-Z0-9_]/g, '');
+    user.email = email;
+    user.registered = true;
     user.verified = false;
     await user.save();
 
@@ -48,7 +45,7 @@ const register = async (req, res) => {
         return res.json({ success: false, message: 'Something went wrong' });
       }
       logActivity(user._id, 'Account Activation', `${user.name} activated their account`);
-      return res.json({ success: true, message: 'Please check your email (spam folder too) to verify your account', redirect: '/home' });
+      return res.json({ success: true, message: 'Please check your email (spam folder too) to verify your account', redirect: '/home?onboarding=true' });
     })
   } catch (err) {
     console.log(err);

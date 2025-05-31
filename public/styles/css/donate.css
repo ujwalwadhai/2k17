@@ -30,7 +30,7 @@ body {
 }
 .donate-section .donate-container .description {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   margin-bottom: 2rem;
   line-height: 22px;
 }
@@ -46,7 +46,7 @@ body {
 }
 .donate-section .donate-container .donate-btn {
   background: #7b5cf0;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   padding: 0.8rem;
   border: none;
   border-radius: 8px;

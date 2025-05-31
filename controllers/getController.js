@@ -49,7 +49,7 @@ exports.home = async (req, res) => {
     if (hasUnreadNotifications) {
       res.locals.hasUnreadNotifications = true;
     }
-    res.render('pages/home', { birthdays, isHome: true });
+    res.render('pages/home', { birthdays, isHome: true, onboarding: Boolean(req.query.onboarding) || false });
   } catch (err) {
     console.log(err);
     res.redirect("/login")

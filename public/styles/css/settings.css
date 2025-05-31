@@ -69,7 +69,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   transition: opacity 0.3s ease;
 }
 #notification-settings-popup .overlay.show {
@@ -85,7 +85,7 @@
   transform: translate(-50%, -50%);
   background: #1f1c2e;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -172,7 +172,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   transition: opacity 0.3s ease;
 }
 #change-password-popup .overlay.show {
@@ -188,7 +188,7 @@
   transform: translate(-50%, -50%);
   background: #1f1c2e;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -232,7 +232,7 @@
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   outline: none;
   resize: vertical;
 }
@@ -278,7 +278,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   transition: opacity 0.3s ease;
 }
 #report-problem-popup .overlay.show {
@@ -294,7 +294,7 @@
   transform: translate(-50%, -50%);
   background: #1f1c2e;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -338,7 +338,7 @@
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   outline: none;
   resize: vertical;
 }
@@ -384,7 +384,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   transition: opacity 0.3s ease;
 }
 #give-suggestion-popup .overlay.show {
@@ -400,7 +400,7 @@
   transform: translate(-50%, -50%);
   background: #1f1c2e;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -444,7 +444,7 @@
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   outline: none;
   resize: vertical;
 }
@@ -490,7 +490,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   transition: opacity 0.3s ease;
 }
 #change-email-popup .overlay.show {
@@ -506,7 +506,7 @@
   transform: translate(-50%, -50%);
   background: #1f1c2e;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -550,7 +550,7 @@
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   outline: none;
   resize: vertical;
 }

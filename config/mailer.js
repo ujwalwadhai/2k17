@@ -86,7 +86,7 @@ async function NewCommentMail(to, data) {
       <h3 style="color: #7b5cf0; margin-top: 0;">New comment on your post</h3>
 
       <p style="margin: 15px 0;">
-        <strong style="color: #ffffff;">${data.user.username} (${data.user.name.split(' ')[0]} ${data.user.name.split(' ')[1][0]}.)</strong> commented on your post:
+        <strong style="color: #ffffff;">${data.user.name.split(' ')[0]} ${data.user.name.split(' ')[1][0]}. </strong> commented on your post:
       </p>
 
       <div style="background-color: #2c283d; padding: 12px; border-left: 4px solid #7b5cf0; border-radius: 4px; margin: 12px 0; color: #ffffffcc;">

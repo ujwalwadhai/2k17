@@ -15,7 +15,13 @@ body {
   min-height: 100vh;
   text-align: center;
   height: 100vh;
+  overflow-x: auto;
   overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.members-page::-webkit-scrollbar {
+  width: 0;
 }
 .members-page h2 {
   font-size: 2.2rem;
@@ -32,7 +38,7 @@ body {
   border: none;
   border-radius: 8px;
   background: #2c283d;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   outline: none;
   max-width: 400px;
 }
@@ -97,17 +103,17 @@ body {
   padding: 0;
   margin: 0;
   margin-top: 8px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   font-size: 14px;
 }
 .members-page .member-card .username {
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   font-size: 14px;
   cursor: pointer;
 }
 .members-page .member-card .bio {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   margin-bottom: 16px;
 }
 .members-page .member-card .social-links {

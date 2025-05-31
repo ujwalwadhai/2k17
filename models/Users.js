@@ -22,8 +22,15 @@ const userSchema = new mongoose.Schema({
   },
   code: { type: String, select: false },
   role: { type: String, enum: ['admin', 'moderator']},
-  joinedAt: { type: Date },
-  updatedAt: { type: Date }
+  joinedAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+  pushSubscriptions: [{
+    endpoint: String,
+    keys: {
+      p256dh: String,
+      auth: String
+    }
+  }]
 });
 
 

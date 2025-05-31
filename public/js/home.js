@@ -460,6 +460,9 @@ function checkUsername(el){
     
 }
 
+var usernameform = document.getElementById("choose-username-form");
+
+if(usernameform){
 document.getElementById("choose-username-form").addEventListener("submit", function (e) {
   e.preventDefault();
   var statusBox = document.getElementById("choose-username-status");
@@ -492,6 +495,7 @@ document.getElementById("choose-username-form").addEventListener("submit", funct
       statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
     });
 });
+}
 
 function openChooseUsername(){
   var chooseUsernamePopup = document.getElementById('choose-username-popup');
@@ -506,3 +510,21 @@ function closeChooseUsername(){
   chooseUsernamePopup.classList.remove('show');
   chooseUsernameOverlay.classList.remove('show');
 }
+
+var banner = document.getElementById('notification-banner');
+
+var showBanner = () => {
+  var dismissed = localStorage.getItem('notificationDismissed');
+  var permission = Notification.permission;
+
+  if (!dismissed && permission === 'default') {
+    banner.style.display = 'block';
+  }
+};
+
+document.getElementById('later-btn').addEventListener('click', () => {
+  localStorage.setItem('notificationDismissed', 'true');
+  banner.style.display = 'none';
+});
+
+window.addEventListener('DOMContentLoaded', showBanner);

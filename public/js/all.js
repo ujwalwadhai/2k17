@@ -29,3 +29,5 @@ function Toast(message, type = 'info') {
     toast.remove();
   }, 3500);
 }
+
+

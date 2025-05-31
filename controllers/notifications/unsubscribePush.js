@@ -1,3 +1,4 @@
+var Users = require('../../models/Users');
 
 const unsubscribePush = async (req, res) => {
     if (!req.user) {

@@ -12,9 +12,15 @@ document.getElementById("settings-form").addEventListener("submit", function (e)
   }
 
   // Explicitly set unchecked ones to false
-  ['email', 'login', 'newsletter'].forEach(key => {
+  ['email', 'login', 'newsletter', 'push'].forEach(key => {
     if (!settings.hasOwnProperty(key)) settings[key] = false;
   });
+
+  if(document.getElementById('push').checked){
+    requestNotificationPermissionAndSubscribe()
+  } else {
+    unsubscribeUserFromPush()
+  }
 
   fetch("/settings/update", {
     method: "POST",

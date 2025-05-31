@@ -54,7 +54,7 @@ router.post('/post/:postId/new/comment', isLoggedIn, commentsController.newComme
 router.post('/post/:postId/comment/:commentId/delete', isLoggedIn, commentsController.deleteComment)
 
 
-
+ 
 router.post('/notifications', isLoggedIn, notificationsController.fetchNotifications)
 
 router.post('/notifications/read', isLoggedIn, notificationsController.markReadNotifications)

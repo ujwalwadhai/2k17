@@ -1,28 +1,30 @@
 var Posts = require('../../models/Posts');
+var Users = require('../../models/Users');
 var Notifications = require('../../models/Notifications');
 var sendMail = require('../../config/mailer');
 var logActivity = require('../../utils/log');
+// var webpush = require('web-push');
+var sendPushNotification = require('../../utils/push');
 
 const newComment = async (req, res) => {
   try {
     var post = await Posts.findById(req.params.postId).populate('author', 'name email');
+    var newCommentData = post.comments.create({
+      user: req.user._id,
+      text: req.body.text
+    });
     if (post.comments) {
-      post.comments.push({
-        user: req.user._id,
-        text: req.body.text
-      });
+      post.comments.push(newCommentData);
     } else {
       post.comments = []
-      post.comments.push({
-        user: req.user._id,
-        text: req.body.text
-      });
+      post.comments.push(newCommentData);
     }
     await post.save();
 
     // In-app notification logic
-    if(post.author._id.toString() !== req.user._id.toString() && post.author.email){
-      sendMail('newcomment', post.author.email, { user: req.user, comment: req.body.text, postLink: `${req.protocol}://${req.get('host')}/post/${post._id}` });
+    if(post.author._id.toString() !== req.user._id.toString()){
+      // sendMail('newcomment', post.author.email, { user: req.user, comment: req.body.text, postLink: `${req.protocol}://${req.get('host')}/post/${post._id}` });
+      // Email notifications for comments are not needed
       var notification = new Notifications({
         user: post.author._id,
         type: 'comment',
@@ -32,33 +34,17 @@ const newComment = async (req, res) => {
       })
       await notification.save();
     }
-    logActivity(req.user._id, 'Post Comment', `Commented on ${post.author.username}'s post (${post._id})`);
 
-    // Push notification logic
-    const targetUser = await Users.findById(post.author._id).select('pushSubscriptions');
-      if (targetUser && targetUser.pushSubscriptions && targetUser.pushSubscriptions.length > 0) {
-        const pushPayload = JSON.stringify({
-          title: `${req.user.name} commented on your post`,
-          body: `${commentText.substring(0, 50)}${commentText.length > 50 ? '...' : ''}`,
-          icon: req.user.profile || '/images/web_logo.png',
-          url: `/posts/${post._id}#comment-${newComment._id}`,
-          tag: `comment-${newComment._id}`
-        });
-
-        targetUser.pushSubscriptions.forEach(subscription => {
-          webpush.sendNotification(subscription, pushPayload)
-            .then(() => console.log('Push notification sent to:', subscription.endpoint))
-            .catch(async (error) => {
-              console.error('Error sending push notification, subscription: ', subscription.endpoint, error.statusCode, error.body);
-              // If subscription is no longer valid (e.g., 404, 410), remove it
-              if (error.statusCode === 404 || error.statusCode === 410) {
-                console.log('Subscription expired or invalid. Removing...');
-                targetUser.pushSubscriptions = targetUser.pushSubscriptions.filter(sub => sub.endpoint !== subscription.endpoint);
-                await targetUser.save().catch(saveErr => console.error("Error saving user after removing subscription", saveErr));
-              }
-            });
-        });
+    await sendPushNotification({
+      userId: post.author._id,
+      type: 'comment',
+      data: {
+        user: req.user,
+        text: req.body.text,
+        postId: post._id,
+        commentId: newCommentData._id
       }
+    });
     res.json({ success: true, commentsLength: post.comments.length, message: 'Comment added' });
   } catch (err) {
     console.log(err);

@@ -10,7 +10,8 @@ const settingsSchema = new mongoose.Schema({
   notifications: {
     email: { type: Boolean, default: true },
     login: { type: Boolean, default: true },
-    newsletter: { type: Boolean, default: true }
+    newsletter: { type: Boolean, default: true },
+    push: { type: Boolean, default: false }
   },
   emailVerification: {
     newEmail: String,

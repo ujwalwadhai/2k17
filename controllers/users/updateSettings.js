@@ -1,4 +1,5 @@
 var Settings = require('../../models/Settings');
+var Users = require('../../models/Users');
 
 const updateSettings = async (req, res) => {
   try {
@@ -6,7 +7,8 @@ const updateSettings = async (req, res) => {
 
     var notifications = {
       email: req.body.email || false,
-      login: req.body.login || false
+      login: req.body.login || false,
+      push: req.body.push || false
       //,newsletter: req.body.newsletter || false,
     };
 

@@ -161,7 +161,7 @@ async function submitComment(postId, userId, isHomePage = true) {
       loadComments(postId, userId);
       document.getElementById('new-comment').value = ''
       var id = `comment-btn-${postId}`
-      document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${data.commentsLength}`
+      document.getElementById(id).innerHTML = `<span class="fal fa-messages"></span>${data.commentsLength}`
     } else {
       window.location.reload()
     }
@@ -522,9 +522,13 @@ var showBanner = () => {
   }
 };
 
-document.getElementById('later-btn').addEventListener('click', () => {
+var laterbtn = document.getElementById('later-btn')
+
+if(laterbtn){
+laterbtn.addEventListener('click', () => {
   localStorage.setItem('notificationDismissed', 'true');
   banner.style.display = 'none';
 });
+}
 
 window.addEventListener('DOMContentLoaded', showBanner);

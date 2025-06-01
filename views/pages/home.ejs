@@ -121,19 +121,10 @@
   </div>
 <% } %>
 
-  <div id="notification-banner" style="display: none;">
-    <p>Would you like to recieve important notifications from 2k17 💌?</p>
-    <div class="actions">
-      <button id="later-btn">Maybe Later</button>
-      <button id="grant-btn" onclick="requestNotificationPermissionAndSubscribe()">Yes</button>
-    </div>
-  </div>
+  
 
   <%- include('../partials/footer.ejs') %>
 
-  <script src="/js/all.js"></script>
-  <script src="/js/home.js"></script>
-  <script src="/js/notifications.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       loadPosts('<%= user._id %>');
@@ -153,6 +144,9 @@
       <% } %>
     })
   </script>
+  <script src="/js/all.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/home.js"></script> 
 
 </body>
 </html>

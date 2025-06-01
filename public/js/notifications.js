@@ -100,8 +100,9 @@ async function sendSubscriptionToBackend(subscription) {
 
 function requestNotificationPermissionAndSubscribe() {
     var banner = document.getElementById('notification-banner');
-    localStorage.setItem('notificationDismissed', 'true');
+    if(banner){
     banner.style.display = 'none';
+}
     if (!('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) {
         console.warn('Push messaging is not supported');
         return;

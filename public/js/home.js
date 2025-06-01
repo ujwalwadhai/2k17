@@ -511,13 +511,12 @@ function closeChooseUsername(){
   chooseUsernameOverlay.classList.remove('show');
 }
 
-var banner = document.getElementById('notification-banner');
 
-var showBanner = () => {
-  var dismissed = localStorage.getItem('notificationDismissed');
+function showBanner () {
   var permission = Notification.permission;
-
-  if (!dismissed && permission === 'default') {
+  var banner = document.getElementById('notification-banner');
+  console.log(permission)
+  if (permission === 'default' && banner) {
     banner.style.display = 'block';
   }
 };
@@ -526,7 +525,6 @@ var laterbtn = document.getElementById('later-btn')
 
 if(laterbtn){
 laterbtn.addEventListener('click', () => {
-  localStorage.setItem('notificationDismissed', 'true');
   banner.style.display = 'none';
 });
 }

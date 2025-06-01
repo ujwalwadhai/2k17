@@ -1,10 +1,13 @@
 const CACHE_NAME = 'offline-cache-v1';
 const OFFLINE_URL = '/offline.html';
+const OFFLINE_ASSETS = [OFFLINE_URL, '/favicon.ico'];
 
 self.addEventListener('install', event => {
     console.log('[Service Worker] Installing Service Worker ...');
     event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.add(OFFLINE_URL))
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.addAll(OFFLINE_ASSETS);
+        })
     );
     self.skipWaiting();
 });
@@ -18,14 +21,18 @@ self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
 
     event.respondWith(
-        fetch(event.request)
-            .then(response => response)
-            .catch(() => {
-                if (event.request.mode === 'navigate') {
-                    return caches.match(OFFLINE_URL);
-                }
-                return null;
-            })
+        fetch(event.request).catch(() => {
+            if (event.request.mode === 'navigate') {
+                // For page navigations, return offline fallback
+                return caches.match(OFFLINE_URL);
+            } else if (event.request.url.endsWith('/favicon.ico')) {
+                // Fallback for favicon
+                return caches.match('/favicon.ico');
+            }
+
+            // Default fallback: return empty response (to prevent TypeError)
+            return new Response('', { status: 204 });
+        })
     );
 });
 

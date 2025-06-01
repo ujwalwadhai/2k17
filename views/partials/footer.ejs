@@ -1,3 +1,11 @@
+<div id="notification-banner" style="display: none;">
+    <p>Would you like to recieve important notifications from 2k17 💌?</p>
+    <div class="actions">
+      <button id="later-btn">Maybe Later</button>
+      <button id="grant-btn" onclick="requestNotificationPermissionAndSubscribe()">Yes</button>
+    </div>
+  </div>
+
 <footer class="site-footer">
   <div class="footer-left">
     <img src="/images/web_logo.png" alt="">
@@ -10,6 +18,8 @@
     <a href="/terms-of-service">Terms of service</a>
   </div>
 </footer>
+
+<script src="/js/notifications.js"></script>
 
 
 <div id="toast-container" style="position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;"></div>

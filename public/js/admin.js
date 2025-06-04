@@ -28,7 +28,7 @@ function openResolveReport(reportId) {
     .then(res =>  res.json())
     .then(data => {
         document.getElementById('report-id').innerHTML = reportId;
-        document.getElementById('report-user').innerHTML = `<span onclick="window.location.href='/u/${data.report.user?.username}'">${data.report.user?.username || '-'}</span>`;
+        document.getElementById('report-user').innerHTML = `<span onclick="window.location.href='/${data.report.user?.username}'">${data.report.user?.username || '-'}</span>`;
         document.getElementById('report-time').innerHTML = new Date(data.report.createdAt).toLocaleString("en-IN");
         subjectBox.innerHTML = `<b>Subject: </b> ${data.report.subject}`
         document.getElementById('report-details').textContent = data.report.details;

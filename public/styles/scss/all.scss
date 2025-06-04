@@ -82,3 +82,9 @@ button,
 input:disabled {
   cursor: no-drop;
 }
+
+img{
+  -webkit-user-drag: none;
+  -kkee-user-drag: none;
+  -moz-user-drag: none;
+}

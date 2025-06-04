@@ -8,6 +8,7 @@ var notificationsController = require('../controllers/notifications');
 var reportsController = require('../controllers/reports');
 var emailController = require('../controllers/email');
 var adminController = require('../controllers/admin');
+var memoriesController = require('../controllers/memories');
 var { upload } = require('../config/cloudinary');
 var { isLoggedIn } = require('../middlewares/auth');
 
@@ -85,6 +86,11 @@ router.post('/newsletter/subscribe', emailController.newsletterSubscribe)
 router.post('/admin/logs', adminController.fetchLogs)
 
 router.post('/admin/newsletter/new', adminController.createNewsLetter)
+
+
+router.post('/memories/folders/:folderId', memoriesController.fetchFolder) // add isLoggedIn middleware after testing
+
+router.post('/memories/root', memoriesController.rootFolder) // add isLoggedIn middleware after testing
 
 
 module.exports = router;

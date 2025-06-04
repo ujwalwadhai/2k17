@@ -31,3 +31,6 @@ function Toast(message, type = 'info') {
 }
 
 
+document.querySelectorAll('img').forEach(img => {
+  img.setAttribute('oncontextmenu', 'return false;');
+});

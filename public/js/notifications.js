@@ -19,7 +19,6 @@ async function unsubscribeUserFromPush() {
     const subscription = await registration.pushManager.getSubscription();
 
     if (!subscription) {
-      console.log('User is NOT currently subscribed.');
       return;
     }
 
@@ -58,7 +57,6 @@ async function subscribeUserToPush() {
   try {
     var registration = await navigator.serviceWorker.ready; // Ensure SW is active
     var existingSubscription = await registration.pushManager.getSubscription();
-    console.log(registration, existingSubscription)
 
     if (existingSubscription) {
       // Optional: You might want to send it to the server again to ensure it's up-to-date

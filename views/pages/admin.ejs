@@ -34,7 +34,7 @@
                     <% if(reports.length > 0){ %>
                     <% reports.forEach(report=> { %>
                         <tr id="report-<%= report._id %>">
-                            <td onclick="<%- `window.location.href='/u/${report.user?.username}'` %>"
+                            <td onclick="<%- `window.location.href='/${report.user?.username}'` %>"
                                 style="cursor: pointer;">
                                 <%= report.user?.username || 'Guest' %>
                             </td>

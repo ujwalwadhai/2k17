@@ -8,7 +8,7 @@ const Reports = require('../models/Reports');
 
 exports.indexPage = async (req, res) => {
   var members = await Users.find({name : { $ne : "Ujwal Wadhai"}}, {profile:1, name:1, year:1, username:1}).sort({role:-1}).limit(14);
-  var gallery = await Files.find({}, {url:1, pid:1}).limit(9)
+  var gallery = [] // await Files.find({}, {url:1, pid:1}).limit(9)
   res.render('pages/index', {members, gallery});
 };
 
@@ -139,11 +139,6 @@ exports.members = async (req, res) => {
     var members = await getSortedUsers();
   }
   res.render('pages/members', { members });
-}
-
-exports.gallery = async (req, res) => {
-  var media = await Files.find();
-  res.render('pages/gallery', { media });
 }
 
 exports.viewProfile = async (req, res) => {

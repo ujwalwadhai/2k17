@@ -10,7 +10,7 @@
   <%- include('../partials/navbar') %>
 
   <section class="members-page">
-    <h2>Members of 2k17-24 batch</h2>
+    <h2>Batch members</h2>
     <input type="text" id="searchInput" placeholder="Search by name, username, or email..." />
 
     <div class="members-container" id="membersContainer">
@@ -18,15 +18,15 @@
 
         <div class="member-card">
             <div class="upper">
-                <img onclick="window.location.href='/u/<%= member.username %>'" src="<%- member.profile ? member.profile : '/images/user.png' %>" class="upper-img" alt="Profile of <%= member.name %>">
+                <img onclick="window.location.href='/<%= member.username %>'" src="<%- member.profile ? member.profile : '/images/user.png' %>" class="upper-img" alt="Profile of <%= member.name %>">
                 <div class="upper-info">
-                    <p class="name" onclick="window.location.href='/u/<%= member.username %>'"><%= member.name %>
+                    <p class="name" onclick="window.location.href='/<%= member.username %>'"><%= member.name %>
                     <% if (member.role) { %>
                         <span><%= member.role %></span>
                     <% } %>
                     </p>
                     <% if (member.username && member.username !== member.name.replace(/\s+/g, '').toLowerCase()) { %>
-                        <span class="username" onclick="window.location.href='/u/<%= member.username %>'">@<%= member.username %></span>
+                        <span class="username" onclick="window.location.href='/<%= member.username %>'">@<%= member.username %></span>
                     <% } else { %>
                         <span class="username" style="cursor: text;">Not registered</span>
                     <% } %>

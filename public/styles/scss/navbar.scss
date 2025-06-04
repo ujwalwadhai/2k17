@@ -102,10 +102,10 @@
     span.menu-icon {
       font-size: 20px;
       padding: 6px 8px;
-      border: 1.2px solid white;
+      border: 1.2px solid white !important;
       border-radius: 4px;
       cursor: pointer;
-      color: white;
+      color: white; 
     }
 
     p.brand {

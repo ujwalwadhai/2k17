@@ -5,6 +5,7 @@ var authController = require('../controllers/auth');
 var emailController = require('../controllers/email');
 var postsController = require('../controllers/posts');
 var reportsController = require('../controllers/reports');
+var memoriesController = require('../controllers/memories');
 var { isLoggedIn } = require('../middlewares/auth');
 
 
@@ -32,9 +33,6 @@ router.get('/donate', getController.donate);
 
 router.get('/members', getController.members);
 
-router.get('/gallery', getController.gallery);
-
-router.get('/u/:username', getController.viewProfile);
 
 router.get('/profile', isLoggedIn, getController.myProfile);
 
@@ -51,7 +49,37 @@ router.get('/post/:id', postsController.viewPost);
 router.get('/admin/report/:id', isLoggedIn, reportsController.fetchReport);
 
 
+/* router.get('/memories', memoriesController.showMemories);
+
+router.get('/memories/folder/:folderId', memoriesController.showFolder); */
+
+var Folders = require('../models/Folders');
+var Files = require('../models/Files');
+
+async function getBreadcrumb(folderId) {
+  const breadcrumbs = []
+
+  let current = await Folders.findById(folderId)
+
+  while (current) {
+    breadcrumbs.unshift({
+      name: current.name,
+      id: current._id
+    })
+    current = current.parent ? await Folders.findById(current.parent) : null
+  }
+
+  return breadcrumbs
+}
+
+
+router.get('/memories', memoriesController.showMemories)
+
+router.get('/memories/:folderId', memoriesController.showFolder) // add isLoggedIn middleware after testing
+
+
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping
 
+router.get('/:username', getController.viewProfile);
 
 module.exports = router;

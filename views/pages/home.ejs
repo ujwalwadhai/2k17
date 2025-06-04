@@ -34,7 +34,7 @@
       <p class="heading">Upcoming Birthdays</p>
       <% if(birthdays.length > 0){ %>
       <% birthdays.forEach(member => { %>
-      <div class="event" onclick="window.location.href='/u/<%= member.username %>'">
+      <div class="event" onclick="window.location.href='/<%= member.username %>'">
         <img src="<%= member.profile ? member.profile : '/images/user.png' %>" alt="" class="event-img">
         <div class="event-info">
           <p class="title"><%= member.name %> 🎂</p>

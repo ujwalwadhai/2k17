@@ -48,14 +48,14 @@
         <h3>Members of 2k17</h3>
         <p class="grey-1">Some random picks here. Visit <a href="/members">members</a> to see all.</p><br><br>
         <div class="members-grid">
-          <div class="member-card" onclick="window.location.href='/u/ujwalw'">
+          <div class="member-card" onclick="window.location.href='/ujwalw'">
             <img src="/images/ujwal_profile.jpg" alt="Profile Picture" class="member-profile-pic">
             <h4>Ujwal Wadhai</h4>
             <p style="margin-bottom: 4px;">2017-24 in JNVC</p>
             <p>@ujwalw</p>
           </div>
           <% members.forEach(member => { %>
-            <div class="member-card" onclick="window.location.href='/u/<%= member.username %>'">
+            <div class="member-card" onclick="window.location.href='/<%= member.username %>'">
               <img src="<%- member.profile || '/images/user.png' %>" alt="Profile Picture" class="member-profile-pic">
               <h4><%= member.name %></h4>
               <p style="margin-bottom: 4px;"><%= member.year %> in JNVC</p>

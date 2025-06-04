@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <title><%- currentFolder ? currentFolder.name : 'Featured Memories' %></title>
+    <link rel="stylesheet" href="/styles/css/memories.css">
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/loader') %>
+  <br><br>
+    <section class="memories-container">
+      <h1>Batch Memories</h1>
+  <div class="tabs">
+    <button class="tab <%- typeof tab && tab === 'drive' ? '' : 'active' %>" data-title="Featured Memories" data-tab="featured"><span class="fal fa-sparkles"></span>Featured</button>
+    <button class="tab <%- typeof tab && tab === 'drive' ? 'active' : '' %>" data-title="2k17 Drive" data-tab="drive">Drive</button>
+  </div>
+
+  <div class="tab-content <%- tab && tab === 'drive' ? 'hidden' : '' %>" id="featured-tab">
+    <div class="gallery featured-gallery">
+      <% featuredImages.forEach(img => { %>
+        <div onclick="openViewImage('<%= img.name %>','<%= img.url %>')">
+          <img oncontextmenu="return false;" src="<%= img.url %>" alt="Featured Image">
+          <p><%= img.name.substring(0, 18) %><%- img.name.length > 18 ? '...' : '' %> <span><span class="fal fa-heart"></span><span class="fal fa-message"></span></span></p>
+        </div>
+      <% }) %>
+    </div>
+  </div> 
+
+  <div class="tab-content <%- typeof tab && tab === 'drive' ? '' : 'hidden' %>" id="drive-tab">
+    <div class="breadcrumb">
+      <a onclick="loadFolder('root')"><span class="fal fa-house"></span></a>
+      <% breadcrumb.forEach(folder => { %>
+        <a onclick="loadFolder('<%= folder.id %>')"><%= folder.name %></a>
+      <% })  %>
+    </div> 
+
+    <div class="folders">
+        <% if(folders){ %>
+        <% folders.forEach(folder => { %>
+        <div class="folder" onclick="loadFolder('<%= folder._id %>')">
+          <span class="fal fa-folder-image"></span>
+          <span><%= folder.name %></span>
+        </div>
+        <% }) } else { %>
+        <p>No folders found</p>
+        <% } %>
+    </div>
+    <div class="gallery drive-gallery">
+       <% files.forEach(img => { %>
+        <div onclick="openViewImage('<%= img.name %>','<%= img.url %>&sz=w4000_h4000')">
+          <img oncontextmenu="return false;" src="https://picsum.photos/200/300" alt="Drive Image">
+          <p><%= img.name.substring(0, 18) %><%- img.name.length > 18 ? '...' : '' %> <span><span class="fal fa-heart"></span><span class="fal fa-message"></span></span></p>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
+
+<div id="view-image-popup">
+    <div class="overlay" onclick="closeViewImage()"></div>
+    <div class="view-image-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-image"></span> <span id="imgName"></span></p>
+        <p class="close-icon fal fa-xmark" onclick="closeViewImage()"></p>
+      </div>
+      <div class="view-image-large" id="view-image-large">
+        <img src="" oncontextmenu="return false;" alt="Image" id="imgLarge">
+        <div class="comments">
+          <div class="actions">
+            <span class="fal fa-heart"></span>
+            <span class="fal fa-share"></span>
+          </div>
+          <p class="extend-like-msg"><img src="/images/user.png" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/ujwalw"'>ujwalw</span>&nbsp; and 5 others</p>
+          
+          <div class="comments-box">
+            <p class="section-heading"><b>Comments</b></p>
+            <div class="comment" id="comment-comment._id">
+              <img src="/images/user.png" alt="" class="user-profile">
+              <div class="comment-info">
+                <p class="name">
+                  John Doe &nbsp; <span class="time">3m</span>
+                </p>
+                <span class="text">Nice</span>
+              </div>
+              <div class="action-buttons">
+                <span class="fal fa-trash-alt red" onclick="deleteComment()"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="/js/memories.js"></script>
+
+</body>
+</html>

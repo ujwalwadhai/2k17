@@ -124,9 +124,9 @@ async function loadComments(postId, userId = '') {
           var trashIcon = ''
         }
         list.innerHTML += `<div class="comment" id="comment-${c._id}">
-                                  <img src="${c.user.profile ? c.user.profile : '/images/user.png'}" alt="" onclick="window.location.href='/u/${c.user.username}'" class="user-profile">
+                                  <img src="${c.user.profile ? c.user.profile : '/images/user.png'}" alt="" onclick="window.location.href='/${c.user.username}'" class="user-profile">
                                   <div class="comment-info">
-                                  <p class="name" onclick="window.location.href='/u/${c.user.username}'">${c.user.name} &nbsp; <span class="time">${c.timeAgo}</span></p>
+                                  <p class="name" onclick="window.location.href='/${c.user.username}'">${c.user.name} &nbsp; <span class="time">${c.timeAgo}</span></p>
                               <span class="text">${c.text}</span>
                             </div>
                             <div class="action-buttons">
@@ -222,7 +222,7 @@ function loadNotifications() {
           <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
           <div class="content">
             <div class="text">${['like', 'comment'].includes(n.type)
-                    ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>`
+                    ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
                     </div>
                     <div class="action-buttons">
@@ -234,7 +234,7 @@ function loadNotifications() {
                         <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
                         <div class="content">
                           <div class="text">${['like', 'comment'].includes(n.type)
-                    ? `<a href='/u/${n.fromUser.username}'>${n.fromUser.username}</a>`
+                    ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
                           <div class="time">${n.timeAgo}</div>
                         </div>
@@ -298,7 +298,7 @@ function loadPosts(userId) {
                 var mediaItem = ``
               }
               if (post.likes.length > 1) {
-                var likedBy = `<p class="extend-like-msg"><img src="${(post.likes[0]._id.toString() == userId.toString() ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'}" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/u/${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}"'>${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}</span>&nbsp; and ${post.likes.length - 1} other${post.likes.length == 2 ? '' : 's'}</p>`
+                var likedBy = `<p class="extend-like-msg"><img src="${(post.likes[0]._id.toString() == userId.toString() ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'}" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}"'>${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}</span>&nbsp; and ${post.likes.length - 1} other${post.likes.length == 2 ? '' : 's'}</p>`
               }
               if(post.author._id.toString() === userId.toString()){
                 var trashIcon = `<span class="fal fa-trash red" aria-label="Delete this post" onclick="deletePost('${post._id}')"></span>`
@@ -306,7 +306,7 @@ function loadPosts(userId) {
               posts.innerHTML += `<div class="post" id="post-${post._id}">
             <div class="user-info">
               <img src="${post.author.profile}" alt="" class="user-profile">
-              <div class="user-info-helper" onclick="window.location.href='/u/${post.author.username}'">
+              <div class="user-info-helper" onclick="window.location.href='/${post.author.username}'">
                 <span class="name" >${post.author.name}</span><br>
                 <span class="username">@${post.author.username} (${post.timeAgo})</span>
               </div>
@@ -515,7 +515,6 @@ function closeChooseUsername(){
 function showBanner () {
   var permission = Notification.permission;
   var banner = document.getElementById('notification-banner');
-  console.log(permission)
   if (permission === 'default' && banner) {
     banner.style.display = 'block';
   }

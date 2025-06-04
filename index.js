@@ -106,6 +106,7 @@ const generalLimiter = rateLimit({
 });
 app.use(generalLimiter);
 
+
 // CRON Jobs for recurring events
 require('./cron/logCleanUp')
 require('./cron/birthday')

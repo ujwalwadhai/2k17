@@ -9,7 +9,7 @@
         <meta property="og:title" content="<%= account.name %> on 2k17 Platform">
         <meta property="og:description" content="2k17 Platform">
         <meta property="og:image" content="<%= account.profile || '/images/user.png' %>">
-        <meta property="og:url" content="/u/<%= account.username %>">
+        <meta property="og:url" content="/<%= account.username %>">
         <meta property="og:type" content="website">
 </head>
 <body>
@@ -51,13 +51,8 @@
             </div>
             <% } %>
       <div class="action-buttons">
-        <% if(account.registered){ %>
-        <% if(user && user._id.toString() === account._id.toString()){ %>
+        <% if(account.registered && user && user._id.toString() === account._id.toString()){ %>
           <button class="message-btn" onclick="window.location.href = '/profile/edit'"><span class="fal fa-user-pen"></span> &nbsp;Edit</button>
-        <% } else { %>
-        <button class="message-btn" onclick="showLoginBanner()">Message</button>
-
-        <% } %>
         <% } %>
         <% if (account.email) { %>
           <button class="email-btn" onclick="window.location.href = 'mailto:<%= account.email %>'"><span class="fal fa-envelope"></span>Email</button>
@@ -138,9 +133,9 @@
             </div>
             <% if(post.likes.length > 1) { %>
               <% if(user){ %>
-                <p class="extend-like-msg"><img src="<%-(post.likes[0]._id.toString() == user._id.toString() ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/u/<%-post.likes[0]._id.toString() == user._id.toString() ? post.likes[1].username : post.likes[0].username%>"'><%-post.likes[0]._id.toString() == user._id.toString() ? post.likes[1].username : post.likes[0].username%></span>&nbsp; and <%-post.likes.length - 1 %> other<%-post.likes.length == 2 ? '' : 's'%></p>
+                <p class="extend-like-msg"><img src="<%-(post.likes[0]._id.toString() == user._id.toString() ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/<%-post.likes[0]._id.toString() == user._id.toString() ? post.likes[1].username : post.likes[0].username%>"'><%-post.likes[0]._id.toString() == user._id.toString() ? post.likes[1].username : post.likes[0].username%></span>&nbsp; and <%-post.likes.length - 1 %> other<%-post.likes.length == 2 ? '' : 's'%></p>
               <% } else { %>
-                <p class="extend-like-msg"><img src="<%-(post.likes[0].profile) || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/u/<%-post.likes[0].username%>"'><%-post.likes[0].username%></span>&nbsp; and <%-post.likes.length - 1%> other<%-post.likes.length == 2 ? '' : 's'%></p>
+                <p class="extend-like-msg"><img src="<%-(post.likes[0].profile) || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/<%-post.likes[0].username%>"'><%-post.likes[0].username%></span>&nbsp; and <%-post.likes.length - 1%> other<%-post.likes.length == 2 ? '' : 's'%></p>
               <% } %>
             <% } %>
             </div>
@@ -250,7 +245,7 @@
     <span class="grey-1">You must log in to do this.</span><br>
     <span class="grey-1">See much more about <%= account.name %><br>on 2k17 Platform.</span><br><br>
     <button class="signup-btn" onclick="window.location.href='/create-account'">Create account</button>
-    <button class="login-btn" onclick="window.location.href='/login?url=/u/<%= account.username %>'">Log in</button>
+    <button class="login-btn" onclick="window.location.href='/login?url=/<%= account.username %>'">Log in</button>
   </div>
 </div>
 

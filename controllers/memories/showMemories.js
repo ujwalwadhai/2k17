@@ -9,8 +9,7 @@ const showMemories = async (req, res) => {
   })
 
   var files = await Files.find({
-    folder: null,
-    visible: true
+    folder: null
   })
 
   var featuredImages = await Files.find({

@@ -3,6 +3,7 @@
 <head>
     <%- include('../partials/head') %>
     <title><%- currentFolder ? currentFolder.name : 'Featured Memories' %></title>
+    <link rel="preconnect" href="https://res.cloudinary.com" />
     <link rel="stylesheet" href="/styles/css/memories.css">
 </head>
 <body>
@@ -13,46 +14,26 @@
       <h1>Batch Memories</h1>
   <div class="tabs">
     <button class="tab <%- typeof tab && tab === 'drive' ? '' : 'active' %>" data-title="Featured Memories" data-tab="featured"><span class="fal fa-sparkles"></span>Featured</button>
-    <button class="tab <%- typeof tab && tab === 'drive' ? 'active' : '' %>" data-title="2k17 Drive" data-tab="drive">Drive</button>
+    <button onclick="loadFolder('root')" class="tab <%- typeof tab && tab === 'drive' ? 'active' : '' %>" data-title="2k17 Drive" data-tab="drive">Drive</button>
   </div>
 
   <div class="tab-content <%- tab && tab === 'drive' ? 'hidden' : '' %>" id="featured-tab">
     <div class="gallery featured-gallery">
-      <% featuredImages.forEach(img => { %>
-        <div onclick="openViewImage('<%= img.name %>','<%= img.url %>')">
-          <img oncontextmenu="return false;" src="<%= img.url %>" alt="Featured Image">
-          <p><%= img.name.substring(0, 18) %><%- img.name.length > 18 ? '...' : '' %> <span><span class="fal fa-heart"></span><span class="fal fa-message"></span></span></p>
-        </div>
-      <% }) %>
+      
     </div>
   </div> 
 
   <div class="tab-content <%- typeof tab && tab === 'drive' ? '' : 'hidden' %>" id="drive-tab">
     <div class="breadcrumb">
       <a onclick="loadFolder('root')"><span class="fal fa-house"></span></a>
-      <% breadcrumb.forEach(folder => { %>
-        <a onclick="loadFolder('<%= folder.id %>')"><%= folder.name %></a>
-      <% })  %>
+      
     </div> 
 
     <div class="folders">
-        <% if(folders){ %>
-        <% folders.forEach(folder => { %>
-        <div class="folder" onclick="loadFolder('<%= folder._id %>')">
-          <span class="fal fa-folder-image"></span>
-          <span><%= folder.name %></span>
-        </div>
-        <% }) } else { %>
-        <p>No folders found</p>
-        <% } %>
+        
     </div>
     <div class="gallery drive-gallery">
-       <% files.forEach(img => { %>
-        <div onclick="openViewImage('<%= img.name %>','<%= img.url %>&sz=w4000_h4000')">
-          <img oncontextmenu="return false;" src="https://picsum.photos/200/300" alt="Drive Image">
-          <p><%= img.name.substring(0, 18) %><%- img.name.length > 18 ? '...' : '' %> <span><span class="fal fa-heart"></span><span class="fal fa-message"></span></span></p>
-        </div>
-      <% }) %>
+       
     </div>
   </div>
 </section>
@@ -96,6 +77,10 @@
   </div>
 
 <script src="/js/memories.js"></script>
+<script>document.addEventListener('DOMContentLoaded', ()=>{
+    loadFolder('<%= currentFolder?._id %>')
+  })
+</script>
 
 </body>
 </html>

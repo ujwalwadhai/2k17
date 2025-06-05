@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     var folderId = event.state?.folderId || 'root';
     loadFolder(folderId, false);
   });
-
-
 });
 
 function openViewImage(name, url){
@@ -53,6 +51,8 @@ async function loadFolder(folderId, updateURL = true) {
 
   folders.innerHTML = '<span class="fal fa-rotate fa-circle notch"></span>'
   driveGallery.innerHTML = ''
+
+  if(!folderId) return
   Toast('Loading...', 'info')
 
   // ✅ Update the URL (but not if this is root)
@@ -100,7 +100,7 @@ async function loadFolder(folderId, updateURL = true) {
     data.files.forEach(file => {
       if (file.type === 'image') {
         driveGallery.innerHTML += `<div onclick="openViewImage('${file.name}', '${file.url}')">
-          <img oncontextmenu="return false;" src="https://picsum.photos/200/300" alt="Drive Image">
+          <img oncontextmenu="return false;" src="${file.thumbnail}" alt="Drive Image" loading="lazy">
           <p>${file.name.substring(0, 18)}${file.name.length > 18 ? '...' : ''}<span><span class="fal fa-heart"></span><span class="fal fa-message"></span></span></p>
         </div>`;
       }

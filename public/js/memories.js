@@ -43,8 +43,7 @@ function closeViewImage(){
   name.textContent = ''
 }
 function openViewVideo(name, url){
-  alert('Video open')
-  var ViewVideoPopup = document.getElementById('view-image-popup');
+  var ViewVideoPopup = document.getElementById('view-video-popup');
   var ViewVideoOverlay = ViewVideoPopup.querySelector('.overlay');
   var videoIframe = document.querySelector('#videoIframe')
   var videoName = document.querySelector('#videoName')
@@ -56,7 +55,7 @@ function openViewVideo(name, url){
 }
 
 function closeViewVideo(){
-  var ViewVideoPopup = document.getElementById('view-image-popup');
+  var ViewVideoPopup = document.getElementById('view-video-popup');
   var ViewVideoOverlay = ViewVideoPopup.querySelector('.overlay');
   ViewVideoPopup.classList.remove('show');
   ViewVideoOverlay.classList.remove('show');

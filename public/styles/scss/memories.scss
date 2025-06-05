@@ -290,7 +290,9 @@
     .view-video-large {
       text-align: center;
       padding-top: 16px;
-      min-width: 250px;
+      display: flex;
+      justify-content: center;
+      height: 90vh;
       display: flex;
       gap: 12px;
       overflow: scroll;

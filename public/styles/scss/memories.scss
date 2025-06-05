@@ -62,52 +62,58 @@
       gap: 1rem;
 
       div {
-        position: relative;
         cursor: pointer;
+        background-color: $bg-dark2;
+        padding: 6px 8px;
+        border-radius: 6px;
 
-        p {
-          position: absolute;
-          bottom: 0;
+        p.fileinfo {
           margin: 0;
-          margin-bottom: 3px;
-          border-bottom-left-radius: 6px;
-          border-bottom-right-radius: 6px;
-          padding: 10px 0 10px 12px;
-          background: rgba(0, 0, 0, 0.7);
+          margin-bottom: 4px;
+          border-top-left-radius: 6px;
+          border-top-right-radius: 6px;
+          padding: 10px 0 10px 4px;
           width: 100%;
           font-size: 14px;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.3s ease;
           display: flex;
           align-items: center;
           justify-content: space-between;
 
-          .fal,
+          .fal.fa-heart, .fal.fa-message,
           .fas {
-            margin-right: 16px;
+            margin-right: 6px;
 
             &.fa-heart {
               font-size: 15px;
             }
+          }
+
+          .filename{
+            white-space: nowrap;
+            max-width: 50rem; 
+            overflow: hidden;
+            margin-right: 8px;
+            text-overflow: ellipsis; 
+            display: inline-block;
+          }
+          
+
+          .fal.fa-image, .fal.fa-video::before{
+            margin-right: 12px;
+            padding-bottom: 3px;
           }
         }
 
         img {
           width: 100%;
           height: 200px;
-          border-radius: 6px;
+          border-radius: 4px;
           object-fit: cover;
           background: $bg-dark2;
           transition: transform 0.2s ease;
           -moz-drag-over: none;
           -webkit-user-drag: none;
           cursor: pointer;
-        }
-
-        &:hover p {
-          opacity: 1;
-          pointer-events: auto; // enable interaction if needed
         }
       }
 
@@ -217,112 +223,90 @@
       }
 
       img#imgLarge {
-        width: 65%;
+        width: 100%;
         max-width: 90vw;
         height: 100%;
         max-height: 80vh;
         object-fit: scale-down;
       }
+    }
+  }
 
-      .comments {
-        height: 100vh;
-        width: 32%;
-        min-width: 350px;
+}
+
+#view-video-popup {
+  @include fullscreen-popup(0.9);
+
+  .view-video-box {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    min-width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    border-radius: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .heading {
+      margin-bottom: 0;
+      font-size: 16px;
+      font-weight: bold;
+      padding-left: 16px;
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+
+      .title {
+        span {
+          margin-right: 12px;
+        }
+      }
+
+      p.close-icon {
+        margin: 12px;
+        margin-left: auto;
+        margin-right: 16px;
+        background-color: $bg-dark2;
+        padding: 8px;
+        padding-top: 9px;
+        font-size: 14px;
+        width: 32px;
+        height: 32px;
+        border: 0.2px solid $text-muted;
+        color: white;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+
+    .view-video-large {
+      text-align: center;
+      padding-top: 16px;
+      min-width: 250px;
+      display: flex;
+      gap: 12px;
+      overflow: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+
+      iframe {
+        width: 100%;
+        max-width: 90vw;
+        height: 100%;
         max-height: 80vh;
-        background: $bg-dark2;
-        text-align: left;
-        padding: 12px 16px;
-
-        .actions {
-          padding-top: 8px;
-
-          span {
-            margin-right: 18px;
-            font-size: 18px;
-            cursor: pointer;
-          }
-        }
-
-        .comments-box {
-          p.section-heading {
-            margin-top: 8px;
-            font-size: 18px;
-          }
-
-          .comment {
-            display: flex;
-            align-items: center;
-            font-weight: 400;
-            margin-bottom: 16px;
-
-            img.user-profile {
-              width: 36px;
-              height: 36px;
-              border-radius: 50%;
-              margin-right: 12px;
-              cursor: pointer;
-            }
-
-            .comment-info {
-              .name {
-                margin: 0;
-                margin-bottom: 2px;
-                cursor: pointer;
-              }
-
-              .time {
-                color: grey;
-              }
-
-              .text {
-                font-size: 14px;
-                color: rgb(200, 200, 200);
-              }
-            }
-
-            .action-buttons {
-              margin-left: auto;
-              color: $text-muted;
-              visibility: hidden;
-
-              span {
-                cursor: pointer;
-              }
-
-              .fa-trash {
-                color: red;
-                margin-left: 16px;
-              }
-            }
-
-            &:hover .action-buttons {
-              visibility: visible;
-            }
-          }
-        }
-
-        .extend-like-msg {
-          display: flex;
-          align-items: center;
-          font-size: 14px;
-          color: grey;
-          margin: 18px 0;
-
-          img.user-profile {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            margin-right: 6px;
-          }
-
-          span {
-            color: rgb(189, 189, 189);
-            font-weight: 500;
-            cursor: pointer;
-          }
-        }
-
-
+        object-fit: scale-down;
       }
     }
   }
@@ -340,11 +324,6 @@
       height: 45% !important;
       max-height: 80vh !important;
       margin: 0 auto !important;
-    }
-
-    .comments {
-      max-height: auto;
-      width: 100vw !important;
     }
   }
 }

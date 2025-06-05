@@ -42,6 +42,29 @@ function closeViewImage(){
   img.src = ''
   name.textContent = ''
 }
+function openViewVideo(name, url){
+  alert('Video open')
+  var ViewVideoPopup = document.getElementById('view-image-popup');
+  var ViewVideoOverlay = ViewVideoPopup.querySelector('.overlay');
+  var videoIframe = document.querySelector('#videoIframe')
+  var videoName = document.querySelector('#videoName')
+  videoIframe.src = url;
+  videoName.textContent = name;
+  Toast('Loading video...', 'info')
+  ViewVideoPopup.classList.add('show');
+  ViewVideoOverlay.classList.add('show');
+}
+
+function closeViewVideo(){
+  var ViewVideoPopup = document.getElementById('view-image-popup');
+  var ViewVideoOverlay = ViewVideoPopup.querySelector('.overlay');
+  ViewVideoPopup.classList.remove('show');
+  ViewVideoOverlay.classList.remove('show');
+  var videoIframe = document.querySelector('#videoIframe')
+  var videoName = document.querySelector('#videoName')
+  videoIframe.src = ''
+  videoName.textContent = ''
+}
 
 
 async function loadFolder(folderId, updateURL = true) {
@@ -98,10 +121,15 @@ async function loadFolder(folderId, updateURL = true) {
 
     driveGallery.innerHTML = '';
     data.files.forEach(file => {
-      if (file.type === 'image') {
-        driveGallery.innerHTML += `<div onclick="openViewImage('${file.name}', '${file.url}')">
+      if(file.type === 'image') {
+        driveGallery.innerHTML += `<div onclick="openViewImage('${file.name}', '${file.url}')" class="file-image">
+          <p class="fileinfo"><span class="filename"><span class="fal fa-image"></span>${file.name}</span><span class="fal fa-heart"></span></p>
           <img oncontextmenu="return false;" src="${file.thumbnail}" alt="Drive Image" loading="lazy">
-          <p>${file.name.substring(0, 18)}${file.name.length > 18 ? '...' : ''}<span><span class="fal fa-heart"></span><span class="fal fa-message"></span></span></p>
+        </div>`;
+      } else if(file.type === 'video') {
+        driveGallery.innerHTML += `<div onclick="openViewVideo('${file.name}', '${file.url}')" class="file-video">
+          <p class="fileinfo"><span class="filename"><span class="fal fa-video"></span>${file.name}</span><span class="fal fa-heart"></span></p>
+          <img oncontextmenu="return false;" src="${file.thumbnail}" alt="Drive Video" loading="lazy">
         </div>`;
       }
     });

@@ -41,40 +41,30 @@
 <%- include('../partials/footer') %>
 
 <div id="view-image-popup">
-    <div class="overlay" onclick="closeViewImage()"></div>
-    <div class="view-image-box">
-      <div class="heading">
-        <p class="title"><span class="fal fa-image"></span> <span id="imgName"></span></p>
-        <p class="close-icon fal fa-xmark" onclick="closeViewImage()"></p>
-      </div>
-      <div class="view-image-large" id="view-image-large">
-        <img src="" oncontextmenu="return false;" alt="Image" id="imgLarge">
-        <div class="comments">
-          <div class="actions">
-            <span class="fal fa-heart"></span>
-            <span class="fal fa-share"></span>
-          </div>
-          <p class="extend-like-msg"><img src="/images/user.png" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/ujwalw"'>ujwalw</span>&nbsp; and 5 others</p>
-          
-          <div class="comments-box">
-            <p class="section-heading"><b>Comments</b></p>
-            <div class="comment" id="comment-comment._id">
-              <img src="/images/user.png" alt="" class="user-profile">
-              <div class="comment-info">
-                <p class="name">
-                  John Doe &nbsp; <span class="time">3m</span>
-                </p>
-                <span class="text">Nice</span>
-              </div>
-              <div class="action-buttons">
-                <span class="fal fa-trash-alt red" onclick="deleteComment()"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="overlay" onclick="closeViewImage()"></div>
+  <div class="view-image-box">
+    <div class="heading">
+      <p class="title"><span class="fal fa-image"></span> <span id="imgName"></span></p>
+      <p class="close-icon fal fa-xmark" onclick="closeViewImage()"></p>
+    </div>
+    <div class="view-image-large" id="view-image-large">
+      <img src="" oncontextmenu="return false;" alt="Image" id="imgLarge">
     </div>
   </div>
+</div>
+
+<div id="view-video-popup">
+  <div class="overlay" onclick="closeViewVideo()"></div>
+  <div class="view-video-box">
+    <div class="heading">
+      <p class="title"><span class="fal fa-video"></span> <span id="videoName"></span></p>
+      <p class="close-icon fal fa-xmark" onclick="closeViewVideo()"></p>
+    </div>
+    <div class="view-video-large" id="view-video-large">
+      <iframe id="videoIframe" frameborder="0" width="650" height="650"></iframe>
+    </div>
+  </div>
+</div>
 
 <script src="/js/memories.js"></script>
 <script>document.addEventListener('DOMContentLoaded', ()=>{

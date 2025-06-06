@@ -24,6 +24,7 @@
 - 📅 **Birthday Wishes**: Cron job sends personalized midnight greetings in IST.
 - ☁️ **Cloudinary Integration**: Media upload, cleanup, and deletion on content removal.
 - 🌐 **Responsive Design**: Modern layout with a dark theme, built using SCSS and EJS.
+- 📂 **Memories Section**: All the memories of batch made available in one place.
 
 ---
 
@@ -52,5 +53,4 @@
 - bcryptjs
 - dotenv
 - cron
-- axios
 - View more in [package.json](https://github.com/ujwalwadhai/2k17/blob/master/package.json)

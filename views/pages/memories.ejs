@@ -61,13 +61,17 @@
       <p class="close-icon fal fa-xmark" onclick="closeViewVideo()"></p>
     </div>
     <div class="view-video-large" id="view-video-large">
-      <iframe id="videoIframe" frameborder="0" width="650" height="900"></iframe>
+      <div class="iframe-wrapper">
+        <iframe id="videoIframe" frameborder="0" width="650" height="900"></iframe>
+        <div class="overlay-text">2k17 Platform ❤️</div>
+      </div>
     </div>
   </div>
 </div>
 
 <script src="/js/memories.js"></script>
-<script>document.addEventListener('DOMContentLoaded', ()=>{
+<script>
+  document.addEventListener('DOMContentLoaded', ()=>{
     loadFolder('<%= currentFolder?._id %>')
   })
 </script>

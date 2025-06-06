@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function openViewImage(name, url){
+function openViewImage(name, url) {
   var ViewImagePopup = document.getElementById('view-image-popup');
   var ViewImageOverlay = ViewImagePopup.querySelector('.overlay');
   var img = document.querySelector('#imgLarge')
@@ -32,7 +32,7 @@ function openViewImage(name, url){
   ViewImageOverlay.classList.add('show');
 }
 
-function closeViewImage(){
+function closeViewImage() {
   var ViewImagePopup = document.getElementById('view-image-popup');
   var ViewImageOverlay = ViewImagePopup.querySelector('.overlay');
   ViewImagePopup.classList.remove('show');
@@ -42,19 +42,19 @@ function closeViewImage(){
   img.src = ''
   name.textContent = ''
 }
-function openViewVideo(name, url){
+function openViewVideo(name, url) {
   var ViewVideoPopup = document.getElementById('view-video-popup');
   var ViewVideoOverlay = ViewVideoPopup.querySelector('.overlay');
   var videoIframe = document.querySelector('#videoIframe')
   var videoName = document.querySelector('#videoName')
   videoIframe.src = url;
   videoName.textContent = name;
-  Toast('Loading video...', 'info')
+  Toast('Loading video could take time...', 'info')
   ViewVideoPopup.classList.add('show');
   ViewVideoOverlay.classList.add('show');
 }
 
-function closeViewVideo(){
+function closeViewVideo() {
   var ViewVideoPopup = document.getElementById('view-video-popup');
   var ViewVideoOverlay = ViewVideoPopup.querySelector('.overlay');
   ViewVideoPopup.classList.remove('show');
@@ -70,11 +70,18 @@ async function loadFolder(folderId, updateURL = true) {
   var folders = document.querySelector('.folders');
   var breadcrumb = document.querySelector('.breadcrumb');
   var driveGallery = document.querySelector('.drive-gallery');
+  folders.innerHTML = '';
+  for (let i = 0; i < 5; i++) {
+    folders.innerHTML += `<div class="skeleton-folder"></div>`;
+  }
 
-  folders.innerHTML = '<span class="fal fa-rotate fa-circle notch"></span>'
-  driveGallery.innerHTML = ''
+  driveGallery.innerHTML = '';
+  for (let i = 0; i < 6; i++) {
+    driveGallery.innerHTML += `<div><div class="skeleton"></div></div>`;
+  }
 
-  if(!folderId) return
+
+  if (!folderId) return
   Toast('Loading...', 'info')
 
   // ✅ Update the URL (but not if this is root)
@@ -99,7 +106,7 @@ async function loadFolder(folderId, updateURL = true) {
   var data = await response.json();
 
   if (data.success) {
-    if(data.currentFolder){ 
+    if (data.currentFolder) {
       document.title = data.currentFolder.name
     } else {
       document.title = '2k17 Drive'
@@ -120,17 +127,31 @@ async function loadFolder(folderId, updateURL = true) {
 
     driveGallery.innerHTML = '';
     data.files.forEach(file => {
-      if(file.type === 'image') {
-        driveGallery.innerHTML += `<div onclick="openViewImage('${file.name}', '${file.url}')" class="file-image">
-          <p class="fileinfo"><span class="filename"><span class="fal fa-image"></span>${file.name}</span><span class="fal fa-heart"></span></p>
-          <img oncontextmenu="return false;" src="${file.thumbnail}" alt="Drive Image" loading="lazy">
-        </div>`;
-      } else if(file.type === 'video') {
-        driveGallery.innerHTML += `<div onclick="openViewVideo('${file.name}', '${file.url}')" class="file-video">
-          <p class="fileinfo"><span class="filename"><span class="fal fa-video"></span>${file.name}</span><span class="fal fa-heart"></span></p>
-          <img oncontextmenu="return false;" src="${file.thumbnail}" alt="Drive Video" loading="lazy">
-        </div>`;
-      }
+      const wrapper = document.createElement('div');
+      wrapper.className = file.type === 'image' ? 'file-image' : 'file-video';
+      wrapper.setAttribute('onclick',
+        file.type === 'image'
+          ? `openViewImage('${file.name}', '${file.url}')`
+          : `openViewVideo('${file.name}', '${file.url}')`
+      );
+
+      const fileInfoHTML = `
+    <p class="fileinfo">
+      <span class="filename"><span class="fal ${file.type === 'image' ? 'fa-image' : 'fa-video'}"></span>${file.name}</span>
+      <span class="fal fa-heart"></span>
+    </p>
+  `;
+
+      const img = new Image();
+      img.src = file.thumbnail;
+      img.alt = 'Drive ' + file.type;
+      img.loading = 'lazy';
+      img.oncontextmenu = () => false;
+      img.onload = () => img.classList.add('loaded');
+
+      wrapper.innerHTML = fileInfoHTML;
+      wrapper.appendChild(img);
+      driveGallery.appendChild(wrapper);
     });
 
   } else {

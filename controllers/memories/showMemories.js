@@ -10,11 +10,11 @@ const showMemories = async (req, res) => {
 
   var files = await Files.find({
     folder: null
-  })
+  }).populate('likes', '_id name username profile')
 
   var featuredImages = await Files.find({
     tags: 'featured'
-  })
+  }).populate('likes', '_id name username profile')
 
   var breadcrumb = []
 
@@ -24,7 +24,8 @@ const showMemories = async (req, res) => {
     files,
     breadcrumb,
     tab: '',
-    currentFolder: null
+    currentFolder: null, 
+    userId: req.user?._id || null
   })
 }
 

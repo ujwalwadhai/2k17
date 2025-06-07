@@ -13,7 +13,7 @@
     <section class="memories-container">
       <h1>Batch Memories</h1>
   <div class="tabs">
-    <button class="tab <%- typeof tab && tab === 'drive' ? '' : 'active' %>" data-title="Featured Memories" data-tab="featured"><span class="fal fa-sparkles"></span>Featured</button>
+    <button onclick="loadFolder('root', true)" class="tab <%- typeof tab && tab === 'drive' ? '' : 'active' %>" data-title="Featured Memories" data-tab="featured"><span class="fal fa-sparkles"></span>Featured</button>
     <button onclick="loadFolder('root')" class="tab <%- typeof tab && tab === 'drive' ? 'active' : '' %>" data-title="2k17 Drive" data-tab="drive">Drive</button>
   </div>
 

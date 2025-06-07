@@ -86,6 +86,7 @@ async function toggleLike(postId) {
   }
 }
 
+
 function hidePopup(popupId = 'comments-popup') {
   var commentsPopup = document.getElementById(popupId)
   var overlay = commentsPopup.querySelector('.overlay')

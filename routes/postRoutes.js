@@ -88,9 +88,11 @@ router.post('/admin/logs', adminController.fetchLogs)
 router.post('/admin/newsletter/new', adminController.createNewsLetter)
 
 
-router.post('/memories/folders/:folderId', memoriesController.fetchFolder) // add isLoggedIn middleware after testing
+router.post('/memories/folders/:folderId', isLoggedIn, memoriesController.fetchFolder)
 
-router.post('/memories/root', memoriesController.rootFolder) // add isLoggedIn middleware after testing
+router.post('/memories/root', memoriesController.rootFolder)
+
+router.post('/file/:fileId/like', isLoggedIn, memoriesController.likeFile)
 
 
 module.exports = router;

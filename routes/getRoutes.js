@@ -49,33 +49,9 @@ router.get('/post/:id', postsController.viewPost);
 router.get('/admin/report/:id', isLoggedIn, reportsController.fetchReport);
 
 
-/* router.get('/memories', memoriesController.showMemories);
-
-router.get('/memories/folder/:folderId', memoriesController.showFolder); */
-
-var Folders = require('../models/Folders');
-var Files = require('../models/Files');
-
-async function getBreadcrumb(folderId) {
-  const breadcrumbs = []
-
-  let current = await Folders.findById(folderId)
-
-  while (current) {
-    breadcrumbs.unshift({
-      name: current.name,
-      id: current._id
-    })
-    current = current.parent ? await Folders.findById(current.parent) : null
-  }
-
-  return breadcrumbs
-}
-
-
 router.get('/memories', memoriesController.showMemories)
 
-router.get('/memories/:folderId', memoriesController.showFolder) // add isLoggedIn middleware after testing
+router.get('/memories/:folderId', isLoggedIn, memoriesController.showFolder)
 
 
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping

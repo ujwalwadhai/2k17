@@ -21,7 +21,11 @@ const fileSchema = new mongoose.Schema({
     enum: ['image', 'video', 'other']
   },
   path: String,
-  tags: [String]
+  tags: [String],
+  likes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users'
+  }]
 })
 
 

@@ -26,12 +26,12 @@ var fetchFolder = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Folder not found' });
     }
     var subfolders = await Folders.find({ parent: folderId });
-    var files = await Files.find({ folder: folderId });
+    var files = await Files.find({ folder: folderId }).populate('likes', '_id name username profile');
     var featuredImages = await Files.find({
       tags: 'featured'
-    })
+    }).populate('likes', '_id name username profile')
     var breadcrumb = await getBreadcrumb(folderId);
-    res.json({ success: true, currentFolder: folder, subfolders, files, breadcrumb, featuredImages });
+    res.json({ success: true, currentFolder: folder, subfolders, files, breadcrumb, featuredImages, userId: req.user?._id || null });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Server error' });

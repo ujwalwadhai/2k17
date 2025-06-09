@@ -94,5 +94,10 @@ router.post('/memories/root', memoriesController.rootFolder)
 
 router.post('/file/:fileId/like', isLoggedIn, memoriesController.likeFile)
 
+router.post('/file/:fileId/comments', isLoggedIn, memoriesController.fetchComments);
+
+router.post('/file/:fileId/new/comment', isLoggedIn, memoriesController.newComment);
+
+router.post('/file/:fileId/comment/:commentId/delete', isLoggedIn, memoriesController.deleteComment);
 
 module.exports = router;

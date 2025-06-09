@@ -1,5 +1,6 @@
 @use 'global' as *;
 @use 'components/popup/mixins' as *;
+@use 'components/home/comments' as *;
 
 * {
   user-select: none !important;
@@ -167,13 +168,13 @@
         justify-content: left;
 
         .foldername {
-            white-space: nowrap;
-            max-width: 50rem;
-            overflow: hidden;
-            margin-right: 8px;
-            text-overflow: ellipsis;
-            display: inline-block;
-          }
+          white-space: nowrap;
+          max-width: 50rem;
+          overflow: hidden;
+          margin-right: 8px;
+          text-overflow: ellipsis;
+          display: inline-block;
+        }
 
         span.fal {
           font-size: 18px;
@@ -213,12 +214,36 @@
   }
 }
 
+#comments-popup{
+  @include fullscreen-popup;
 
+  .comments-box {
+    width: 85vw;
+    max-width: 700px;
+    max-height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $bg-dark;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 
-#view-image-popup {
+    .comments-list{
+      padding: 20px;
+
+      
+    }
+  }
+}
+
+.view-file-popup {
   @include fullscreen-popup(0.9);
 
-  .view-image-box {
+  .view-file-box {
     width: 100vw;
     max-width: 100vw;
     height: 100vh;
@@ -250,151 +275,119 @@
         }
       }
 
-      p.close-icon {
-        margin: 12px;
+      .right-btns{
         margin-left: auto;
-        margin-right: 16px;
-        background-color: $bg-dark2;
-        padding: 8px;
-        padding-top: 9px;
-        font-size: 14px;
-        width: 32px;
-        height: 32px;
-        border: 0.2px solid $text-muted;
-        color: white;
-        border-radius: 4px;
-        text-align: center;
-        cursor: pointer;
+        margin-right: 12px;
+
+        p {
+          margin: 12px;
+          margin-left: auto;
+          margin-right: 8px;
+          padding: 8px;
+          padding-top: 9px;
+          font-size: 20px;
+          width: 32px;
+          height: 32px;
+          color: white;
+          text-align: center;
+          cursor: pointer;
+          
+          &.fa-message{
+            font-size: 18px;
+          }
+
+          &.close-icon{
+            &::before{
+              background-color: $bg-dark2;
+              border-radius: 4px;
+              border: 1px solid $text-light;
+              padding: 6px 8px;
+            }
+          }
+          
+        }
       }
+
     }
 
-    .view-image-large {
-      text-align: center;
-      padding-top: 16px;
-      min-width: 250px;
-      display: flex;
-      gap: 12px;
-      overflow: scroll;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
 
-      &::-webkit-scrollbar {
-        width: 0;
-      }
-
-      img#imgLarge {
-        width: 100%;
-        max-width: 90vw;
-        height: 100%;
-        max-height: 80vh;
-        object-fit: scale-down;
-      }
-    }
   }
 
 }
 
-#view-video-popup {
-  @include fullscreen-popup(0.9);
+.view-image-large {
+  text-align: center;
+  padding-top: 16px;
+  min-width: 250px;
+  gap: 12px;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
-  .view-video-box {
-    width: 100vw;
-    max-width: 100vw;
-    height: 100vh;
-    min-width: 300px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: transparent;
-    border-radius: 0;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  img#imgLarge {
+    width: 100%;
+    max-width: 90vw;
+    height: 100%;
+    max-height: 80vh;
+    object-fit: scale-down;
+  }
+}
+
+.view-video-large {
+  text-align: center;
+  padding-top: 16px;
+  display: flex;
+  justify-content: center;
+  height: 90vh;
+  gap: 12px;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  .iframe-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 90vw;
+    height: 100%;
+    max-height: 80vh;
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    justify-content: center;
+    align-items: center;
 
-    .heading {
-      margin-bottom: 0;
-      font-size: 16px;
-      font-weight: bold;
-      padding-left: 16px;
-      display: flex;
+    iframe {
       width: 100%;
-      flex-direction: row;
-      align-items: center;
-
-      .title {
-        span {
-          margin-right: 12px;
-        }
-      }
-
-      p.close-icon {
-        margin: 12px;
-        margin-left: auto;
-        margin-right: 16px;
-        background-color: $bg-dark2;
-        padding: 8px;
-        padding-top: 9px;
-        font-size: 14px;
-        width: 32px;
-        height: 32px;
-        border: 0.2px solid $text-muted;
-        color: white;
-        border-radius: 4px;
-        text-align: center;
-        cursor: pointer;
-      }
+      height: 100%;
+      object-fit: scale-down;
+      display: block;
     }
 
-    .view-video-large {
-      text-align: center;
-      padding-top: 16px;
-      display: flex;
-      justify-content: center;
-      height: 90vh;
-      gap: 12px;
-      overflow: scroll;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-
-      &::-webkit-scrollbar {
-        width: 0;
-      }
-
-      .iframe-wrapper {
-        position: relative;
-        width: 100%;
-        max-width: 90vw;
-        height: 100%;
-        max-height: 80vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        iframe {
-          width: 100%;
-          height: 100%;
-          object-fit: scale-down;
-          display: block;
-        }
-
-        .overlay-text {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          background-color: $bg-dark2;
-          color: white;
-          padding: 12px 16px;
-          font-size: 14px;
-          font-weight: 600;
-          border-radius: 4px;
-          z-index: 2;
-          white-space: nowrap;
-        }
-      }
+    .overlay-text {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: $bg-dark2;
+      color: white;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 4px;
+      z-index: 2;
+      white-space: nowrap;
     }
+  }
+}
 
+@media (max-width: 600px) {
+  .file-type-icon{
+    display: none;
   }
 }
 

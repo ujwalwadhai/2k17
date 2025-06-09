@@ -9,6 +9,7 @@
 <body>
   <%- include('../partials/navbar') %>
   <%- include('../partials/loader') %>
+  <input type="hidden" name="" value="<%- user?._id || '' %>" id="userId">
   <br><br>
     <section class="memories-container">
       <h1>Batch Memories</h1>
@@ -40,12 +41,15 @@
 
 <%- include('../partials/footer') %>
 
-<div id="view-image-popup">
+<div id="view-image-popup" class="view-file-popup">
   <div class="overlay" onclick="closeViewImage()"></div>
-  <div class="view-image-box">
+  <div class="view-file-box">
     <div class="heading">
-      <p class="title"><span class="fal fa-image"></span> <span id="imgName"></span></p>
-      <p class="close-icon fal fa-xmark" onclick="closeViewImage()"></p>
+      <p class="title"><span class="fal fa-image file-type-icon"></span> <span id="imgName"></span></p>
+      <div class="right-btns">
+        <p id="comments-icon" class="comments-icon fal fa-message"></p>
+        <p class="close-icon fal fa-xmark" onclick="closeViewImage()"></p> 
+      </div>
     </div>
     <div class="view-image-large" id="view-image-large">
       <img src="" oncontextmenu="return false;" alt="Image" id="imgLarge">
@@ -53,9 +57,9 @@
   </div>
 </div>
 
-<div id="view-video-popup">
+<div id="view-video-popup" class="view-file-popup">
   <div class="overlay" onclick="closeViewVideo()"></div>
-  <div class="view-video-box">
+  <div class="view-file-box">
     <div class="heading">
       <p class="title"><span class="fal fa-video"></span> <span id="videoName"></span></p>
       <p class="close-icon fal fa-xmark" onclick="closeViewVideo()"></p>
@@ -68,6 +72,19 @@
     </div>
   </div>
 </div>
+
+<div id="comments-popup">
+    <div class="overlay" onclick="closeComments()" id="overlay"></div>
+    <div class="comments-box">
+      <div class="heading"><p>Comments</p><p class="close-icon fas fa-times" onclick="closeComments()"></p></div>
+      <div class="comments-list" id="comments-list">
+      </div>
+      <div class="input-area">
+        <input id="new-comment" autocomplete="off" placeholder="Write a comment..."/>
+        <button type="button" id="newCommentBtn">Post</button>
+      </div>
+    </div>
+  </div>
 
 <script src="/js/memories.js"></script>
 <script>

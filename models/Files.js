@@ -1,4 +1,11 @@
 const mongoose = require('mongoose');
+const { getRelativeTime } = require('../utils/time');
+
+var commentSchema = new mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
+    text: String,
+    createdAt: { type: Date, default: Date.now }
+  })
 
 const fileSchema = new mongoose.Schema({
   name: String,
@@ -25,8 +32,15 @@ const fileSchema = new mongoose.Schema({
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
-  }]
+  }],
+  comments: [commentSchema]
 })
+
+commentSchema.virtual('timeAgo').get(function () {
+  return getRelativeTime(this.createdAt);
+});
+commentSchema.set('toJSON', { virtuals: true });
+commentSchema.set('toObject', { virtuals: true })
 
 
 module.exports = mongoose.model('Files', fileSchema);

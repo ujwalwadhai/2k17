@@ -249,7 +249,7 @@ async function loadFolder(folderId, updateURL = true) {
           <span class="filename"><span class="fal fa-image"></span>${img.name.replace(/\.[^/.]+$/, '')}</span>
           <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${img._id}" onclick="likeFile('${img._id}')"></span>
         </p>
-        <img onclick="openViewImage('${img.name.replace(/\.[^/.]+$/, '')}','${img.url}', '${img._id}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
+        <img onclick="openViewImage("${img.name.replace(/\.[^/.]+$/, '')}",'${img.url}', '${img._id}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
       </div>`
       } else {
       featuredImages.innerHTML += `<div>
@@ -257,7 +257,7 @@ async function loadFolder(folderId, updateURL = true) {
         <span class="filename"><span class="fal fa-image"></span>${img.name.replace(/\.[^/.]+$/, '')}</span>
         <span class="fal fa-heart" id="like-icon-${img._id}"></span>
       </p>
-      <img onclick="openViewImage('${img.name.replace(/\.[^/.]+$/, '')}','${img.url}', '${img._id}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
+      <img onclick="openViewImage("${img.name.replace(/\.[^/.]+$/, '')}",'${img.url}', '${img._id}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
     </div>`
       }
     })
@@ -286,8 +286,8 @@ async function loadFolder(folderId, updateURL = true) {
       img.loading = 'lazy';
       img.setAttribute('onclick',
         file.type === 'image'
-          ? `openViewImage('${file.name.replace(/\.[^/.]+$/, '')}', '${file.url}', '${file._id}')`
-          : `openViewVideo('${file.name.replace(/\.[^/.]+$/, '')}', '${file.url}', '${file._id}')`
+          ? `openViewImage("${file.name.replace(/\.[^/.]+$/, '')}", '${file.url}', '${file._id}')`
+          : `openViewVideo("${file.name.replace(/\.[^/.]+$/, '')}", '${file.url}', '${file._id}')`
       );
       img.oncontextmenu = () => false;
       img.onload = () => img.classList.add('loaded');

@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/styles/css/memories.css">
 </head>
 <body>
-  <%- include('../partials/navbar') %>
   <%- include('../partials/loader') %>
+  <%- include('../partials/navbar') %>
   <input type="hidden" name="" value="<%- user?._id || '' %>" id="userId">
   <br><br>
     <section class="memories-container">
@@ -62,7 +62,10 @@
   <div class="view-file-box">
     <div class="heading">
       <p class="title"><span class="fal fa-video"></span> <span id="videoName"></span></p>
-      <p class="close-icon fal fa-xmark" onclick="closeViewVideo()"></p>
+      <div class="right-btns">
+        <p id="comments-icon" class="comments-icon fal fa-message"></p>
+        <p class="close-icon fal fa-xmark" onclick="closeViewVideo()"></p> 
+      </div>
     </div>
     <div class="view-video-large" id="view-video-large">
       <div class="iframe-wrapper">

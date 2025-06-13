@@ -34,3 +34,8 @@ function Toast(message, type = 'info') {
 document.querySelectorAll('img').forEach(img => {
   img.setAttribute('oncontextmenu', 'return false;');
 });
+
+// Disable right-click globally
+document.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+});

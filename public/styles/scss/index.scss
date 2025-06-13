@@ -31,9 +31,14 @@ body {
       font-size: 42px;
       color: white;
       margin-bottom: 16px;
+      margin-top: 0;
 
       span {
         -webkit-text-stroke: 0.005px white;
+      }
+
+      @media (max-width: 768px) {
+        margin-top: 16px;
       }
     }
 

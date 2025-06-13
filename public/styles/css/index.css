@@ -28,9 +28,15 @@ body {
   font-size: 42px;
   color: white;
   margin-bottom: 16px;
+  margin-top: 0;
 }
 .hero .hero-text h2 span {
   -webkit-text-stroke: 0.005px white;
+}
+@media (max-width: 768px) {
+  .hero .hero-text h2 {
+    margin-top: 16px;
+  }
 }
 .hero .hero-text p {
   margin: 1rem 0;

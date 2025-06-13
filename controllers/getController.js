@@ -8,22 +8,18 @@ const Reports = require('../models/Reports');
 
 exports.indexPage = async (req, res) => {
   var members = await Users.find({name : { $ne : "Ujwal Wadhai"}}, {profile:1, name:1, year:1, username:1}).sort({role:-1}).limit(14);
-  var gallery = [] // await Files.find({}, {url:1, pid:1}).limit(9)
-  res.render('pages/index', {members, gallery});
-};
+  var featuredImages = await Files.find({
+      tags: 'featured'
+    })
+  res.render('pages/index', {members, featuredImages});
+}; 
 
 exports.termsOfService = (req, res) => {
   res.render('pages/terms-of-service');
 }
 
 exports.login = (req, res) => {
-  var { url } = req.query;
-  if (!url) url = '/home'
-  var exclude = ['/login', '/signup', '/email-login', '/forgot-password', '/reset-password', '/donate', '/logout', '/home']
-  if (url[0] !== "/" || exclude.includes(url)) {
-    url = '/home'
-  }
-  res.render('pages/login', { redirectURL: url });
+  res.render('pages/login');
 }
 
 exports.admin = async (req, res) => {
@@ -46,10 +42,14 @@ exports.home = async (req, res) => {
     res.locals.hasUnreadNotifications = false;
     var birthdays = await getUpcomingBirthdays();
     var hasUnreadNotifications = await Notifications.findOne({ user: req.user._id, seen: false });
+    const [photo] = await Files.aggregate([
+  { $match: { tags: 'featured' } },
+  { $sample: { size: 1 } }
+]);
     if (hasUnreadNotifications) {
       res.locals.hasUnreadNotifications = true;
     }
-    res.render('pages/home', { birthdays, isHome: true, onboarding: Boolean(req.query.onboarding) || false });
+    res.render('pages/home', { birthdays, featuredPhoto: photo, isHome: true, onboarding: Boolean(req.query.onboarding) || false });
   } catch (err) {
     console.log(err);
     res.redirect("/login")

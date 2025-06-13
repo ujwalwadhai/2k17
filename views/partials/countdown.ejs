@@ -1,0 +1,55 @@
+<div id="countdown-box">
+    <p id="text1">We are launching soon ...</p>
+    <h1 id="countdown">Loading...</h1>
+    <p id="text2">Pre-register now to get a verified 2k17 account and an email when we launch.</p>
+</div>
+<script>
+    const target = new Date("2025-06-24T00:00:00");
+
+    function pad(n) {
+        return n < 10 ? '0' + n : n;
+    }
+
+    function updateCountdown() {
+        const now = new Date();
+        let diff = target - now;
+
+        if (diff <= 0) {
+            document.getElementById('countdown').innerHTML =
+                `<span class="digit-d">00<span class="unit">d</span></span> ` +
+                `<span class="digit-h">00<span class="unit">h</span></span> ` +
+                `<span class="digit-m">00<span class="unit">m</span></span> ` +
+                `<span class="digit-s">00<span class="unit">s</span></span>`;
+            document.querySelector('#text1').textContent = '2k17 Platform is live! 🚀';
+            document.querySelector('#text2').textContent = 'Login with your account to access this marvelous platform. ✌️';
+            document.querySelector('.cta-btn').innerHTML = 'Login now &nbsp; &nbsp; <span class="fal fa-arrow-right"></span>'
+            document.querySelector('.cta-btn').href = '/login'
+            document.querySelector('#navbar-login-btn-small').textContent = 'Login'
+            document.querySelector('#navbar-login-btn-small').href = '/login'
+            document.querySelector('#navbar-login-btn-large').textContent = 'Login'
+            document.querySelector('#navbar-login-btn-large').href = '/login'
+            clearInterval(interval);
+            return;
+        } else {
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('countdown').innerHTML =
+                `<span class="digit-d">${pad(days)}<span class="unit">d</span></span> ` +
+                `<span class="digit-h">${pad(hours)}<span class="unit">h</span></span> ` +
+                `<span class="digit-m">${pad(minutes)}<span class="unit">m</span></span> ` +
+                `<span class="digit-s">${pad(seconds)}<span class="unit">s</span></span>`;
+            document.querySelector('.header').querySelectorAll('a').forEach((el) => {
+                el.style.color = '#888'
+            })
+            document.querySelectorAll('.cta-btn').forEach(btn => btn.style.color = 'white')
+            document.querySelectorAll('.login-btn').forEach(btn => btn.style.color = 'white')
+        }
+    }
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+</script>

@@ -79,7 +79,29 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/admin', isLoggedIn, hasRole(['admin']))
+app.use((req, res, next) => {
+  const now = new Date();
+  const launchDate = new Date(process.env.LAUNCH_DATE || '2025-06-24T00:00:00');
+
+  if (req.method !== 'GET') return next();
+
+  // If platform is live, allow everything
+  if (now >= launchDate) return next();
+
+  // Allow preregister page and admin login (use /login/admin instead of /login to login for testing)
+  const publicPaths = ['/login/admin', '/', '/preregister', '/terms-of-service']; // allowed routes before launch
+  if (publicPaths.includes(req.path)) return next();
+
+  // Allow access to everything if logged in and role is admin
+  if (req?.user?.role === 'admin') {
+    return next();
+  }
+
+  return res.redirect('/');
+});
+
+
+// app.use('/admin', isLoggedIn, hasRole(['admin']))
 app.use('/',require('./middlewares/locals'), getRoutes);
 app.use('/', postRoutes);
 

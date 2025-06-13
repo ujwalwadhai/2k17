@@ -845,7 +845,7 @@ body {
   position: relative;
   display: inline-block;
   width: 100%;
-  max-width: 40vw;
+  max-width: max(40vw, 500px);
   border: 1px solid #9e9e9e;
   border-radius: 12px;
   transition: 0.3s transform ease;

@@ -4,22 +4,25 @@
   <%- include('../partials/head.ejs') %>
   <title>2k17 Platform</title>
   <link rel="stylesheet" href="/styles/css/index.css" />
+  <link rel="stylesheet" href="/styles/css/components/countdown.css" />
 </head>
 <body>
-  <%- include('../partials/loader.ejs') %>
-  <%- include('../partials/navbar.ejs') %>
+  <%- include('../partials/loader') %>
+  <%- include('../partials/navbar') %>
 
   <main>
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-text">
         <h2>Welcome to <span style="color: blue;">2</span><span style="color: green;">k</span><span style="color: red;">1</span><span style="color: yellow;">7</span></h2>
-        <p>Private space to reconnect, share moments, and relive memories for the 2017-24 batch of JNV Chandrapur</p><br>
-        <a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
+        <p>Mini social media platform built specially for the 2017-24 batch of JNV Chandrapur.</p><br>
+        <a href="/preregister" class="cta-btn">Pre-register now &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
+        <!--<a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>-->
       </div>
-      <div class="featured-photo" onclick="window.open()">
-        <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
-        <div class="overlay-text">Featured photo</div>
+      <div class="featured-photo">
+        <!--<img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
+        <div class="overlay-text">Featured photo</div>-->
+        <%- include('../partials/countdown') %>
       </div>
     </section>
 
@@ -32,7 +35,7 @@
     </section>
 
     <section id="newsletter-sub" class="newsletter-sub">
-      <h3>Subscribe to our Newsletter &nbsp; <span class="fal fa-envelope-dot"></span></h3>
+      <h3>Subscribe to our Newsletter</h3>
       <p>Stay updated with the latest news and updates from 2k17 with an email.</p>
       <form id="newsletter-form" onsubmit="e=> e.preventDefault()">
         <input type="email" name="email" placeholder="Enter your email" required>
@@ -83,9 +86,9 @@
       <h3>Gallery</h3>
       <p class="grey-1">For the memories living in our heads. Visit <a href="/gallery">gallery</a> to see all.</p><br><br>
       <div class="gallery-grid">
-        <% gallery.forEach(image => { %>
-        <div class="image-card" onclick="window.open('<%= image.url %>', '_blank')">
-          <img src="<%= image.url.replace('w_750','w_400') %>" alt="<%= image.pid %>">
+        <% featuredImages.forEach(image => { %>
+        <div class="image-card" onclick="window.location.href= '/memories'">
+          <img src="<%= image.thumbnail %>" alt="<%= image.pid %>">
         </div>
         <% }) %>
         <div class="image-card" style="padding: 1.2rem;">

@@ -11,6 +11,8 @@ var { isLoggedIn } = require('../middlewares/auth');
 
 router.get('/logout', isLoggedIn, authController.logout);
 
+router.get('/login/admin', getController.login);
+
 
 router.get('/verify-email/:token', emailController.verifyEmail);
 

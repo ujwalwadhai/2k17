@@ -12,8 +12,8 @@
 
 </head>
 <body>
-  <%- include('../partials/loader.ejs') %>
-  <%- include('../partials/navbar.ejs') %>
+  <%- include('../partials/loader') %>
+  <%- include('../partials/navbar') %>
 
   <main>
     <!-- Hero Section -->
@@ -23,8 +23,8 @@
           <p>Ready to catch up with your batchmates and relive the best moments of 2k17?</p><br>
           <a class="cta-btn" onclick="document.getElementById('posts').scrollIntoView({behavior: 'smooth'})">Explore &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
         </div>
-        <div class="featured-photo" onclick="window.open()">
-          <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
+        <div class="featured-photo">
+          <img src="<%= featuredPhoto.url %>" alt="Today's featured photo" class="featured-photo-img">
           <div class="overlay-text">Featured photo</div>
         </div>
     </section>

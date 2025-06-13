@@ -6,8 +6,8 @@
         <li><a href="/members">Members</a></li>
         <% if (!user) { %>
         <li><a href="/donate">Donate</a></li>
-          <li><a href="/create-account">Register</a></li>
-          <li><a href="/login" class="login-btn">Login</a></li>
+          <!--<li><a href="/create-account">Register</a></li>-->
+          <li><a href="/preregister" class="login-btn" id="navbar-login-btn-large">Pre-register</a></li>
         <% } else { %>
         <% if(typeof isHome !== 'undefined' && isHome) { %>
           <li><a onclick="openPostPopup()"><span class="fal fa-square-plus"></span></a></li>
@@ -55,7 +55,7 @@
             </ul>
           </li>
       <% } else { %>
-        <button class="login-btn" onclick="window.location.href = '/login'">Login</button>
+        <button class="login-btn" id="navbar-login-btn-small" onclick="window.location.href = '/preregister'">Pre-register</button>
       <% } %>
     </nav>
 
@@ -72,11 +72,7 @@
           <li onclick="window.location.href = '/memories'"><a href="/memories"><span class="fal fa-images"></span>Memories</a></li>
           <li onclick="window.location.href = '/donate'"><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span>Donate</a></li>
           <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>
-          <li onclick="window.location.href = '/report'"><a href="/report"><span class="fal fa-triangle-exclamation"></span>Report a problem</a></li>
-          <% if (!user) { %>
-            <li onclick="window.location.href = '/create-account'"><a href="/create-account"><span class="fal fa-user-plus"></span>Register</a></li>
-            <li onclick="window.location.href = '/login'"><a href="/login"><span class="fal fa-right-to-bracket"></span>Login</a></li>
-          <% } else { %>
+          <% if (user) { %>
             <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
           <% } %>
         </ul>

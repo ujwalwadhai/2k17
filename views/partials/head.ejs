@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="/styles/css/home.css">
 <script src="/js/all.js"></script>
 
+<% if(PLATFORM_TYPE === 'production') { %>
 <!-- Google tag  -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ES2BYH06Y"></script>
 <script>
@@ -34,3 +35,7 @@
 
   gtag('config', 'G-1ES2BYH06Y');
 </script>
+
+<% } else { %>
+  <!-- Google analytics disabled for PLATFORM_TYPE=development to avoid adding testing data -->
+<% } %>

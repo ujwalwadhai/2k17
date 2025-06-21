@@ -25,6 +25,10 @@ router.get('/home', isLoggedIn, getController.home);
 
 router.get('/admin', getController.admin);
 
+router.get("/pre-register", getController.preregister);
+
+router.get('/preregister', (req, res) => res.redirect('/pre-register'));
+
 router.get('/login', getController.login);
 
 router.get('/create-account', getController.createAccount);
@@ -49,6 +53,8 @@ router.get('/post/:id', postsController.viewPost);
 
 
 router.get('/admin/report/:id', isLoggedIn, reportsController.fetchReport);
+
+router.get('/admin/users', isLoggedIn, getController.adminUserlist);
 
 
 router.get('/memories', memoriesController.showMemories)

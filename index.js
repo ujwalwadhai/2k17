@@ -89,9 +89,10 @@ app.use((req, res, next) => {
   if (now >= launchDate) return next();
 
   // Allow preregister page and admin login (use /login/admin instead of /login to login for testing)
-  const publicPaths = ['/login/admin', '/', '/preregister', '/terms-of-service']; // allowed routes before launch
-  if (publicPaths.includes(req.path)) return next();
-
+  const publicPaths = ['/login/admin', '/', '/preregister', '/pre-register', '/terms-of-service']; // allowed routes before launch
+  if (publicPaths.includes(req.path) || req.path.startsWith('/verify-email/')) {
+  return next();
+}
   // Allow access to everything if logged in and role is admin
   if (req?.user?.role === 'admin') {
     return next();

@@ -37,6 +37,18 @@ exports.admin = async (req, res) => {
   res.render('pages/admin', { reports });
 }
 
+exports.adminUserlist = async (req, res) => {
+  try {
+    var users = await Users.find({})
+    .sort({ registered: -1, name: 1 })
+  
+    res.render('pages/admin-users', { users });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 exports.home = async (req, res) => {
   try {
     res.locals.hasUnreadNotifications = false;
@@ -55,6 +67,10 @@ exports.home = async (req, res) => {
     res.redirect("/login")
   }
 }
+
+exports.preregister = (req, res) => {
+  res.render("pages/pre-register");
+};
 
 exports.createAccount = (req, res) => {
   res.render('pages/signup');

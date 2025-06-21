@@ -1,5 +1,7 @@
 .admin-btns {
   padding: 8px 20px;
+  display: flex;
+  gap: 12px;
 }
 .admin-btns .newsletter-btn {
   background: #332f48;

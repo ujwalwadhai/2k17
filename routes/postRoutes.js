@@ -22,6 +22,8 @@ router.post('/login/email', authController.loginEmail);
 
 router.post('/signup', authController.register);
 
+router.post('/pre-register', authController.preRegister);
+
 
 
 router.post('/check/username', usersController.checkUsername);
@@ -69,6 +71,9 @@ router.post('/notifications/unsubscribe', isLoggedIn, notificationsController.un
 router.post('/report', reportsController.newReport)
 
 router.post('/admin/report/resolve', isLoggedIn, reportsController.resolveReport)
+
+
+router.post('/admin/users/register', isLoggedIn, adminController.registerUser)
 
 
 

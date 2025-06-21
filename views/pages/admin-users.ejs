@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%-include('../partials/head') %>
+        <title>Admin Dashboard</title>
+        <link rel="stylesheet" href="/styles/css/admin.css">
+</head>
+
+<body>
+    <%-include('../partials/navbar') %>
+    <%-include('../partials/loader') %>
+        <br><br><br><br>
+
+    <div class="reports-logs">
+        <h2>Registered Users List</h2>
+        <div class="logs-table-wrapper">
+            <table class="logs-table" id="users-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Is verified</th>
+                        <th>Is registered</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(users.length > 0){ %>
+                    <% users.forEach(user=> { %>
+                        <tr id="user-<%= user._id %>">
+                            <td>
+                                <%= user.name %>
+                            </td>
+                            <td>
+                                <%= user.username %>
+                            </td>
+                            <td data-email>
+                                <%= user.email %>
+                            </td>
+                            <td>
+                                <%= user.verified %>
+                            </td>
+                            <td>
+                                <%= user.registered %>
+                            </td>
+                            <td data-action>
+                                <% if (user.registered) { %>
+                                    -
+                                <% } else { %>
+                                    <button class="register-btn" onclick="registerUser('<%= user._id %>')">Approve</button>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% })} else { %>
+                        <tr>
+                            <td colspan="5" style="text-align: center; color:grey">No reports found.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div id="toast-container" style="position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;"></div>
+
+    <script src="/js/admin-users.js"></script>
+</body>
+
+</html>

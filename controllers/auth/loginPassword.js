@@ -14,7 +14,9 @@ const loginPassword = async (req, res) => {
       return res.json({ success: false, message: 'User not found' });
     }
 
-    if(!user.registered) return res.json({ success: false, message: 'Email not verified' });
+    if(!user.verified) return res.json({ success: false, message: 'Email not verified' });
+
+    if(!user.registered) return res.json({ success: false, message: 'Your account is under verification. You will get email shortly!' });
 
     var isMatch = await user.validatePassword(password);
     if (!isMatch) {

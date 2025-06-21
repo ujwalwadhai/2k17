@@ -16,6 +16,8 @@ const loginEmail = async (req, res) => {
 
     if(!user.verified) return res.json({ success: false, message: 'Email not verified' });
 
+    if(!user.registered) return res.json({ success: false, message: 'Your account is under verification. You will get email shortly!' });
+
     var otpRecord = await otps.findOne({ email: email, otp: otp });
 
     if (!otpRecord) {

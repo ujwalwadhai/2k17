@@ -3,6 +3,9 @@
 
 .admin-btns {
   padding: 8px 20px;
+  display: flex;
+  gap: 12px;
+
   .newsletter-btn {
     background: $bg-dark3;
     display: flex;

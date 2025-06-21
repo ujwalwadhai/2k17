@@ -19,7 +19,7 @@
           <li class="user-capsule-wrapper">
             <div class="user-capsule">
               <img src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
-              <p><%= user.name.split(' ')[0] + ' ' + user.name.split(' ')[1].split('')[0] + '.' %></p>
+                <p><%= user.name.split(' ')[0] + (user.name.split(' ')[1] ? ' ' + user.name.split(' ')[1].charAt(0) + '.' : '') %></p>
             </div>
 
             <ul class="user-dropdown">

@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['admin', 'moderator']},
   joinedAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+  registeredAt: { type: Date, default: Date.now },
   pushSubscriptions: [{
     endpoint: String,
     keys: {

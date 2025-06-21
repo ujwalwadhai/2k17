@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head.ejs') %>
+    <link rel="stylesheet" href="/styles/css/signup_login.css" />
+    <title>Pre-register • 2k17 Platform</title>
+  </head>
+  <body>
+    <%- include('../partials/loader.ejs') %>
+    <div class="container">
+      <%- include('../partials/login-carousel.ejs') %>
+
+      <div class="right-pane">
+        <div class="signup-form">
+          <span class="only-small"
+            ><br /><br /><br /><br /><br /><br /><br /><br
+          /></span>
+          <h1>Can't wait to get started!</h1>
+          <small class="grey-1" id="info"
+            ><span class="fal fa-info-circle"></span> &nbsp; You will get the
+            email as soon as the 2k17 Platform gets live</small
+          ><br /><br />
+          <div>
+            <!-- <div class="username-field">
+            <input type="text" autocomplete="off" oninput="checkUsername(this, this.value)" id="signup-username" name="username" placeholder="Choose username" />
+            <span id="status-icon" class="status-icon fal fa-user-circle"></span>
+        </div>
+        <small id="status-message" class="grey-1"></small> -->
+            <div>
+              <input
+                type="input"
+                autocomplete="name"
+                name="name"
+                id="name"
+                placeholder="Full Name *"
+                oninput="updateUsername(this.value)"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="input"
+                autocomplete="username"
+                name="username"
+                id="username"
+                placeholder="username *"
+                required
+              />
+            </div>
+            <input
+              type="email"
+              autocomplete="email"
+              name="email"
+              id="email"
+              placeholder="Email *"
+              required
+            />
+            <!-- <input
+              type="text"
+              name="code"
+              autocomplete="off"
+              oninput="this.value = this.value.toUpperCase()"
+              id="code"
+              placeholder="Enter activation code *"
+              required
+            /> -->
+            <!-- <div class="password-field">
+              <input type="password" placeholder="Enter your password *" />
+              <span class="eye-icon fal fa-eye"></span>
+            </div> -->
+            <div>
+              <span>Date of Birth:</span>
+              <input
+                type="date"
+                autocomplete="date"
+                name="dob"
+                id="dob"
+                placeholder="Date of Birth *"
+                required
+              />
+            </div>
+            <br />
+            <label class="terms">
+              <input type="checkbox" id="terms-box" />
+              I agree to the &nbsp;
+              <a href="/terms-of-service"> Terms of Service</a> </label
+            ><br />
+          </div>
+
+          <button onclick="preRegister()" id="signup-btn" class="primary-btn">
+            Create Account</button
+          ><br /><br />
+          <!-- <div class="divider">Or register with</div>
+        <div class="social-buttons">
+          <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
+          <button class="apple">Apple</button>
+        </div>-->
+          <span class="only-small"><br /><br /></span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="toast-container"
+      style="
+        position: absolute;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+      "
+    ></div>
+
+    <script src="/js/pre-register.js"></script>
+  </body>
+</html>

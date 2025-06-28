@@ -21,7 +21,7 @@ function togglePassword() {
     usernameInput.value = username;
   }
   
-  function preRegister() {
+  function register() {
     var email = document.getElementById("email").value;
     var name = document.getElementById("name").value;
     var username = document.getElementById("username").value;

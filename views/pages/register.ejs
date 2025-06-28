@@ -15,11 +15,18 @@
           <span class="only-small"
             ><br /><br /><br /><br /><br /><br /><br /><br
           /></span>
-          <h1>Can't wait to get started!</h1>
-          <small class="grey-1" id="info"
-            ><span class="fal fa-info-circle"></span> &nbsp; You will get the
-            email as soon as the 2k17 Platform gets live</small
-          ><br /><br />
+
+          <% if (isLaunched) { %>
+            <h1 class="error">Create Account</h1>
+          <% } else { %>
+            <h1>Can't wait to get started!</h1>
+            <small class="grey-1" id="info"
+              ><span class="fal fa-info-circle"></span> &nbsp; You will get the
+              email as soon as the 2k17 Platform gets live</small
+            >
+          <% } %>
+
+          <br /><br />
           <div>
             <!-- <div class="username-field">
             <input type="text" autocomplete="off" oninput="checkUsername(this, this.value)" id="signup-username" name="username" placeholder="Choose username" />
@@ -87,8 +94,8 @@
             ><br />
           </div>
 
-          <button onclick="preRegister()" id="signup-btn" class="primary-btn">
-            Create Account</button
+            <button onclick="register()" id="signup-btn" class="primary-btn">
+            <%= isLaunched ? 'Create Account' : 'Pre-register' %></button
           ><br /><br />
           <!-- <div class="divider">Or register with</div>
         <div class="social-buttons">
@@ -111,6 +118,6 @@
       "
     ></div>
 
-    <script src="/js/pre-register.js"></script>
+    <script src="/js/register.js"></script>
   </body>
 </html>

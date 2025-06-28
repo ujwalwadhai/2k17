@@ -25,13 +25,13 @@ router.get('/home', isLoggedIn, getController.home);
 
 router.get('/admin', getController.admin);
 
-router.get("/pre-register", getController.preregister);
+router.get("/pre-register", getController.register);
 
 router.get('/preregister', (req, res) => res.redirect('/pre-register'));
 
 router.get('/login', getController.login);
 
-router.get('/create-account', getController.createAccount);
+router.get('/create-account', getController.register);
 
 router.get('/login/email', getController.emailLogin);
 

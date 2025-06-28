@@ -4,6 +4,7 @@ var Posts = require('../models/Posts');
 var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
 var getUpcomingBirthdays = require('../utils/birthdays');
+var { compareLaunchDateWithCurrentIST } = require('../utils/time');
 const Reports = require('../models/Reports');
 
 exports.indexPage = async (req, res) => {
@@ -68,12 +69,20 @@ exports.home = async (req, res) => {
   }
 }
 
-exports.preregister = (req, res) => {
-  res.render("pages/pre-register");
-};
+exports.register = (req, res) => {
+  const launchDate = process.env.LAUNCH_DATE;
+  if (!launchDate) {
+    console.error("Launch date not set in environment variables.");
+    return res.status(500).send("Launch date not set. Please contact support.");
+  }
 
-exports.createAccount = (req, res) => {
-  res.render('pages/signup');
+  const launchedStatus = compareLaunchDateWithCurrentIST(launchDate);
+
+  if (launchedStatus === 1) {
+    res.render('pages/register', { isLaunched: false, launchDate: new Date(launchDate).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) });
+  } else {
+    res.render('pages/register', { isLaunched: true });
+  }
 }
 
 exports.emailLogin = (req, res) => {

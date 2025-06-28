@@ -106,4 +106,42 @@ function endOfDay(date) {
 }
 
 
-module.exports = { getRelativeTime, formatDOB, createDate, subDays, startOfDay, endOfDay };
+function compareLaunchDateWithCurrentIST(launchDateTimeString) {
+  try {
+
+    if (!launchDateTimeString) {
+      console.error('LAUNCH_DATE_TIME environment variable is not defined.');
+      return NaN;
+    }
+
+    // Parse the launch date assuming it's already in IST
+    const launchDateIST = new Date(launchDateTimeString);
+
+    if (isNaN(launchDateIST.getTime())) {
+      console.error('Invalid LAUNCH_DATE_TIME format. Must be a valid ISO 8601 string.');
+      return NaN;
+    }
+
+    // Get the current date and time in IST
+    const now = new Date();
+    const currentIST = new Date(now.getTime() + (330 + now.getTimezoneOffset()) * 60000);
+
+    // Compare the dates (without considering time)
+    const launchDay = new Date(launchDateIST.getFullYear(), launchDateIST.getMonth(), launchDateIST.getDate());
+    const currentDay = new Date(currentIST.getFullYear(), currentIST.getMonth(), currentIST.getDate());
+
+    if (launchDay < currentDay) {
+      return -1; // Launch date is in the past
+    } else if (launchDay > currentDay) {
+      return 1; // Launch date is in the future
+    } else {
+      return 0; // Launch date is today
+    }
+  } catch (error) {
+    console.error('Error comparing dates:', error);
+    return NaN;
+  }
+}
+
+
+module.exports = { getRelativeTime, formatDOB, createDate, subDays, startOfDay, endOfDay, compareLaunchDateWithCurrentIST };

@@ -282,6 +282,15 @@ async function NewsLetterSubscribeMail(to, data) {
   sendEmail(to, 'Newsletter subscription • 2k17 Platform', template);
 }
 
+async function UserRegisteredMail(to, data) {
+  var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
+              <h3 style="color: #7b5cf0;">New User Registration</h3>
+              <p>${data.name} (${data.email}) registered just now.<br>Email is not yet veified.</p>
+              <p style="color: #888;">Automated Mail System</p><p style="color: #888;">2k17 Platform</p>
+            </div>`
+  sendEmail(to, 'New user registered • 2k17 Platform', template);
+}
+
 async function sendMail(type, to, data) {
   if (type == 'otp') OTPMail(to, data);
   // if (type == 'login') LoginMail(to, data);
@@ -297,6 +306,7 @@ async function sendMail(type, to, data) {
   if (type == 'newsletter_preview') NewsLetterPreviewMail(to, data); 
   if (type == 'newsletter') NewsLetterMail(to, data); 
   if (type == 'newsletter_subscribe') NewsLetterSubscribeMail(to, data); 
+  if (type == 'user_registered') UserRegisteredMail(to, data); 
 }
 
 module.exports = sendMail;

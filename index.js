@@ -94,7 +94,7 @@ app.use((req, res, next) => {
   }
 
   // Allow preregister page and admin login (use /login/admin instead of /login to login for testing)
-  const publicPaths = ['/login/admin', '/', '/preregister', '/pre-register', '/terms-of-service']; // allowed routes before launch
+  const publicPaths = ['/login/admin', '/', '/preregister', '/pre-register', '/terms-of-service', '/ping', '/donate']; // allowed routes before launch
   if (publicPaths.includes(req.path) || req.path.startsWith('/verify-email/')) {
     return next();
   }

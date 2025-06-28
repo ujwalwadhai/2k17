@@ -50,7 +50,7 @@ function togglePassword() {
         .then((data) => {
           if (data.success) {
             info.innerHTML =
-              "<span class='green'><span class='fal fa-circle-check'></span> &nbsp; Your pre-registeration is done!</span>";
+              "<span class='green'><span class='fal fa-circle-check'></span> &nbsp; Your pre-registration is done! Check your email for verification link.</span>";
             signup_btn.innerHTML = "Return to home...";
             signup_btn.onclick = () => {
               window.location.href = data.redirect;

@@ -282,14 +282,42 @@ async function NewsLetterSubscribeMail(to, data) {
   sendEmail(to, 'Newsletter subscription • 2k17 Platform', template);
 }
 
+async function LaunchEmailSentMail(to, data) {
+  var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
+              <h3 style="color: #7b5cf0;">General Notification</h3>
+              <p>Platform launch email is ${data.success ? '' : '<b>not</b>'} sent to everyone.</p>
+              <p style="color: #888;">Automated Mail System,</p><p style="color: #888;">2k17 Platform</p>
+            </div>`
+  sendEmail(to, 'Launch emails sent • 2k17 Platform', template);
+}
+
 async function UserRegisteredMail(to, data) {
   var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
               <h3 style="color: #7b5cf0;">New User Registration</h3>
-              <p>${data.name} (${data.email}) registered just now.<br>Email is not yet veified.</p>
+              <p>${data.name} (${data.email}) registered just now.<br>Email is not yet verified.</p>
               <p style="color: #888;">Automated Mail System</p><p style="color: #888;">2k17 Platform</p>
             </div>`
   sendEmail(to, 'New user registered • 2k17 Platform', template);
 }
+
+async function PlatformLaunchMail(to, data) {
+  var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
+              <h2 style="color: #7b5cf0;">We're live now 🚀</h2>
+              <p>Hey ${data.user?.name?.trim().split(' ')[0] || 'there'},</p>
+              <p>We're so excited to announce that the <b>2k17 Platform</b> has officially launched!</p>
+              <p>Use following details to login to your account.</p>
+              <div style="background-color: #2b273f; padding: 12px 10px; border-left: 4px solid #7b5cf0; margin: 20px 0;">
+                <p><strong>Name:</strong> ${data.user.name || "<Name not specified>"}</p>
+                <p style="margin-top: 5px;"><strong>Username:</strong> ${data.user.username}</p>
+                <p style="margin-top: 5px;"><strong>Activation Code:</strong> ${data.user.code}</p>
+                <small>Please don't share your activation code with anyone as it can be used to access your account.</small>
+              </div><br>
+              <a href="https://twok17.onrender.com/" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px;">Visit Platform</a><br><br>
+              <p style="color: #888;">Automated Mail System</p><p style="color: #888;">2k17 Platform</p>
+              </div>`
+  sendEmail(to, "2k17 Platform is Launched 🚀", template);
+}
+
 
 async function sendMail(type, to, data) {
   if (type == 'otp') OTPMail(to, data);
@@ -307,6 +335,8 @@ async function sendMail(type, to, data) {
   if (type == 'newsletter') NewsLetterMail(to, data); 
   if (type == 'newsletter_subscribe') NewsLetterSubscribeMail(to, data); 
   if (type == 'user_registered') UserRegisteredMail(to, data); 
+  if (type == 'platform_launch') PlatformLaunchMail(to, data); 
+  if (type == 'launch_emails_sent') LaunchEmailSentMail(to, data);
 }
 
 module.exports = sendMail;

@@ -21,11 +21,11 @@ const preRegister = async (req, res) => {
     const user = await Users.create({
       email,
       username: username.toLowerCase(),
-      name,
+      name: name.trim(),
       dob: dob.split("-").reverse().join("/"), // Convert to DD/MM/YYYY format
       registered: false,
       verified: false,
-      code: getCode(),
+      code: getCode(name),
     });
 
     await user.save();

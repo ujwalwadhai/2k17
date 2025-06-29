@@ -3,6 +3,7 @@ var sendMail = require('../../config/mailer')
 const contactForm = async (req, res) => {
     var { email, text } = req.body
     try {
+        if(!email || !text) return res.json({ success:false, message: 'Please fill all fields' });
         await sendMail('contact_form', '2k17platform@gmail.com', { email, text })
         res.json({ success:true, message: 'Email sent successfully' })
     } catch (error) {

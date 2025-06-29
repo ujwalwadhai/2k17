@@ -1,4 +1,5 @@
 var Users = require('../../models/Users');
+var Settings = require('../../models/Settings');
 var sendMail = require('../../config/mailer')
 var logActivity = require('../../utils/log');
 
@@ -14,7 +15,24 @@ const loginPassword = async (req, res) => {
       return res.json({ success: false, message: 'User not found' });
     }
 
-    if(!user.verified) return res.json({ success: false, message: 'Email not verified' });
+    if(!user.verified){
+      if(user.email){
+        var token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+            var expiry = new Date(Date.now() + 1000 * 60 * 30);
+        
+            var settings = await Settings.findOneAndUpdate(
+              { user: user._id },
+              { emailVerification: { newEmail: user.email, token, expiry } },
+              { new: true, upsert: true }
+            );
+        
+            var link = `${req.protocol}://${req.get('host')}/verify-email/${token}`;
+            await sendMail('account_activation', user.email, {link, name: user.name});
+            res.json({ success: false, message: 'Your email is not verified. Please check your email for verification link.' });
+      } else {
+            res.json({ success: false, message: 'Your account doesn\'t have an email. Please contact Ujwal or Prajyot to login to your account.' });
+      }
+    }
 
     if(!user.registered) return res.json({ success: false, message: 'Your account is under verification. You will get email shortly!' });
 

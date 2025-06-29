@@ -139,9 +139,7 @@ app.use(generalLimiter);
 require('./cron/logCleanUp')
 require('./cron/birthday')
 require('./cron/newsletter')
-
-// Cleans the database when server restarts
-require('./utils/cleanup')()
+require('./cron/launch')
 
 require('./config/mailer')
 
@@ -153,6 +151,7 @@ mongoose.connect(process.env.MONGO_URI, {}).then(() => {
   app.listen(PORT, () => {
     console.log(`🚀 Server is running\n`);
   });
+  require('./utils/cleanup')()
 }).catch((err) => {
   console.error('❌ MongoDB connection error:', err);
 });

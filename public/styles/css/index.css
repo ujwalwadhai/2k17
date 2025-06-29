@@ -416,5 +416,11 @@ footer {
     width: 50%;
   }
 }
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
 
 /*# sourceMappingURL=index.css.map */

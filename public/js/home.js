@@ -267,7 +267,7 @@ function closeNotifications() {
 function loadPosts(userId) {
   userid= userId;
   var posts = document.getElementById('posts');
-  posts.innerHTML = '<p class="heading">Posts in last 6 months</p>';
+  posts.innerHTML = '<p class="heading">Recent posts</p>';
   posts.innerHTML += partialLoader('posts-loader')
   fetch('/posts', {
     method: 'POST',

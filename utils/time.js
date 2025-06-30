@@ -46,7 +46,7 @@ function formatDOB(dateString) {
   var [day, month, year] = dateString.split('/').map(Number);
   var date = new Date(year, month - 1, day);
 
-  var options = { day: '2-digit', month: 'long' };
+  var options = { day: 'numeric', month: 'long' };
   return date.toLocaleDateString('en-In', options);
 }
 

@@ -21,7 +21,7 @@
         <div class="hero-text">
           <h2 id="greeting"><span id="greeting-msg"></span>, <%= user.name.split(' ')[0] %></h2>
           <p>Ready to catch up with your batchmates and relive the best moments of 2k17?</p><br>
-          <a class="cta-btn" onclick="document.getElementById('posts').scrollIntoView({behavior: 'smooth'})">Explore &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
+          <a class="cta-btn" onclick="document.getElementById('posts').scrollIntoView({behavior: 'smooth'})">Explore posts &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
         </div>
         <div class="featured-photo">
           <img src="<%= featuredPhoto.url %>" alt="Today's featured photo" class="featured-photo-img">
@@ -29,7 +29,7 @@
         </div>
     </section>
 
-    <div class="events-container">
+    <!--<div class="events-container">
     <section id="events" class="events">
       <p class="heading">Upcoming Birthdays</p>
       <% if(birthdays.length > 0){ %>
@@ -46,7 +46,30 @@
         <p class="grey-1">No upcoming birthdays in next 30 days.</p>
       <% } %>
     </section>
-    </div><br><br><br>
+    </div>-->
+    
+    <% if (birthdays.length > 0) { %>
+<section id="birthday-spotlight" class="no-select">
+  <h3>🎉 Birthday Spotlight</h3>
+
+  <div class="gallery-grid">
+    <% birthdays.forEach(bdayuser => { %>
+      <div class="image-card" style="padding: 1.2rem;" onclick="window.location.href='/<%= bdayuser.username %>'">
+        <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo">
+        <h4 style="color: #7b5cf0; margin-bottom: 10px;"><%= bdayuser.name %> <%- bdayuser.isBirthdayToday ? '🎂' : '' %></h4>
+        <p class="grey-1">@<%= bdayuser.username%></p>
+        <% if(bdayuser.isBirthdayToday){ %>
+          <p style="line-height: 26px;">Happy Birthday! 🎉</p>
+        <% } else { %>
+        <p style="line-height: 26px;">on <%- formatDOB(bdayuser.dob) %></p>
+        <% } %>
+      </div>
+    <% }) %>
+  </div>
+</section>
+<% } %>
+    
+    <br><br>
 
     <div class="create-post-box small-only" onclick="openPostPopup()">
       <p class="heading">Create a new post</p>
@@ -55,10 +78,9 @@
         <span class="fal fa-image"></span>
       </div>
     </div>
-    <span class="small-only"><br><br></span>
+    <span class="small-only"><br></span>
 
     <section class="posts" id="posts">
-      <p class="heading">Posts in last 6 months</p>
     </section>
 
     <br><br><br><br><br>

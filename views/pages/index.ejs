@@ -25,7 +25,7 @@
         <%- include('../partials/countdown') %>
       </div>
     </section>
-
+ 
     <% if (birthdayUsers.length > 0) { %>
 <section id="birthday-spotlight" class="no-select">
   <h3>🎉 Birthday Spotlight</h3>
@@ -103,8 +103,8 @@
 
     <!-- Gallery Section -->
     <section id="gallery" class="gallery no-select">
-      <h3>Gallery</h3>
-      <p class="grey-1">For the memories living in our heads. Visit <a href="/gallery">gallery</a> to see all.</p><br><br>
+      <h3>Memories</h3>
+      <p class="grey-1">For the memories living in our heads. Visit <a href="/memories">memories</a> to see all.</p><br><br>
       <div class="gallery-grid">
         <% featuredImages.forEach(image => { %>
         <div class="image-card" onclick="window.location.href= '/memories'">
@@ -113,7 +113,7 @@
         <% }) %>
         <div class="image-card" style="padding: 1.2rem;">
           <span style="color:white; font-size:42px; margin: 2px 2px 18px 2px;" class="fal fa-images"></span>
-          <p style="line-height: 26px;">There's much more,</p><p>Visit <a href="/gallery">gallery</a> to see.</p>
+          <p style="line-height: 26px;">There's much more,</p><p>Visit <a href="/memories">memories</a> to see.</p>
         </div>
       </div>
     </section>

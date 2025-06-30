@@ -479,3 +479,76 @@ footer {
     opacity: 0;
   }
 }
+
+
+#birthday-spotlight {
+  background: $bg-dark;
+  padding: 4rem 10%;
+  border-radius: 10px;
+  margin-top: 2rem;
+  padding-bottom: 1rem;
+
+  h3 {
+    color: $text-light;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: $text-muted;
+    font-size: 1rem;
+    margin-bottom: 0;
+
+    a {
+      color: $primary-light;
+      text-decoration: underline;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+
+  .gallery-grid {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+    padding-bottom: 0;
+
+    .image-card {
+      background: $bg-dark;
+      border-radius: 10px;
+      height: max-content;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 0 0 transparent;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        background: $bg-dark3;
+      }
+
+      img {
+        width: 48px;
+        height: 48px;
+        display: block;
+        border-radius: 10px;
+      }
+
+      h4 {
+        color: $primary;
+        font-size: 1.3rem;
+        margin: 10px 0;
+      }
+
+      p {
+        color: $text-muted;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-top: 8px;
+      }
+    }
+  }
+}

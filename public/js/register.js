@@ -55,7 +55,6 @@ function togglePassword() {
             signup_btn.onclick = () => {
               window.location.href = data.redirect;
             }
-            document.getElementById("pre-register-form").reset();
             Toast(
               "Account created successfully! Please check your email for verification link."
             );

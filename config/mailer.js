@@ -253,11 +253,19 @@ async function ResetPasswordMail(to, data) {
 }
 
 async function BirthdayMail(to, data) {
-  var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
-              <h3 style="color: #7b5cf0;">🎂 Happy Birthday, ${data.name || 'Friend'}!</h3>
-              <p>Wishing you a fantastic year ahead. Thanks for being part of 2k17!</p>
-              <p style="color: #888;">Ujwal W.<br>2k17 Platform</p>
-            </div>`
+  var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px; line-height: 25px; max-width: 600px; margin: auto;">
+  <h3 style="color: #7b5cf0;">🎂 Happy Birthday, ${data.name || 'Friend'}!</h3>
+
+  <p>Today’s your day – and you’re officially in the spotlight on <b><a href="https://twok17.onrender.com/" target="_blank">2k17 Platform</a></b>! You are featured on our website on this special day. 🥳</p>
+
+  <p>Drop a post, share the vibes, or just soak in the birthday wishes from your batchmates. We’re glad you’re part of this journey!</p>
+
+  <p>Wishing you an amazing year ahead. 🎈</p>
+
+  <a href="https://twok17.onrender.com/#birthday-spotlight" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; font-weight:bold; text-decoration: none; border-radius: 5px;">Visit 2k17 Platform</a>
+
+  <p style="color: #888; margin-top: 12px; margin-bottom:6px">Ujwal W. and Prajyot R.</p><p style="color: #888; margin-top:0; padding-top:0; margin-bottom: 4px">2k17 Platform</p>
+</div>`
   logActivity('', "Sent Email", `to ${to} for birthday wish`)
   sendEmail(to, 'Happy Birthday 🎂 • 2k17 Platform', template);
 }
@@ -294,7 +302,13 @@ async function LaunchEmailSentMail(to, data) {
 async function UserRegisteredMail(to, data) {
   var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
               <h3 style="color: #7b5cf0;">New User Registration</h3>
-              <p>${data.name} (${data.email}) registered just now.<br>Email is not yet verified.</p>
+              <p>${data.name} (${data.email}) registered just now.</p>
+              <p>The current user stats are as follows :</p>
+              <div style="background-color: #2b273f; padding: 10px 15px; border-left: 4px solid #7b5cf0; margin: 20px 0;">
+                <p><strong>Total users:</strong> ${data.totalUsers}</p>
+                <p style="margin-top: 5px;"><strong>Verified users:</strong> ${data.verifiedUsers}</p>
+                <p style="margin-top: 5px;"><strong>Registered users:</strong> ${data.registeredUsers}</p>
+              </div>
               <p style="color: #888;">Automated Mail System</p><p style="color: #888;">2k17 Platform</p>
             </div>`
   sendEmail(to, 'New user registered • 2k17 Platform', template);

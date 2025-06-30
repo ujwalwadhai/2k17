@@ -8,12 +8,34 @@ var { compareLaunchDateWithCurrentIST } = require('../utils/time');
 const Reports = require('../models/Reports');
 
 exports.indexPage = async (req, res) => {
-  var members = await Users.find({name : { $ne : "Ujwal Wadhai"}}, {profile:1, name:1, year:1, username:1}).sort({role:-1}).limit(14);
-  var featuredImages = await Files.find({
-      tags: 'featured'
-    })
-  res.render('pages/index', {members, featuredImages});
-}; 
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var todayStr = `${dd}/${mm}`;
+
+  var members = await Users.find(
+    { name: { $ne: "Ujwal Wadhai" } },
+    { profile: 1, name: 1, year: 1, username: 1 }
+  ).sort({ role: -1 }).limit(14);
+
+  var featuredImages = await Files.find({ tags: 'featured' });
+
+  var birthdayUsers = await Users.find({
+    dob: { $regex: `^${todayStr}/` }
+  , verified: true}, {
+    name: 1,
+    username: 1,
+    profile: 1,
+    dob: 1
+  });
+
+  res.render('pages/index', {
+    members,
+    featuredImages,
+    birthdayUsers
+  });
+};
+
 
 exports.termsOfService = (req, res) => {
   res.render('pages/terms-of-service');

@@ -44,7 +44,10 @@ const preRegister = async (req, res) => {
     await sendMail('account_activation', email, { name: user.name, link }); 
     var admins = await Users.find({ role: 'admin' }, {email:1});
     var adminEmails = admins.map(u => u.email);
-    await sendMail('user_registered', adminEmails, {name: user.name, email: user.email});
+    var totalUsers = await Users.countDocuments();
+    var verifiedUsers = await Users.countDocuments({ verified: true });
+    var registeredUsers = await Users.countDocuments({ registered: true });
+    await sendMail('user_registered', adminEmails, {name: user.name, email: user.email, totalUsers, verifiedUsers, registeredUsers});
 
     logActivity(user._id, 'Account Activation', `${user.name} activated their account`);
     return res.json({ success: true, message: 'Please check your email (spam folder too) to verify your account', redirect: '/' });

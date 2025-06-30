@@ -26,6 +26,26 @@
       </div>
     </section>
 
+    <% if (birthdayUsers.length > 0) { %>
+<section id="birthday-spotlight" class="no-select">
+  <h3>🎉 Birthday Spotlight</h3>
+  <p class="grey-1">It’s <%= birthdayUsers.length === 1 ? birthdayUsers[0].name + "'s" : "their" %> special day! Drop a wish and make it memorable. 🥳</p><br>
+
+  <div class="gallery-grid">
+    <% birthdayUsers.forEach(bdayuser => { %>
+      <div class="image-card" style="padding: 1.2rem;" onclick="window.location.href='/<%= bdayuser.username %>'">
+        <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo">
+        <h4 style="color: #7b5cf0; margin-bottom: 10px;"><%= bdayuser.name %> 🎂</h4>
+        <p style="line-height: 26px;">We wish you a happy birthday from 2k17 ❤️</p>
+        <p><a href="/profile/<%= bdayuser.username %>">View profile</a></p>
+      </div>
+    <% }) %>
+  </div>
+</section>
+<% } %>
+
+
+
     <div class="about-and-newsletter">
     <!-- About Section -->
     <section id="about" class="about">

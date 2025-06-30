@@ -19,7 +19,7 @@ function isBirthday(dob) {
 cron.schedule('0 0 * * *', async () => {
     console.log('📧 Sending birthday emails...');
     try {
-        var users = await Users.find({ dob: { $exists: true } });
+        var users = await Users.find({ dob: { $exists: true }, verified: true});
 
         var birthdayUsers = users.filter(user => {
             if (!user.dob) return false;

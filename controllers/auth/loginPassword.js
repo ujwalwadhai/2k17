@@ -28,9 +28,9 @@ const loginPassword = async (req, res) => {
         
             var link = `${req.protocol}://${req.get('host')}/verify-email/${token}`;
             await sendMail('account_activation', user.email, {link, name: user.name});
-            res.json({ success: false, message: 'Your email is not verified. Please check your email for verification link.' });
+            return res.json({ success: false, message: 'Your email is not verified. Please check your email for verification link.' });
       } else {
-            res.json({ success: false, message: 'Your account doesn\'t have an email. Please contact Ujwal or Prajyot to login to your account.' });
+            return res.json({ success: false, message: 'Your account doesn\'t have an email. Please contact Ujwal or Prajyot to login to your account.' });
       }
     }
 

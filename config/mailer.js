@@ -218,11 +218,11 @@ async function AccountActivationMail(to, data) {
     <p>Welcome to 2k17 Platform ❤️.</p>
     <p>Please verify your email to activate your account.</p>
     <a href="${data.link}" style="display: inline-block; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Verify Email Address</a>
-    <p style="margin-top: 20px; color: #888;">
-      This link is valid for 2 days. If you didn't create an account on 2k17 Platform, please ignore this email or contact support.
+    <p style="margin-top: 20px; color: #888; line-height: 24px;">
+      This link is valid for 2 days. If you didn't create an account on 2k17 Platform, please ignore this email or reply to this email.
     </p>
-    <p style="color: #888;">
-      Regards,<br>
+    <p style="color: #888; line-height: 24px;">
+      Automated Mail System,<br>
       2k17 Platform
     </p>
   </div>`
@@ -262,7 +262,7 @@ async function BirthdayMail(to, data) {
 
   <p>Wishing you an amazing year ahead. 🎈</p>
 
-  <a href="https://twok17.onrender.com/#birthday-spotlight" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; font-weight:bold; text-decoration: none; border-radius: 5px;">Visit 2k17 Platform</a>
+  <a href="https://twok17.onrender.com/#birthday-spotlight" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Visit 2k17 Platform</a>
 
   <p style="color: #888; margin-top: 12px; margin-bottom:6px">Ujwal W. and Prajyot R.</p><p style="color: #888; margin-top:0; padding-top:0; margin-bottom: 4px">2k17 Platform</p>
 </div>`
@@ -302,16 +302,21 @@ async function LaunchEmailSentMail(to, data) {
 async function UserRegisteredMail(to, data) {
   var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
               <h3 style="color: #7b5cf0;">New User Registration</h3>
-              <p>${data.name} (${data.email}) registered just now.</p>
-              <p>The current user stats are as follows :</p>
+              <p>A new user has registered just now with details as follows:</p>
               <div style="background-color: #2b273f; padding: 10px 15px; border-left: 4px solid #7b5cf0; margin: 20px 0;">
+                <p><strong>Name:</strong> ${data.name || "<Name not specified>"}</p>
+                <p style="margin-top: 5px;"><strong>Username:</strong> ${data.username}</p>
+                <p style="margin-top: 5px;"><strong>Email:</strong> ${data.email}</p>
+                <p style="margin-top: 5px;"><strong>Action:</strong> <a href="https://twok17.onrender.com/admin/users" style="font-weight: bold; text-decoration: none;" target="_blank">Open admin dashboard</a> to approve this user</p>
+                <br>
+                <p>The current user stats are as follows :</p>
                 <p><strong>Total users:</strong> ${data.totalUsers}</p>
                 <p style="margin-top: 5px;"><strong>Verified users:</strong> ${data.verifiedUsers}</p>
                 <p style="margin-top: 5px;"><strong>Registered users:</strong> ${data.registeredUsers}</p>
               </div>
               <p style="color: #888;">Automated Mail System</p><p style="color: #888;">2k17 Platform</p>
             </div>`
-  sendEmail(to, 'New user registered • 2k17 Platform', template);
+  sendEmail(to, 'New user registration • 2k17 Platform', template);
 }
 
 async function PlatformLaunchMail(to, data) {

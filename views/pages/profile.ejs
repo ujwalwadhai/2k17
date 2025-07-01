@@ -26,7 +26,7 @@
       <img src="<%= account.profile || '/images/user.png' %>" alt="Profile">
     </div>
     <div class="user-details">
-      <p class="name"><%= account.name %><br><span class="username"><%- account.username === account.name.replace(' ','').toLowerCase() ? 'Not registered' : `@${account.username}`%></span></p>
+      <p class="name"><%= account.name %><br><span class="username"><%- account.username ? `@${account.username}` : 'Not registered' %></span></p>
       
       <% if(account.bio){ %>
         <p class="bio"><%- account.bio || "<span class='grey-1'>Nothing here</span>" %></p>

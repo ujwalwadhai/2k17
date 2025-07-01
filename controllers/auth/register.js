@@ -12,7 +12,7 @@ const register = async (req, res) => {
       return res.json({ success: false, message: 'Invalid activation code!' });
     }
 
-    if(user.registered) {
+    if (user.registered) {
       return res.json({ success: false, message: 'You are already registered! Please login to continue' });
     }
 
@@ -31,13 +31,19 @@ const register = async (req, res) => {
 
     await Settings.findOneAndUpdate(
       { user: user._id },
-      { emailVerification: { newEmail:email, token, expiry } },
-      { new: true, upsert: true } 
+      { emailVerification: { newEmail: email, token, expiry } },
+      { new: true, upsert: true }
     );
 
     var link = `${req.protocol}://${req.get('host')}/verify-email/${token}`;
 
     await sendMail('account_activation', email, { name: user.name, link });
+    var admins = await Users.find({ role: 'admin' }, { email: 1 });
+    var adminEmails = admins.map(u => u.email);
+    var totalUsers = await Users.countDocuments();
+    var verifiedUsers = await Users.countDocuments({ verified: true });
+    var registeredUsers = await Users.countDocuments({ registered: true });
+    await sendMail('user_registered', adminEmails, { name: user.name, email, username: user.username, totalUsers, verifiedUsers, registeredUsers });
 
     req.login(user, (err) => {
       if (err) {

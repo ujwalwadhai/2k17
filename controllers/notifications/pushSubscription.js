@@ -28,7 +28,7 @@ const subscribePush = async (req, res) => {
     user.pushSubscriptions = user.pushSubscriptions || [];
     user.pushSubscriptions.push(subscription);
     await user.save();
-    await Settings.findOneAndUpdate({_id: req.user?._id}, { 'notifications.push' : true}, {new: true, upsert: true})
+    await Settings.findOneAndUpdate({user: req.user?._id}, { 'notifications.push' : true}, {new: true, upsert: true})
     res.status(201).json({ message: 'Subscription saved successfully.' });
   } catch (error) {
     res.status(500).json({ message: 'Failed to save subscription.' });

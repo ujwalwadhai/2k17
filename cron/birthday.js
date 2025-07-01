@@ -29,7 +29,7 @@ cron.schedule('0 0 * * *', async () => {
 
         for (var user of birthdayUsers) {
             if(!user.email) continue;
-            await sendMail('birthday', user.email, { name: `${user.name.split(' ')[0]} ${user.name.split(' ')[1][0]}.` });
+            await sendMail('birthday', user.email, { name: `${user.name.split(' ')[0]}` });
             console.log(`✅ Sent birthday email to ${user.name}.`)
         }
 

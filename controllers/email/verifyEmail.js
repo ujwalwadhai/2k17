@@ -7,11 +7,13 @@ const verifyEmail = async (req, res) => {
     var { token } = req.params;
     var settings = await Settings.findOne({ 'emailVerification.token': token });
 
+    var user = await Users.findById(settings.user);
+    if(user.verified) return res.send('<h2 style="color:green;">Email already verified.</h2>');
+    
     if (!settings || !settings.emailVerification || new Date() > settings.emailVerification.expiry) {
       return res.send('<h2 style="color:red;">Invalid or expired link.</h2>');
     }
 
-    var user = await Users.findById(settings.user);
     if (!user) return res.send('<h2 style="color:red;">User not found.</h2>');
 
     user.email = settings.emailVerification.newEmail;

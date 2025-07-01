@@ -25,7 +25,7 @@
                         <span><%= member.role %></span>
                     <% } %>
                     </p>
-                    <% if (member.username && member.username !== member.name.replace(/\s+/g, '').toLowerCase()) { %>
+                    <% if (member.username) { %>
                         <span class="username" onclick="window.location.href='/<%= member.username %>'">@<%= member.username %></span>
                     <% } else { %>
                         <span class="username" style="cursor: text;">Not registered</span>

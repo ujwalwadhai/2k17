@@ -1,38 +1,6 @@
 var Users = require("../models/Users");
 
-/* async function getUpcomingBirthdays() {
-  var allUsers = await Users.find({ dob: { $exists: true} });
-
-  var today = new Date();
-  var todayMonth = today.getMonth() + 1;
-  var todayDate = today.getDate();
-  var daysToConsider = 14 // Days to consider for upcoming birthdays
-
-  var upcomingBirthdays = [];
-
-  for (var user of allUsers) {
-    var [dd, mm] = user.dob.split("/").map(Number);
-    if (!dd || !mm) continue;
-
-    // Use current year
-    var birthdayThisYear = new Date(today.getFullYear(), mm - 1, dd);
-
-    // If already passed, set to next year
-    if (birthdayThisYear < today) {
-      birthdayThisYear.setFullYear(today.getFullYear() + 1);
-    }
-
-    var diffInDays = Math.ceil((birthdayThisYear - today) / (1000 * 60 * 60 * 24));
-
-    if (diffInDays >= 0 && diffInDays <= daysToConsider) {
-      upcomingBirthdays.push(user);
-    }
-  }
-
-  return upcomingBirthdays;
-} */
-
-  async function getUpcomingBirthdays() {
+async function getUpcomingBirthdays() {
   const allUsers = await Users.find({ dob: { $exists: true } });
 
   const today = new Date();

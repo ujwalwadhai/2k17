@@ -256,3 +256,61 @@ function closeChangeEmail(){
   ChangeEmailPopup.classList.remove('show');
   ChangeEmailOverlay.classList.remove('show');
 }
+
+
+document.getElementById("privacy-settings-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var statusBox = document.getElementById("privacy-settings-status");
+  statusBox.style.color = "green";
+  statusBox.innerHTML = "<i class='fal fa-circle-notch fa-rotate'></i> &nbsp;Updating...";
+
+  var formData = new FormData(this);
+  var settings = {};
+
+  for (let [key, value] of formData.entries()) {
+    settings[key] = true; // All checkboxes present are "true"
+  }
+
+  // Explicitly set unchecked ones to false
+  ['email', 'phone', 'dob'].forEach(key => {
+    if (!settings.hasOwnProperty(key)) settings[key] = false;
+  });
+
+  fetch("/settings/privacy/update", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(settings)
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        statusBox.innerHTML = "<i class='fal fa-circle-check'></i> &nbsp;Preferences updated!";
+        statusBox.style.color = "green";
+        setTimeout(closePrivacySettings, 2000);
+      } else {
+        statusBox.innerHTML = "<i class='fal fa-circle-xmark'></i> &nbsp;" + (data.message || "Failed to submit.");
+        statusBox.style.color = "red";
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
+      statusBox.style.color = "red";
+    });
+});
+ 
+function openPrivacySettings(){
+  var privacySettingsPopup = document.getElementById('privacy-settings-popup');
+  var privacySettingsOverlay = privacySettingsPopup.querySelector('.overlay');
+  privacySettingsPopup.classList.add('show');
+  privacySettingsOverlay.classList.add('show');
+}
+
+function closePrivacySettings(){
+  var privacySettingsPopup = document.getElementById('privacy-settings-popup');
+  var privacySettingsOverlay = privacySettingsPopup.querySelector('.overlay');
+  privacySettingsPopup.classList.remove('show');
+  privacySettingsOverlay.classList.remove('show');
+}

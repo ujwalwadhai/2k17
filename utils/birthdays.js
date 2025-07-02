@@ -1,10 +1,10 @@
 var Users = require("../models/Users");
 
 async function getUpcomingBirthdays() {
-  const allUsers = await Users.find({ dob: { $exists: true } });
+  const allUsers = await Users.find({ dob: { $exists: true } }).populate("settings");
 
   const today = new Date();
-  const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate()); // removes time
+  const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
   const daysToConsider = 14;
 
   const upcomingBirthdays = [];
@@ -26,6 +26,9 @@ async function getUpcomingBirthdays() {
 
     if (diffInDays >= 0 && diffInDays <= daysToConsider) {
       var isToday = diffInDays === 0;
+      if(!isToday){
+        if (!user.settings?.privacy?.dob) continue;
+      }
 
       var userWithFlag = {
         ...user.toObject(),

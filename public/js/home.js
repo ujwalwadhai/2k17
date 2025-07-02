@@ -513,20 +513,3 @@ function closeChooseUsername(){
 }
 
 
-function showBanner () {
-  var permission = Notification.permission;
-  var banner = document.getElementById('notification-banner');
-  if (permission === 'default' && banner) {
-    banner.style.display = 'block';
-  }
-};
-
-var laterbtn = document.getElementById('later-btn')
-
-if(laterbtn){
-laterbtn.addEventListener('click', () => {
-  banner.style.display = 'none';
-});
-}
-
-window.addEventListener('DOMContentLoaded', showBanner);

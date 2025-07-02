@@ -131,3 +131,30 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 } else {
   console.warn('Push messaging is not supported by this browser.');
 }
+
+function showBanner () {
+  var permission = Notification.permission;
+  var banner = document.getElementById('notification-banner');
+  if (permission === 'default' && banner) {
+    banner.style.display = 'block';
+  }
+};
+
+var laterbtn = document.getElementById('later-btn')
+
+if(laterbtn){
+  var banner = document.getElementById('notification-banner');
+laterbtn.addEventListener('click', () => {
+  localStorage.setItem('notification-banner', 'hidden');
+  banner.style.display = 'none';
+});
+}
+
+window.addEventListener('DOMContentLoaded', ()=>{
+  if(localStorage && localStorage.getItem('notification-banner') === 'hidden'){
+    var banner = document.getElementById('notification-banner');
+    if(banner) banner.style.display = 'none';
+  } else {
+    showBanner();
+  }
+});

@@ -54,10 +54,10 @@
         <% if(account.registered && user && user._id.toString() === account._id.toString()){ %>
           <button class="message-btn" onclick="window.location.href = '/profile/edit'"><span class="fal fa-user-pen"></span> &nbsp;Edit</button>
         <% } %>
-        <% if (account.email) { %>
+        <% if (account.email && account?.settings?.privacy?.email) { %>
           <button class="email-btn" onclick="window.location.href = 'mailto:<%= account.email %>'"><span class="fal fa-envelope"></span>Email</button>
         <% } %>
-        <% if (account.phone) { %>
+        <% if (account.phone && account?.settings?.privacy?.phone) { %>
           <button class="call-btn" onclick="window.location.href= 'tel:<%= account.phone %>'"><span class="fal fa-phone"></span>Call</button>
         <% } %>
       </div>
@@ -178,7 +178,7 @@
           <div class="top-box">
             <div class="dob-info">
               <span class="fal fa-cake"></span><br>
-              <span><%- formatDOB(account.dob) || "Not specified" %></span>
+              <span><%- account.settings?.privacy?.dob ? account.dob : "Not specified" %></span>
             </div>
             <div class="year-info">
               <span class="fal fa-calendar-days"></span><br>

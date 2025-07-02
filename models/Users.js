@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String },
   year: { type: String, default: "2017-24" },
-  phone: { type: String }, 
+  phone: { type: String },
   dob: { type: String },
   password: { type: String, select: false },
   profile: { type: String },
@@ -22,10 +22,14 @@ const userSchema = new mongoose.Schema({
     other: String
   },
   code: { type: String, select: false },
-  role: { type: String, enum: ['admin', 'moderator']},
+  role: { type: String, enum: ['admin', 'moderator'] },
   joinedAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   lastLogin: { type: Date },
+  lastActive: {
+    type: Date,
+    default: null,
+  },
   pushSubscriptions: [{
     endpoint: String,
     keys: {
@@ -33,32 +37,49 @@ const userSchema = new mongoose.Schema({
       auth: String
     }
   }]
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 });
 
 
 // Hash the password before saving to database
 userSchema.pre('save', async function (next) {
-    if (this.isModified('password')){ // Don't hash if password isn't modified
-        try {
-            const salt = await bcrypt.genSalt(10); // Generate salt with 10 rounds
-            this.password = await bcrypt.hash(this.password, salt); // Hash the password
-        } catch (err) {
-          console.log(err);
-        }
+  if (this.isModified('password')) { // Don't hash if password isn't modified
+    try {
+      const salt = await bcrypt.genSalt(10); // Generate salt with 10 rounds
+      this.password = await bcrypt.hash(this.password, salt); // Hash the password
+    } catch (err) {
+      console.log(err);
     }
+  }
 
-    this.updatedAt = Date.now();
-    next();
+  this.updatedAt = Date.now();
+  next();
 });
 
 // Method to compare password (for login)
 userSchema.methods.validatePassword = async function (enteredPassword) {
-  if(this.password){
+  if (this.password) {
     return await bcrypt.compare(enteredPassword, this.password);
   }
   return enteredPassword === this.code;
 };
 
+userSchema.virtual('settings', {
+  ref: 'Settings',
+  localField: '_id',
+  foreignField: 'user',
+  justOne: true
+});
+
 const Users = mongoose.model('Users', userSchema);
+
+/*  async function send(){
+  var user = await Users.findOne({name: 'Samyak Sakhare'}).select('+code').populate("settings");
+  console.log(user)
+  // await sendMail('new_user_registration', 'i.am.samyak@outlook.com', {user})
+}
+send() */
 
 module.exports = Users

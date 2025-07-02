@@ -36,7 +36,14 @@ app.use(require('./middlewares/locals'))
 
 app.set('trust proxy', 1)
 
-
+app.use(async (req, res, next) => {
+  if (req.user && (req.user.lastActive == null || req.user.lastActive < Date.now() - 1000 * 60 * 5)) {
+    req.user.lastActive = Date.now();
+    await req.user.save()
+  }
+  next();
+});
+dotenv.config();
 
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
@@ -105,6 +112,8 @@ const generalLimiter = rateLimit({
   }
 });
 app.use(generalLimiter);
+
+
 
 
 // CRON Jobs for recurring events

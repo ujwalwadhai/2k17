@@ -13,6 +13,11 @@ const settingsSchema = new mongoose.Schema({
     newsletter: { type: Boolean, default: true },
     push: { type: Boolean, default: false }
   },
+  privacy: {
+    email: { type: Boolean, default: true },
+    dob: { type: Boolean, default: true },
+    phone: { type: Boolean, default: true }
+  },
   emailVerification: {
     newEmail: String,
     token: String,
@@ -24,4 +29,6 @@ const settingsSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Settings', settingsSchema);
+const Settings = mongoose.model('Settings', settingsSchema);
+
+module.exports = Settings

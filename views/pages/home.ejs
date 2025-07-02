@@ -28,25 +28,6 @@
           <div class="overlay-text">Featured photo</div>
         </div>
     </section>
-
-    <!--<div class="events-container">
-    <section id="events" class="events">
-      <p class="heading">Upcoming Birthdays</p>
-      <% if(birthdays.length > 0){ %>
-      <% birthdays.forEach(member => { %>
-      <div class="event" onclick="window.location.href='/<%= member.username %>'">
-        <img src="<%= member.profile ? member.profile : '/images/user.png' %>" alt="" class="event-img">
-        <div class="event-info">
-          <p class="title"><%= member.name %> 🎂</p>
-          <p class="description">on <%- formatDOB(member.dob) %></p>
-        </div>
-      </div>
-      <% }) %>
-      <% } else { %>
-        <p class="grey-1">No upcoming birthdays in next 30 days.</p>
-      <% } %>
-    </section>
-    </div>-->
     
     <% if (birthdays.length > 0) { %>
 <section id="birthday-spotlight" class="no-select">
@@ -146,6 +127,14 @@
   
 
   <%- include('../partials/footer.ejs') %>
+
+  <div id="notification-banner" style="display: none;">
+    <p>Would you like to recieve important notifications from 2k17 💌?</p>
+    <div class="actions">
+      <button id="later-btn">Maybe Later</button>
+      <button id="grant-btn" onclick="requestNotificationPermissionAndSubscribe()">Yes</button>
+    </div>
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {

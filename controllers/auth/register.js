@@ -2,7 +2,6 @@ var Users = require('../../models/Users');
 var Settings = require('../../models/Settings');
 var sendMail = require('../../config/mailer');
 var logActivity = require('../../utils/log');
-var getCode = require('../../utils/randomCode');
 
 const register = async (req, res) => {
   var { email, username, name, dob, password } = req.body;
@@ -13,7 +12,7 @@ const register = async (req, res) => {
     }
 
     var existingUser = await Users.findOne({ email });
-    if (existingUser) return res.json({ success: false, message: 'Email already registered' });
+    if (existingUser) return res.json({ success: false, message: 'Email already in use. Login to your account' });
 
     var existingUsername = await Users.findOne({ username: username.toLowerCase() });
     if (existingUsername) return res.json({ success: false, message: 'Username already taken' });

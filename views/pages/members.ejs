@@ -34,7 +34,7 @@
                 </div>
             </div>
             <p class="bio"><%- member.bio ? member.bio : "Nothing here" %></p>
-            <% if ((member.email || member.phone) || (typeof member.socialLinks !== 'undefined' && (member.socialLinks.instagram || member.socialLinks.linkedin || member.socialLinks.github || member.socialLinks.other))) { %>
+            <% if (((member.email && member?.settings?.privacy?.email) || (member.phone && member?.settings?.privacy?.phone)) || (typeof member.socialLinks !== 'undefined' && (member.socialLinks.instagram || member.socialLinks.linkedin || member.socialLinks.github || member.socialLinks.other))) { %>
             <div class="social-links">
               <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.instagram ) { %>
                 <a href="<%= member.socialLinks.instagram %>" target="_blank"><span class="fab fa-instagram"></span></a>
@@ -51,10 +51,10 @@
               <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.other ) { %>
                 <a href="<%= member.socialLinks.other %>" target="_blank"><span class="fal fa-link-simple"></span></a>
               <% } %>
-              <% if (member.email) { %>
+              <% if (member.email && member?.settings?.privacy?.email) { %>
                 <a href="mailto:<%= member.email %>" target="_blank"><span class="fal fa-envelope"></span></a>
               <% } %>
-              <% if (member.phone) { %>
+              <% if (member.phone && member?.settings?.privacy?.phone) { %>
                 <a href="tel:<%= member.phone %>" target="_blank"><span class="fal fa-phone-volume"></span></a>
               <% } %>
             </div>

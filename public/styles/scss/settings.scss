@@ -97,7 +97,7 @@
     }
   }
 }
-
+ 
 #change-password-popup{
   @include fullscreen-popup;
 
@@ -198,8 +198,43 @@
   }
 }
 
+#privacy-settings-popup{
+  @include fullscreen-popup;
+
+  .privacy-settings-box {
+    @include popup-box;
+
+    .privacy-settings-list{
+      padding: 20px;
+
+      .form-section {
+        line-height: 28px;
+        
+        label {
+          display: block;
+          margin-bottom: 0.75rem;
+          cursor: pointer;
+
+          input[type="checkbox"] {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      #privacy-settings-status {
+        margin: 1rem 0;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        @include popup-button;
+      }
+    }
+  }
+}
+
 @media (max-width: 600px) {
-  .notification-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box, .change-email-box {
+  .notification-settings-box, .privacy-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box, .change-email-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;

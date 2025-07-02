@@ -1,6 +1,6 @@
 <div class="header">
     <nav class="large-and-medium">
-      <h1>2k17 ❤️</h1>
+      <h1 style="cursor: pointer;" onclick="window.location.href = '/'">2k17 ❤️</h1>
       <ul class="nav-items">
         <li><a href="/memories">Memories</a></li>
         <li><a href="/members">Members</a></li>
@@ -36,7 +36,7 @@
     </nav>
     <nav class="small-only">
       <span class="menu-icon fal fa-bars-sort" onclick="toggleMenu()"></span>
-      <p class="brand">2k17 ❤️</p>
+      <p class="brand" style="cursor: pointer;" onclick="window.location.href = '/'">2k17 ❤️</p>
       <% if (user) { %>
         <li class="user-capsule-wrapper">
             <div class="user-capsule user-capsule-2">
@@ -72,7 +72,6 @@
           <li onclick="window.location.href = '/memories'"><a href="/memories"><span class="fal fa-images"></span>Memories</a></li>
           <li onclick="window.location.href = '/donate'"><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span>Donate</a></li>
           <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>
-          <li onclick="window.location.href = '/login'"><a href="/login"><span class="fal fa-lock"></span>Login</a></li>
           <% if (user) { %>
             <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
           <% } %>

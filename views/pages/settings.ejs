@@ -20,6 +20,7 @@
         <li onclick="openChangePassword()"><a><span class="fal fa-unlock-keyhole"></span> Change password</a></li>
         <li onclick="openChangeEmail()"><a><span class="fal fa-envelope"></span> <%- user.email ? 'Change' : 'Add' %> email</a></li>
         <li onclick="openNotificationSettings()"><a><span class="fal fa-bell"></span> Notifications</a></li>
+        <li onclick="openPrivacySettings()"><a><span class="fal fa-eye-slash"></span> Privacy & Visibility</a></li>
       </ul>
       <ul>
         <li onclick="openReportProblem()"><a><span class="fal fa-triangle-exclamation"></span>
@@ -156,9 +157,41 @@
     </div>
   </div>
   
+  <div id="privacy-settings-popup">
+    <div class="overlay" onclick="closePrivacySettings()"></div>
+    <div class="privacy-settings-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-eye-slash"></span>Privacy & Visibility</p>
+        <p class="close-icon fal fa-xmark" onclick="closePrivacySettings()"></p>
+      </div>
+      <div class="privacy-settings-list" id="privacy-settings-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Your profile will be in spotlight on your birthday even if you hide the birth date.<br>Check mark the details you want the people to see :</span><br><br><br>
+          <form id="privacy-settings-form">
+            <div class="form-section">
+              <label>
+                  <input type="checkbox" id="privacy-email" name="email" <%- settings.privacy?.email ? 'checked' : '' %>>
+                  Email <small class="grey-1"> &nbsp;(System emails will still be sent.)</small>
+              </label>
+              <label>
+                <input type="checkbox" name="phone" <%=settings.privacy?.phone ? 'checked' : '' %>>
+                Phone number
+              </label>
+              <label>
+                <input type="checkbox" name="dob" <%=settings.privacy?.dob ? 'checked' : '' %>>
+                Date of birth
+              </label>
+            </div><br>
+
+            <div id="privacy-settings-status"></div>
+            <button type="submit">Save Settings</button>
+          </form>
+        
+      </div>
+    </div>
+  </div>
 
   <script src="/js/settings.js"></script>
   <script src="/js/notifications.js"></script>
 </body>
 
-</html>
+</html> 

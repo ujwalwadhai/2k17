@@ -136,7 +136,6 @@ function openViewImage(name, url, id) {
   var imgName = document.querySelector('#imgName')
   img.src = url;
   imgName.textContent = name;
-  Toast('Loading image...', 'info');
   ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
   ViewImagePopup.classList.add('show');
   ViewImageOverlay.classList.add('show');
@@ -159,7 +158,6 @@ function openViewVideo(name, url, id) {
   var videoName = document.querySelector('#videoName')
   videoIframe.src = url;
   videoName.textContent = name;
-  Toast('Loading video could take time...', 'info')
   ViewVideoPopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
   ViewVideoPopup.classList.add('show');
   ViewVideoOverlay.classList.add('show');
@@ -194,7 +192,6 @@ async function loadFolder(folderId, updateURL = true) {
 
 
   if (!folderId) return
-  Toast('Loading...', 'info')
 
   // ✅ Update the URL (but not if this is root)
   if (updateURL) {

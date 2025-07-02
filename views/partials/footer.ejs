@@ -1,7 +1,7 @@
 <div id="notification-banner" style="display: none;">
     <p>Would you like to recieve important notifications from 2k17 💌?</p>
     <div class="actions">
-      <button id="later-btn">Maybe Later</button>
+      <button id="later-btn" onclick="document.getElementById('notification-banner').style.display = 'none'">Maybe Later</button>
       <button id="grant-btn" onclick="requestNotificationPermissionAndSubscribe()">Yes</button>
     </div>
   </div>

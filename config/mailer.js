@@ -1,6 +1,7 @@
 // Nodemailer configuration for sending emails
 
 const nodemailer = require('nodemailer');
+const Users = require('../models/Users');
 const { createDate } = require('../utils/time');
 const deviceInfo = require('../middlewares/device');
 var logActivity = require('../utils/log')
@@ -16,7 +17,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendEmail(to, subject, htmlContent) {
+async function sendEmail(to, subject, htmlContent, includeBCC) {
   try {
     var mailOptions = {
       from: '"2k17 Platform" <2k17platform@gmail.com>',
@@ -24,7 +25,11 @@ async function sendEmail(to, subject, htmlContent) {
       subject,
       html: htmlContent,
     };
-
+    if(includeBCC){
+      var admins = await Users.find({ role: 'admin' }, {email:1});
+      var adminEmails = admins.map(u => u.email);
+      mailOptions.bcc = adminEmails;
+    }
     await transporter.sendMail(mailOptions);
   } catch (error) {
     console.log(error);
@@ -54,7 +59,7 @@ async function OTPMail(to, data) {
   var template = `<div style="margin: 0; padding: 0; background-color: #1f1c2e; font-family: sans-serif; color: #ffffffcc;">
     <div style="max-width: 600px; margin: 0 auto; padding: 30px 20px;">
       <div style="background-color: #2b273f; border-radius: 8px; padding: 30px;">
-        <h3 style="color: #7b5cf0; margin-top: 0;">Verify Your Email</h3>
+        <h3 style="color: #7b5cf0; margin-top: 0;">OTP for login</h3>
         <p style="margin: 15px 0;">To continue, use the following one-time password:</p>
 
         <div style="font-size: 28px; font-weight: bold; background-color: #2c283d; color: #ffffffcc; padding: 14px 0; border-radius: 6px; display: inline-block; letter-spacing: 5px; margin: 8px 0;">
@@ -111,7 +116,7 @@ async function NewCommentMail(to, data) {
 
 </body>`
   logActivity('', "Sent Email", `to ${to} for comment on post`, {postLink: data.postLink})
-  sendEmail(to, 'New comment on your post • 2k17 Platform', template);
+  sendEmail(to, 'New comment on your post • 2k17 Platform', template, true);
 }
 
 async function UserReportMail(to, data) {
@@ -171,7 +176,7 @@ async function AdminReportMail(to, data) {
       <p style="margin-top: 5px;"><strong>Time:</strong> ${createDate()}</p>
     </div>
 
-    <p style="color: #888;">Login to the admin panel to manage this report.</p>
+    <p style="color: #888;">Login to the <a href="https://twok17.onrender.com/admin">admin dashboard</a> to manage this report.</p>
     <p style="color: #888;">Automated Report System<br>2k17 Platform</p>
   </div>`
   logActivity('', "Sent Email", `to admins for new report`)
@@ -328,7 +333,6 @@ async function RegisteredDataMail(to, data) {
   sendEmail(to, "Welcome to 2k17 Platform ❤️", template);
 }
 
-
 async function sendMail(type, to, data) {
   if (type == 'otp') OTPMail(to, data);
   // if (type == 'login') LoginMail(to, data);
@@ -349,3 +353,4 @@ async function sendMail(type, to, data) {
 }
 
 module.exports = sendMail;
+ 

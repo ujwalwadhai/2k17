@@ -41,13 +41,14 @@ const loginPassword = async (req, res) => {
       return res.json({ success: false, message: 'Incorrect password' });
     }
 
-    req.login(user, (err) => {
+    req.login(user,async (err) => {
       if (err) {
         console.log(err);
         return res.json({ success: false, message: 'Something went wrong' });
       }
       // logActivity(user._id, 'User Login', `Logged in with password.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
+      await Users.findOneAndUpdate({ email: user.email }, { lastLogin: Date.now() }, { new: true });
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     });
 

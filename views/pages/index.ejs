@@ -16,13 +16,11 @@
       <div class="hero-text">
         <h2>Welcome to <span style="color: blue;">2</span><span style="color: green;">k</span><span style="color: red;">1</span><span style="color: yellow;">7</span></h2>
         <p>Mini social media platform built specially for the 2017-24 batch of JNV Chandrapur.</p><br>
-        <a href="/preregister" class="cta-btn">Pre-register now &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
-        <!--<a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>-->
+        <a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
       </div>
       <div class="featured-photo">
-        <!--<img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
-        <div class="overlay-text">Featured photo</div>-->
-        <%- include('../partials/countdown') %>
+        <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
+        <div class="overlay-text">Featured photo</div>
       </div>
     </section>
  
@@ -159,7 +157,97 @@
   </main>
 
   <%- include('../partials/footer') %>
+  <script>
+    const colors = ['#7b5cf0', '#6342d8', '#ff4081', '#00e5ff', '#ffd740'];
 
+    function setupCanvas(id) {
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100vw';
+        canvas.style.height = '100vh';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '9999';
+        canvas.id = id;
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        return { canvas, ctx };
+    }
+
+    function renderConfetti() {
+        const { canvas, ctx } = setupCanvas('canvas-wrapping');
+        const timeDelta = 0.05;
+        const xAmplitude = 0.5;
+        const yAmplitude = 1;
+        const xVelocity = 2;
+        if(window.innerWidth < 600) {
+            var yVelocity = 0.7;
+        } else {
+            var yVelocity = 3;
+        }
+
+        let time = 0;
+        const confetti = [];
+
+        for (let i = 0; i < 100; i++) {
+            const radius = Math.random() * 5 + 2.5;
+            const tilt = Math.floor(Math.random() * 10) - 5;
+            const xSpeed = Math.random() * xVelocity - xVelocity / 2;
+            const ySpeed = Math.random() * yVelocity;
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height - canvas.height;
+
+            confetti.push({
+                x,
+                y,
+                xSpeed,
+                ySpeed,
+                radius,
+                tilt,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                phaseOffset: i,
+            });
+        }
+
+        let animationId;
+
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confetti.forEach((piece) => {
+                piece.y += (Math.cos(piece.phaseOffset + time) + 1) * yAmplitude + piece.ySpeed;
+                piece.x += Math.sin(piece.phaseOffset + time) * xAmplitude + piece.xSpeed;
+
+                if (piece.x < 0) piece.x = canvas.width;
+                if (piece.x > canvas.width) piece.x = 0;
+                if (piece.y > canvas.height) piece.y = 0;
+
+                ctx.beginPath();
+                ctx.lineWidth = piece.radius;
+                ctx.strokeStyle = piece.color;
+                ctx.moveTo(piece.x + piece.tilt, piece.y);
+                ctx.lineTo(piece.x + piece.tilt / 2, piece.y + piece.tilt + piece.radius);
+                ctx.stroke();
+            });
+
+            time += timeDelta;
+            animationId = requestAnimationFrame(update);
+        }
+
+        update();
+    }
+    renderConfetti()
+    renderConfetti()
+</script>
   <script src="/js/indexPage.js"></script>
 
 </body>

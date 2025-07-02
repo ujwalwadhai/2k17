@@ -3,6 +3,5 @@ module.exports = {
   loginEmail: require('./loginEmail'),
   sendOTP: require('./sendOTP'),
   register: require('./register'),
-  logout: require('./logout'),
-  preRegister: require('./preRegister'),
+  logout: require('./logout')
 };

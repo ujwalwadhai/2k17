@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
+var sendMail = require('../config/mailer');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   username: { type: String, required: true, unique: true },
   email: { type: String },
-  year: { type: String },
+  year: { type: String, default: "2017-24" },
   phone: { type: String }, 
   dob: { type: String },
   password: { type: String, select: false },
@@ -24,6 +25,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['admin', 'moderator']},
   joinedAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+  lastLogin: { type: Date },
   pushSubscriptions: [{
     endpoint: String,
     keys: {
@@ -57,4 +59,6 @@ userSchema.methods.validatePassword = async function (enteredPassword) {
   return enteredPassword === this.code;
 };
 
-module.exports = mongoose.model('Users', userSchema);
+const Users = mongoose.model('Users', userSchema);
+
+module.exports = Users

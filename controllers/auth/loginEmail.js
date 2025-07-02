@@ -42,13 +42,15 @@ const loginEmail = async (req, res) => {
       return res.json({ success: false, message: 'Invalid or expired OTP' });
     }
 
-    req.login(user, (err) => {
+    req.login(user, async (err) => {
       if (err) {
         console.log(err);
         return res.json({ success: false, message: 'Something went wrong' });
       }
       logActivity(user._id, 'User Login', `Logged in with email OTP.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Email OTP'});
+      await Users.findOneAndUpdate({ email: email }, { lastLogin: Date.now() }, { new: true });
+      await otps.deleteMany({ email: email })
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     })
 

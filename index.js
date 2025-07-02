@@ -79,34 +79,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  const now = new Date()
-  const launchDate = new Date(process.env.LAUNCH_DATE || '2025-06-24T00:00:00');
-
-  if (req.method !== 'GET') return next();
-
-  // After launch
-  if (now >= launchDate) {
-    if (req.path === '/pre-register' || req.path === '/preregister') {
-      return res.redirect('/create-account');
-    }
-    return next();
-  }
-
-  // Allow preregister page and admin login (use /login/admin instead of /login to login for testing)
-  const publicPaths = ['/login/admin', '/', '/preregister', '/pre-register', '/terms-of-service', '/ping', '/donate']; // allowed routes before launch
-  if (publicPaths.includes(req.path) || req.path.startsWith('/verify-email/')) {
-    return next();
-  }
-  // Allow access to everything if logged in and role is admin
-  if (req?.user?.role === 'admin') {
-    return next();
-  }
-
-  return res.redirect('/');
-});
-
-
 // app.use('/admin', isLoggedIn, hasRole(['admin']))
 app.use('/',require('./middlewares/locals'), getRoutes);
 app.use('/', postRoutes);
@@ -139,7 +111,6 @@ app.use(generalLimiter);
 require('./cron/logCleanUp')
 require('./cron/birthday')
 require('./cron/newsletter')
-require('./cron/launch')
 
 require('./config/mailer')
 

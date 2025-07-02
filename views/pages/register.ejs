@@ -3,7 +3,7 @@
   <head>
     <%- include('../partials/head.ejs') %>
     <link rel="stylesheet" href="/styles/css/signup_login.css" />
-    <title>Pre-register • 2k17 Platform</title>
+    <title>Create account • 2k17 Platform</title>
   </head>
   <body>
     <%- include('../partials/loader.ejs') %>
@@ -16,17 +16,13 @@
             ><br /><br /><br /><br /><br /><br /><br /><br
           /></span>
 
-          <% if (isLaunched) { %>
-            <h1 class="error">Create Account</h1>
-          <% } else { %>
-            <h1>Can't wait to get started!</h1>
-            <small class="grey-1" id="info"
-              ><span class="fal fa-info-circle"></span> &nbsp; You will get the
-              email as soon as the 2k17 Platform gets live</small
-            >
-          <% } %>
+          
+          <h1 class="error">Create Account</h1>
+           <p>Already have an account? &nbsp;<a href="/login">Login to account</a></p><br>
+            <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; Please check your email app after creating account for activation code.</small><br><br>
+            <div>
 
-          <br /><br />
+    
           <div>
             <!-- <div class="username-field">
             <input type="text" autocomplete="off" oninput="checkUsername(this, this.value)" id="signup-username" name="username" placeholder="Choose username" />
@@ -71,10 +67,10 @@
               placeholder="Enter activation code *"
               required
             /> -->
-            <!-- <div class="password-field">
-              <input type="password" placeholder="Enter your password *" />
-              <span class="eye-icon fal fa-eye"></span>
-            </div> -->
+            <div class="password-field">
+              <input type="password" id="password" placeholder="Enter password of your choice*" />
+              <span class="eye-icon fal fa-eye" id="toggle" onclick="togglePassword()"></span>
+            </div>
             <div>
               <span>Date of Birth:</span>
               <input
@@ -94,8 +90,7 @@
             ><br />
           </div>
 
-            <button onclick="register()" id="signup-btn" class="primary-btn">
-            <%= isLaunched ? 'Create Account' : 'Pre-register' %></button
+            <button onclick="register()" id="signup-btn" class="primary-btn">Create Account</button
           ><br /><br />
           <!-- <div class="divider">Or register with</div>
         <div class="social-buttons">

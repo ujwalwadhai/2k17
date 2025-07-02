@@ -1,6 +1,6 @@
-function registerUser(userId) {
+function disableLoginUser(userId) {
     console.log(userId)
-    fetch('/admin/users/register', {
+    fetch('/admin/users/disablelogin', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -24,7 +24,11 @@ function registerUser(userId) {
                     const action = row.querySelector('td[data-action]')
                     
                     if (action) {
-                        action.textContent = 'Yes';
+                        if(data.registered){
+action.innerHTML = `<button class="btn btn-primary" onclick="disableLoginUser('${userId}')">Disable Login</button>`;
+                        } else {
+                        action.innerHTML = `<button class="btn btn-primary" onclick="disableLoginUser('${userId}')">Enable Login</button>`;
+                        }
                     }
                     break;
                 }

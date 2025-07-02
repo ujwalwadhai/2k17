@@ -26,15 +26,16 @@ function togglePassword() {
     var name = document.getElementById("name").value;
     var username = document.getElementById("username").value;
     var dob = document.getElementById("dob").value;
+    var password = document.getElementById("password").value;
     var info = document.getElementById("info");
     var signup_btn = document.getElementById("signup-btn");
     if (!document.querySelector("#terms-box").checked) {
       return Toast("Please accept terms of service!", "error");
     }
-    if (email && username && name && dob) {
+    if (email && username && name && dob && password) {
       signup_btn.innerHTML =
         "<span class='fal fa-spin fa-spinner-third'></span> &nbsp; Creating account...";
-      fetch("/pre-register", {
+      fetch("/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,20 +44,19 @@ function togglePassword() {
           email: email,
           username: username,
           name: name,
-          dob: dob
+          dob: dob,
+          password
         }),
       })
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
             info.innerHTML =
-              "<span class='green'><span class='fal fa-circle-check'></span> &nbsp; Your pre-registration is done! Check your email for verification link.</span>";
-            signup_btn.innerHTML = "Return to home...";
-            signup_btn.onclick = () => {
-              window.location.href = data.redirect;
-            }
+              "<span class='green'><span class='fal fa-circle-check'></span> &nbsp; Your account is created. Logging in...</span>";
+            signup_btn.innerHTML = "Redirecting to home...";
+            setTimeout(()=> window.location.href = data.redirect, 1200);
             Toast(
-              "Account created successfully! Please check your email for verification link."
+              "Account created successfully! Redirecting to home..."
             );
           } else {
             setTimeout(() => {

@@ -233,9 +233,15 @@ async function loadFolder(folderId, updateURL = true) {
         <span class="foldername">${folder.name}</span>
       </div>`;
     });
-
+    
     driveGallery.innerHTML = '';
     featuredImages.innerHTML = '';
+    if(folderId === 'root'){
+      driveGallery.innerHTML += `<div class="upload-own-banner folder" style="padding: 10px 14px; line-height:25px" onclick="window.location.href = ''">
+        <span class="fal fa-images"></span> &nbsp; Want to upload images and videos?<br>
+        <span class='grey-1'>Click here to upload your own memories</span>
+      </div>`;
+    }
 
     data.featuredImages.forEach(img => {
       var isLiked = false

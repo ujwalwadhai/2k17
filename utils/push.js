@@ -19,7 +19,7 @@ if (!vapidPublicKey || !vapidPrivateKey || !webPushContactEmail) {
 // Push notification templates
 const templates = {
   comment: (data) => ({
-    title: `${data.user.name} commented on your post`,
+    title: `${data.user.username} commented on your post`,
     body: `"${data.text?.substring(0, 50)}${data.text?.length > 50 ? '...' : ''}"`,
     icon: data.user.profile || '/images/web_logo.png',
     url: `/post/${data.postId}#comment-${data.commentId}`,

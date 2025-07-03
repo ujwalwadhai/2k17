@@ -14,13 +14,7 @@ const userSchema = new mongoose.Schema({
   bio: { type: String },
   registered: { type: Boolean, default: false },
   verified: { type: Boolean, default: false },
-  socialLinks: {
-    instagram: String,
-    linkedin: String,
-    github: String,
-    facebook: String,
-    other: String
-  },
+  socialLinks: { type: Object, default: {} },
   code: { type: String, select: false },
   role: { type: String, enum: ['admin', 'moderator'] },
   joinedAt: { type: Date, default: Date.now },

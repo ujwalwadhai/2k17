@@ -47,14 +47,42 @@
       <textarea style="resize: vertical;" name="bio" rows="3" placeholder="Write something about yourself..."><%= user.bio %></textarea>
     </div>
 
-    <div class="form-group">
-      <label>Social Links</label>
-      <input type="url" name="facebook" placeholder="Facebook URL" value="<%= user.socialLinks?.facebook %>">
-      <input type="url" name="linkedin" placeholder="LinkedIn URL" value="<%= user.socialLinks?.linkedin %>">
-      <input type="url" name="github" placeholder="GitHub URL" value="<%= user.socialLinks?.github %>">
-      <input type="url" name="instagram" placeholder="Instagram URL" value="<%= user.socialLinks?.instagram %>">
-      <input type="url" name="other" placeholder="Other URL" value="<%= user.socialLinks?.other %>">
-    </div>
+    <div class="form-group" id="social-links-group">
+  <label style="margin-bottom: 16px;">Social Links</label>
+  <% if (user.socialLinks) { Object.entries(user.socialLinks).forEach(([key, value]) => { %>
+  <% if(value.length > 0){ %>
+  <input
+    type="url"
+    name="<%= key %>"
+    placeholder="<%= key.charAt(0).toUpperCase() + key.slice(1) %> URL"
+    value="<%= value %>">
+    <% } %>
+<% }) } %>
+
+  <div id="additional-links"></div>
+
+  <button type="button" id="add-link-btn" style="margin-top: 12px; padding: 8px 12px; border-radius: 4px; background-color: #007bff; color: white; border: none; cursor: pointer; font-size: 14px;">Add new link</button>
+</div>
+
+<script>
+  const addLinkBtn = document.getElementById('add-link-btn');
+  const additionalLinksDiv = document.getElementById('additional-links');
+
+  addLinkBtn.addEventListener('click', () => {
+    const wrapper = document.createElement('div');
+    wrapper.style.marginTop = '5px';
+
+    const input = document.createElement('input');
+    input.type = 'url';
+    input.placeholder = 'Enter URL (Icon will be set automatically)';
+    input.style.marginTop = '8px'
+    input.name = String(Math.random()).slice(3);
+    wrapper.appendChild(input);
+    additionalLinksDiv.appendChild(wrapper);
+    input.focus()
+  });
+</script>
+
 
     <div id="edit-profile-status"></div><br>
 

@@ -9,13 +9,17 @@
 <body>
   <%- include('../partials/loader') %>
   <%- include('../partials/navbar') %>
-  <input type="hidden" name="" value="<%- user?._id || '' %>" id="userId">
+  <input type="hidden" name="" value="<%- user?._id || userId || '' %>" id="userId">
   <br><br>
     <section class="memories-container">
       <h1>Batch Memories</h1>
   <div class="tabs">
     <button onclick="loadFolder('root', true)" class="tab <%- typeof tab && tab === 'drive' ? '' : 'active' %>" data-title="Featured Memories" data-tab="featured"><span class="fal fa-sparkles"></span>Featured</button>
+    <% if(userId){ %>
     <button onclick="loadFolder('root')" class="tab <%- typeof tab && tab === 'drive' ? 'active' : '' %>" data-title="2k17 Drive" data-tab="drive">Drive</button>
+    <% } else { %>
+    <button onclick="window.location.href = '/login'" class="tab" data-title="2k17 Drive" data-tab="">Login for all memories</button>
+    <% } %>
   </div>
 
   <div class="tab-content <%- tab && tab === 'drive' ? 'hidden' : '' %>" id="featured-tab">

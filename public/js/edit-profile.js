@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { 
   var profileInput = document.getElementById("profilePhoto");
   var profileImg = document.querySelector(".profile-pic");
   var form = document.getElementById("edit-profile-form");

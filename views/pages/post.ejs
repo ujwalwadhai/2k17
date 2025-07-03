@@ -11,7 +11,7 @@
         <!-- Open Graph tags for social sharing -->
         <meta property="og:title" content="View post by <%= post.author.name %> on 2k17">
         <meta property="og:description" content="2k17 Platform">
-        <meta property="og:image" content="/images/web_logo.png">
+        <meta property="og:image" content="<%- post?.media?.url || 'https://twok17.onrender.com/images/web_logo.png' %>">
         <meta property="og:url" content="/post/<%= post._id %>">
         <meta property="og:type" content="website">
 </head>

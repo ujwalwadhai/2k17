@@ -21,7 +21,7 @@ var showFolder = async (req, res) => {
         currentFolder: folder,
         tab: 'drive',
         featuredImages, 
-        userId: req.user?._id || null
+        userId: req?.user?._id || null
     })
 }
 

@@ -33,24 +33,23 @@
                     <p class="year"><%- member.year %> &nbsp;in JNV</p>
                 </div>
             </div>
-            <p class="bio"><%- member.bio ? member.bio : "Nothing here" %></p>
-            <% if (((member.email && member?.settings?.privacy?.email) || (member.phone && member?.settings?.privacy?.phone)) || (typeof member.socialLinks !== 'undefined' && (member.socialLinks.instagram || member.socialLinks.linkedin || member.socialLinks.github || member.socialLinks.other))) { %>
+            <p class="bio"><%- member.bio ? member.bio : "<span style='color: #888'>Nothing here</span>" %></p>
+            <% if (((member.email && member?.settings?.privacy?.email) || (member.phone && member?.settings?.privacy?.phone))) { %>
             <div class="social-links">
-              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.instagram ) { %>
-                <a href="<%= member.socialLinks.instagram %>" target="_blank"><span class="fab fa-instagram"></span></a>
-              <% } %>
-              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.linkedin ) { %>
-                <a href="<%= member.socialLinks.linkedin %>" target="_blank"><span class="fab fa-linkedin"></span></a>
-              <% } %>
-              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.github ) { %>
-                <a href="<%= member.socialLinks.github %>" target="_blank"><span class="fab fa-github"></span></a>
-              <% } %>
-              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.facebook ) { %>
-                <a href="<%= member.socialLinks.facebook %>" target="_blank"><span class="fab fa-facebook"></span></a>
-              <% } %>
-              <% if(typeof member.socialLinks !== 'undefined' && member.socialLinks.other ) { %>
-                <a href="<%= member.socialLinks.other %>" target="_blank"><span class="fal fa-link-simple"></span></a>
-              <% } %>
+              <% const domainIconMap = { facebook: 'fab fa-facebook', instagram: 'fab fa-instagram', linkedin: 'fab fa-linkedin', twitter: 'fab fa-x-twitter', 'x.com': 'fab fa-x-twitter', 'x-twitter': 'fab fa-x-twitter',threads: 'fab fa-threads',snapchat: 'fab fa-snapchat',youtube: 'fab fa-youtube',pinterest: 'fab fa-pinterest',whatsapp: 'fab fa-whatsapp',telegram: 'fab fa-telegram',discord: 'fab fa-discord',reddit: 'fab fa-reddit',github: 'fab fa-github',spotify: 'fab fa-spotify',default: 'fal fa-link'}%>
+              <% if (member.socialLinks) {
+                Object.entries(member.socialLinks).forEach(([key, value]) => {
+                  if (!value) return;
+                  const brandIcons = ['facebook', 'instagram', 'linkedin', 'twitter', 'github', 'reddit', 'youtube', 'tiktok', 'snapchat', 'telegram', 'discord'];
+                  const iconPrefix = brandIcons.includes(key.toLowerCase()) ? 'fab' : 'fal';
+                  const iconClass = `${iconPrefix} fa-${brandIcons.includes(key.toLowerCase()) ? key.toLowerCase() : 'link-simple'}`;
+              %>
+                <a href="<%= value %>" target="_blank" title="<%= key %>">
+                  <span class="<%= iconClass %>"></span>
+                </a>
+              <% }) } %>
+
+              
               <% if (member.email && member?.settings?.privacy?.email) { %>
                 <a href="mailto:<%= member.email %>" target="_blank"><span class="fal fa-envelope"></span></a>
               <% } %>

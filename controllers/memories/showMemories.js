@@ -25,7 +25,7 @@ const showMemories = async (req, res) => {
     breadcrumb,
     tab: '',
     currentFolder: null, 
-    userId: req.user?._id || null
+    userId: req?.user?._id || null
   })
 }
 

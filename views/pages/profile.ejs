@@ -186,22 +186,19 @@
             </div>
           </div>
           <div class="low-box">
-            <p class="heading">Social Links</p>
-              <% if(typeof account.socialLinks !== 'undefined' && account.socialLinks.instagram ) { %>
-                <p><span class="fab fa-instagram"></span><a href="<%= account.socialLinks.instagram %>" target="_blank">Instagram</a></p>
-              <% } %>
-              <% if(typeof account.socialLinks !== 'undefined' && account.socialLinks.linkedin ) { %>
-                <p><span class="fab fa-linkedin"></span><a href="<%= account.socialLinks.linkedin %>" target="_blank">LinkedIn</a></p>
-              <% } %>
-              <% if(typeof account.socialLinks !== 'undefined' && account.socialLinks.github ) { %>
-                <p><span class="fab fa-github"></span><a href="<%= account.socialLinks.github %>" target="_blank">GitHub</a></p>
-              <% } %>
-              <% if(typeof account.socialLinks !== 'undefined' && account.socialLinks.facebook ) { %>
-                <p><span class="fab fa-facebook"></span><a href="<%= account.socialLinks.facebook %>" target="_blank">Facebook</a></p>
-              <% } %>
-              <% if(typeof account.socialLinks !== 'undefined' && account.socialLinks.other ) { %>
-                <p><span class="fal fa-link"></span><a href="<%= account.socialLinks.other %>" target="_blank">Other</a></p>
-              <% } %>
+            <p class="heading">Social Links</p> 
+              <% const domainIconMap = { facebook: 'fab fa-facebook', instagram: 'fab fa-instagram', linkedin: 'fab fa-linkedin', twitter: 'fab fa-x-twitter', 'x.com': 'fab fa-x-twitter', 'x-twitter': 'fab fa-x-twitter',threads: 'fab fa-threads',snapchat: 'fab fa-snapchat',youtube: 'fab fa-youtube',pinterest: 'fab fa-pinterest',whatsapp: 'fab fa-whatsapp',telegram: 'fab fa-telegram',discord: 'fab fa-discord',reddit: 'fab fa-reddit',github: 'fab fa-github',spotify: 'fab fa-spotify',default: 'fal fa-link'}%>
+              <% if (account.socialLinks) {
+                Object.entries(account.socialLinks).forEach(([key, value]) => {
+                  if (!value) return;
+                  const brandIcons = ['facebook', 'instagram', 'linkedin', 'twitter', 'github', 'reddit', 'youtube', 'tiktok', 'snapchat', 'telegram', 'discord'];
+                  const iconPrefix = brandIcons.includes(key.toLowerCase()) ? 'fab' : 'fal';
+                  const iconClass = `${iconPrefix} fa-${brandIcons.includes(key.toLowerCase()) ? key.toLowerCase() : 'link-simple'}`;
+              %>
+                <a href="<%= value %>" target="_blank" title="<%= key %>">
+                  <span class="<%= iconClass %>"></span>
+                </a>
+              <% }) } %>
               <% if(Object.values(account.socialLinks).every(value => value === "")) { %>
                 <p class="no-links"><span class="fal fa-signal-slash"></span>No links in record.</p>
               <% } %>

@@ -3,13 +3,16 @@
   display: flex;
   gap: 12px;
 }
+.admin-btns button {
+  min-width: 220px;
+  width: 100%;
+}
 .admin-btns .newsletter-btn {
   background: #332f48;
   display: flex;
   gap: 12px;
   padding: 0.8rem;
   width: 100%;
-  max-width: 280px;
   border: none;
   border-radius: 4px;
   color: #ffffff;
@@ -24,6 +27,20 @@
 .admin-btns .newsletter-btn span.fal {
   font-size: 18px;
   margin-right: 8px;
+}
+@media (max-width: 500px) {
+  .admin-btns {
+    flex-direction: column;
+    gap: 0;
+  }
+  .admin-btns button {
+    max-width: 500px;
+  }
+}
+@media (min-width: 501px) {
+  .admin-btns button {
+    max-width: 280px;
+  }
 }
 
 .reports-logs {

@@ -2,7 +2,7 @@ var cron = require('node-cron');
 var Reports = require('../models/Reports');
 var logActivity = require('../utils/log');
 
-cron.schedule('0 0 * * *', async () => {
+cron.schedule('5 0 * * *', async () => {
   var sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
   try {
@@ -15,4 +15,6 @@ cron.schedule('0 0 * * *', async () => {
   } catch (error) {
     console.error('[CRON] Error deleting old resolved reports:', error);
   }
+}, {
+    timezone: "Asia/Kolkata"
 });

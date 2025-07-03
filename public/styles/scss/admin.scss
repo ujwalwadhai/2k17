@@ -4,15 +4,18 @@
 .admin-btns {
   padding: 8px 20px;
   display: flex;
-  gap: 12px;
-
+  gap: 12px; 
+  button{
+    min-width: 220px;
+    width: 100%;
+  }
+  
   .newsletter-btn {
     background: $bg-dark3;
     display: flex;
     gap: 12px;
     padding: 0.8rem;
     width: 100%;
-    max-width: 280px;
     border: none;
     border-radius: 4px;
     color: $text-light;
@@ -20,14 +23,27 @@
     margin-top: 1rem;
     cursor: pointer;
     align-items: center;
-
+    
     &:hover {
       background: $primary-dark;
     }
-
+    
     span.fal{
       font-size: 18px;
       margin-right: 8px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    gap:0;
+    button{
+      max-width: 500px;
+    }
+  }
+  @media (min-width: 501px) {
+    button{
+      max-width: 280px;
     }
   }
 }

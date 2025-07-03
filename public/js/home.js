@@ -298,8 +298,8 @@ function loadPosts(userId) {
               } else {
                 var mediaItem = ``
               }
-              if (post.likes.length > 1) {
-                var likedBy = `<p class="extend-like-msg"><img src="${(post.likes[0]._id.toString() == userId.toString() ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'}" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}"'>${post.likes[0]._id.toString() == userId.toString() ? post.likes[1].username : post.likes[0].username}</span>&nbsp; and ${post.likes.length - 1} other${post.likes.length == 2 ? '' : 's'}</p>`
+              if (post.likes.length > 2) {
+                var likedBy = `<p class="extend-like-msg"><img src="${post.likes[1].profile || '/images/user.png'}" alt="" class="user-profile"> Liked by <span style='margin: 0 3px' onclick='window.location.href="/${post.likes[1].username}"'> ${ post.likes[1].username } </span> and ${post.likes.length - 1} others</p>`
               }
               if(post.author._id.toString() === userId.toString()){
                 var trashIcon = `<span class="fal fa-trash red" aria-label="Delete this post" onclick="deletePost('${post._id}')"></span>`
@@ -321,7 +321,7 @@ function loadPosts(userId) {
                 <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${post._id}"></span>
               </button> &nbsp; 
 
-              <button class="comment-btn" onclick="loadComments('${post._id}', '${userId}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span></button>
+              <button class="comment-btn" onclick="loadComments('${post._id}', '${userId}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span>&nbsp; ${post.comments.length > 0 ? post.comments.length : ''}</button>
               <div class="btns-right">
               <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://twok17.onrender.com/post/${post._id}"><span class="fal fa-share"></span></button>
               ${trashIcon || ''}

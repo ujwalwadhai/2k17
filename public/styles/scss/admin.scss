@@ -4,13 +4,17 @@
 .admin-btns {
   padding: 8px 20px;
   display: flex;
-  gap: 12px; 
-  button{
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+
+  button {
+    flex: 1 1 calc(50% - 6px); // Default to 2 per row
     min-width: 220px;
     width: 100%;
   }
-  
-  .newsletter-btn {
+
+  .tool-btn {
     background: $bg-dark3;
     display: flex;
     gap: 12px;
@@ -23,34 +27,49 @@
     margin-top: 1rem;
     cursor: pointer;
     align-items: center;
-    
+
     &:hover {
       background: $primary-dark;
     }
-    
-    span.fal{
+
+    span.fal {
       font-size: 18px;
       margin-right: 8px;
+      width: 20px;
     }
   }
 
-  @media (max-width: 500px) {
+  // Small screens: stack vertically
+  @media (max-width: 612px) {
     flex-direction: column;
-    gap:0;
-    button{
-      max-width: 500px;
+    gap: 0;
+
+    button {
+      flex: 1 1 100%;
+      max-width: 100%;
     }
   }
-  @media (min-width: 501px) {
-    button{
-      max-width: 280px;
-    }
+
+  // Large screens: all in one row
+  @media (min-width: 1025px) {
+  flex-wrap: nowrap; // ensures all in one row
+  button {
+    flex: 1 1 0; // allow buttons to shrink/grow equally
+    max-width: none;
   }
 }
+
+}
+
 
 .reports-logs {
   padding: 8px 20px;
 
+  h2{
+    color: $primary-dark;
+    font-size: 22px;
+  }
+  
   .search-bar {
     padding: 10px;
     border: none;
@@ -60,7 +79,7 @@
     margin-bottom: 15px;
     width: 100%;
     font-size: 16px;
-
+    
     &::placeholder {
       color: $text-muted;
     }
@@ -69,7 +88,11 @@
 
 .activity-logs {
   padding: 8px 20px;
-
+  
+  h2{
+    color: $primary-dark;
+    font-size: 22px;
+  }
   .search-bar {
     padding: 10px;
     border: none;
@@ -228,9 +251,165 @@
     }
   }
 }
+#send-notification-popup {
+  @include fullscreen-popup;
+
+  .send-notification-box {
+    @include popup-box;
+
+    .send-notification-list {
+      padding: 20px;
+
+      .info-box {
+        font-size: 14px;
+
+        #report-user {
+          color: $primary;
+          cursor: pointer;
+        }
+      }
+
+      input,
+      textarea {
+        @include popup-inputs;
+      }
+
+      #send-notification-status {
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        @include popup-button;
+      }
+    }
+  }
+}
 
 @media (max-width: 600px) {
-  .resolve-report-box {
+  .resolve-report-box, .newsletter-box, .send-notification-box {
+    width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+  }
+}
+
+.table-scroll-wrapper {
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.user-info-profile {
+  margin: 1.2rem auto;
+  text-align: center;
+
+  img {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.user-info-table {
+  width: 100%;
+  min-width: 400px;
+  border-collapse: collapse;
+  background: $bg-dark2;
+  color: $text-light;
+  overflow: hidden;
+
+  td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #444;
+
+    &:first-child {
+      width: 30%;
+      font-weight: bold;
+      color: #888;
+    }
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+}
+
+#users-table {
+  tbody tr td{
+    font-size: 14px;
+  }
+  tr:nth-of-type(even) {
+    background: rgba($bg-dark, 0.8);
+  }
+
+  #user-btn-action {
+    background: rgb(87, 87, 87);
+    color: white;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    width: 100px;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: rgb(62, 62, 62);
+    }
+  }
+}
+
+
+#user-info-popup {
+  @include fullscreen-popup;
+
+  .user-info-box {
+    @include popup-box;
+    overflow-y: auto;
+
+    .user-info-list {
+      padding: 0;
+
+      p {
+        line-height: 25px;
+      }
+
+      button {
+        &.btn-danger {
+          background: rgb(200, 37, 37);
+
+          &:hover {
+            background-color: red;
+          }
+        }
+
+        &.btn-success {
+          background: rgb(5, 161, 5);
+
+          &:hover {
+            background-color: green;
+          }
+        }
+
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.75rem;
+        width: 100%;
+        max-width: 120px;
+        transition: background 0.3s;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .user-info-box, .resolve-report-box, .newsletter-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;

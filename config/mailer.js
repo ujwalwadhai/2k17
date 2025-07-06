@@ -177,7 +177,7 @@ async function AdminReportMail(to, data) {
     </div>
 
     <p style="color: #888;">Login to the <a href="https://twok17.onrender.com/admin">admin dashboard</a> to manage this report.</p>
-    <p style="color: #888;">Automated Report System<br>2k17 Platform</p>
+    <p style="color: #888;">Report System<br>2k17 Platform</p>
   </div>`
   logActivity('', "Sent Email", `to admins for new report`)
   sendEmail(to, "New Report Submitted • 2k17 Platform", template);
@@ -193,7 +193,7 @@ async function ContactFormMail(to, data) {
       <p style="margin-top: 5px;"><strong>Message:</strong> ${data.text}</p>
       <p style="margin-top: 5px;"><strong>Time:</strong> ${createDate()}</p>
     </div>
-    <p style="color: #888;">Automated Report System<br>2k17 Platform</p>
+    <p style="color: #888;">Report System<br>2k17 Platform</p>
   </div>`
   sendEmail(to, "Contact Form Reachout • 2k17 Platform", template);
 }
@@ -227,7 +227,7 @@ async function AccountActivationMail(to, data) {
       This link is valid for 2 days. If you didn't create an account on 2k17 Platform, please ignore this email or reply to this email.
     </p>
     <p style="color: #888; line-height: 24px;">
-      Automated Mail System,<br>
+      Mail System,<br>
       2k17 Platform
     </p>
   </div>`
@@ -310,7 +310,7 @@ async function UserRegisteredMail(to, data) {
                 <p style="margin-top: 5px;"><strong>Verified users:</strong> ${data.verifiedUsers}</p>
                 <p style="margin-top: 5px;"><strong>Registered users:</strong> ${data.registeredUsers}</p>
               </div>
-              <p style="color: #888;">Automated Mail System</p><p style="color: #888;">2k17 Platform</p>
+              <p style="color: #888;">Mail System</p><p style="color: #888;">2k17 Platform</p>
             </div>`
   sendEmail(to, 'New user registration • 2k17 Platform', template);
 }
@@ -328,9 +328,45 @@ async function RegisteredDataMail(to, data) {
                 <small>We use industry-standard hashing (bcryptjs) to protect your password. This means no one can know your actual password, not even Ujwal and Prajyot.</small>
               </div><br>
               <a href="https://twok17.onrender.com/" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px;">Visit Platform</a><br><br>
-              <p style="color: #888;">Automated Mail System</p><p style="color: #888;">2k17 Platform</p>
+              <p style="color: #888;">Mail System</p><p style="color: #888;">2k17 Platform</p>
               </div>`
   sendEmail(to, "Welcome to 2k17 Platform ❤️", template);
+}
+
+async function WeeklyReportMail(to, data) {
+  var template = `<div style="font-family: Arial, sans-serif; background-color: #1f1c2e; color: #ffffffcc; padding: 20px;">
+  <h3 style="color: #7b5cf0;">Weekly Analytics Report</h3>
+
+  <p>Hello Admin,</p>
+  <p style="line-height:25px">Here’s the monthly analytics summary as of <strong>${new Date().toLocaleDateString('en-IN', {
+    day: '2-digit', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata'
+  })}</strong>:</p>
+
+  <div style="background-color: #2b273f; padding: 15px; border-left: 4px solid #7b5cf0; margin: 20px 0; line-height: 25px;">
+    <p><b>Total Users:</b> ${data.current.total} 
+      (${data.change.total.toFixed(0) > 0 ? `<span style="color: green">+${data.change.total.toFixed(0)}%</span> than last month` : `<span style="color: red">${data.change.total.toFixed(0)}%</span> than last month`})</p>
+
+    <p><b>Known Users:</b> ${data.current.known} 
+      (${data.change.known.toFixed(0) > 0 ? `<span style="color: green">+${data.change.known.toFixed(0)}%</span> than last month` : `<span style="color: red">${data.change.known.toFixed(0)}%</span> than last month`})</p>
+
+    <p><b>Guests:</b> ${data.current.guests} 
+      (${data.change.guests.toFixed(0) > 0 ? `<span style="color: green">+${data.change.guests.toFixed(0)}%</span> than last month` : `<span style="color: red">${data.change.guests.toFixed(0)}%</span> than last month`})</p>
+
+    <p><b>Total Visits:</b> ${data.visits.current} 
+      (${data.visits.change.toFixed(0) > 0 ? `<span style="color: green">+${data.visits.change.toFixed(0)}%</span> than last month` : `<span style="color: red">${data.visits.change.toFixed(0)}%</span> than last month`})</p>
+
+    <p><b>Peak Hour:</b> ${data.peakHour || 'No data available'}</p>
+    <p><b>Top Route:</b> ${data.topRoute || 'No data available'}</p>
+  </div>
+
+  <p style="line-height: 25px">For detailed analytics, Visit <a href="https://twok17.onrender.com/admin/analytics" style="color: #7b5cf0; text-decoration: underline;">admin dashboard</a>.</p>
+
+  <p style="color: #888; line-height: 25px">
+    Mail System,<br>
+    2k17 Platform
+  </p>
+</div>`
+sendEmail(to, "Weekly Analytics Report", template);
 }
 
 async function sendMail(type, to, data) {
@@ -350,6 +386,7 @@ async function sendMail(type, to, data) {
   if (type == 'newsletter_subscribe') NewsLetterSubscribeMail(to, data); 
   if (type == 'user_registered') UserRegisteredMail(to, data); 
   if (type == 'new_user_registration') RegisteredDataMail(to, data); 
+  if (type == 'weeklyReport') WeeklyReportMail(to, data);
 }
 
 module.exports = sendMail;

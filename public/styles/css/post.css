@@ -109,7 +109,7 @@
 }
 
 @media (max-width: 600px) {
-  .comments-box {
+  .comments-box, .post-likes-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;

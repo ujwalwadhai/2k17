@@ -3,7 +3,7 @@ var { getRelativeTime } = require('../utils/time');
 
 const notificationSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
-  type: { type: String, enum: ['like', 'comment', 'tag', 'reply', 'report', 'security', 'birthday'], required: true },
+  type: { type: String, enum: ['like', 'comment', 'tag', 'reply', 'report', 'security', 'birthday', 'admin'], required: true },
   fromUser: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
   message: { type: String },
   url: { type: String },

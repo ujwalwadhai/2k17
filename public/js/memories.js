@@ -129,7 +129,7 @@ function closeComments() {
   CommentsOverlay.classList.remove('show');
 }
 
-function openViewImage(name, url, id) {
+function openViewImage(name, url, id, thumbnail) {
   var ViewImagePopup = document.getElementById('view-image-popup');
   var ViewImageOverlay = ViewImagePopup.querySelector('.overlay');
   var img = document.querySelector('#imgLarge')
@@ -137,8 +137,13 @@ function openViewImage(name, url, id) {
   img.src = url;
   imgName.textContent = name;
   ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
+  ViewImagePopup.querySelector("#share-icon").setAttribute('onclick', `shareImage("${id}", "${thumbnail}")`)
   ViewImagePopup.classList.add('show');
   ViewImageOverlay.classList.add('show');
+  if(!localStorage.getItem('viewedImages') || !localStorage.getItem('viewedImages').includes(id)) {
+    navigator.sendBeacon('/api/analytics/addFileView', JSON.stringify({ fileId: id }));
+    localStorage.setItem('viewedImages', localStorage.getItem('viewedImages') ? localStorage.getItem('viewedImages') + ',' + id : id)
+  }
 }
 
 function closeViewImage() {
@@ -151,7 +156,7 @@ function closeViewImage() {
   img.src = ''
   name.textContent = ''
 }
-function openViewVideo(name, url, id) {
+function openViewVideo(name, url, id, thumbnail) {
   var ViewVideoPopup = document.getElementById('view-video-popup');
   var ViewVideoOverlay = ViewVideoPopup.querySelector('.overlay');
   var videoIframe = document.querySelector('#videoIframe')
@@ -159,6 +164,7 @@ function openViewVideo(name, url, id) {
   videoIframe.src = url;
   videoName.textContent = name;
   ViewVideoPopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
+  ViewVideoPopup.querySelector("#share-icon").setAttribute('onclick', `shareImage("${id}", "${thumbnail}")`)
   ViewVideoPopup.classList.add('show');
   ViewVideoOverlay.classList.add('show');
 }
@@ -172,6 +178,38 @@ function closeViewVideo() {
   var videoName = document.querySelector('#videoName')
   videoIframe.src = ''
   videoName.textContent = ''
+}
+
+async function likeFile(fileId) {
+  try {
+    var icon = document.getElementById(`like-icon-${fileId}`);
+    icon.classList.remove("fa-heart");
+    icon.classList.add("fa-spinner-third");
+    icon.classList.add("fa-spin");
+    var res = await fetch(`/file/${fileId}/like`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    var data = await res.json();
+    if (!data.success) return Toast('Failed to update like', 'error');
+
+    // Toggle icon style
+    icon.classList.remove('fa-spin');
+    icon.classList.remove('fa-spinner-third');
+    icon.classList.add('fa-heart');
+    if (data.liked) {
+      icon.classList.remove('fal');
+      icon.classList.add('fas');
+    } else {
+      icon.classList.remove('fas');
+      icon.classList.add('fal');
+    }
+
+  } catch (err) {
+    console.log(err);
+    Toast('Error while liking post', 'error');
+  }
 }
 
 
@@ -193,9 +231,8 @@ async function loadFolder(folderId, updateURL = true) {
 
   if (!folderId) return
 
-  // ✅ Update the URL (but not if this is root)
   if (updateURL) {
-    var newPath = folderId === 'root' ? '/memories' : `/memories/${folderId}`;
+    var newPath = folderId === 'root' ? '/memories' : `/memories/folder/${folderId}`;
     window.history.pushState({ folderId }, '', newPath);
   }
 
@@ -237,7 +274,7 @@ async function loadFolder(folderId, updateURL = true) {
     driveGallery.innerHTML = '';
     featuredImages.innerHTML = '';
     if(folderId === 'root'){
-      driveGallery.innerHTML += `<div class="upload-own-banner folder" style="padding: 10px 14px; line-height:25px" onclick="window.location.href = ''">
+      driveGallery.innerHTML += `<div class="upload-own-banner folder" style="padding: 10px 14px; line-height:25px" onclick="window.open('https://drive.google.com/drive/folders/1uy7KZjeHKomo2Ml80_bixL_mDAcVFxUf', '_blank')">
         <span class="fal fa-images"></span> &nbsp; Want to upload images and videos?<br>
         <span class='grey-1'>Click here to upload your own memories</span>
       </div>`;
@@ -252,7 +289,7 @@ async function loadFolder(folderId, updateURL = true) {
           <span class="filename"><span class="fal fa-image"></span>${img.name.replace(/\.[^/.]+$/, '')}</span>
           <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${img._id}" onclick="likeFile('${img._id}')"></span>
         </p>
-        <img onclick="openViewImage("${img.name.replace(/\.[^/.]+$/, '')}",'${img.url}', '${img._id}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
+        <img onclick="openViewImage("${img.name.replace(/\.[^/.]+$/, '')}",'${img.url}', '${img._id}', '${img.thumbnail}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
       </div>`
       } else {
       featuredImages.innerHTML += `<div>
@@ -260,7 +297,7 @@ async function loadFolder(folderId, updateURL = true) {
         <span class="filename"><span class="fal fa-image"></span>${img.name.replace(/\.[^/.]+$/, '')}</span>
         <span class="fal fa-heart" id="like-icon-${img._id}"></span>
       </p>
-      <img onclick="openViewImage("${img.name.replace(/\.[^/.]+$/, '')}",'${img.url}', '${img._id}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
+      <img onclick="openViewImage("${img.name.replace(/\.[^/.]+$/, '')}",'${img.url}', '${img._id}', '${img.thumbnail}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
     </div>`
       }
     })
@@ -289,8 +326,8 @@ async function loadFolder(folderId, updateURL = true) {
       img.loading = 'lazy';
       img.setAttribute('onclick',
         file.type === 'image'
-          ? `openViewImage("${file.name.replace(/\.[^/.]+$/, '')}", '${file.url}', '${file._id}')`
-          : `openViewVideo("${file.name.replace(/\.[^/.]+$/, '')}", '${file.url}', '${file._id}')`
+          ? `openViewImage("${file.name.replace(/\.[^/.]+$/, '')}", '${file.url}', '${file._id}', '${file.thumbnail}')`
+          : `openViewVideo("${file.name.replace(/\.[^/.]+$/, '')}", '${file.url}', '${file._id}', '${file.thumbnail}')`
       );
       img.oncontextmenu = () => false;
       img.onload = () => img.classList.add('loaded');
@@ -306,34 +343,23 @@ async function loadFolder(folderId, updateURL = true) {
   }
 }
 
-async function likeFile(fileId) {
+
+async function shareImage(fileId, url){
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const file = new File([blob], 'image.jpg', { type: blob.type });
+
+  const shareData = {
+    title: 'Check this memory',
+    text: 'See this memory I found on 2k17 Platform.',
+    url: `https://twok17.onrender.com/memories/file/${fileId}`,
+    files: [file]
+  };
+
   try {
-    var icon = document.getElementById(`like-icon-${fileId}`);
-    icon.classList.remove("fa-heart");
-    icon.classList.add("fa-spinner-third");
-    icon.classList.add("fa-spin");
-    var res = await fetch(`/file/${fileId}/like`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    });
-
-    var data = await res.json();
-    if (!data.success) return Toast('Failed to update like', 'error');
-
-    // Toggle icon style
-    icon.classList.remove('fa-spin');
-    icon.classList.remove('fa-spinner-third');
-    icon.classList.add('fa-heart');
-    if (data.liked) {
-      icon.classList.remove('fal');
-      icon.classList.add('fas');
-    } else {
-      icon.classList.remove('fas');
-      icon.classList.add('fal');
-    }
-
+    await navigator.share(shareData);
+    console.log('Shared successfully');
   } catch (err) {
-    console.log(err);
-    Toast('Error while liking post', 'error');
+    console.error('Sharing failed', err);
   }
 }

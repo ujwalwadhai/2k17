@@ -3,6 +3,7 @@ module.exports = {
     fetchFolder: require('./fetchFolder.js'),
     rootFolder: require('./rootFolder.js'),
     showFolder: require('./showFolder.js'),
+    showFile: require('./showFile.js'),
     likeFile: require('./likeFile.js'),
     fetchComments: require('./fetchComments.js'),
     newComment: require('./newComment.js'),

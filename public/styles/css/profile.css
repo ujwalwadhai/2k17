@@ -88,6 +88,11 @@
 .posts .post .post-data .post-img {
   width: 100%;
   border-radius: 4px;
+  object-fit: cover;
+  max-height: 500px;
+}
+.posts .post .post-text {
+  line-height: 24px;
 }
 .posts .post .post-buttons {
   margin-top: 12px;
@@ -116,7 +121,8 @@
 .posts .post .post-buttons button:hover {
   color: #9e9e9e;
 }
-.posts .post .post-buttons button span.fal, .posts .post .post-buttons button span.fas {
+.posts .post .post-buttons button span.fal,
+.posts .post .post-buttons button span.fas {
   margin-right: 6px;
 }
 .posts .post .extend-like-msg {
@@ -187,7 +193,7 @@
 #post-popup.popup-wrapper .post-box .heading .close-icon {
   cursor: pointer;
   font-size: 1.1rem;
-  background: #2b273f;
+  background: #252236;
   border: 1px solid #9e9e9e;
   border-radius: 4px;
   padding: 0.3rem 0.5rem;
@@ -252,7 +258,7 @@
   background: #7b5cf0;
 }
 #post-popup.popup-wrapper .post-box .action-buttons button.cancel-btn {
-  background: #2b273f;
+  background: #252236;
 }
 #post-popup.popup-wrapper .post-box .action-buttons button.cancel-btn:hover {
   background: #7b5cf0;
@@ -267,7 +273,7 @@
   }
 }
 .create-post-box.small-only {
-  background-color: #2b273f;
+  background-color: #252236;
   padding: 12px 20px;
   margin: 0 6%;
   border-radius: 8px;
@@ -298,6 +304,28 @@
 }
 .create-post-box.small-only span.fal {
   font-size: 20px;
+}
+
+.post-likes-list {
+  overflow-y: auto;
+}
+.post-likes-list li {
+  list-style: none;
+  text-decoration: none;
+}
+.post-likes-list li a {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.post-likes-list li a img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-page {
@@ -421,7 +449,7 @@
   gap: 1.5rem;
 }
 .profile-page .user-posts-section .posts-grid .post-card {
-  background: #2b273f;
+  background: #252236;
   border-radius: 8px;
   padding: 0.75rem;
   overflow: hidden;
@@ -591,115 +619,6 @@
   width: 28px;
 }
 
-/* .posts {
-  width: 100%;
-  max-width: 600px;
-  background-color: $bg-dark;
-  border-radius: 8px;
-  margin: auto;
-  padding: 12px 16px;
-  box-sizing: border-box;
-
-  .heading {
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .post {
-    margin-top: 16px;
-    border-top: 1px solid $text-muted;
-    padding-top: 12px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid grey;
-
-    &:first-of-type{
-      margin-top: 0;
-      padding-top: 2px;
-    }
-
-    &:last-of-type{
-      border-bottom: none;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-
-      .username {
-        font-size: 14px;
-        color: $text-muted;
-      }
-
-      img.user-profile {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        margin-right: 12px;
-      }
-    }
-
-    .post-data .post-img {
-      width: 100%;
-      border-radius: 4px;
-    }
-
-    .post-buttons {
-      margin-top: 12px;
-      padding: 8px 0;
-      display: flex;
-
-      .btns-right {
-        margin-left: auto;
-
-        button {
-          margin-left: 2px;
-
-          &.save-btn{
-            margin-right: 0;
-          }
-        }
-      }
-
-      button {
-        background-color: transparent;
-        color: white;
-        border: none;
-        outline: none;
-        font-size: 16px;
-        cursor: pointer;
-        margin-right: 16px;
-        padding: 0;
-
-        &:hover { color: $text-muted; }
-
-        span.fal, span.fas {
-          margin-right: 6px;
-        }
-      }
-    }
-
-    .extend-like-msg{
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      color: grey;
-
-      img{
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        margin-right: 6px;
-      }
-
-      span{
-        color: rgb(189, 189, 189);
-        font-weight: 500;
-        cursor: pointer;
-      }
-    }
-  }
-} */
 .login-banner {
   position: fixed;
   top: 0;
@@ -793,6 +712,15 @@
 }
 .login-box p {
   font-size: 18px;
+}
+
+@media (max-width: 600px) {
+  .post-likes-box {
+    width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+  }
 }
 
 /*# sourceMappingURL=profile.css.map */

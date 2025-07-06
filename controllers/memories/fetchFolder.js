@@ -1,5 +1,6 @@
 var Folders = require('../../models/Folders');
 var Files = require('../../models/Files');
+var PageViews = require('../../models/PageViews');
 
 async function getBreadcrumb(folderId) {
   var breadcrumbs = []
@@ -31,6 +32,12 @@ var fetchFolder = async (req, res) => {
       tags: 'featured'
     }).populate('likes', '_id name username profile')
     var breadcrumb = await getBreadcrumb(folderId);
+    const date = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' });
+    await PageViews.findOneAndUpdate(
+      { route: `/memories/folder/${folderId}`, date },
+      { $inc: { visits: 1 } },
+      { upsert: true }
+    );
     res.json({ success: true, currentFolder: folder, subfolders, files, breadcrumb, featuredImages, userId: req.user?._id || null });
   } catch (error) {
     console.error(error);

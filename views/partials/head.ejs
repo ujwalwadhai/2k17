@@ -6,7 +6,8 @@
 
 <!-- Open Graph tags for social sharing -->
 <meta property="og:title" content="2k17 Platform">
-<meta property="og:description" content="A small, nostalgic corner for the 2k17 batch to reconnect, share, and remember.">
+<meta property="og:description"
+  content="A small, nostalgic corner for the 2k17 batch to reconnect, share, and remember.">
 <meta property="og:image" content="https://twok17.onrender.com/images/web_logo.png">
 <meta property="og:url" content="/">
 <meta property="og:type" content="website">
@@ -25,17 +26,12 @@
 <link rel="stylesheet" href="/styles/css/home.css">
 <script src="/js/all.js"></script>
 
-<% if(PLATFORM_TYPE === 'production') { %>
-<!-- Google tag  -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1ES2BYH06Y"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-1ES2BYH06Y');
-</script>
-
+<% if(PLATFORM_TYPE==='production' ) { %>
+  <script>
+    window.__USER_ID__ = "<%= user ? user._id : null %>";
+    window.__USER_ROLE__ = "<%= user ? user.role : null %>";
+  </script>
+  <script src="/js/analytics.js"></script>
 <% } else { %>
-  <!-- Google analytics disabled for PLATFORM_TYPE=development to avoid adding testing data -->
+  <!-- Analytics disabled for PLATFORM_TYPE=development to avoid adding testing stats -->
 <% } %>

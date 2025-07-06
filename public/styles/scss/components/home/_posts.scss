@@ -44,29 +44,41 @@
             1px -1px 0 white,
             -1px 1px 0 white,
             1px 1px 0 white;
-        
 
-        &.letter-blue { color: blue; }
-        &.letter-green {
-          color: green;
-          -webkit-text-stroke: 0.005px white;
+
+          &.letter-blue {
+            color: blue;
+          }
+
+          &.letter-green {
+            color: green;
+            -webkit-text-stroke: 0.005px white;
+          }
+
+          &.letter-red {
+            color: red;
+            -webkit-text-stroke: 0.005px white;
+          }
+
+          &.letter-yellow {
+            color: yellow;
+            -webkit-text-stroke: 0.005px white;
+          }
         }
-        &.letter-red {
-          color: red;
-          -webkit-text-stroke: 0.005px white;
-        }
-        &.letter-yellow {
-          color: yellow;
-          -webkit-text-stroke: 0.005px white;
-        }
-      }
       }
     }
   }
 
   @keyframes jump {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-16px); }
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-16px);
+    }
   }
 
   .heading {
@@ -100,6 +112,12 @@
     .post-data .post-img {
       width: 100%;
       border-radius: 4px;
+      object-fit: cover;
+      max-height: 500px;
+    }
+
+    .post-text {
+      line-height: 24px;
     }
 
     .post-buttons {
@@ -109,13 +127,14 @@
 
       .btns-right {
         margin-left: auto;
-        .fa-trash{
+
+        .fa-trash {
           cursor: pointer;
         }
 
         button {
           margin-left: 10px;
-          
+
         }
       }
 
@@ -129,28 +148,31 @@
         margin-right: 16px;
         padding: 0;
 
-        &:hover { color: $text-muted; }
+        &:hover {
+          color: $text-muted;
+        }
 
-        span.fal, span.fas {
+        span.fal,
+        span.fas {
           margin-right: 6px;
         }
       }
     }
 
-    .extend-like-msg{
+    .extend-like-msg {
       display: flex;
       align-items: center;
       font-size: 14px;
       color: grey;
 
-      img{
+      img {
         width: 16px;
         height: 16px;
         border-radius: 50%;
         margin-right: 6px;
       }
 
-      span{
+      span {
         color: rgb(189, 189, 189);
         font-weight: 500;
         cursor: pointer;
@@ -295,7 +317,7 @@
       }
     }
 
-    
+
   }
 }
 
@@ -344,5 +366,30 @@
 
   span.fal {
     font-size: 20px;
+  }
+}
+
+
+.post-likes-list {
+  overflow-y: auto;
+  li {
+    list-style: none;
+    text-decoration: none;
+
+    a {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      img {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
 }

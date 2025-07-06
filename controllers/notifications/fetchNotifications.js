@@ -5,7 +5,7 @@ const fetchNotifications = async (req, res) => {
     var notifications = await Notifications.find({
       $or: [
         { user: req.user._id },
-        { user: { $exists: false } }
+        { user: null }
       ]
     }).sort({ createdAt: -1 }).populate('fromUser', 'username profile');
     return res.json({ success: true, notifications });

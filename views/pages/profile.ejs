@@ -131,12 +131,8 @@
                     </button>
                     </div>
             </div>
-            <% if(post.likes.length > 1) { %>
-              <% if(user){ %>
-                <p class="extend-like-msg"><img src="<%-(post.likes[0]._id.toString() == user._id.toString() ? post.likes[1].profile : post.likes[0].profile) || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/<%-post.likes[0]._id.toString() == user._id.toString() ? post.likes[1].username : post.likes[0].username%>"'><%-post.likes[0]._id.toString() == user._id.toString() ? post.likes[1].username : post.likes[0].username%></span>&nbsp; and <%-post.likes.length - 1 %> other<%-post.likes.length == 2 ? '' : 's'%></p>
-              <% } else { %>
-                <p class="extend-like-msg"><img src="<%-(post.likes[0].profile) || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/<%-post.likes[0].username%>"'><%-post.likes[0].username%></span>&nbsp; and <%-post.likes.length - 1%> other<%-post.likes.length == 2 ? '' : 's'%></p>
-              <% } %>
+            <% if(post.likes.length > 2) { %>
+                <p class="extend-like-msg"><img src="<%-post.likes[1].profile || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/<%= post.likes[1].username%>"'><%-post.likes[1].username%></span>&nbsp; and <span style="margin: 0 3px;" onclick="openPostLikes('<%= post._id %>')" ><%-post.likes.length - 1 %> others</span></p>
             <% } %>
             </div>
             <% }) %>
@@ -178,14 +174,14 @@
           <div class="top-box">
             <div class="dob-info">
               <span class="fal fa-cake"></span><br>
-              <span><%- account.settings?.privacy?.dob ? account.dob : "Not specified" %></span>
+              <span><%- (account.settings?.privacy?.dob || user._id.toString() == account._id.toString()) ? formatDOB(account.dob) : "Not specified" %></span>
             </div>
             <div class="year-info">
               <span class="fal fa-calendar-days"></span><br>
               <span><%= account.year %> in JNV</span>
             </div>
           </div>
-          <div class="low-box">
+          <!--<div class="low-box">
             <p class="heading">Social Links</p> 
               <% const domainIconMap = { facebook: 'fab fa-facebook', instagram: 'fab fa-instagram', linkedin: 'fab fa-linkedin', twitter: 'fab fa-x-twitter', 'x.com': 'fab fa-x-twitter', 'x-twitter': 'fab fa-x-twitter',threads: 'fab fa-threads',snapchat: 'fab fa-snapchat',youtube: 'fab fa-youtube',pinterest: 'fab fa-pinterest',whatsapp: 'fab fa-whatsapp',telegram: 'fab fa-telegram',discord: 'fab fa-discord',reddit: 'fab fa-reddit',github: 'fab fa-github',spotify: 'fab fa-spotify',default: 'fal fa-link'}%>
               <% if (account.socialLinks) {
@@ -202,7 +198,7 @@
               <% if(Object.values(account.socialLinks).every(value => value === "")) { %>
                 <p class="no-links"><span class="fal fa-signal-slash"></span>No links in record.</p>
               <% } %>
-          </div>
+          </div>-->
         </div>
       </div>
       <% } else { %>
@@ -245,6 +241,19 @@
     <button class="login-btn" onclick="window.location.href='/login?url=/<%= account.username %>'">Log in</button>
   </div>
 </div>
+
+<div id="post-likes-popup">
+    <div class="overlay" onclick="closePostLikes()"></div>
+    <div class="post-likes-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-heart"></span> Likes on post</p>
+        <p class="close-icon fal fa-xmark" onclick="closePostLikes()"></p>
+      </div>
+      <div class="post-likes-list" id="post-likes-list">
+        
+      </div>
+    </div>
+  </div>
 
 <script src="/js/home.js"></script>
 <script src="/js/profile.js"></script>

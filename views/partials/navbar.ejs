@@ -4,7 +4,7 @@
       <ul class="nav-items">
         <li><a href="/memories">Memories</a></li>
         <li><a href="/members">Members</a></li>
-        <li><a href="/donate">Donate</a></li>
+        <li><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span></a></li>
         <% if (!user) { %>
           <li><a href="/create-account">Register</a></li>
           <li><a href="/login" class="login-btn" id="navbar-login-btn-large">Login</a></li>
@@ -55,7 +55,7 @@
             </ul>
           </li>
       <% } else { %>
-        <button class="login-btn" id="navbar-login-btn-small" onclick="window.location.href = '/create-account'">Register</button>
+        <button class="login-btn" id="navbar-login-btn-small" onclick="window.location.href = '/login'">Login</button>
       <% } %>
     </nav>
 

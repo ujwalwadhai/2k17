@@ -32,3 +32,28 @@ function showLoginBanner() {
   popup.querySelector(".overlay").classList.add("show");
 }
 
+
+async function openPostLikes(postId){
+  var PostLikesPopup = document.getElementById('post-likes-popup');
+  var PostLikesOverlay = PostLikesPopup.querySelector('.overlay');
+  var res = await fetch(`/post/${postId}/likes`)
+  var data = await res.json()
+  if(data.success){
+    data.likes.forEach(like=>{
+      var li = document.createElement('li');
+      li.innerHTML = `<a href="/${like.username}"><img src="${like.profile || '/images/user.png'}" alt="${like.username}">${like.username}</a>`;
+      PostLikesPopup.querySelector('.post-likes-list').appendChild(li);
+    })
+    PostLikesPopup.classList.add('show');
+    PostLikesOverlay.classList.add('show');
+  } else {
+    alert("Can't fetch likes at the moment. Please try again later.")
+  }
+}
+
+function closePostLikes(){
+  var PostLikesPopup = document.getElementById('post-likes-popup');
+  var PostLikesOverlay = PostLikesPopup.querySelector('.overlay');
+  PostLikesPopup.classList.remove('show');
+  PostLikesOverlay.classList.remove('show');
+}

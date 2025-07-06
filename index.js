@@ -14,7 +14,7 @@ const session = require('express-session');
 const passport = require('passport');
 require('./config/passport')(passport);
 
-const app = express(); 
+const app = express();
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -48,11 +48,23 @@ dotenv.config();
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
 
-require('./models/Users')
+const Users = require('./models/Users')
+require('./models/DailyUsers')
 require('./models/Posts')
 require('./models/Notifications')
 require('./models/Settings')
+require('./models/ActiveUsers')
+require('./models/PageViews')
 
+app.get(['/memories', '/settings', '/profile', '/home'], async (req, res, next) => {
+  if (req.user) {
+    var user = await Users.findById(req.user._id)
+    if (user && !user.registered) {
+      return res.redirect('/logout')
+    }
+  }
+  next()
+})
 
 app.use(express.json({ type: 'application/json' }))
 app.use(express.urlencoded({ extended: true }));
@@ -69,7 +81,7 @@ app.use((req, res, next) => {
         if (key === 'newsLetterContent') {
           req.body[key] = sanitizeHtml(req.body[key], {
             allowedTags: ['p', 'a', 'b', 'strong', 'div', 'section', 'table', 'tr', 'th', 'tbody', 'thead', 'span', 'em', 'i'],
-            allowedAttributes: false, 
+            allowedAttributes: false,
             disallowedTagsMode: 'discard',
             nonTextTags: ['script'],
             allowedSchemes: ['http', 'https', 'mailto', 'tel'],
@@ -86,8 +98,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use('/admin', isLoggedIn, hasRole(['admin']))
-app.use('/',require('./middlewares/locals'), getRoutes);
+app.use('/admin', isLoggedIn, hasRole(['admin']))
+app.get('/api/analytics', isLoggedIn, hasRole(['admin']))
+app.use('/', require('./middlewares/locals'), getRoutes);
 app.use('/', postRoutes);
 
 app.use((req, res) => {
@@ -120,6 +133,8 @@ app.use(generalLimiter);
 require('./cron/logCleanUp')
 require('./cron/birthday')
 require('./cron/newsletter')
+require('./cron/weeklyReport')
+require('./cron/popularFilePost')
 
 require('./config/mailer')
 

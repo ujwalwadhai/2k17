@@ -14,15 +14,12 @@
 
     <div class="reports-logs">
         <h2>Registered Users List</h2>
-        <div class="logs-table-wrapper">
+        <div class="logs-table-wrapper" style="min-width: 750px;">
             <table class="logs-table" id="users-table">
                 <thead>
                     <tr>
-                        <th>User</th>
+                        <th>User (<%= users.length %> total)</th>
                         <th>Username</th>
-                        <th>Email</th>
-                        <th>Is verified</th>
-                        <th>Last login</th>
                         <th>Last Active</th>
                         <th>Action</th>
                     </tr>
@@ -32,29 +29,16 @@
                     <% users.forEach(user=> { %>
                         <tr id="user-<%= user._id %>">
                             <td>
-                                <%= user.name %>
+                                <%= user.name.split(' ')[0] + ' ' + user.name.split(' ')[1][0]+'.' %>
                             </td>
                             <td>
                                 <%= user.username %>
                             </td>
-                            <td data-email>
-                                <%= user.email %>
-                            </td>
                             <td>
-                                <%= user.verified %>
-                            </td>
-                            <td>
-                                <%- user.lastLogin ? new Date(user.lastLogin).toLocaleString("en-IN", {timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'}) : 'Yet to login' %>
-                            </td>
-                            <td>
-                                <%- user.lastActive ? new Date(user.lastActive).toLocaleString("en-IN", {timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'}) : 'No data available' %>
+                                <%- user.lastActive ? new Date(user.lastActive).toLocaleString("en-IN", {timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'}) : '<span class="grey-1">No data available</span>' %>
                             </td>
                             <td data-action>
-                                <% if(user.registered){ %>
-                                <button class="btn btn-primary" onclick="disableLoginUser('<%= user._id %>')">Disable Login</button>
-                                <% } else { %>
-                               <button class="btn btn-primary" onclick="disableLoginUser('<%= user._id %>')">Enable Login</button>
-                                <% } %>
+                                <button class="btn btn-primary" id="user-btn-action" onclick="openUserInfo('<%= user._id %>')">User Info</button>
                             </td>
                         </tr>
                     <% })} else { %>
@@ -66,9 +50,70 @@
             </table>
         </div>
     </div>
+            <br>
 
 
     <div id="toast-container" style="position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;"></div>
+
+    <div id="user-info-popup">
+        <div class="overlay" onclick="closeUserInfo()"></div>
+        <div class="user-info-box">
+        <div class="heading">
+            <p class="title"><span class="fal fa-user-circle"></span> User Information</p>
+            <p class="close-icon fal fa-xmark" onclick="closeUserInfo()"></p>
+        </div>
+        <div class="user-info-list" id="user-info-list">
+            <div class="user-info-profile">
+                <img src="/images/user.png" id="user-profile" alt="">
+                <p>Profile Picture</p>
+            </div>
+            <div class="table-scroll-wrapper">
+                <table class="user-info-table">
+                    <tr>
+                    <td><b>_id</b></td>
+                    <td><span id="user-id"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>Name</b></td>
+                    <td><span id="user-name"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>Username</b></td>
+                    <td><span id="user-username"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>Email</b></td>
+                    <td><span id="user-email"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>Phone</b></td>
+                    <td><span id="user-phone"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>Code</b></td>
+                    <td><span id="user-code"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>DOB</b></td>
+                    <td><span id="user-dob"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>Joined At</b></td>
+                    <td><span id="user-joinedAt"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>Last Login</b></td>
+                    <td><span id="user-lastLogin"></span></td>
+                    </tr>
+                    <tr>
+                    <td><b>Action</b></td>
+                    <td id="user-action-btn"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
 
     <script src="/js/admin-users.js"></script>
 </body>

@@ -347,117 +347,6 @@
 }
 
 
-/* .posts {
-  width: 100%;
-  max-width: 600px;
-  background-color: $bg-dark;
-  border-radius: 8px;
-  margin: auto;
-  padding: 12px 16px;
-  box-sizing: border-box;
-
-  .heading {
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .post {
-    margin-top: 16px;
-    border-top: 1px solid $text-muted;
-    padding-top: 12px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid grey;
-
-    &:first-of-type{
-      margin-top: 0;
-      padding-top: 2px;
-    }
-
-    &:last-of-type{
-      border-bottom: none;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-
-      .username {
-        font-size: 14px;
-        color: $text-muted;
-      }
-
-      img.user-profile {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        margin-right: 12px;
-      }
-    }
-
-    .post-data .post-img {
-      width: 100%;
-      border-radius: 4px;
-    }
-
-    .post-buttons {
-      margin-top: 12px;
-      padding: 8px 0;
-      display: flex;
-
-      .btns-right {
-        margin-left: auto;
-
-        button {
-          margin-left: 2px;
-
-          &.save-btn{
-            margin-right: 0;
-          }
-        }
-      }
-
-      button {
-        background-color: transparent;
-        color: white;
-        border: none;
-        outline: none;
-        font-size: 16px;
-        cursor: pointer;
-        margin-right: 16px;
-        padding: 0;
-
-        &:hover { color: $text-muted; }
-
-        span.fal, span.fas {
-          margin-right: 6px;
-        }
-      }
-    }
-
-    .extend-like-msg{
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      color: grey;
-
-      img{
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        margin-right: 6px;
-      }
-
-      span{
-        color: rgb(189, 189, 189);
-        font-weight: 500;
-        cursor: pointer;
-      }
-    }
-  }
-} */
-
-
 .login-banner{
   @include fullscreen-popup;
 
@@ -537,5 +426,15 @@
   margin-top: 48px;
   p{
     font-size: 18px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .post-likes-box {
+    width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
   }
 }

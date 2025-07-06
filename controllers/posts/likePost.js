@@ -1,5 +1,6 @@
 var Posts = require('../../models/Posts');
 var Notifications = require('../../models/Notifications');
+var sendPushNotification = require('../../utils/push');
 
 const likePost = async (req, res) => {
   var userId = req.user._id;
@@ -18,7 +19,7 @@ const likePost = async (req, res) => {
     }
 
     await post.save();
-    if(post.author.toString() !== userId.toString() && !alreadyLiked){
+    if (post.author.toString() !== userId.toString() && !alreadyLiked) {
       var notification = new Notifications({
         user: post.author,
         type: 'like',
@@ -27,6 +28,14 @@ const likePost = async (req, res) => {
         url: `/post/${post._id}`
       })
       await notification.save();
+      await sendPushNotification({
+        userId: post.author._id,
+        type: 'like',
+        data: {
+          user: req.user,
+          postId: post._id
+        }
+      });
     }
 
     res.json({

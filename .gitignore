@@ -1,29 +1,7 @@
-# Node modules
 node_modules/
-
-views/pages/upload.ejs
-
-# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
 desktop.ini
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Environment variables
 .env
-
-# Misc
-.DS_Store
-Thumbs.db
 .vscode/
-.idea/
-
-# MongoDB local data dump
-dump/

@@ -59,7 +59,7 @@ self.addEventListener('push', event => {
     const options = {
         body: data.body,
         icon: data.icon || '/images/web_logo.png',
-        badge: data.badge || '/images/web_logo.png',
+        badge: '/images/icons/logo_72x72.png',
         tag: data.tag || 'general-notification',
         data: {
             url: data.url || '/'

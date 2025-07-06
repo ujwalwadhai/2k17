@@ -9,6 +9,7 @@ var reportsController = require('../controllers/reports');
 var emailController = require('../controllers/email');
 var adminController = require('../controllers/admin');
 var memoriesController = require('../controllers/memories');
+var analyticsController = require('../controllers/analytics');
 var { upload } = require('../config/cloudinary');
 var { isLoggedIn } = require('../middlewares/auth');
 
@@ -91,6 +92,17 @@ router.post('/newsletter/subscribe', emailController.newsletterSubscribe)
 router.post('/admin/logs', adminController.fetchLogs)
 
 router.post('/admin/newsletter/new', adminController.createNewsLetter)
+
+router.post('/admin/send-notification', adminController.pushNotification)
+
+
+router.post('/api/analytics/ping', express.text({ type: '*/*' }), analyticsController.ping)
+
+router.post('/api/analytics/deleteAdmin', express.text({ type: '*/*' }), analyticsController.deleteAdminLog)
+
+router.post('/api/analytics/addFileView', express.text({ type: '*/*' }), analyticsController.addFileView)
+
+
 
 
 router.post('/memories/folders/:folderId', isLoggedIn, memoriesController.fetchFolder)

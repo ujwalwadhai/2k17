@@ -59,7 +59,7 @@
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;
-  background-color: #2b273f;
+  background-color: #252236;
   padding: 8px;
   font-size: 14px;
   width: 32px;
@@ -246,7 +246,7 @@
   margin-bottom: 1.4rem;
 }
 .memories-container .tabs .tab {
-  background: #2b273f;
+  background: #252236;
   border: none;
   color: #ffffff;
   padding: 0.6rem 1.2rem;
@@ -278,7 +278,7 @@
 }
 .memories-container .tab-content .gallery div {
   cursor: pointer;
-  background-color: #2b273f;
+  background-color: #252236;
   padding: 6px 8px;
   border-radius: 6px;
 }
@@ -322,7 +322,7 @@
   height: 200px;
   border-radius: 4px;
   object-fit: cover;
-  background: #2b273f;
+  background: #252236;
   transition: transform 0.2s ease;
   -moz-drag-over: none;
   -webkit-user-drag: none;
@@ -332,7 +332,7 @@
   width: 100%;
   height: 200px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #2b273f 25%, #332f48 50%, #2b273f 75%);
+  background: linear-gradient(90deg, #252236 25%, #332f48 50%, #252236 75%);
   background-size: 200% 100%;
   animation: shimmer 1.2s infinite linear;
 }
@@ -384,7 +384,7 @@
   max-width: 300px;
   height: 44px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #2b273f 25%, #332f48 50%, #2b273f 75%);
+  background: linear-gradient(90deg, #252236 25%, #332f48 50%, #252236 75%);
   background-size: 200% 100%;
   animation: shimmer 1.2s infinite linear;
 }
@@ -518,7 +518,7 @@
   font-size: 18px;
 }
 .view-file-popup .view-file-box .heading .right-btns p.close-icon::before {
-  background-color: #2b273f;
+  background-color: #252236;
   border-radius: 4px;
   border: 1px solid #ffffff;
   padding: 6px 8px;
@@ -578,7 +578,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #2b273f;
+  background-color: #252236;
   color: white;
   padding: 12px 16px;
   font-size: 14px;

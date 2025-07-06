@@ -19,7 +19,7 @@ var greeting = getGreeting();
 var greetingElement = document.getElementById("greeting-msg")
 if (greetingElement) greetingElement.innerHTML = greeting;
 
-function partialLoader(id){
+function partialLoader(id) {
   return `<div id="${id}">
   <div class="${id}-text" id="${id}-text">
       <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
@@ -168,7 +168,7 @@ async function submitComment(postId, userId, isHomePage = true) {
     }
     document.querySelector('#newCommentBtn').disabled = false;
   } else {
-    Toast('Failed to add comment! Please try again later.','error')
+    Toast('Failed to add comment! Please try again later.', 'error')
     document.querySelector('#newCommentBtn').disabled = false;
   }
 }
@@ -226,9 +226,9 @@ function loadNotifications() {
                     ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
                     </div>
-                    <div class="action-buttons">
+
                     <div class="time">${n.timeAgo}</div>
-          </div>
+          
         </div>`
               } else {
                 list.innerHTML += `<div class="notification unread" onclick="window.location.href = '${n.url}'">
@@ -237,11 +237,10 @@ function loadNotifications() {
                           <div class="text">${['like', 'comment'].includes(n.type)
                     ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
-                          <div class="time">${n.timeAgo}</div>
                         </div>
-                        <div class="action-buttons">
+                        
                     <div class="time">${n.timeAgo}</div>
-          </div>
+          
                       </div>`
               }
             })
@@ -265,7 +264,7 @@ function closeNotifications() {
 }
 
 function loadPosts(userId) {
-  userid= userId;
+  userid = userId;
   var posts = document.getElementById('posts');
   posts.innerHTML = '<p class="heading">Recent posts</p>';
   posts.innerHTML += partialLoader('posts-loader')
@@ -299,9 +298,9 @@ function loadPosts(userId) {
                 var mediaItem = ``
               }
               if (post.likes.length > 2) {
-                var likedBy = `<p class="extend-like-msg"><img src="${post.likes[1].profile || '/images/user.png'}" alt="" class="user-profile"> Liked by <span style='margin: 0 3px' onclick='window.location.href="/${post.likes[1].username}"'> ${ post.likes[1].username } </span> and ${post.likes.length - 1} others</p>`
+                var likedBy = `<p class="extend-like-msg"><img src="${post.likes[1].profile || '/images/user.png'}" alt="" class="user-profile"> Liked by <span style='margin: 0 3px' onclick='window.location.href="/${post.likes[1].username}"'> ${post.likes[1].username} </span> and <span style="margin: 0 3px" onclick="openPostLikes('${post._id}')">${post.likes.length - 1} others</span></p>`
               }
-              if(post.author._id.toString() === userId.toString()){
+              if (post.author._id.toString() === userId.toString()) {
                 var trashIcon = `<span class="fal fa-trash red" aria-label="Delete this post" onclick="deletePost('${post._id}')"></span>`
               }
               posts.innerHTML += `<div class="post" id="post-${post._id}">
@@ -362,7 +361,7 @@ function createPost(userId) {
     formData.append('text', text);
     formData.append('media', media[0]);
     closePostPopup()
-    Toast("Uploading the file. Please wait...",'info')
+    Toast("Uploading the file. Please wait...", 'info')
     fetch('/new/post/file?folder=posts', {
       method: 'POST',
       body: formData
@@ -421,95 +420,103 @@ function deletePost(postId) {
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        Toast("Post deleted!","success")
+        Toast("Post deleted!", "success")
         loadPosts(userid)
       } else {
-        console.log(data.message)
         Toast("Can't delete post. Try again later.", 'error')
       }
     })
 }
 
-function checkUsername(el){
-    el.value = el.value.toLowerCase().replace(/[^a-zA-Z0-9_]/g, '');
-    var status_message = document.getElementById("choose-username-status");
-    if(el.value){
-        status_message.innerHTML = "Checking username availability...";
-        setTimeout(()=>{
-            fetch('/check/username', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: el.value
-                })  
-            }).then((res)=>
-                res.json()
-            ).then((data)=>{
-                if(data.success){
-                    status_message.innerHTML = "<span class='green'>Username available!</span>";
-                } else {
-                    status_message.innerHTML = "<span class='red'>Username already taken!</span>"; 
-                }
-            })
-        }, 500)
-    } else {
-        status_message.innerHTML = "<span class='grey-1'>Enter username to check</span>";
-    }
-    
-    
+function checkUsername(el) {
+  el.value = el.value.toLowerCase().replace(/[^a-zA-Z0-9_]/g, '');
+  var status_message = document.getElementById("choose-username-status");
+  if (el.value) {
+    status_message.innerHTML = "Checking username availability...";
+    setTimeout(() => {
+      fetch('/check/username', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: el.value
+        })
+      }).then((res) =>
+        res.json()
+      ).then((data) => {
+        if (data.success) {
+          status_message.innerHTML = "<span class='green'>Username available!</span>";
+        } else {
+          status_message.innerHTML = "<span class='red'>Username already taken!</span>";
+        }
+      })
+    }, 500)
+  } else {
+    status_message.innerHTML = "<span class='grey-1'>Enter username to check</span>";
+  }
+
+
 }
 
 var usernameform = document.getElementById("choose-username-form");
 
-if(usernameform){
-document.getElementById("choose-username-form").addEventListener("submit", function (e) {
-  e.preventDefault();
-  var statusBox = document.getElementById("choose-username-status");
-  statusBox.style.color = "green";
-  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'><span> &nbsp;Updating...";
-  var data = {
-    username: this.elements['username'].value
-  };
+if (usernameform) {
+  document.getElementById("choose-username-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var statusBox = document.getElementById("choose-username-status");
+    statusBox.style.color = "green";
+    statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'><span> &nbsp;Updating...";
+    var data = {
+      username: this.elements['username'].value
+    };
 
-  fetch("/profile/update", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        statusBox.innerHTML = "<i class='fal fa-check-circle'></i> &nbsp;Username added!";
-        setTimeout(closeChooseUsername, 2000);
-      } else {
-        statusBox.style.color = "red";
-        statusBox.innerHTML = `<i class='fal fa-times-circle'></i> &nbsp;${data.message || 'Failed to add username'}`;
-      }
+    fetch("/profile/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
     })
-    .catch(err => {
-      console.log(err);
-      statusBox.style.color = "red";
-      statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
-    });
-});
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          statusBox.innerHTML = "<i class='fal fa-check-circle'></i> &nbsp;Username added!";
+          setTimeout(closeChooseUsername, 2000);
+        } else {
+          statusBox.style.color = "red";
+          statusBox.innerHTML = `<i class='fal fa-times-circle'></i> &nbsp;${data.message || 'Failed to add username'}`;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        statusBox.style.color = "red";
+        statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
+      });
+  });
 }
 
-function openChooseUsername(){
-  var chooseUsernamePopup = document.getElementById('choose-username-popup');
-  var chooseUsernameOverlay = chooseUsernamePopup.querySelector('.overlay');
-  chooseUsernamePopup.classList.add('show');
-  chooseUsernameOverlay.classList.add('show');
+async function openPostLikes(postId) {
+  var PostLikesPopup = document.getElementById('post-likes-popup');
+  var PostLikesOverlay = PostLikesPopup.querySelector('.overlay');
+  var res = await fetch(`/post/${postId}/likes`)
+  var data = await res.json()
+  if (data.success) {
+    data.likes.forEach(like => {
+      var li = document.createElement('li');
+      li.innerHTML = `<a href="/${like.username}"><img src="${like.profile || '/images/user.png'}" alt="${like.username}">${like.username}</a>`;
+      PostLikesPopup.querySelector('.post-likes-list').appendChild(li);
+    })
+    PostLikesPopup.classList.add('show');
+    PostLikesOverlay.classList.add('show');
+  } else {
+    alert("Can't fetch likes at the moment. Please try again later.")
+  }
 }
 
-function closeChooseUsername(){
-  var chooseUsernamePopup = document.getElementById('choose-username-popup');
-  var chooseUsernameOverlay = chooseUsernamePopup.querySelector('.overlay');
-  chooseUsernamePopup.classList.remove('show');
-  chooseUsernameOverlay.classList.remove('show');
+function closePostLikes() {
+  var PostLikesPopup = document.getElementById('post-likes-popup');
+  var PostLikesOverlay = PostLikesPopup.querySelector('.overlay');
+  PostLikesPopup.classList.remove('show');
+  PostLikesOverlay.classList.remove('show');
 }
-
-

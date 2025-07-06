@@ -13,10 +13,13 @@
         <br><br><br><br>
     
     <div class="admin-btns">
-        <button onclick="openNewsLetter()" class="newsletter-btn"><span class="fal fa-newspaper"></span> Create new newsletter</button>
-        <button onclick="window.location.href='/admin/users'" class="newsletter-btn"><span class="fal fa-users"></span> Manage users</button>
+        <button onclick="openNewsLetter()" class="tool-btn"><span class="fal fa-newspaper"></span> Create new newsletter</button>
+        <button onclick="openSendNotification()" class="tool-btn"><span class="fal fa-bell"></span> Send push notification</button>
+        <button onclick="window.location.href='/admin/users'" class="tool-btn"><span class="fal fa-users"></span> Manage users</button>
+        <button onclick="window.location.href='/admin/analytics'" class="tool-btn"><span class="fal fa-chart-mixed"></span> Analytics</button>
     </div>
 
+        <% if(reports.length > 0){ %>
     <div class="reports-logs">
         <h2>Submitted Reports</h2>
         <input type="text" id="reportSearch" placeholder="Search reports..." class="search-bar" />
@@ -27,12 +30,11 @@
                         <th>User</th>
                         <th>Subject</th>
                         <th>Details</th>
-                        <th>Created At</th>
+                        <th>Time</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% if(reports.length > 0){ %>
                     <% reports.forEach(report=> { %>
                         <tr id="report-<%= report._id %>">
                             <td onclick="<%- `window.location.href='/${report.user?.username}'` %>"
@@ -46,21 +48,18 @@
                                 <%= report.details.length> 50 ? report.details.substring(0, 50) + '...' : report.details %>
                             </td>
                             <td>
-                                <%= new Date(report.createdAt).toLocaleString() %>
+                                <%= new Date(report.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %>
                             </td>
                             <td>
                                 <span onclick="openResolveReport('<%= report._id %>')" class="resolve-link">Resolve</span>
                             </td>
                         </tr>
-                    <% })} else { %>
-                        <tr>
-                            <td colspan="5" style="text-align: center; color:grey">No reports found.</td>
-                        </tr>
-                    <% } %>
+                    <% }) %>
                 </tbody>
             </table>
         </div>
     </div>
+       <% } %>
 
 
     <div class="activity-logs">
@@ -82,6 +81,7 @@
             <button id="loadMoreLogsBtn" class="load-more-btn">Load Previous Day</button>
         </div>
     </div>
+    <br><br>
 
     <div id="resolve-report-popup">
         <div class="overlay" onclick="closeResolveReport()"></div>
@@ -121,6 +121,27 @@
                 <input type="date" placeholder="Date to send this" name="scheduledAt" id="newsletter-scheduledAt" required /><br><br>
             <div id="newsletter-status"></div><br>
             <button type="submit">Save newsletter</button>
+            </form>
+        </div>
+        </div>
+    </div>
+
+    <div id="send-notification-popup">
+        <div class="overlay" onclick="closeSendNotification()"></div>
+        <div class="send-notification-box">
+        <div class="heading">
+            <p class="title"><span class="fal fa-bell"></span> Send Notification</p>
+            <p class="close-icon fal fa-xmark" onclick="closeSendNotification()"></p>
+        </div>
+        <div class="send-notification-list" id="send-notification-list">
+            <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Only users who opted for push notifications will recieve this notification.</span><br><br>
+            <form id="send-notification-form">
+            <input type="text" autocomplete="off" id="send-notification-title" name="title" required placeholder="Title" />
+            <textarea name="body" rows="5" required id="send-notification-body" placeholder="Notification body..."></textarea>
+            <input type="text" autocomplete="off" id="send-notification-url" name="url" placeholder="URL (optional)" />
+            <br>
+            <div id="send-notification-status"></div><br>
+            <button type="submit">Send notification</button>
             </form>
         </div>
         </div>

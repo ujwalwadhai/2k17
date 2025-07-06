@@ -180,20 +180,20 @@ body {
   }
 }
 
-#choose-username-popup{
+#post-likes-popup{
   @include popup.fullscreen-popup;
 
-  .choose-username-box {
+  .post-likes-box {
     @include popup.popup-box(500px);
 
-    .choose-username-list{
+    .post-likes-list{
       padding: 20px;
 
       input {
         @include popup.popup-inputs;
       }
 
-      #choose-username-status {
+      #post-likes-status {
         margin-top: 4px;
         font-weight: 500;
       }
@@ -261,7 +261,7 @@ body {
     margin-top: 0.75rem;
     padding: 16px 0;
     padding-bottom: 24px;
-    overflow-x: scroll;
+    overflow-x: auto;
 
     .image-card {
       background: $bg-dark;

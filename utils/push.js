@@ -36,6 +36,7 @@ const templates = {
     title: data.title,
     body: data.body,
     icon: '/images/web_logo.png',
+    badge: '/images/icons/logo_72x72.png',
     url: data.url || '/',
     tag: 'admin-msg'
   }),
@@ -49,31 +50,48 @@ const templates = {
 };
 
 async function sendPushNotification({ userId, type, data = {} }) {
-  if (!userId || !templates[type]) return;
-  const settings = await Settings.findOne({user: userId}).select('notifications.push');
-  if (!settings?.notifications?.push) return;
+  if (!templates[type]) return;
 
-  const user = await Users.findById(userId).select('pushSubscriptions');
-  if (!user?.pushSubscriptions?.length) return;
+  let users = [];
+
+  if (userId) {
+    const settings = await Settings.findOne({ user: userId }).select('notifications.push');
+    if (!settings?.notifications?.push) return;
+
+    const user = await Users.findById(userId).select('pushSubscriptions');
+    if (user?.pushSubscriptions?.length) {
+      users.push({ _id: userId, pushSubscriptions: user.pushSubscriptions });
+    }
+  } else {
+    const allSettings = await Settings.find({ 'notifications.push': true }).select('user');
+    const userIds = allSettings.map(s => s.user);
+
+    users = await Users.find({
+      _id: { $in: userIds }, name: "Ujwal Wadhai",
+      pushSubscriptions: { $exists: true, $not: { $size: 0 } }
+    }).select('pushSubscriptions');
+  }
 
   const notificationPayload = JSON.stringify(templates[type](data));
 
-  const validSubs = [];
+  for (const user of users) {
+    const validSubs = [];
 
-  for (const sub of user.pushSubscriptions) {
-    try {
-      await webpush.sendNotification(sub, notificationPayload);
-      validSubs.push(sub);
-    } catch (err) {
-      // Endpoint will be removed if it's not valid anymore
-      if (![404, 410].includes(err.statusCode)) validSubs.push(sub);
+    for (const sub of user.pushSubscriptions) {
+      try {
+        await webpush.sendNotification(sub, notificationPayload);
+        validSubs.push(sub);
+      } catch (err) {
+        if (![404, 410].includes(err.statusCode)) validSubs.push(sub);
+      }
     }
-  }
 
-  if (validSubs.length !== user.pushSubscriptions.length) {
-    user.pushSubscriptions = validSubs;
-    await user.save().catch(e => console.error('Failed to update subscriptions', e));
+    if (validSubs.length !== user.pushSubscriptions.length) {
+      user.pushSubscriptions = validSubs;
+      await user.save().catch(e => console.error('Failed to update subscriptions', e));
+    }
   }
 }
 
 module.exports = sendPushNotification;
+ 

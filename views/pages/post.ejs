@@ -78,6 +78,9 @@
                                                 class="fal fa-share"></span></button>
                                     </div>
                 </div>
+                <% if(post.likes.length > 2) { %>
+                <p class="extend-like-msg"><img src="<%-post.likes[1].profile || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/<%= post.likes[1].username%>"'><%-post.likes[1].username%></span>&nbsp; and <span style="margin: 0 3px;" onclick="openPostLikes('<%= post._id %>')" ><%-post.likes.length - 1 %> others</span></p>
+            <% } %>
             </div>
 
             <div class="comments-box" id="comments">
@@ -122,6 +125,19 @@
                     <% } %>
             </div>
         </div>
+
+        <div id="post-likes-popup">
+    <div class="overlay" onclick="closePostLikes()"></div>
+    <div class="post-likes-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-heart"></span> Likes on post</p>
+        <p class="close-icon fal fa-xmark" onclick="closePostLikes()"></p>
+      </div>
+      <div class="post-likes-list" id="post-likes-list">
+        
+      </div>
+    </div>
+  </div>
 
         <%- include('../partials/footer') %>
 

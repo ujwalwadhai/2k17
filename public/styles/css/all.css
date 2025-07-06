@@ -15,7 +15,7 @@
   min-width: 240px;
   max-width: 400px;
   overflow: hidden;
-  border: 2px solid #2b273f;
+  border: 2px solid #252236;
   border-bottom: none;
 }
 .toast .fa-xmark {
@@ -44,7 +44,7 @@
   font-size: 1rem;
   cursor: pointer;
   padding: 4px 8px;
-  border: 0.1px solid #2b273f;
+  border: 0.1px solid #252236;
   border-radius: 2px;
 }
 .toast .toast-progress {

@@ -32,7 +32,7 @@
   cursor: pointer;
 }
 .header .user-capsule-wrapper .user-dropdown li:hover {
-  background: #2b273f;
+  background: #252236;
 }
 .header .user-capsule-wrapper .user-dropdown li a {
   text-decoration: none !important;
@@ -259,7 +259,7 @@
 }
 .header #mobileSidebar #sidebarContent .close-icon {
   position: absolute;
-  background-color: #2b273f;
+  background-color: #252236;
   right: 12px;
   color: white;
   top: 12px;
@@ -300,7 +300,7 @@
   width: 36px;
 }
 .header #mobileSidebar #sidebarContent ul li:hover {
-  background-color: #2b273f;
+  background-color: #252236;
 }
 
 @media screen and (min-width: 641px) {

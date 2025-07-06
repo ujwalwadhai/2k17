@@ -61,7 +61,7 @@ exports.admin = async (req, res) => {
 
 exports.adminUserlist = async (req, res) => {
   try {
-    var users = await Users.find({})
+    var users = await Users.find({role: { $ne: 'admin' }})
     .sort({ registered: -1, name: 1 })
   
     res.render('pages/admin-users', { users });
@@ -71,11 +71,15 @@ exports.adminUserlist = async (req, res) => {
   }
 }
 
+exports.analyticsPage = async (req, res) => {
+  res.render('pages/analytics');
+}
+
 exports.home = async (req, res) => {
   try {
     res.locals.hasUnreadNotifications = false;
     var birthdays = await getUpcomingBirthdays();
-    var hasUnreadNotifications = await Notifications.findOne({ user: req.user._id, seen: false });
+    var hasUnreadNotifications = await Notifications.findOne({ $or: [{ user: req.user._id },{ user: null }], seen: false });
     const [photo] = await Files.aggregate([
   { $match: { tags: 'featured' } },
   { $sample: { size: 1 } }
@@ -112,6 +116,14 @@ exports.renderResetPage = async (req, res) => {
 
 exports.donate = (req, res) => {
   res.render('pages/donate');
+}
+
+exports.adminUserInfo = async (req, res) => {
+  var user = await Users.findOne({ _id: req.params.userId }).select("+code");
+  if(user){
+    return res.json({success: true, user });
+  }
+  res.json({success:false, user });
 }
 
 async function getSortedUsers(loggedInUserId = null) {

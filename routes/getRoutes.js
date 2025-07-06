@@ -6,6 +6,7 @@ var emailController = require('../controllers/email');
 var postsController = require('../controllers/posts');
 var reportsController = require('../controllers/reports');
 var memoriesController = require('../controllers/memories');
+var analyticsController = require('../controllers/analytics');
 var { isLoggedIn } = require('../middlewares/auth');
 
 
@@ -51,15 +52,35 @@ router.get('/reset-password/:token', getController.renderResetPage);
 
 router.get('/post/:id', postsController.viewPost);
 
+router.get('/post/:postId/likes', postsController.fetchPostLikes);
 
-router.get('/admin/report/:id', isLoggedIn, reportsController.fetchReport);
 
-router.get('/admin/users', isLoggedIn, getController.adminUserlist);
+router.get('/admin/report/:id', reportsController.fetchReport);
+
+router.get('/admin/users', getController.adminUserlist);
+
+router.get('/admin/analytics', getController.analyticsPage);
+
+router.get('/admin/userinfo/:userId', getController.adminUserInfo);
+
 
 
 router.get('/memories', memoriesController.showMemories)
 
-router.get('/memories/:folderId', isLoggedIn, memoriesController.showFolder)
+router.get('/memories/folder/:folderId', isLoggedIn, memoriesController.showFolder)
+
+router.get('/memories/file/:fileId', isLoggedIn, memoriesController.showFile)
+
+
+router.get('/api/analytics/online-users', analyticsController.onlineUsers);
+
+router.get('/api/analytics/page-stats', analyticsController.pageStats);
+
+router.get('/api/analytics/daily-users', analyticsController.dailyUsers);
+
+router.get('/api/analytics/daily-route-views', analyticsController.dailyRouteViews);
+
+router.get('/api/analytics/monthly-users', analyticsController.monthlyUsers);
 
 
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping

@@ -25,8 +25,7 @@
       <ul>
         <li onclick="openReportProblem()"><a><span class="fal fa-triangle-exclamation"></span>
             Report a problem</a></li>
-        <li onclick="openGiveSuggestion()"><a><span class="fal fa-lightbulb-on"></span> Give
-            suggestion</a></li>
+        <li onclick="openGiveSuggestion()"><a><span class="fal fa-lightbulb-on"></span> Suggest new feature</a></li>
       </ul>
       <ul id="account">
         <!--<li onclick="window.location.href='/delete-account'"><a href="/delete-account"><span class="fal fa-trash"></span> Delete
@@ -122,14 +121,14 @@
     <div class="overlay" onclick="closeGiveSuggestion()"></div>
     <div class="give-suggestion-box">
       <div class="heading">
-        <p class="title"><span class="fal fa-lightbulb-on"></span> Give suggestion</p>
+        <p class="title"><span class="fal fa-lightbulb-on"></span> New feature details</p>
         <p class="close-icon fal fa-xmark" onclick="closeGiveSuggestion()"></p>
       </div>
       <div class="give-suggestion-list" id="give-suggestion-list">
         <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; You can also email this at <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a>.</span><br><br>
         <form id="give-suggestion-form">
-          <input type="text" autocomplete="off" name="subject" required placeholder="Brief subject..." />
-          <textarea name="details" rows="5" required placeholder="Explain the marvelous thing in your brain..."></textarea>
+          <input type="text" autocomplete="off" name="subject" required placeholder="Main purpose of feature" />
+          <textarea name="details" rows="5" required placeholder="Explain this feature for better understanding..."></textarea>
           <br>
           <div id="give-suggestion-status"></div><br>
           <button type="submit">Submit</button>

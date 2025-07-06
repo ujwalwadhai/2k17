@@ -69,11 +69,4 @@ userSchema.virtual('settings', {
 
 const Users = mongoose.model('Users', userSchema);
 
-/*  async function send(){
-  var user = await Users.findOne({name: 'Samyak Sakhare'}).select('+code').populate("settings");
-  console.log(user)
-  // await sendMail('new_user_registration', 'i.am.samyak@outlook.com', {user})
-}
-send() */
-
 module.exports = Users

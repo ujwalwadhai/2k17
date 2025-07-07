@@ -333,9 +333,10 @@
 .create-post-box.small-only {
   background-color: $bg-dark2;
   padding: 12px 20px;
-  margin: 0 6%;
+  margin: 0 1.5rem;
   border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 
   p.heading {
     margin: 8px 0 12px;

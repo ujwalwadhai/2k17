@@ -6,8 +6,7 @@
 
 <!-- Open Graph tags for social sharing -->
 <meta property="og:title" content="2k17 Platform">
-<meta property="og:description"
-  content="A small, nostalgic corner for the 2k17 batch to reconnect, share, and remember.">
+<meta property="og:description" content="A small, nostalgic corner for the 2k17 batch to reconnect, share, and remember.">
 <meta property="og:image" content="https://twok17.onrender.com/images/web_logo.png">
 <meta property="og:url" content="/">
 <meta property="og:type" content="website">
@@ -27,11 +26,11 @@
 <script src="/js/all.js"></script>
 
 <% if(PLATFORM_TYPE==='production' ) { %>
-  <script>
-    window.__USER_ID__ = "<%= user ? user._id : null %>";
-    window.__USER_ROLE__ = "<%= user ? user.role : null %>";
-  </script>
-  <script src="/js/analytics.js"></script>
+<script>
+  window.__USER_ID__ = "<%= user ? user._id : null %>";
+  window.__USER_ROLE__ = "<%= user ? user.role : null %>";
+</script>
+<script src="/js/analytics.js"></script>
 <% } else { %>
-  <!-- Analytics disabled for PLATFORM_TYPE=development to avoid adding testing stats -->
+<!-- Analytics disabled for PLATFORM_TYPE=development to avoid adding testing stats -->
 <% } %>

@@ -38,6 +38,7 @@ async function openPostLikes(postId){
   var PostLikesOverlay = PostLikesPopup.querySelector('.overlay');
   var res = await fetch(`/post/${postId}/likes`)
   var data = await res.json()
+  PostLikesPopup.querySelector('.post-likes-list').innerHTML = '';
   if(data.success){
     data.likes.forEach(like=>{
       var li = document.createElement('li');

@@ -1,85 +1,90 @@
 <div class="header">
-    <nav class="large-and-medium">
-      <h1 style="cursor: pointer;" onclick="window.location.href = '/'">2k17 ❤️</h1>
-      <ul class="nav-items">
-        <li><a href="/memories">Memories</a></li>
-        <li><a href="/members">Members</a></li>
-        <li><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span></a></li>
-        <% if (!user) { %>
-          <li><a href="/create-account">Register</a></li>
-          <li><a href="/login" class="login-btn" id="navbar-login-btn-large">Login</a></li>
-        <% } else { %>
-        <% if(typeof isHome !== 'undefined' && isHome) { %>
-          <li><a onclick="openPostPopup()"><span class="fal fa-square-plus"></span></a></li>
-        <% } else { %>
-          <li><a href="/home"><span class="fal fa-house"></span></a></li>
-        <% } %>
-          <li><a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a></li>
-          <li><a href="/settings"><span class="fal fa-cog"></span></a></li>
-          <li class="user-capsule-wrapper">
-            <div class="user-capsule">
-              <img src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
-                <p><%= user.name.split(' ')[0] + (user.name.split(' ')[1] ? ' ' + user.name.split(' ')[1].charAt(0) + '.' : '') %></p>
-            </div>
+  <nav class="large-and-medium">
+    <h1 style="cursor: pointer;" onclick="window.location.href = '/'">2k17 ❤️</h1>
+    <ul class="nav-items">
+      <li><a href="/memories">Memories</a></li>
+      <li><a href="/members">Members</a></li>
+      <li><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span></a></li>
+      <% if (!user) { %>
+        <li><a href="/create-account">Register</a></li>
+        <li><a href="/login" class="login-btn" id="navbar-login-btn-large">Login</a></li>
+      <% } else { %>
+      <% if(typeof isHome !== 'undefined' && isHome) { %>
+        <li><a onclick="openPostPopup()"><span class="fal fa-square-plus"></span></a></li>
+      <% } else { %>
+        <li><a href="/home"><span class="fal fa-house"></span></a></li>
+      <% } %>
+        <li><a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a></li>
+        <li><a href="/settings"><span class="fal fa-cog"></span></a></li>
+        <li class="user-capsule-wrapper">
+        <div class="user-capsule">
+          <img src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
+          <p><%= user.name.split(' ')[0] + (user.name.split(' ')[1] ? ' ' + user.name.split(' ')[1].charAt(0) + '.' : '') %></p>
+        </div>
 
-            <ul class="user-dropdown">
-              <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>Profile</a></li>
-              <% if(user && user.role == 'admin'){ %>
-              <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-user-crown"></span>Admin Page</a></li>
-              <% } %>
-              <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
-              <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>
-            </ul>
-          </li>
+        <ul class="user-dropdown">
+          <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>Profile</a></li>
+          <% if(user && user.role == 'admin'){ %>
+          <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-user-crown"></span>Admin Page</a></li>
+          <% } %>
+          <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
+          <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>
+        </ul>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+  <nav class="small-only">
+    <span class="menu-icon fal fa-bars-sort" onclick="toggleMenu()"></span>
+    <p class="brand" style="cursor: pointer;" onclick="window.location.href = '/'">2k17 ❤️</p>
+    <% if (user) { %>
+    <li class="user-capsule-wrapper">
+      <div class="user-capsule user-capsule-2">
+        <% if(typeof isHome !== 'undefined' && isHome) { %>
+          <a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a>
+        <% } else { %>
+          <a href="/home"><span class="fal fa-house"></span></a>
+        <% } %>
+        <!--<a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a>-->
+        <a href="/settings"><span class="fal fa-cog"></span></a>
+        <img id="user-capsule-img" src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
+      </div>
+
+      <ul class="user-dropdown user-dropdown-2">
+        <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>Profile</a></li>
+        <% if(user.role == 'admin'){ %>
+        <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-user-crown"></span>Admin Page</a></li>
+        <% } %>
+        <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
+        <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>
+      </ul>
+    </li>
+    <% } else { %>
+    <button class="login-btn" id="navbar-login-btn-small" onclick="window.location.href = '/login'">Login</button>
+    <% } %>
+  </nav>
+
+  <div id="mobileSidebar">
+    <div id="sidebarContent">
+      <div class="close-icon" id="close-icon">
+        <span class="fas fa-xmark"></span>
+      </div>
+      <img src="/images/jnv-bg-1.jpg" alt="">
+      <ul class="nav-items">
+        <% if(user) { %>
+        <li onclick="window.location.href = '/home'"><a href="/home"><span class="fal fa-house"></span>Home</a></li>
+        <% } %>
+        <li onclick="window.location.href = '/memories'"><a href="/memories"><span class="fal fa-images"></span>Memories</a></li>
+        <li onclick="window.location.href = '/donate'"><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span>Donate</a></li>
+        <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>
+        <% if (user) { %>
+        <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
         <% } %>
       </ul>
-    </nav>
-    <nav class="small-only">
-      <span class="menu-icon fal fa-bars-sort" onclick="toggleMenu()"></span>
-      <p class="brand" style="cursor: pointer;" onclick="window.location.href = '/'">2k17 ❤️</p>
-      <% if (user) { %>
-        <li class="user-capsule-wrapper">
-            <div class="user-capsule user-capsule-2">
-              <a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a>
-              <a href="/settings"><span class="fal fa-cog"></span></a>
-              <img id="user-capsule-img" src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
-            </div>
-
-            <ul class="user-dropdown user-dropdown-2">
-              <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>Profile</a></li>
-              <% if(user.role == 'admin'){ %>
-              <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-user-crown"></span>Admin Page</a></li>
-              <% } %>
-              <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
-              <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>
-            </ul>
-          </li>
-      <% } else { %>
-        <button class="login-btn" id="navbar-login-btn-small" onclick="window.location.href = '/login'">Login</button>
-      <% } %>
-    </nav>
-
-    <div id="mobileSidebar">
-      <div id="sidebarContent">
-        <div class="close-icon" id="close-icon">
-          <span class="fas fa-xmark"></span>
-        </div>
-        <img src="/images/jnv-bg-1.jpg" alt="">
-        <ul class="nav-items">
-          <% if(user) { %>
-          <li onclick="window.location.href = '/home'"><a href="/home"><span class="fal fa-house"></span>Home</a></li>
-          <% } %>
-          <li onclick="window.location.href = '/memories'"><a href="/memories"><span class="fal fa-images"></span>Memories</a></li>
-          <li onclick="window.location.href = '/donate'"><a href="/donate"><span class="fal fa-hand-holding-circle-dollar"></span>Donate</a></li>
-          <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>
-          <% if (user) { %>
-            <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
-          <% } %>
-        </ul>
-      </div>
     </div>
   </div>
-  
+</div>
+
 <div id="notifications-popup">
   <div class="overlay" onclick="closeNotifications()"></div>
   <div class="notifications-box">
@@ -88,11 +93,11 @@
       <span class="close-icon fal fa-xmark" onclick="closeNotifications()"></span>
     </div>
     <div class="notifications-list" id="notifications-list">
-      
+
     </div>
   </div>
 </div>
-  <script>
+<script>
   var sidebar = document.getElementById('mobileSidebar');
   var sidebarContent = document.getElementById('sidebarContent');
 
@@ -103,7 +108,7 @@
     });
   }
 
-  window.addEventListener('click', function (e) {
+  window.addEventListener('click', function(e) {
     if (sidebar.style.display === 'block' && !sidebarContent.contains(e.target) && !e.target.classList.contains('menu-icon')) {
       sidebarContent.style.transform = 'translateX(-100%)';
       setTimeout(() => {
@@ -112,40 +117,40 @@
     }
   });
 
-  document.getElementById('close-icon').addEventListener('click', function () {
+  document.getElementById('close-icon').addEventListener('click', function() {
     sidebarContent.style.transform = 'translateX(-100%)';
     setTimeout(() => {
       sidebar.style.display = 'none';
     }, 300);
   });
-  
-    var capsule = document.querySelector(".large-and-medium .user-capsule");
-    var dropdown = document.querySelector(".large-and-medium .user-dropdown");
-    if(capsule){
-      capsule.addEventListener("click", () => {
-        dropdown.classList.toggle("show");
-      });
 
-      document.addEventListener("click", (e) => {
-        if (!capsule.contains(e.target) && !dropdown.contains(e.target)) {
-          dropdown.classList.remove("show");
-        }
-      });
-    }
+  var capsule = document.querySelector(".large-and-medium .user-capsule");
+  var dropdown = document.querySelector(".large-and-medium .user-dropdown");
+  if (capsule) {
+    capsule.addEventListener("click", () => {
+      dropdown.classList.toggle("show");
+    });
 
-    var capsule2 = document.querySelector("#user-capsule-img");
-    var dropdown2 = document.querySelector(".user-dropdown-2");
-    if(capsule2){
-      capsule2.addEventListener("click", () => {
-        dropdown2.classList.toggle("show");
-      });
+    document.addEventListener("click", (e) => {
+      if (!capsule.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove("show");
+      }
+    });
+  }
 
-      document.addEventListener("click", (e) => {
-        if (!capsule2.contains(e.target) && !dropdown2.contains(e.target)) {
-          dropdown2.classList.remove("show");
-        }
-      });
-    }
+  var capsule2 = document.querySelector("#user-capsule-img");
+  var dropdown2 = document.querySelector(".user-dropdown-2");
+  if (capsule2) {
+    capsule2.addEventListener("click", () => {
+      dropdown2.classList.toggle("show");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!capsule2.contains(e.target) && !dropdown2.contains(e.target)) {
+        dropdown2.classList.remove("show");
+      }
+    });
+  }
 </script>
 
 <script src="/js/home.js"></script>

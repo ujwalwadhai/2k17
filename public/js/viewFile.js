@@ -181,3 +181,23 @@ async function likeFile(fileId) {
     Toast('Error while liking post', 'error');
   }
 }
+
+async function shareImage(fileId, url){
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const file = new File([blob], 'image.jpg', { type: blob.type });
+
+  const shareData = {
+    title: 'Check this memory',
+    text: 'See this memory I found on 2k17 Platform.',
+    url: `https://twok17.onrender.com/memories/file/${fileId}`,
+    files: [file]
+  };
+
+  try {
+    await navigator.share(shareData);
+    console.log('Shared successfully');
+  } catch (err) {
+    console.error('Sharing failed', err);
+  }
+}

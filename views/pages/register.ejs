@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('../partials/head.ejs') %>
-    <link rel="stylesheet" href="/styles/css/signup_login.css" />
-    <title>Create account • 2k17 Platform</title>
-  </head>
-  <body>
-    <%- include('../partials/loader.ejs') %>
-    <div class="container">
-      <%- include('../partials/login-carousel.ejs') %>
 
-      <div class="right-pane">
-        <div class="signup-form" id="register-form">
-          <span class="only-small"
-            ><br /><br /><br /><br /><br /><br /><br /><br
-          /></span>
+<head>
+  <%- include('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/styles/css/signup_login.css" />
+  <title>Create account • 2k17 Platform</title>
+</head>
 
-          
-          <h1 class="error">Create Account</h1>
-           <p>Already have an account? &nbsp;<a href="/login">Login to account</a></p><br>
-            <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; Please check your email app after creating account for activation code.</small><br><br>
-            <div>
+<body>
+  <%- include('../partials/loader.ejs') %>
+  <%- include('../partials/navbar.ejs') %>
+  <div class="container">
 
-    
+    <div class="right-pane">
+      <div class="signup-form" id="register-form">
+        <span class="only-small"><br /><br /><br /><br /><br /><br /><br /><br /></span>
+
+
+        <h1 class="error">Create account</h1>
+        <p>Already have an account? &nbsp;<a href="/login">Login instead</a></p><br>
+        <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; Please <a href="mailto:2k17platform@gmail.com?cc=wadhaiujwal@gmail.com&subject=2k17 Platform Support">contact us</a> if you face any problems.</small><br><br>
+        <div>
+
+
           <div>
             <!-- <div class="username-field">
             <input type="text" autocomplete="off" oninput="checkUsername(this, this.value)" id="signup-username" name="username" placeholder="Choose username" />
@@ -30,34 +30,12 @@
         </div>
         <small id="status-message" class="grey-1"></small> -->
             <div>
-              <input
-                type="input"
-                autocomplete="name"
-                name="name"
-                id="name"
-                placeholder="Full Name *"
-                oninput="updateUsername(this.value)"
-                required
-              />
+              <input type="input" autocomplete="name" name="name" id="name" placeholder="Full Name *" oninput="updateUsername(this.value)" required />
             </div>
             <div>
-              <input
-                type="input"
-                autocomplete="username"
-                name="username"
-                id="username"
-                placeholder="Username *"
-                required
-              />
+              <input type="input" autocomplete="username" name="username" id="username" placeholder="Username *" required />
             </div>
-            <input
-              type="email"
-              autocomplete="email"
-              name="email"
-              id="email"
-              placeholder="Email *"
-              required
-            />
+            <input type="email" autocomplete="email" name="email" id="email" placeholder="Email *" required />
             <!-- <input
               type="text"
               name="code"
@@ -68,30 +46,21 @@
               required
             /> -->
             <div class="password-field">
-              <input type="password" id="password" placeholder="Enter password of your choice*" />
+              <input type="password" id="password" placeholder="Enter password of your choice *" />
               <span class="eye-icon fal fa-eye" id="toggle" onclick="togglePassword()"></span>
             </div>
             <div>
               <span>Date of Birth:</span>
-              <input
-                type="date"
-                autocomplete="date"
-                name="dob"
-                id="dob"
-                placeholder="Date of Birth *"
-                required
-              />
+              <input type="date" autocomplete="date" name="dob" id="dob" placeholder="Date of Birth *" required />
             </div>
             <br />
             <label class="terms">
               <input type="checkbox" id="terms-box" />
               I agree to the &nbsp;
-              <a href="/terms-of-service"> Terms of Service</a> </label
-            ><br />
+              <a href="/terms-of-service"> Terms of Service</a> </label><br />
           </div>
 
-            <button onclick="register()" id="signup-btn" class="primary-btn">Create Account</button
-          ><br /><br />
+          <button onclick="register()" id="signup-btn" class="primary-btn">Create Account</button><br /><br />
           <!-- <div class="divider">Or register with</div>
         <div class="social-buttons">
           <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
@@ -102,17 +71,15 @@
       </div>
     </div>
 
-    <div
-      id="toast-container"
-      style="
+    <div id="toast-container" style="
         position: absolute;
         bottom: 32px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 9999;
-      "
-    ></div>
+      "></div>
 
     <script src="/js/register.js"></script>
-  </body>
+</body>
+
 </html>

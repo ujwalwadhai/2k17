@@ -84,13 +84,19 @@
   padding-top: 7px;
 }
 .header nav.small-only .user-capsule-2 span.fal.fa-bell,
-.header nav.small-only .user-capsule-2 span.fal.fa-cog {
+.header nav.small-only .user-capsule-2 span.fal.fa-cog,
+.header nav.small-only .user-capsule-2 span.fal.fa-house {
   width: 28px;
   height: 100%;
   text-align: center;
   margin-left: 4px;
   color: white;
   font-size: 18px;
+}
+.header nav.small-only .user-capsule-2 span.fal.fa-house {
+  position: relative;
+  margin-left: 5px;
+  font-size: 17.5px;
 }
 .header nav.small-only .user-capsule-2 .fal.fa-bell {
   position: relative;
@@ -223,6 +229,7 @@
   user-select: none;
   color: white;
   font-weight: bold;
+  font-family: "Lato", "Times New Roman", Times, serif;
 }
 .header nav.small-only .login-btn {
   background: #6342d8;

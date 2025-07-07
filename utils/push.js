@@ -87,13 +87,12 @@ async function sendPushNotification({ userId, type, data = {} }) {
     }
 
     if (validSubs.length !== user.pushSubscriptions.length) {
-  await Users.updateOne(
-    { _id: user._id },
-    { $set: { pushSubscriptions: validSubs } }
-  ).catch(e => console.error('Failed to update subscriptions', e));
-}
+      await Users.updateOne(
+        { _id: user._id },
+        { $set: { pushSubscriptions: validSubs } }
+      ).catch(e => console.error('Failed to update subscriptions', e));
+    }
   }
 }
 
 module.exports = sendPushNotification;
- 

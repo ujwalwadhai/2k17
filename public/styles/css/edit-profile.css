@@ -1,8 +1,17 @@
+body {
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
+}
+@media (max-width: 768px) {
+  body {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
+  }
+}
+
 .edit-profile-container {
   max-width: 800px;
   margin: 40px auto;
   padding: 2rem;
-  background: #1f1c2e;
+  background: transparent;
   border-radius: 12px;
   color: white;
 }
@@ -34,9 +43,10 @@
 }
 .edit-profile-container .photo-section label span {
   background-color: #252236;
-  padding: 4px 8px;
+  padding: 0.5rem 1rem;
   border-radius: 4px;
   margin-top: 6px;
+  border: 0.5px solid #9e9e9e;
 }
 .edit-profile-container .photo-section label input[type=file] {
   display: none;
@@ -55,7 +65,8 @@
   padding: 0.75rem;
   border: 1px solid #9e9e9e;
   border-radius: 6px;
-  background: #2c283d;
+  background: transparent;
+  backdrop-filter: blur(10px);
   color: white;
   font-family: inherit;
 }
@@ -70,7 +81,7 @@
 .edit-profile-container .btn-save {
   width: 100%;
   padding: 0.75rem;
-  background-color: #7b5cf0;
+  background-color: #6342d8;
   color: white;
   border: none;
   font-size: 1rem;
@@ -80,12 +91,12 @@
   transition: background 0.3s ease;
 }
 .edit-profile-container .btn-save:hover {
-  background-color: #6342d8;
+  background-color: #7b5cf0;
 }
 
 @media (max-width: 600px) {
   .edit-profile-container {
-    padding: 1rem;
+    padding: 1rem 1.5rem;
   }
   .edit-profile-container .photo-section {
     flex-direction: column;
@@ -95,6 +106,16 @@
     width: 100px;
     height: 100px;
   }
+}
+#add-link-btn {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #6342d8;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 /*# sourceMappingURL=edit-profile.css.map */

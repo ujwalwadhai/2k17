@@ -3,147 +3,47 @@
 
 body {
   margin: 0;
-  background: $bg-dark;
+  background: transparent;
   color: $text-light;
 }
 
 .container {
   display: flex;
   height: 100vh;
-}
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 
-.left-pane {
-  flex: 1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 2rem;
-
-  .carousel {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 12px;
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-      z-index: 1;
-
-      &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.5); // dark overlay
-        z-index: 1;
-      }
-
-      &.active {
-        opacity: 1;
-        z-index: 2;
-      }
-    }
-
-    .header,
-    .image-caption {
-      position: relative;
-      z-index: 3;
-      padding: 12px;
-      bottom: 8px;
-      background: transparent;
-    }
-
-    .header {
-      margin-top: 16px;
-    }
-
-    .image-caption {
-      margin-left: 8px;
-      position: absolute;
-
-      p {
-        font-size: 28px;
-        font-weight: bold;
-      }
-    }
-  }
-
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 8px;
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin-left: 8px;
-      user-select: none;
-    }
-
-    .back-button {
-      color: $text-light;
-      background: rgba(255, 255, 255, 0.25);
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      text-decoration: none;
-      text-align: center;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.4);
-      }
-    }
-  }
-
-  .image-caption {
-
-    .dots {
-      margin-top: 1rem;
-
-      .dot {
-        height: 6px;
-        width: 18px;
-        background: rgba(255, 255, 255, 0.2);
-        display: inline-block;
-        border-radius: 3px;
-        margin-right: 6px;
-        cursor: pointer;
-
-        &.active {
-          background: $text-light;
-        }
-      }
-    }
+  @media (max-width: 768px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
   }
 }
 
 .right-pane {
   flex: 1;
-  background: $bg-dark;
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(5px);
+  border-radius: 8px;
+  max-width: 800px;
+  min-width: min(100vw, 500px);
+  margin: auto;
+  overflow-y: auto;
+  ::-webkit-scrollbar{
+    display: none;
+  }
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
 
   .signup-form {
     width: 100%;
-    max-width: 400px;
+    max-width: 440px;
     padding: 2rem;
+    overflow-y: auto;
 
     h1 {
       margin-bottom: 0.5rem;
+      margin-top: 84px;
     }
 
     p {
@@ -161,7 +61,7 @@ body {
       margin: 0.5rem 0;
       border: none;
       border-radius: 8px;
-      background: $input-bg;
+      background: transparent;
       color: $text-light;
       outline: none;
       border: 1px solid $text-disabled;
@@ -298,77 +198,12 @@ body {
     }
   }
 
-  .left-pane {
-    height: 40vh;
-    padding: 1.5rem;
-
-    .carousel {
-      position: relative;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      border-radius: 12px;
-
-      .slide {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        transition: opacity 0.8s ease;
-        z-index: 1;
-
-        &.active {
-          opacity: 1;
-          z-index: 2;
-        }
-      }
-
-      .header,
-      .image-caption {
-        position: relative;
-        z-index: 3;
-        background: transparent;
-      }
-    }
-
-
-    .header {
-      .logo {
-        font-size: 1.2rem;
-      }
-
-      .back-button {
-        font-size: 0.9rem;
-        padding: 0.4rem 0.8rem;
-      }
-    }
-
-    .image-caption {
-      position: relative;
-      margin-top: 72px;
-
-      p {
-        font-size: 20px !important;
-      }
-
-      .dots {
-        .dot {
-          width: 12px;
-        }
-      }
-    }
-  }
-
   .right-pane {
     height: 60vh;
-    padding: 2rem;
+    padding: 1.5rem;
 
     .signup-form {
-      padding: 1rem;
+      padding: 0.5rem;
     }
   }
 }
@@ -376,23 +211,15 @@ body {
 @media (max-width: 600px) {
 
   .container {
-    .left-pane {
-      .image-caption {
-        text-align: center;
-        position: relative;
-        margin-top: 72px;
-
-        p {
-          font-size: 18px;
-        }
-      }
-    }
 
     .right-pane {
       .signup-form {
         max-width: 100%;
         padding: 1rem;
         padding-top: 0;
+        h1{
+          margin-top: 64px;
+        }
 
         .name-fields {
           flex-direction: column;
@@ -418,13 +245,13 @@ body {
   }
 }
 
-#forgotten-password-popup{
+#forgotten-password-popup {
   @include fullscreen-popup;
 
   .forgotten-password-box {
     @include popup-box;
 
-    .forgotten-password-list{
+    .forgotten-password-list {
       padding: 20px;
 
       input {

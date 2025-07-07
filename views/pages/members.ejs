@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('../partials/head') %>
   <link rel="stylesheet" href="/styles/css/members.css">
   <title>Members of 2k17 Batch</title>
 </head>
+
 <body>
   <%- include('../partials/loader') %>
   <%- include('../partials/navbar') %>
@@ -16,52 +18,52 @@
     <div class="members-container" id="membersContainer">
       <% members.forEach(member => { %>
 
-        <div class="member-card">
-            <div class="upper">
-                <img onclick="window.location.href='/<%= member.username %>'" src="<%- member.profile ? member.profile : '/images/user.png' %>" class="upper-img" alt="Profile of <%= member.name %>">
-                <div class="upper-info">
-                    <p class="name" onclick="window.location.href='/<%= member.username %>'"><%= member.name %>
-                    <% if (member.role) { %>
-                        <span><%= member.role %></span>
-                    <% } %>
-                    </p>
-                    <% if (member.username) { %>
-                        <span class="username" onclick="window.location.href='/<%= member.username %>'">@<%= member.username %></span>
-                    <% } else { %>
-                        <span class="username" style="cursor: text;">Not registered</span>
-                    <% } %>
-                    <p class="year"><%- member.year %> &nbsp;in JNV</p>
-                </div>
-            </div>
-            <p class="bio"><%- member.bio ? member.bio : "<span style='color: #888'>Nothing here</span>" %></p>
-            <% if (((member.email && member?.settings?.privacy?.email) || (member.phone && member?.settings?.privacy?.phone))) { %>
-            <div class="social-links">
-              <% const domainIconMap = { facebook: 'fab fa-facebook', instagram: 'fab fa-instagram', linkedin: 'fab fa-linkedin', twitter: 'fab fa-x-twitter', 'x.com': 'fab fa-x-twitter', 'x-twitter': 'fab fa-x-twitter',threads: 'fab fa-threads',snapchat: 'fab fa-snapchat',youtube: 'fab fa-youtube',pinterest: 'fab fa-pinterest',whatsapp: 'fab fa-whatsapp',telegram: 'fab fa-telegram',discord: 'fab fa-discord',reddit: 'fab fa-reddit',github: 'fab fa-github',spotify: 'fab fa-spotify',default: 'fal fa-link'}%>
-              <% if (member.socialLinks) {
+      <div class="member-card">
+        <div class="upper">
+          <img onclick="window.location.href='/<%= member.username %>'" src="<%- member.profile ? member.profile : '/images/user.png' %>" class="upper-img" alt="Profile of <%= member.name %>">
+          <div class="upper-info">
+            <p class="name" onclick="window.location.href='/<%= member.username %>'"><%= member.name %>
+              <% if (member.role) { %>
+              <span><%= member.role %></span>
+              <% } %>
+            </p>
+            <% if (member.username) { %>
+            <span class="username" onclick="window.location.href='/<%= member.username %>'">@<%= member.username %></span>
+            <% } else { %>
+            <span class="username" style="cursor: text;">Not registered</span>
+            <% } %>
+            <p class="year"><%- member.year %> &nbsp;in JNV</p>
+          </div>
+        </div>
+        <p class="bio"><%- member.bio ? member.bio : "<span style='color: #888'>Nothing here</span>" %></p>
+        <% if (((member.email && member?.settings?.privacy?.email) || (member.phone && member?.settings?.privacy?.phone))) { %>
+        <div class="social-links">
+          <% const domainIconMap = { facebook: 'fab fa-facebook', instagram: 'fab fa-instagram', linkedin: 'fab fa-linkedin', twitter: 'fab fa-x-twitter', 'x.com': 'fab fa-x-twitter', 'x-twitter': 'fab fa-x-twitter',threads: 'fab fa-threads',snapchat: 'fab fa-snapchat',youtube: 'fab fa-youtube',pinterest: 'fab fa-pinterest',whatsapp: 'fab fa-whatsapp',telegram: 'fab fa-telegram',discord: 'fab fa-discord',reddit: 'fab fa-reddit',github: 'fab fa-github',spotify: 'fab fa-spotify',default: 'fal fa-link'}%>
+          <% if (member.socialLinks) {
                 Object.entries(member.socialLinks).forEach(([key, value]) => {
                   if (!value) return;
                   const brandIcons = ['facebook', 'instagram', 'linkedin', 'twitter', 'github', 'reddit', 'youtube', 'tiktok', 'snapchat', 'telegram', 'discord'];
                   const iconPrefix = brandIcons.includes(key.toLowerCase()) ? 'fab' : 'fal';
                   const iconClass = `${iconPrefix} fa-${brandIcons.includes(key.toLowerCase()) ? key.toLowerCase() : 'link-simple'}`;
               %>
-                <a href="<%= value %>" target="_blank" title="<%= key %>">
-                  <span class="<%= iconClass %>"></span>
-                </a>
-              <% }) } %>
+          <a href="<%= value %>" target="_blank" title="<%= key %>">
+            <span class="<%= iconClass %>"></span>
+          </a>
+          <% }) } %>
 
-              
-              <% if (member.email && member?.settings?.privacy?.email) { %>
-                <a href="mailto:<%= member.email %>" target="_blank"><span class="fal fa-envelope"></span></a>
-              <% } %>
-              <% if (member.phone && member?.settings?.privacy?.phone) { %>
-                <a href="tel:<%= member.phone %>" target="_blank"><span class="fal fa-phone-volume"></span></a>
-              <% } %>
-            </div>
-            <% } else { %>
-            <div class="grey-2">No contact details available</div>
-            <% } %>
+
+          <% if (member.email && member?.settings?.privacy?.email) { %>
+          <a href="mailto:<%= member.email %>" target="_blank"><span class="fal fa-envelope"></span></a>
+          <% } %>
+          <% if (member.phone && member?.settings?.privacy?.phone) { %>
+          <a href="tel:<%= member.phone %>" target="_blank"><span class="fal fa-phone-volume"></span></a>
+          <% } %>
         </div>
-        
+        <% } else { %>
+        <div class="grey-2">No contact details available</div>
+        <% } %>
+      </div>
+
       <% }) %>
     </div>
   </section>
@@ -81,4 +83,5 @@
     });
   </script>
 </body>
+
 </html>

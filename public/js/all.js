@@ -30,12 +30,10 @@ function Toast(message, type = 'info') {
   }, 3500);
 }
 
-
 document.querySelectorAll('img').forEach(img => {
   img.setAttribute('oncontextmenu', 'return false;');
 });
 
-// Disable right-click globally
 document.addEventListener('contextmenu', function (e) {
   e.preventDefault();
 });

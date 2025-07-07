@@ -6,7 +6,11 @@ body {
   scroll-behavior: smooth;
   box-sizing: border-box;
   color: white;
-  background-color: #1f1c2e;
+}
+
+main {
+  background: rgba(16, 14, 23, 0.537254902);
+  backdrop-filter: blur(5px);
 }
 
 .hero {
@@ -92,7 +96,7 @@ body {
 .gallery {
   padding: 4rem 10%;
   text-align: left;
-  background: #1f1c2e;
+  background: transparent;
 }
 .about h3,
 .features h3,
@@ -334,7 +338,7 @@ footer {
     background: #6342d8;
   }
 }
-@media screen and (max-width: 890px) {
+@media (max-width: 890px) {
   .newsletter-sub {
     background: #1f1c2e;
     box-sizing: border-box;
@@ -483,6 +487,10 @@ footer {
   font-size: 1rem;
   line-height: 1.6;
   margin-top: 8px;
+}
+
+.about-and-newsletter {
+  background: transparent;
 }
 
 /*# sourceMappingURL=index.css.map */

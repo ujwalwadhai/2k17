@@ -1,96 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include('../partials/head') %>
-    <title>Edit profile</title>
-    <link rel="stylesheet" href="/styles/css/edit-profile.css">
+  <%- include('../partials/head') %>
+  <title>Edit profile</title>
+  <link rel="stylesheet" href="/styles/css/edit-profile.css">
 </head>
+
 <body>
-    <%- include('../partials/navbar') %>
-<br><br>
-<div class="edit-profile-container">
-  
-  <form class="edit-profile-form" id="edit-profile-form" enctype="multipart/form-data">
-    <h2>Edit Profile</h2><br>
+  <%- include('../partials/navbar') %>
+  <br><br>
+  <div class="edit-profile-container">
 
-    <div class="photo-section">
-      <label for="profilePhoto">
-        <img class="profile-pic" src="<%= user.profile || '/images/user.png' %>" alt="Profile Photo">
-        <input type="file" id="profilePhoto" accept="image/jpg, image/jpeg, image/png">
-        <span>Change Profile Photo</span>
-      </label>
-    </div>
+    <form class="edit-profile-form" id="edit-profile-form" enctype="multipart/form-data">
+      <h2>Edit Profile</h2><br>
 
-    <div class="form-group">
-      <label>Name &nbsp;<span class="grey-1">(Can't be changed)</span></label>
-      <input type="text" placeholder="<%= user.name %>" disabled>
-    </div>
+      <div class="photo-section">
+        <label for="profilePhoto">
+          <img class="profile-pic" src="<%= user.profile || '/images/user.png' %>" alt="Profile Photo">
+          <input type="file" id="profilePhoto" accept="image/jpg, image/jpeg, image/png">
+          <span>Change Profile Photo</span>
+        </label>
+      </div>
 
-    <div class="form-group">
-      <label>Email &nbsp;<span class="grey-1">(Go to settings to change email)</span></label>
-      <input disabled type="email" placeholder="<%- user.email ?? 'Your email is not verified. Check your email app for verification email' %>">
-    </div>
-    
-    <div class="form-group">
-      <label>Username</label>
-      <input style="margin-bottom: 4px;" type="text" name="username" value="<%= user.username %>" oninput="checkUsername(this, this.value, '<%= user.username %>')" required>
-      <span id="status-icon" class="grey-1 fal"></span>&nbsp; <span id="status-message"></span>
-    </div>
+      <div class="form-group">
+        <label>Name &nbsp;<span class="grey-1">(Can't be changed)</span></label>
+        <input type="text" placeholder="<%= user.name %>" disabled>
+      </div>
 
-    <div class="form-group">
-      <label>Phone number</label>
-      <input type="tel" maxlength="10" max="9999999999" name="phone" value="<%= user.phone %>">
-    </div>
+      <div class="form-group">
+        <label>Email &nbsp;<span class="grey-1">(Go to settings to change email)</span></label>
+        <input disabled type="email" placeholder="<%- user.email ?? 'Your email is not verified. Check your email app for verification email' %>">
+      </div>
 
-    <div class="form-group">
-      <label>Bio</label>
-      <textarea style="resize: vertical;" name="bio" rows="3" placeholder="Write something about yourself..."><%= user.bio %></textarea>
-    </div>
+      <div class="form-group">
+        <label>Username</label>
+        <input style="margin-bottom: 4px;" type="text" name="username" value="<%= user.username %>" oninput="checkUsername(this, this.value, '<%= user.username %>')" required>
+        <span id="status-icon" class="grey-1 fal"></span>&nbsp; <span id="status-message"></span>
+      </div>
 
-    <div class="form-group" id="social-links-group">
-  <label style="margin-bottom: 16px;">Social Links</label>
-  <% if (user.socialLinks) { Object.entries(user.socialLinks).forEach(([key, value]) => { %>
-  <% if(value.length > 0){ %>
-  <input
-    type="url"
-    name="<%= key %>"
-    placeholder="<%= key.charAt(0).toUpperCase() + key.slice(1) %> URL"
-    value="<%= value %>">
-    <% } %>
-<% }) } %>
+      <div class="form-group">
+        <label>Phone number</label>
+        <input type="tel" maxlength="10" max="9999999999" name="phone" value="<%= user.phone %>">
+      </div>
 
-  <div id="additional-links"></div>
+      <div class="form-group">
+        <label>Bio</label>
+        <textarea style="resize: vertical;" name="bio" rows="3" placeholder="Write something about yourself..."><%= user.bio %></textarea>
+      </div>
 
-  <button type="button" id="add-link-btn" style="margin-top: 12px; padding: 8px 12px; border-radius: 4px; background-color: #007bff; color: white; border: none; cursor: pointer; font-size: 14px;">Add new link</button>
-</div>
+      <div class="form-group" id="social-links-group">
+        <label style="margin-bottom: 16px;">Social Links</label>
+        <% if (user.socialLinks) { Object.entries(user.socialLinks).forEach(([key, value]) => { %>
+        <% if(value.length > 0){ %>
+        <input type="url" name="<%= key %>" placeholder="<%= key.charAt(0).toUpperCase() + key.slice(1) %> URL" value="<%= value %>">
+        <% } %>
+        <% }) } %>
 
-<script>
-  const addLinkBtn = document.getElementById('add-link-btn');
-  const additionalLinksDiv = document.getElementById('additional-links');
+        <div id="additional-links"></div>
 
-  addLinkBtn.addEventListener('click', () => {
-    const wrapper = document.createElement('div');
-    wrapper.style.marginTop = '5px';
+        <button type="button" id="add-link-btn">Add new link</button>
+      </div>
 
-    const input = document.createElement('input');
-    input.type = 'url';
-    input.placeholder = 'Enter URL (Icon will be set automatically)';
-    input.style.marginTop = '8px'
-    input.name = String(Math.random()).slice(3);
-    wrapper.appendChild(input);
-    additionalLinksDiv.appendChild(wrapper);
-    input.focus()
-  });
-</script>
+      <script>
+        const addLinkBtn = document.getElementById('add-link-btn');
+        const additionalLinksDiv = document.getElementById('additional-links');
+
+        addLinkBtn.addEventListener('click', () => {
+          const wrapper = document.createElement('div');
+          wrapper.style.marginTop = '5px';
+
+          const input = document.createElement('input');
+          input.type = 'url';
+          input.placeholder = 'Enter URL (Icon will be set automatically)';
+          input.style.marginTop = '8px'
+          input.name = String(Math.random()).slice(3);
+          wrapper.appendChild(input);
+          additionalLinksDiv.appendChild(wrapper);
+          input.focus()
+        });
+      </script>
 
 
-    <div id="edit-profile-status"></div><br>
+      <div id="edit-profile-status"></div><br>
 
-    <button type="submit" class="btn-save">Save Changes</button>
-  </form>
-</div>
+      <button type="submit" class="btn-save">Save Changes</button>
+    </form>
+  </div>
 
-<script src="/js/edit-profile.js"></script>
+  <script src="/js/edit-profile.js"></script>
 
 </body>
+
 </html>

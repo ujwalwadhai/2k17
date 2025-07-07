@@ -9,33 +9,30 @@
 
 <body>
   <%- include('../partials/loader.ejs') %>
-    <div class="container">
-      <%- include('../partials/login-carousel.ejs') %>
-        <div class="right-pane">
-          <div class="signup-form">
-            <h1>Log in to 2k17 ❤️</h1>
-            <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
-            <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; Please <a href="mailto:2k17platform@gmail.com?cc=wadhaiujwal@gmail.com&subject=2k17 Platform Support">contact us</a> if you face any problems.</small><br><br>
-            <div>
-              <input type="text" id="username" name="username" placeholder="Email or username *"
-                oninput="this.value = this.value.toLowerCase().replace(/[^a-zA-Z0-9_@.]/g, '')"
-                onkeyup="if(event.key === 'Enter') document.getElementById('password').focus()" />
-              <div class="password-field">
-                <input id="password" name="password" type="password" placeholder="Enter password (or activation code)"
-                  onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()" />
-                <span onclick="togglePassword()" id="toggle" class="eye-icon fal fa-eye"></span>
-              </div><br>
-            </div>
-
-            <p><a href="/login/email">Login with Email OTP instead</a></p>
-            <p><a style="margin-top: 8px;" onclick="openForgottenPassword()">Forgotten password?</a></p>
-            <button onclick="login('/home')" class="primary-btn" id="login_btn">Continue</button><br><br>
-            <span class="only-small"><br><br></span>
-          </div>
+  <%- include('../partials/navbar.ejs') %>
+  <div class="container">
+    <div class="right-pane">
+      <div class="signup-form">
+        <h1>Login to 2k17 ❤️</h1>
+        <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
+        <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; Please <a href="mailto:2k17platform@gmail.com?cc=wadhaiujwal@gmail.com&subject=2k17 Platform Support">contact us</a> if you face any problems.</small><br><br>
+        <div>
+          <input type="text" id="username" name="username" placeholder="Enter email or username" oninput="this.value = this.value.toLowerCase().replace(/[^a-zA-Z0-9_@.]/g, '')" onkeyup="if(event.key === 'Enter') document.getElementById('password').focus()" />
+          <div class="password-field">
+            <input id="password" name="password" type="password" placeholder="Enter password (or activation code)" onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()" />
+            <span onclick="togglePassword()" id="toggle" class="eye-icon fal fa-eye"></span>
+          </div><br>
         </div>
-    </div>
 
-    <div id="forgotten-password-popup">
+        <p><a href="/login/email">Login with Email OTP instead</a></p>
+        <p><a style="margin-top: 8px;" onclick="openForgottenPassword()">Forgotten password?</a></p>
+        <button onclick="login('/home')" class="primary-btn" id="login_btn">Continue</button><br><br>
+        <span class="only-small"><br><br></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="forgotten-password-popup">
     <div class="overlay" onclick="closeForgottenPassword()"></div>
     <div class="forgotten-password-box">
       <div class="heading">
@@ -54,7 +51,7 @@
     </div>
   </div>
 
-    <script src="/js/login.js"></script>
+  <script src="/js/login.js"></script>
 </body>
 
 </html>

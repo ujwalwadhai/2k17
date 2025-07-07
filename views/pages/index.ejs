@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('../partials/head.ejs') %>
   <title>2k17 Platform</title>
   <link rel="stylesheet" href="/styles/css/index.css" />
   <link rel="stylesheet" href="/styles/css/components/countdown.css" />
 </head>
+
 <body id="body">
   <%- include('../partials/loader') %>
   <%- include('../partials/navbar') %>
@@ -23,81 +25,81 @@
         <div class="overlay-text">Featured photo</div>
       </div>
     </section>
- 
-    <% if (birthdayUsers.length > 0) { %>
-<section id="birthday-spotlight" class="no-select">
-  <h3>🎉 Birthday Spotlight</h3>
-  <p class="grey-1">It’s <%= birthdayUsers.length === 1 ? birthdayUsers[0].name + "'s" : "their" %> special day! Drop a wish and make it memorable. 🥳</p><br>
 
-  <div class="gallery-grid">
-    <% birthdayUsers.forEach(bdayuser => { %>
-      <div class="image-card" style="padding: 1.2rem;" onclick="window.location.href='/<%= bdayuser.username %>'">
-        <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo">
-        <h4 style="color: #7b5cf0; margin-bottom: 10px;"><%= bdayuser.name %> 🎂</h4>
-        <p style="line-height: 26px;">We wish you a happy birthday from 2k17 ❤️</p>
-        <p><a href="/profile/<%= bdayuser.username %>">View profile</a></p>
+    <% if (birthdayUsers.length > 0) { %>
+    <section id="birthday-spotlight" class="no-select">
+      <h3>🎉 Birthday Spotlight</h3>
+      <p class="grey-1">It’s <%= birthdayUsers.length === 1 ? birthdayUsers[0].name + "'s" : "their" %> special day! Drop a wish and make it memorable. 🥳</p><br>
+
+      <div class="gallery-grid">
+        <% birthdayUsers.forEach(bdayuser => { %>
+        <div class="image-card" style="padding: 1.2rem;" onclick="window.location.href='/<%= bdayuser.username %>'">
+          <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo">
+          <h4 style="color: #7b5cf0; margin-bottom: 10px;"><%= bdayuser.name %> 🎂</h4>
+          <p style="line-height: 26px;">We wish you a happy birthday from 2k17 ❤️</p>
+          <p><a href="/profile/<%= bdayuser.username %>">View profile</a></p>
+        </div>
+        <% }) %>
       </div>
-    <% }) %>
-  </div>
-</section>
-<% } %>
+    </section>
+    <% } %>
 
 
 
     <div class="about-and-newsletter">
-    <!-- About Section -->
-    <section id="about" class="about">
-      <h3>What is 2k17 Platform?</h3>
-      <p>This isn’t just another social media site — it’s a digital time capsule. 2k17 exists for the quiet moments — when you’re feeling a little nostalgic, when you want to see a familiar face or check where someone is, or when a memory from school suddenly resurfaces. It’s not about daily posts or endless scrolling. It’s about checking in once in a while, smiling at something someone shared, and remembering the chaos, laughter, and friendships that shaped those seven years. This place will be here — quietly, patiently — whenever you feel like coming home for a bit.
-</p>
-    </section>
+      <!-- About Section -->
+      <section id="about" class="about">
+        <h3>What is 2k17 Platform?</h3>
+        <p>This isn’t just another social media site — it’s a digital time capsule. 2k17 exists for the quiet moments — when you’re feeling a little nostalgic, when you want to see a familiar face or check where someone is, or when a memory from school suddenly resurfaces. It’s not about daily posts or endless scrolling. It’s about checking in once in a while, smiling at something someone shared, and remembering the chaos, laughter, and friendships that shaped those seven years. This place will be here — quietly, patiently — whenever you feel like coming home for a bit.
+        </p>
+      </section>
 
-    <section id="newsletter-sub" class="newsletter-sub">
-      <h3>Subscribe to our Newsletter</h3>
-      <p>Stay updated with the latest news and updates from 2k17 with an email.</p>
-      <form id="newsletter-form" onsubmit="e=> e.preventDefault()">
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <button type="submit" id="newsletter-sub-btn">Subscribe</button>
-      </form>
-      <br><br>
-    </section>
+      <section id="newsletter-sub" class="newsletter-sub">
+        <h3>Subscribe to our Newsletter</h3>
+        <p style="line-height: 24px">Stay updated with the latest news and updates from 2k17 with an email.</p>
+        <form id="newsletter-form" onsubmit="e=> e.preventDefault()">
+          <input type="email" name="email" placeholder="Enter your email" required>
+          <button type="submit" id="newsletter-sub-btn">Subscribe</button>
+        </form>
+        <br><br>
+      </section>
 
     </div>
 
     <!-- Members Section -->
-      <div id="members" class="members no-select">
-        <h3>Members of 2k17</h3>
-        <p class="grey-1">Some random picks here. Visit <a href="/members">members</a> to see all.</p><br><br>
-        <div class="members-grid">
-          <div class="member-card" onclick="window.location.href='/ujwalw'">
-            <img src="/images/ujwal_profile.jpg" alt="Profile Picture" class="member-profile-pic">
-            <h4>Ujwal Wadhai</h4>
-            <p style="margin-bottom: 4px;">2017-24 in JNVC</p>
-            <p>@ujwalw</p>
-          </div>
-          <% members.forEach(member => { %>
-            <div class="member-card" onclick="window.location.href='/<%= member.username %>'">
-              <img src="<%- member.profile || '/images/user.png' %>" alt="Profile Picture" class="member-profile-pic">
-              <h4><%= member.name %></h4>
-              <p style="margin-bottom: 4px;"><%= member.year %> in JNVC</p>
-              <% if(member.username) { %>
-                <% if(member.username == member.name.toLowerCase().replace(' ', '')) { %>
-                  <p>Not registered</p>
-                <% } else { %>
-                  <p>@<%=member.username%></p>
-                <% } %>
-              <% } else { %>
-                <p>Not registered</p>
-              <% } %>
-            </div>
-          <% }) %>
-          <div class="member-card"  onclick="window.location.href='/members'">
-            <p class="fal fa-users-rectangle" style="color:white; font-size:40px; margin: 2px 2px 16px 2px;"></p>
-            <h4>There are more</h4>
-            <p style="line-height: 24px;">Visit <a href="/members">members</a> to see all of us.</p>
-          </div>
+    <div id="members" class="members no-select">
+      <h3>Members of 2k17</h3>
+      <p class="grey-1">Some random picks here. Visit <a href="/members">members</a> to see all.</p><br><br>
+      <div class="members-grid">
+        <div class="member-card" onclick="window.location.href='/ujwalw'">
+          <img src="/images/ujwal_profile.jpg" alt="Profile Picture" class="member-profile-pic">
+          <h4>Ujwal Wadhai</h4>
+          <p style="margin-bottom: 4px;">2017-24 in JNVC</p>
+          <p>@ujwalw</p>
+        </div>
+        <% members.forEach(member => { %>
+        <div class="member-card" onclick="window.location.href='/<%= member.username %>'">
+          <img src="<%- member.profile || '/images/user.png' %>" alt="Profile Picture" class="member-profile-pic">
+          <h4><%= member.name %></h4>
+          <p style="margin-bottom: 4px;"><%= member.year %> in JNVC</p>
+          <% if(member.username) { %>
+          <% if(member.username == member.name.toLowerCase().replace(' ', '')) { %>
+          <p>Not registered</p>
+          <% } else { %>
+          <p>@<%=member.username%></p>
+          <% } %>
+          <% } else { %>
+          <p>Not registered</p>
+          <% } %>
+        </div>
+        <% }) %>
+        <div class="member-card" onclick="window.location.href='/members'">
+          <p class="fal fa-users-rectangle" style="color:white; font-size:40px; margin: 2px 2px 16px 2px;"></p>
+          <h4>There are more</h4>
+          <p style="line-height: 24px;">Visit <a href="/members">members</a> to see all of us.</p>
         </div>
       </div>
+    </div>
 
     <!-- Gallery Section -->
     <section id="gallery" class="gallery no-select">
@@ -111,7 +113,8 @@
         <% }) %>
         <div class="image-card" style="padding: 1.2rem;">
           <span style="color:white; font-size:42px; margin: 2px 2px 18px 2px;" class="fal fa-images"></span>
-          <p style="line-height: 26px;">There's much more,</p><p>Visit <a href="/memories">memories</a> to see.</p>
+          <p style="line-height: 26px;">There's much more,</p>
+          <p>Visit <a href="/memories">memories</a> to see.</p>
         </div>
       </div>
     </section>
@@ -128,7 +131,7 @@
         </div>
         <div class="feature-card">
           <span class="fal feature-icon fa-layer-group"></span>
-          <h4>Share Posts</h4> 
+          <h4>Share Posts</h4>
           <p>Post text and pictures to remember our best moments.</p>
         </div>
         <div class="feature-card">
@@ -144,110 +147,22 @@
       </div>
     </section>
 
-      <section class="contact" id="contact">
-        <h3>Contact Us</h3>
-        <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a></p><br>
-        <form id="contact-form">
-          <input type="text" placeholder="Your email" name="email" required>
-          <input type="text" name="text" id="" placeholder="Say hi ..." required>
-          <p id="contact-status" style="font-size: 14px;"></p>
-          <button type="submit"><span class="fal fa-paper-plane"></span> &nbsp; Send</button>
-        </form>
-      </section>
+    <section class="contact" id="contact">
+      <h3>Contact Us</h3>
+      <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a></p><br>
+      <form id="contact-form">
+        <input type="text" placeholder="Your email" name="email" required>
+        <input type="text" name="text" id="" placeholder="Say hi ..." required>
+        <p id="contact-status" style="font-size: 14px;"></p>
+        <button type="submit"><span class="fal fa-paper-plane"></span> &nbsp; Send</button>
+      </form>
+    </section>
   </main>
 
   <%- include('../partials/footer') %>
-  <script>
-    const colors = ['#7b5cf0', '#6342d8', '#ff4081', '#00e5ff', '#ffd740'];
 
-    function setupCanvas(id) {
-        const canvas = document.createElement('canvas');
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100vw';
-        canvas.style.height = '100vh';
-        canvas.style.pointerEvents = 'none';
-        canvas.style.zIndex = '9999';
-        canvas.id = id;
-        document.body.appendChild(canvas);
-        const ctx = canvas.getContext('2d');
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-
-        return { canvas, ctx };
-    }
-
-    function renderConfetti() {
-        const { canvas, ctx } = setupCanvas('canvas-wrapping');
-        const timeDelta = 0.05;
-        const xAmplitude = 0.5;
-        const yAmplitude = 1;
-        const xVelocity = 2;
-        if(window.innerWidth < 600) {
-            var yVelocity = 0.7;
-        } else {
-            var yVelocity = 3;
-        }
-
-        let time = 0;
-        const confetti = [];
-
-        for (let i = 0; i < 100; i++) {
-            const radius = Math.random() * 5 + 2.5;
-            const tilt = Math.floor(Math.random() * 10) - 5;
-            const xSpeed = Math.random() * xVelocity - xVelocity / 2;
-            const ySpeed = Math.random() * yVelocity;
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height - canvas.height;
-
-            confetti.push({
-                x,
-                y,
-                xSpeed,
-                ySpeed,
-                radius,
-                tilt,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                phaseOffset: i,
-            });
-        }
-
-        let animationId;
-
-        function update() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            confetti.forEach((piece) => {
-                piece.y += (Math.cos(piece.phaseOffset + time) + 1) * yAmplitude + piece.ySpeed;
-                piece.x += Math.sin(piece.phaseOffset + time) * xAmplitude + piece.xSpeed;
-
-                if (piece.x < 0) piece.x = canvas.width;
-                if (piece.x > canvas.width) piece.x = 0;
-                if (piece.y > canvas.height) piece.y = 0;
-
-                ctx.beginPath();
-                ctx.lineWidth = piece.radius;
-                ctx.strokeStyle = piece.color;
-                ctx.moveTo(piece.x + piece.tilt, piece.y);
-                ctx.lineTo(piece.x + piece.tilt / 2, piece.y + piece.tilt + piece.radius);
-                ctx.stroke();
-            });
-
-            time += timeDelta;
-            animationId = requestAnimationFrame(update);
-        }
-
-        update();
-    }
-    renderConfetti()
-</script>
   <script src="/js/indexPage.js"></script>
 
 </body>
+
 </html>

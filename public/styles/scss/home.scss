@@ -2,6 +2,7 @@
 @use 'components/home/comments';
 @use 'components/home/posts';
 @use 'components/home/notifications';
+@use 'components/home/pwa_banner';
 @use 'components/popup/mixins' as popup;
 
 body {
@@ -113,7 +114,8 @@ body {
     position: relative;
     display: inline-block;
     width: 100%;
-    max-width: max(40vw, 500px);;
+    max-width: max(40vw, 500px);
+    ;
     border: 1px solid $text-muted;
     border-radius: 12px;
     transition: 0.3s transform ease;
@@ -123,7 +125,7 @@ body {
     }
 
     img.featured-photo-img {
-      height: 100%;
+      height: min(calc(40vh - 6rem), 300px);
       object-fit: cover;
       border-radius: 12px;
       width: 100%;
@@ -139,7 +141,7 @@ body {
       height: 72px;
       color: white;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-      font-size: 22px;
+      font-size: 20px;
       border-radius: 12px;
     }
   }
@@ -163,8 +165,8 @@ body {
     .featured-photo {
       max-width: 500px;
       min-width: 250px;
-      width: 100%;
-      margin-top: 108px;
+      width: 90%;
+      margin-top: 124px;
       transform: scale(1.1);
 
       &:hover {
@@ -180,13 +182,13 @@ body {
   }
 }
 
-#post-likes-popup{
+#post-likes-popup {
   @include popup.fullscreen-popup;
 
   .post-likes-box {
     @include popup.popup-box(500px);
 
-    .post-likes-list{
+    .post-likes-list {
       padding: 20px;
 
       input {
@@ -198,11 +200,11 @@ body {
         font-weight: 500;
       }
 
-      .popup-btns{
-        display:flex;
-        gap:12px;
+      .popup-btns {
+        display: flex;
+        gap: 12px;
 
-        button{
+        button {
           background-color: $input-bg;
           color: white;
           border: none;
@@ -214,10 +216,10 @@ body {
           transition: background 0.3s;
 
           &:hover {
-              background-color: $text-disabled;
+            background-color: $text-disabled;
           }
         }
-        
+
         button[type="submit"] {
           @include popup.popup-button;
         }
@@ -234,11 +236,21 @@ body {
   margin-top: 2rem;
   padding-bottom: 1rem;
 
+  @media (max-width: 600px) {
+    padding: 1rem 1.5rem;
+    margin-top: 1rem;
+  }
+
   h3 {
     color: $text-light;
     font-size: 1.4rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
+
+    span {
+      margin-right: 12px;
+      margin-left: 2px;
+    }
   }
 
   p {
@@ -249,6 +261,7 @@ body {
     a {
       color: $primary-light;
       text-decoration: underline;
+
       &:hover {
         color: $primary;
       }
@@ -276,7 +289,7 @@ body {
       &:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        background: $bg-dark3;
+        background: rgba($bg-dark, 0.75);
       }
 
       img {
@@ -300,5 +313,15 @@ body {
         margin-top: 0;
       }
     }
+  }
+}
+
+
+@media (max-width: 600px) {
+  .post-likes-box {
+    width: 100vw !important;
+    max-height: 100vh !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
   }
 }

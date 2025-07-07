@@ -31,13 +31,15 @@ body {
   color: #6342d8;
 }
 .members-page #searchInput {
-  width: 100%;
+  width: 90%;
+  margin: auto;
   padding: 0.8rem;
   margin-top: 8px;
   margin-bottom: 72px;
-  border: none;
+  border: 0.75px solid grey;
   border-radius: 8px;
-  background: #2c283d;
+  background: transparent;
+  backdrop-filter: blur(20px);
   color: #ffffff;
   outline: none;
   max-width: 400px;
@@ -52,12 +54,14 @@ body {
   padding: 0 10px;
 }
 .members-page .member-card {
-  background: #252236;
+  background: transparent;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(20px);
   padding: 20px;
   width: 100%;
   max-width: 400px;
+  border: 0.5px solid grey;
   text-align: left;
   transition: transform 0.3s ease;
 }

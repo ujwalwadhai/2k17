@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <%- include('../partials/head') %>
-    <title>Settings</title>
-    <link rel="stylesheet" href="/styles/css/settings.css">
+  <%- include('../partials/head') %>
+  <title>Settings</title>
+  <link rel="stylesheet" href="/styles/css/settings.css">
 </head>
 
 <body>
@@ -36,8 +36,8 @@
 
     </div><br><br>
     <br>
-</div>
-  
+  </div>
+
   <div id="notification-settings-popup">
     <div class="overlay" onclick="closeNotificationSettings()"></div>
     <div class="notification-settings-box">
@@ -48,30 +48,30 @@
       <div class="notification-settings-list" id="notification-settings-list">
         <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Notifications for OTPs and newsletter are always
           sent.</span><br><br><br>
-          <form id="settings-form">
-            <div class="form-section">
-              <label>
-                  <input type="checkbox" id="push" name="push" <%- settings.notifications?.push ? 'checked' : '' %>>
-                  Push notifications <small class="grey-1"> &nbsp;(Permission needed the first time)</small>
-              </label>
-              <label>
-                <input type="checkbox" name="email" <%=settings.notifications.email ? 'checked' : '' %>>
-                Email notifications
-              </label>
-              <label>
-                <input type="checkbox" name="login" <%=settings.notifications.login ? 'checked' : '' %>>
-                Login alerts (via email)
-              </label>
-              <label style="color: grey; pointer-events: none;">
-                <input type="checkbox" name="newsletter" <%=settings.notifications.newsletter ? 'checked' : '' %>>
-                Monthly newsletter via email
-              </label>
-            </div><br>
+        <form id="settings-form">
+          <div class="form-section">
+            <label>
+              <input type="checkbox" id="push" name="push" <%- settings.notifications?.push ? 'checked' : '' %>>
+              Push notifications <small class="grey-1"> &nbsp;(Permission needed the first time)</small>
+            </label>
+            <label>
+              <input type="checkbox" name="email" <%=settings.notifications.email ? 'checked' : '' %>>
+              Email notifications
+            </label>
+            <label>
+              <input type="checkbox" name="login" <%=settings.notifications.login ? 'checked' : '' %>>
+              Login alerts (via email)
+            </label>
+            <label style="color: grey; pointer-events: none;">
+              <input type="checkbox" name="newsletter" <%=settings.notifications.newsletter ? 'checked' : '' %>>
+              Monthly newsletter via email
+            </label>
+          </div><br>
 
-            <div id="settings-status"></div>
-            <button type="submit">Save Settings</button>
-          </form>
-        
+          <div id="settings-status"></div>
+          <button type="submit">Save Settings</button>
+        </form>
+
       </div>
     </div>
   </div>
@@ -155,7 +155,7 @@
       </div>
     </div>
   </div>
-  
+
   <div id="privacy-settings-popup">
     <div class="overlay" onclick="closePrivacySettings()"></div>
     <div class="privacy-settings-box">
@@ -165,26 +165,26 @@
       </div>
       <div class="privacy-settings-list" id="privacy-settings-list">
         <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Your profile will be in spotlight on your birthday even if you hide the birth date.<br>Check mark the details you want the people to see :</span><br><br><br>
-          <form id="privacy-settings-form">
-            <div class="form-section">
-              <label>
-                  <input type="checkbox" id="privacy-email" name="email" <%- settings.privacy?.email ? 'checked' : '' %>>
-                  Email <small class="grey-1"> &nbsp;(System emails will still be sent.)</small>
-              </label>
-              <label>
-                <input type="checkbox" name="phone" <%=settings.privacy?.phone ? 'checked' : '' %>>
-                Phone number
-              </label>
-              <label>
-                <input type="checkbox" name="dob" <%=settings.privacy?.dob ? 'checked' : '' %>>
-                Date of birth
-              </label>
-            </div><br>
+        <form id="privacy-settings-form">
+          <div class="form-section">
+            <label>
+              <input type="checkbox" id="privacy-email" name="email" <%- settings.privacy?.email ? 'checked' : '' %>>
+              Email <small class="grey-1"> &nbsp;(System emails will still be sent.)</small>
+            </label>
+            <label>
+              <input type="checkbox" name="phone" <%=settings.privacy?.phone ? 'checked' : '' %>>
+              Phone number
+            </label>
+            <label>
+              <input type="checkbox" name="dob" <%=settings.privacy?.dob ? 'checked' : '' %>>
+              Date of birth
+            </label>
+          </div><br>
 
-            <div id="privacy-settings-status"></div>
-            <button type="submit">Save Settings</button>
-          </form>
-        
+          <div id="privacy-settings-status"></div>
+          <button type="submit">Save Settings</button>
+        </form>
+
       </div>
     </div>
   </div>
@@ -193,4 +193,4 @@
   <script src="/js/notifications.js"></script>
 </body>
 
-</html> 
+</html>

@@ -19,7 +19,7 @@ const likePost = async (req, res) => {
     }
 
     await post.save();
-    if (post.author.toString() !== userId.toString() && !alreadyLiked) {
+    if (post.author._id.toString() !== userId.toString() && !alreadyLiked) {
       var notification = new Notifications({
         user: post.author,
         type: 'like',

@@ -1,7 +1,15 @@
 @use 'global' as *;
 
+body{
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+
+  @media (max-width: 768px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+  }
+}
+
 .analytics-page {
-  background-color: $bg-dark;
+  background-color: transparent;
   color: $text-light;
   min-height: 100vh;
 

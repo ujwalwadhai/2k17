@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('../partials/head.ejs') %>
   <title>Home ❤️ 2k17</title>
   <link rel="stylesheet" href="/styles/css/home.css" />
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#6342d8">
+  <meta name="theme-color" content="#1f1c2e">
+  <meta name="accent-color" content="#6342d8">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="icon" sizes="192x192" href="/images/icons/logo_192x192.png">
 
 </head>
+
 <body>
   <%- include('../partials/loader') %>
   <%- include('../partials/navbar') %>
@@ -18,39 +21,49 @@
   <main>
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-text">
-          <h2 id="greeting"><span id="greeting-msg"></span>, <%= user.name.split(' ')[0] %></h2>
-          <p>Ready to catch up with your batchmates and relive the best moments of 2k17?</p><br>
-          <a class="cta-btn" onclick="document.getElementById('posts').scrollIntoView({behavior: 'smooth'})">Explore posts &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
-        </div>
-        <div class="featured-photo">
-          <img src="<%= featuredPhoto.url %>" alt="Today's featured photo" class="featured-photo-img">
-          <div class="overlay-text">Featured photo</div>
-        </div>
-    </section>
-    
-    <% if (birthdays.length > 0) { %>
-<section id="birthday-spotlight" class="no-select">
-  <h3>🎉 Birthday Spotlight</h3>
-
-  <div class="gallery-grid">
-    <% birthdays.forEach(bdayuser => { %>
-      <div class="image-card" style="padding: 1.2rem;" onclick="window.location.href='/<%= bdayuser.username %>'">
-        <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo">
-        <h4 style="color: #7b5cf0; margin-bottom: 10px;"><%= bdayuser.name %> <%- bdayuser.isBirthdayToday ? '🎂' : '' %></h4>
-        <p class="grey-1">@<%= bdayuser.username%></p>
-        <% if(bdayuser.isBirthdayToday){ %>
-          <p style="line-height: 26px;">Happy Birthday! 🎉</p>
-        <% } else { %>
-        <p style="line-height: 26px;">on <%- formatDOB(bdayuser.dob) %></p>
-        <% } %>
+      <div class="hero-text">
+        <h2 id="greeting"><span id="greeting-msg"></span>, <%= user.name.split(' ')[0] %></h2>
+        <p>Ready to catch up with your batchmates and relive the best moments of 2k17?</p><br>
+        <a class="cta-btn" onclick="document.getElementById('posts').scrollIntoView({behavior: 'smooth'})">Explore posts &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
       </div>
-    <% }) %>
-  </div>
-</section>
-<% } %>
-    
-    <br><br>
+      <div class="featured-photo">
+        <img src="<%= featuredPhoto.url %>" alt="Today's featured photo" class="featured-photo-img">
+        <div class="overlay-text">Featured photo</div>
+      </div>
+    </section>
+
+    <% if (birthdays.length > 0) { %>
+    <section id="birthday-spotlight" class="no-select">
+      <h3><span class="fal fa-cake-candles"></span> Birthday Spotlight</h3>
+
+      <div class="gallery-grid">
+        <% birthdays.forEach(bdayuser => { %>
+        <div class="image-card" style="padding: 1.2rem;" onclick="window.location.href='/<%= bdayuser.username %>'">
+          <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo">
+          <h4 style="color: #7b5cf0; margin-bottom: 10px;"><%= bdayuser.name %> <%- bdayuser.isBirthdayToday ? '🎂' : '' %></h4>
+          <p class="grey-1">@<%= bdayuser.username%></p>
+          <% if(bdayuser.isBirthdayToday){ %>
+          <p style="line-height: 26px;">Happy Birthday! 🎉</p>
+          <% } else { %>
+          <p style="line-height: 26px;">on <%- formatDOB(bdayuser.dob) %></p>
+          <% } %>
+        </div>
+        <% }) %>
+      </div>
+    </section>
+    <% } %>
+
+    <br>
+
+    <div class="pwa-banner" id="pwaBanner" style="display: none;">
+      <div class="text">
+        <div class="title"><span class="fal fa-mobile-screen-button"></span> 2k17 is better in the app</div>
+        <div class="subtitle">Get notifications and much more</div>
+      </div>
+      <button class="install-btn" id="installBtn">Install</button>
+    </div>
+
+    <br class="small-only">
 
     <div class="create-post-box small-only" onclick="openPostPopup()">
       <p class="heading">Create a new post</p>
@@ -70,11 +83,14 @@
   <div id="comments-popup">
     <div class="overlay" onclick="hidePopup()" id="overlay"></div>
     <div class="comments-box">
-      <div class="heading"><p>Comments</p><p class="close-icon fas fa-times" onclick="hidePopup()"></p></div>
+      <div class="heading">
+        <p>Comments</p>
+        <p class="close-icon fas fa-times" onclick="hidePopup()"></p>
+      </div>
       <div class="comments-list" id="comments-list">
       </div>
       <div class="input-area">
-        <input id="new-comment" autocomplete="off" placeholder="Write a comment..."/>
+        <input id="new-comment" autocomplete="off" placeholder="Write a comment..." />
         <button type="button" id="newCommentBtn">Post</button>
       </div>
     </div>
@@ -107,12 +123,12 @@
         <p class="close-icon fal fa-xmark" onclick="closePostLikes()"></p>
       </div>
       <div class="post-likes-list" id="post-likes-list">
-        
+
       </div>
     </div>
   </div>
 
-  
+
 
   <%- include('../partials/footer.ejs') %>
 
@@ -127,14 +143,14 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       loadPosts('<%= user._id %>');
-      document.getElementById('media-input').addEventListener('change', function () {
+      document.getElementById('media-input').addEventListener('change', function() {
         var preview = document.getElementById('media-preview');
         preview.innerHTML = '';
         Array.from(this.files).forEach(file => {
           var url = URL.createObjectURL(file);
-          var el = file.type.startsWith('image')
-            ? `<img src="${url}" />`
-            : `<video src="${url}" muted autoplay loop />`;
+          var el = file.type.startsWith('image') ?
+            `<img src="${url}" />` :
+            `<video src="${url}" muted autoplay loop />`;
           preview.innerHTML += el;
         });
       });
@@ -142,7 +158,34 @@
   </script>
   <script src="/js/all.js"></script>
   <script src="/js/notifications.js"></script>
-  <script src="/js/home.js"></script> 
+  <script src="/js/home.js"></script>
+
+  <script>
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      const banner = document.getElementById('pwaBanner');
+      banner.style.display = 'flex';
+
+      document.getElementById('installBtn').addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const {
+            outcome
+          } = await deferredPrompt.userChoice;
+          deferredPrompt = null;
+        }
+      });
+    });
+
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('pwaBanner').style.display = 'none';
+    });
+  </script>
 
 </body>
+
 </html>

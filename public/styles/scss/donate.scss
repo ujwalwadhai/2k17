@@ -15,15 +15,28 @@ body {
   background: transparent;
   min-height: 90vh;
 
+  @media (max-width: 768px) {
+    padding: 4rem 0;
+    width: 100vw;
+  }
+
   .donate-container {
-    background: $bg-dark;
-    padding: 16px 28px;
-    padding-top: 12px;
+    backdrop-filter: blur(5px);
+    background: transparent;
+    padding: 1.2rem 2rem;
+    padding-top: 0.8rem;
     border-radius: 1.5rem;
-    max-width: 500px;
+    max-width: min(600px, 100vw);
     width: 100%;
     text-align: left;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 1);
+
+    @media (max-width: 768px) {
+      box-shadow: none;
+      padding: 16px 28px;
+      padding-top: 12px;
+      border-radius: 0;
+    }
 
     h1 {
       font-size: 28px;
@@ -38,10 +51,10 @@ body {
       line-height: 22px;
     }
 
-    .qr-box{
+    .qr-box {
       text-align: center;
-      
-      img.qr-code{
+
+      img.qr-code {
         width: 60vw;
         max-width: 300px;
         max-height: 300px;
@@ -52,7 +65,7 @@ body {
 
 
     .donate-btn {
-      background: $primary;
+      background: $primary-dark;
       color: $text-light;
       padding: 0.8rem;
       border: none;
@@ -65,7 +78,7 @@ body {
       width: 100%;
 
       &:hover {
-        background: $primary-dark;
+        background: $primary;
       }
     }
   }

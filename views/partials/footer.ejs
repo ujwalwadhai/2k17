@@ -1,10 +1,10 @@
 <div id="notification-banner" style="display: none;">
-    <p>Would you like to recieve important notifications from 2k17 💌?</p>
-    <div class="actions">
-      <button id="later-btn" onclick="document.getElementById('notification-banner').style.display = 'none'">Maybe Later</button>
-      <button id="grant-btn" onclick="requestNotificationPermissionAndSubscribe()">Yes</button>
-    </div>
+  <p>Would you like to recieve important notifications from 2k17 💌?</p>
+  <div class="actions">
+    <button id="later-btn" onclick="document.getElementById('notification-banner').style.display = 'none'">Maybe Later</button>
+    <button id="grant-btn" onclick="requestNotificationPermissionAndSubscribe()">Yes</button>
   </div>
+</div>
 
 <footer class="site-footer">
   <div class="footer-left">
@@ -22,6 +22,29 @@
 <script>
   document.querySelectorAll('img').forEach(img => {
     img.addEventListener('contextmenu', event => event.preventDefault());
+  });
+
+  document.querySelectorAll('a').forEach(link => {
+    const href = link.getAttribute('href');
+    if (
+      href &&
+      !href.startsWith('http') &&
+      !link.hasAttribute('target') &&
+      !href.startsWith('mailto:') &&
+      !href.startsWith('#')
+    ) {
+      link.addEventListener('click', () => {
+        document.querySelector('body').style.pointerEvents = 'none';
+          document.querySelector('body').innerHTML += `<div id="full-loader">
+  <div class="loader-text" id="loader-text">
+      <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
+      <span class="letter" style="animation-delay: 0.15s"><span class='letter-green'>k</span></span>
+      <span class="letter" style="animation-delay: 0.3s"><span class='letter-red'>1</span></span>
+      <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
+  </div>
+</div>`;
+      });
+    }
   });
 </script>
 

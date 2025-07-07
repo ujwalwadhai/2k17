@@ -8,7 +8,11 @@ body {
   scroll-behavior: smooth;
   box-sizing: border-box;
   color: white;
-  background-color: $bg-dark;
+}
+
+main{
+  background: #100e1789;
+  backdrop-filter: blur(5px);
 }
 
 .hero {
@@ -105,7 +109,7 @@ body {
 .gallery {
   padding: 4rem 10%;
   text-align: left;
-  background: $bg-dark;
+  background: transparent;
 
   h3 {
     font-size: 2rem;
@@ -376,7 +380,7 @@ footer {
   }
 }
 
-@media screen and (max-width: 890px) {
+@media (max-width: 890px) {
 
   .newsletter-sub {
     background: $bg-dark;
@@ -551,4 +555,9 @@ footer {
       }
     }
   }
+}
+
+
+.about-and-newsletter{
+  background: transparent;
 }

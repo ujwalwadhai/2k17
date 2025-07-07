@@ -25,8 +25,8 @@ async function sendEmail(to, subject, htmlContent, includeBCC) {
       subject,
       html: htmlContent,
     };
-    if(includeBCC){
-      var admins = await Users.find({ role: 'admin' }, {email:1});
+    if (includeBCC) {
+      var admins = await Users.find({ role: 'admin' }, { email: 1 });
       var adminEmails = admins.map(u => u.email);
       mailOptions.bcc = adminEmails;
     }
@@ -51,7 +51,7 @@ async function LoginMail(to, data) {
   </p>
 </div>
 `
-  logActivity('', "Sent Email", `to ${to} for login alert`, {device: deviceInfo(data.useragent), method: data.method})
+  logActivity('', "Sent Email", `to ${to} for login alert`, { device: deviceInfo(data.useragent), method: data.method })
   sendEmail(to, 'Login Alert • 2k17 Platform', template);
 }
 
@@ -78,7 +78,7 @@ async function OTPMail(to, data) {
       </div>
     </div>
   </div>`
-  logActivity('', "Sent Email", `to ${to} for OTP`, {device: deviceInfo(data.useragent), otp: data.otp})
+  logActivity('', "Sent Email", `to ${to} for OTP`, { device: deviceInfo(data.useragent), otp: data.otp })
   sendEmail(to, 'OTP for login • 2k17 Platform', template);
 }
 
@@ -115,7 +115,7 @@ async function NewCommentMail(to, data) {
   </div>
 
 </body>`
-  logActivity('', "Sent Email", `to ${to} for comment on post`, {postLink: data.postLink})
+  logActivity('', "Sent Email", `to ${to} for comment on post`, { postLink: data.postLink })
   sendEmail(to, 'New comment on your post • 2k17 Platform', template, true);
 }
 
@@ -138,7 +138,7 @@ async function UserReportMail(to, data) {
       2k17 Platform
     </p>
   </div>`
-  logActivity('', "Sent Email", `to ${to} for report acknowledgement`, {report: data.reportId})
+  logActivity('', "Sent Email", `to ${to} for report acknowledgement`, { report: data.reportId })
   sendEmail(to, "Report received • 2k17 Platform", template);
 }
 
@@ -160,7 +160,7 @@ async function ReportResolvedMail(to, data) {
       2k17 Platform
     </p>
   </div>`
-  logActivity('', "Sent Email", `to ${to} for report resolution`, {report: data.reportId})
+  logActivity('', "Sent Email", `to ${to} for report resolution`, { report: data.reportId })
   sendEmail(to, "Report resolved • 2k17 Platform", template);
 }
 
@@ -212,7 +212,7 @@ async function VerifyNewEmailMail(to, data) {
       2k17 Platform
     </p>
   </div>`
-  logActivity('', "Sent Email", `to ${to} for email verification`, {VerificationLink: data.link})
+  logActivity('', "Sent Email", `to ${to} for email verification`, { VerificationLink: data.link })
   sendEmail(to, 'Verify your new email • 2k17 Platform', template);
 }
 
@@ -231,7 +231,7 @@ async function AccountActivationMail(to, data) {
       2k17 Platform
     </p>
   </div>`
-  logActivity('', "Sent Email", `to ${to} for account activation`, {VerificationLink: data.link})
+  logActivity('', "Sent Email", `to ${to} for account activation`, { VerificationLink: data.link })
   sendEmail(to, 'Verify your email • 2k17 Platform', template);
 }
 
@@ -253,7 +253,7 @@ async function ResetPasswordMail(to, data) {
 </div>
 
       `
-  logActivity('', "Sent Email", `to ${to} for password reset link`, {resetLink: data.link})
+  logActivity('', "Sent Email", `to ${to} for password reset link`, { resetLink: data.link })
   sendEmail(to, 'Password reset link • 2k17 Platform', template);
 }
 
@@ -290,7 +290,7 @@ async function NewsLetterSubscribeMail(to, data) {
   var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
               <h3 style="color: #7b5cf0;">Newsletter subscription</h3>
               <p>${data.email} subscribed to our newsletter.</p>
-              <p style="color: #888;">Ujwal W.</p><p style="color: #888;">2k17 Platform</p>
+              <p style="color: #888;">Mail System</p><p style="color: #888;">2k17 Platform</p>
             </div>`
   sendEmail(to, 'Newsletter subscription • 2k17 Platform', template);
 }
@@ -366,7 +366,7 @@ async function WeeklyReportMail(to, data) {
     2k17 Platform
   </p>
 </div>`
-sendEmail(to, "Weekly Analytics Report", template);
+  sendEmail(to, "Weekly Analytics Report", template);
 }
 
 async function sendMail(type, to, data) {
@@ -376,18 +376,17 @@ async function sendMail(type, to, data) {
   if (type == 'report_admins') AdminReportMail(to, data);
   if (type == 'verify-new-email') VerifyNewEmailMail(to, data);
   if (type == 'reset-password') ResetPasswordMail(to, data);
-  if (type == 'newcomment') NewCommentMail(to, data); 
-  if (type == 'report_resolved') ReportResolvedMail(to, data); 
-  if (type == 'birthday') BirthdayMail(to, data); 
-  if (type == 'account_activation') AccountActivationMail(to, data); 
-  if (type == 'contact_form') ContactFormMail(to, data); 
-  if (type == 'newsletter_preview') NewsLetterPreviewMail(to, data); 
-  if (type == 'newsletter') NewsLetterMail(to, data); 
-  if (type == 'newsletter_subscribe') NewsLetterSubscribeMail(to, data); 
-  if (type == 'user_registered') UserRegisteredMail(to, data); 
-  if (type == 'new_user_registration') RegisteredDataMail(to, data); 
-  if (type == 'weeklyReport') WeeklyReportMail(to, data);
+  if (type == 'newcomment') NewCommentMail(to, data);
+  if (type == 'report_resolved') ReportResolvedMail(to, data);
+  if (type == 'birthday') BirthdayMail(to, data);
+  if (type == 'account_activation') AccountActivationMail(to, data);
+  if (type == 'contact_form') ContactFormMail(to, data);
+  if (type == 'newsletter_preview') NewsLetterPreviewMail(to, data);
+  if (type == 'newsletter') NewsLetterMail(to, data);
+  if (type == 'newsletter_subscribe') NewsLetterSubscribeMail(to, data);
+  if (type == 'user_registered') UserRegisteredMail(to, data);
+  if (type == 'new_user_registration') RegisteredDataMail(to, data);
+  if (type == 'weekly_report') WeeklyReportMail(to, data);
 }
 
 module.exports = sendMail;
- 

@@ -67,7 +67,7 @@ async function sendPushNotification({ userId, type, data = {} }) {
     const userIds = allSettings.map(s => s.user);
 
     users = await Users.find({
-      _id: { $in: userIds }, name: "Ujwal Wadhai",
+      _id: { $in: userIds },
       pushSubscriptions: { $exists: true, $not: { $size: 0 } }
     }).select('pushSubscriptions');
   }
@@ -87,9 +87,11 @@ async function sendPushNotification({ userId, type, data = {} }) {
     }
 
     if (validSubs.length !== user.pushSubscriptions.length) {
-      user.pushSubscriptions = validSubs;
-      await user.save().catch(e => console.error('Failed to update subscriptions', e));
-    }
+  await Users.updateOne(
+    { _id: user._id },
+    { $set: { pushSubscriptions: validSubs } }
+  ).catch(e => console.error('Failed to update subscriptions', e));
+}
   }
 }
 

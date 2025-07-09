@@ -1,4 +1,4 @@
-@use 'global' as *;
+
 
 body,
 html {
@@ -33,7 +33,7 @@ body {
     text-align: center;
     margin-top: 84px;
     margin-bottom: 20px;
-    color: $primary-dark;
+    color: var(--primary-dark);
   }
 
   #searchInput {
@@ -46,12 +46,12 @@ body {
     border-radius: 8px;
     background: transparent;
     backdrop-filter: blur(20px);
-    color: $text-light;
+    color: var(--text-light);
     outline: none;
     max-width: 400px;
 
     &:focus {
-      border: 1px solid $primary;
+      border: 1px solid var(--primary);
     }
   }
 
@@ -106,9 +106,9 @@ body {
 
       span {
         font-size: 0.8rem;
-        color: $text-muted;
+        color: var(--text-muted);
         margin-left: 8px;
-        background: $primary-dark;
+        background: var(--primary-dark);
         color: white;
         border-radius: 4px;
         padding: 4px 8px;
@@ -121,19 +121,19 @@ body {
       padding: 0;
       margin: 0;
       margin-top: 8px;
-      color: $text-light;
+      color: var(--text-light);
       font-size: 14px;
     }
 
     .username {
-      color: $text-light;
+      color: var(--text-light);
       font-size: 14px;
       cursor: pointer;
     }
 
     .bio {
       font-size: 0.9rem;
-      color: $text-light;
+      color: var(--text-light);
       margin-bottom: 16px;
     }
 

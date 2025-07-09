@@ -13,30 +13,6 @@ const formattedYesterday = yesterday.toLocaleDateString('en-IN', {
     timeZone: 'Asia/Kolkata'
 });
 
-async function getTopFile() {
-    const topFile = await PageViews.aggregate([
-        {
-            $match: {
-                date: formattedYesterday,
-                route: { $regex: /^\/memories\/file\// }
-            }
-        },
-        {
-            $group: {
-                _id: '$route',
-                total: { $sum: '$visits' }
-            }
-        },
-        { $sort: { total: -1 } },
-        { $limit: 1 }
-    ]);
-    if (topFile.length) {
-        var file = await Files.findOne({ _id: topFile[0]._id.replace('/memories/file/', '') }).select("url")
-        return { file, _id: topFile[0]._id }
-    }
-    return null
-}
-
 cron.schedule('2 0 * * *', async () => {
     console.log('[CRON] Creating popular file post...');
 

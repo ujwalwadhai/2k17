@@ -1,4 +1,4 @@
-@use 'global' as *;
+
 
 body {
   margin: 0;
@@ -55,15 +55,15 @@ main{
     }
 
     .cta-btn {
-      background: $primary-dark;
-      color: $text-light;
+      background: var(--primary-dark);
+      color: var(--text-light);
       padding: 0.75rem 1.5rem;
       text-decoration: none;
       border-radius: 8px;
       transition: 0.3s;
 
       &:hover {
-        background: $primary;
+        background: var(--primary);
       }
     }
   }
@@ -74,7 +74,7 @@ main{
     display: inline-block;
     width: 100%;
     max-width: 40vw;
-    border: 1px solid $text-muted;
+    border: 1px solid var(--text-muted);
     border-radius: 12px;
 
 
@@ -155,7 +155,7 @@ main{
   padding-bottom: 6px;
 
   .member-card {
-    background: $bg-dark;
+    background: var(--bg-dark);
     user-select: none;
     padding: 1.2rem;
     text-align: left;
@@ -206,7 +206,7 @@ main{
   padding-bottom: 32px;
 
   .image-card {
-    background: $bg-dark;
+    background: var(--bg-dark);
     user-select: none;
     padding: 0;
     border-radius: 1rem;
@@ -238,7 +238,7 @@ main{
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 
   .feature-card {
-    background: $bg-dark;
+    background: var(--bg-dark);
     user-select: none;
     padding: 1.5rem;
     text-align: left;
@@ -271,10 +271,10 @@ main{
 footer {
   text-align: center;
   padding: 1.5rem;
-  background: $bg-dark;
+  background: var(--bg-dark);
   color: grey;
   font-size: 0.9rem;
-  border-top: 1px solid $text-muted;
+  border-top: 1px solid var(--text-muted);
 }
 
 
@@ -316,7 +316,7 @@ footer {
     }
 
     .newsletter-sub {
-      background: $bg-dark;
+      background: var(--bg-dark);
     }
   }
 }
@@ -333,9 +333,9 @@ footer {
     }
     
     .newsletter-sub {
-      background: $bg-dark;
+      background: var(--bg-dark);
       box-sizing: border-box;
-      border: 3px solid $primary;
+      border: 3px solid var(--primary);
       border-radius: 8px;
       margin: 5rem 0;
       margin-right: 5%;
@@ -351,18 +351,18 @@ footer {
         margin: 0.5rem 0;
         border: none;
         border-radius: 8px;
-        background: $input-bg;
-        color: $text-light;
+        background: var(--input-bg);
+        color: var(--text-light);
         outline: none;
 
         &:focus {
-          border: 1px solid $primary;
+          border: 1px solid var(--primary);
         }
       }
 
       button {
-        background: $primary;
-        color: $text-light;
+        background: var(--primary);
+        color: var(--text-light);
         padding: 0.8rem;
         border: none;
         border-radius: 8px;
@@ -373,7 +373,7 @@ footer {
         width: 100%;
 
         &:hover {
-          background: $primary-dark;
+          background: var(--primary-dark);
         }
       }
     }
@@ -383,11 +383,11 @@ footer {
 @media (max-width: 890px) {
 
   .newsletter-sub {
-    background: $bg-dark;
+    background: var(--bg-dark);
     box-sizing: border-box;
     margin: 4rem 8%;
     padding: 8px 32px;
-    border: 3px solid $primary;
+    border: 3px solid var(--primary);
     border-radius: 8px;
     width: auto;
     min-width: 250px;
@@ -398,18 +398,18 @@ footer {
       margin: 0.5rem 0;
       border: none;
       border-radius: 8px;
-      background: $input-bg;
-      color: $text-light;
+      background: var(--input-bg);
+      color: var(--text-light);
       outline: none;
 
       &:focus {
-        border: 1px solid $primary;
+        border: 1px solid var(--primary);
       }
     }
 
     button {
-      background: $primary;
-      color: $text-light;
+      background: var(--primary);
+      color: var(--text-light);
       padding: 0.8rem;
       border: none;
       border-radius: 8px;
@@ -420,7 +420,7 @@ footer {
       width: 100%;
 
       &:hover {
-        background: $primary-dark;
+        background: var(--primary-dark);
       }
     }
   }
@@ -433,19 +433,19 @@ footer {
     margin: 0.5rem 0;
     border: none;
     border-radius: 8px;
-    background: $input-bg;
-    color: $text-light;
+    background: var(--input-bg);
+    color: var(--text-light);
     outline: none;
     max-width: 400px;
 
     &:focus {
-      border: 1px solid $primary;
+      border: 1px solid var(--primary);
     }
   }
 
   button {
-    background: $primary;
-    color: $text-light;
+    background: var(--primary);
+    color: var(--text-light);
     padding: 0.8rem;
     border: none;
     border-radius: 8px;
@@ -457,7 +457,7 @@ footer {
     max-width: 400px;
 
     &:hover {
-      background: $primary-dark;
+      background: var(--primary-dark);
     }
   }
 
@@ -486,29 +486,29 @@ footer {
 
 
 #birthday-spotlight {
-  background: $bg-dark;
+  background: var(--bg-dark);
   padding: 4rem 10%;
   border-radius: 10px;
   margin-top: 2rem;
   padding-bottom: 1rem;
 
   h3 {
-    color: $text-light;
+    color: var(--text-light);
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
 
   p {
-    color: $text-muted;
+    color: var(--text-muted);
     font-size: 1rem;
     margin-bottom: 0;
 
     a {
-      color: $primary-light;
+      color: var(--primary-light);
       text-decoration: underline;
       &:hover {
-        color: $primary;
+        color: var(--primary);
       }
     }
   }
@@ -521,7 +521,7 @@ footer {
     padding-bottom: 0;
 
     .image-card {
-      background: $bg-dark;
+      background: var(--bg-dark);
       border-radius: 10px;
       height: max-content;
       cursor: pointer;
@@ -531,7 +531,7 @@ footer {
       &:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        background: $bg-dark3;
+        background: var(--bg-dark3);
       }
 
       img {
@@ -542,13 +542,13 @@ footer {
       }
 
       h4 {
-        color: $primary;
+        color: var(--primary);
         font-size: 1.3rem;
         margin: 10px 0;
       }
 
       p {
-        color: $text-muted;
+        color: var(--text-muted);
         font-size: 1rem;
         line-height: 1.6;
         margin-top: 8px;

@@ -35,6 +35,8 @@ router.post('/change-password', isLoggedIn, usersController.changePassword)
 
 router.post('/settings/privacy/update', isLoggedIn, usersController.updatePrivacySettings)
 
+router.post('/change-theme', isLoggedIn, usersController.changeTheme)
+
 
 
 router.post('/fetch/posts', isLoggedIn, postsController.fetchPosts);

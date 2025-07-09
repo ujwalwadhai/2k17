@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-theme="<%= theme? theme : 'purple' %>" lang="en">
 
 <head>
   <%- include('../partials/head.ejs') %>
@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/styles/css/home.css" />
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1f1c2e">
-  <meta name="accent-color" content="#6342d8">
+  <meta name="accent-color" content="<%= theme? theme : 'purple' %>">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="icon" sizes="192x192" href="/images/icons/logo_192x192.png">
@@ -40,7 +40,7 @@
         <% birthdays.forEach(bdayuser => { %>
         <div class="image-card" style="padding: 1.2rem;" onclick="window.location.href='/<%= bdayuser.username %>'">
           <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo">
-          <h4 style="color: #7b5cf0; margin-bottom: 10px;"><%= bdayuser.name %> <%- bdayuser.isBirthdayToday ? '🎂' : '' %></h4>
+          <h4 style="margin-bottom: 10px;"><%= bdayuser.name %> <%- bdayuser.isBirthdayToday ? '🎂' : '' %></h4>
           <p class="grey-1">@<%= bdayuser.username%></p>
           <% if(bdayuser.isBirthdayToday){ %>
           <p style="line-height: 26px;">Happy Birthday! 🎉</p>

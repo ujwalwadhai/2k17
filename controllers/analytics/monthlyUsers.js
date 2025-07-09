@@ -183,41 +183,11 @@ const monthlyUsers = async (req, res) => {
             { $limit: 1 }
         ]);
 
-        // Peak hour analysis (when most DailyUsers first arrived)
-        const hourly = await DailyUsers.aggregate([
-            {
-                $match: {
-                    createdAt: { $gte: currentStart, $lte: currentEnd }
-                }
-            },
-            {
-                $project: {
-                    hour: {
-                        $hour: {
-                            date: { $add: ['$createdAt', 19800000] },
-                            timezone: 'Asia/Kolkata'
-                        }
-                    }
-                }
-            },
-            {
-                $group: {
-                    _id: '$hour',
-                    total: { $sum: 1 }
-                }
-            },
-            { $sort: { total: -1 } },
-            { $limit: 1 }
-        ]);
-
 
         // New users this month
         const newUsers = await Users.countDocuments({
             joinedAt: { $gte: currentStart, $lte: currentEnd }
         });
-        const peakHour = hourly.length
-            ? `${(hourly[0]._id % 12 || 12)} ${hourly[0]._id < 12 ? 'AM' : 'PM'}`
-            : null;
 
         res.json({
             current,
@@ -236,7 +206,6 @@ const monthlyUsers = async (req, res) => {
             topRoute: topRoute[0]?._id || null,
             topFolder: topFolder[0]?._id || null,
             topFile: topFile[0]?._id || null,
-            peakHour,
             newUsers,
             platform_breakdown
         });

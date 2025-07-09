@@ -1,4 +1,4 @@
-@use 'global' as *;
+
 @use 'components/toast' as *;
 
 html, body{
@@ -67,7 +67,7 @@ html, body{
 }
 
 a {
-  color: $primary;
+  color: var(--primary);
   text-decoration: none;
   user-select: none;
   cursor: pointer;

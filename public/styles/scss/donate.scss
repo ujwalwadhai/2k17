@@ -1,4 +1,4 @@
-@use 'global' as *;
+
 
 body {
   height: 100vh;
@@ -46,7 +46,7 @@ body {
 
     .description {
       font-size: 0.95rem;
-      color: $text-light;
+      color: var(--text-light);
       margin-bottom: 2rem;
       line-height: 22px;
     }
@@ -65,8 +65,8 @@ body {
 
 
     .donate-btn {
-      background: $primary-dark;
-      color: $text-light;
+      background: var(--primary-dark);
+      color: var(--text-light);
       padding: 0.8rem;
       border: none;
       border-radius: 8px;
@@ -78,7 +78,7 @@ body {
       width: 100%;
 
       &:hover {
-        background: $primary;
+        background: var(--primary);
       }
     }
   }

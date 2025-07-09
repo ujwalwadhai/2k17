@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-theme="<%= theme || 'purple' %>" lang="en">
 
 <head>
   <%- include('../partials/head') %>
@@ -19,6 +19,7 @@
             Update profile</a></li>
         <li onclick="openChangePassword()"><a><span class="fal fa-unlock-keyhole"></span> Change password</a></li>
         <li onclick="openChangeEmail()"><a><span class="fal fa-envelope"></span> <%- user.email ? 'Change' : 'Add' %> email</a></li>
+        <li onclick="openChangeTheme()"><a><span class="fal fa-palette"></span> Change theme &nbsp; <span class="fal fa-sparkles" style="color: yellow; font-size: 20px"></span></a></li>
         <li onclick="openNotificationSettings()"><a><span class="fal fa-bell"></span> Notifications</a></li>
         <li onclick="openPrivacySettings()"><a><span class="fal fa-eye-slash"></span> Privacy & Visibility</a></li>
       </ul>
@@ -70,6 +71,43 @@
 
           <div id="settings-status"></div>
           <button type="submit">Save Settings</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="change-theme-popup">
+    <div class="overlay" onclick="closeChangeTheme()"></div>
+    <div class="change-theme-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-palette"></span>Change Theme</p>
+        <p class="close-icon fal fa-xmark" onclick="closeChangeTheme()"></p>
+      </div>
+      <div class="change-theme-list" id="change-theme-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;This only changes theme color. Dark mode will still be on.</span><br><br><br>
+        <form id="change-theme-form">
+          <div class="form-section">
+            <label>
+              <input type="radio" name="theme" value="purple" <%- theme == 'purple' ? 'checked' : '' %>>
+              Purple <%- theme == 'purple' ? '<span class="grey-1">(current theme)</span>' : '' %>
+            </label>
+            <label>
+              <input type="radio" value="blue" name="theme" <%- theme == 'blue' ? 'checked' : '' %>>
+              Blue <%- theme == 'blue' ? '<span class="grey-1">(current theme)</span>' : '' %>
+            </label>
+            <label>
+              <input type="radio" value="green" name="theme" <%- theme == 'green' ? 'checked' : '' %>>
+              Green <%- theme == 'green' ? '<span class="grey-1">(current theme)</span>' : '' %>
+            </label>
+            <label>
+              <input type="radio" value="orange" name="theme" <%- theme == 'orange' ? 'checked' : '' %>>
+              Orange <%- theme == 'orange' ? '<span class="grey-1">(current theme)</span>' : '' %>
+            </label>
+          </div><br>
+
+          <div id="change-theme-status"></div>
+          <button type="submit">Change</button>
         </form>
 
       </div>

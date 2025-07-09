@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
+  theme: {
+    type: String,
+    default: 'purple',
+    enum: ['purple', 'blue', 'green', 'orange']
+  },
   pushSubscriptions: [{
     endpoint: String,
     keys: {

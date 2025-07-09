@@ -1,18 +1,18 @@
-@use 'global' as *;
+
 
 #notification-banner {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: $bg-dark2;
-  color: $text-light;
+  background-color: var(--bg-dark2);
+  color: var(--text-light);
   padding: 1rem 1.5rem;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   max-width: 400px;
   margin: auto;
-  border: 0.1px solid $text-disabled;
+  border: 0.1px solid var(--text-disabled);
   border-radius: 4px 4px 0 0;
 
   p {
@@ -36,20 +36,20 @@
       font-weight: 500;
 
       &:last-child {
-        background-color: $primary;
-        color: $text-light;
+        background-color: var(--primary);
+        color: var(--text-light);
 
         &:hover {
-          background-color: $primary-dark;
+          background-color: var(--primary-dark);
         }
       }
 
       &:first-child {
         background-color: transparent;
-        color: $text-muted;
+        color: var(--text-muted);
 
         &:hover {
-          color: $text-light;
+          color: var(--text-light);
         }
       }
     }
@@ -60,20 +60,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $bg-dark2;
-  color: $text-muted;
+  background-color: var(--bg-dark2);
+  color: var(--text-muted);
   padding: 14px 20px;
   font-size: 14px;
-  border-top: 1px solid $bg-dark3;
+  border-top: 1px solid var(--bg-dark3);
 
   a {
-    color: $text-muted;
+    color: var(--text-muted);
     margin-left: 20px;
     text-decoration: none;
     transition: color 0.2s ease;
 
     &:hover {
-      color: $primary;
+      color: var(--primary);
     }
   }
 
@@ -92,7 +92,7 @@
         margin-right: 8px;
     }
     span {
-      color: $text-muted;
+      color: var(--text-muted);
     }
   }
 

@@ -1,7 +1,7 @@
 body {
   margin: 0;
   background: transparent;
-  color: #ffffff;
+  color: var(--text-light);
 }
 
 .container {
@@ -47,7 +47,7 @@ body {
   font-size: 0.9rem;
 }
 .right-pane .signup-form p a {
-  color: #7b5cf0;
+  color: var(--primary);
   text-decoration: none;
 }
 .right-pane .signup-form input {
@@ -57,12 +57,12 @@ body {
   border: none;
   border-radius: 8px;
   background: transparent;
-  color: #ffffff;
+  color: var(--text-light);
   outline: none;
-  border: 1px solid #555;
+  border: 1px solid var(--text-disabled);
 }
 .right-pane .signup-form input:focus {
-  border: 1px solid #7b5cf0;
+  border: 1px solid var(--primary);
 }
 .right-pane .signup-form .password-field {
   position: relative;
@@ -119,27 +119,27 @@ body {
   width: auto;
 }
 .right-pane .signup-form .terms a {
-  color: #7b5cf0;
+  color: var(--primary);
   text-decoration: none;
 }
 .right-pane .signup-form .primary-btn {
-  background: #6342d8;
+  background: var(--primary-dark);
   padding: 0.8rem;
   width: 100%;
   border: none;
   border-radius: 8px;
-  color: #ffffff;
+  color: var(--text-light);
   font-weight: bold;
   margin-top: 1rem;
   cursor: pointer;
 }
 .right-pane .signup-form .primary-btn:hover {
-  background: #7b5cf0;
+  background: var(--primary);
 }
 .right-pane .signup-form .divider {
   text-align: center;
   margin: 1rem 0;
-  color: #9e9e9e;
+  color: var(--text-muted);
 }
 .right-pane .signup-form .social-buttons {
   display: flex;
@@ -147,15 +147,15 @@ body {
 }
 .right-pane .signup-form .social-buttons button {
   flex: 1;
-  background: #2c283d;
-  color: #ffffff;
+  background: var(--input-bg);
+  color: var(--text-light);
   border: none;
   padding: 0.8rem;
   border-radius: 8px;
   cursor: pointer;
 }
 .right-pane .signup-form .social-buttons button:hover {
-  background: #9e9e9e;
+  background: var(--text-muted);
 }
 
 @media (max-width: 1024px) {
@@ -227,13 +227,13 @@ body {
 }
 #forgotten-password-popup .forgotten-password-box {
   width: 85vw;
-  max-width: 700px;
-  max-height: 600px;
+  max-width: var(--maxWidth, 700px);
+  max-height: var(--maxHeight, 600px);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -249,7 +249,7 @@ body {
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #9e9e9e;
+  border-bottom: 1px solid var(--text-muted);
 }
 #forgotten-password-popup .forgotten-password-box .heading .title span {
   margin-right: 16px;
@@ -258,12 +258,12 @@ body {
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   padding: 8px;
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #9e9e9e;
+  border: 0.2px solid var(--text-muted);
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -278,20 +278,20 @@ body {
   margin: 0.5rem 0;
   border: none;
   border-radius: 8px;
-  background: #2c283d;
-  color: #ffffff;
+  background: var(--input-bg);
+  color: var(--text-light);
   outline: none;
   resize: vertical;
 }
 #forgotten-password-popup .forgotten-password-box .forgotten-password-list input:focus {
-  border: 1px solid #7b5cf0;
+  border: 1px solid var(--primary);
 }
 #forgotten-password-popup .forgotten-password-box .forgotten-password-list #forgotten-password-status {
   margin-top: 4px;
   font-weight: 500;
 }
 #forgotten-password-popup .forgotten-password-box .forgotten-password-list button[type=submit] {
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -302,7 +302,7 @@ body {
   transition: background 0.3s;
 }
 #forgotten-password-popup .forgotten-password-box .forgotten-password-list button[type=submit]:hover {
-  background-color: #7b5cf0;
+  background-color: var(--primary);
 }
 
 @media (max-width: 600px) {

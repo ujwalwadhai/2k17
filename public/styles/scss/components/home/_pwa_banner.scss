@@ -1,10 +1,10 @@
-@use '../../global' as *;
+
 
 .pwa-banner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $bg-dark2;
+  background-color: var(--bg-dark2);
   color: #ffffffcc;
   padding: 1rem 1.2rem;
   border-radius: 0.5rem;
@@ -38,7 +38,7 @@
   }
 
   .install-btn {
-    background-color: $primary-dark;
+    background-color: var(--primary-dark);
     color: #fff;
     border: none;
     padding: 0.6rem 1.2rem;
@@ -48,7 +48,7 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: rgba($primary-dark, 0.5);
+      background-color: var(--primary);
     }
   }
 }

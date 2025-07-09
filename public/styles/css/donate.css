@@ -45,7 +45,7 @@ body {
 }
 .donate-section .donate-container .description {
   font-size: 0.95rem;
-  color: #ffffff;
+  color: var(--text-light);
   margin-bottom: 2rem;
   line-height: 22px;
 }
@@ -60,8 +60,8 @@ body {
   text-align: center;
 }
 .donate-section .donate-container .donate-btn {
-  background: #6342d8;
-  color: #ffffff;
+  background: var(--primary-dark);
+  color: var(--text-light);
   padding: 0.8rem;
   border: none;
   border-radius: 8px;
@@ -73,7 +73,7 @@ body {
   width: 100%;
 }
 .donate-section .donate-container .donate-btn:hover {
-  background: #7b5cf0;
+  background: var(--primary);
 }
 
 /*# sourceMappingURL=donate.css.map */

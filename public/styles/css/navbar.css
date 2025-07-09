@@ -7,8 +7,8 @@
   position: absolute;
   top: 112%;
   right: 0;
-  background: #1f1c2e;
-  border: 1px solid #9e9e9e;
+  background: var(--bg-dark);
+  border: 1px solid var(--text-muted);
   border-radius: 0.5rem;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   opacity: 0;
@@ -32,7 +32,7 @@
   cursor: pointer;
 }
 .header .user-capsule-wrapper .user-dropdown li:hover {
-  background: #252236;
+  background: var(--bg-dark2);
 }
 .header .user-capsule-wrapper .user-dropdown li a {
   text-decoration: none !important;
@@ -56,9 +56,9 @@
   padding: 2px;
   padding-right: 12px;
   margin: 0;
-  border: 1px solid #9e9e9e;
+  border: 1px solid var(--text-muted);
   border-radius: 24px;
-  background-color: #1f1c2e;
+  background-color: var(--bg-dark);
   cursor: pointer;
 }
 .header .user-capsule-wrapper .user-capsule img {
@@ -77,7 +77,7 @@
   padding-right: 2px;
 }
 .header nav.small-only .user-capsule-2 a {
-  color: #7b5cf0;
+  color: var(--primary);
   text-decoration: none;
   user-select: none;
   height: 32px;
@@ -178,7 +178,7 @@
   transition-duration: 0.3s;
 }
 .header nav.large-and-medium ul.nav-items li a span.fal:hover {
-  color: #7b5cf0;
+  color: var(--primary);
 }
 .header nav.large-and-medium ul.nav-items li a .fal.fa-bell {
   position: relative;
@@ -196,14 +196,14 @@
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
 .header nav.large-and-medium ul.nav-items .login-btn {
-  background: #6342d8;
+  background: var(--primary-dark);
   color: white;
   padding: 10px 32px;
   border-radius: 5px;
   transition: 0.3s ease;
 }
 .header nav.large-and-medium ul.nav-items .login-btn:hover {
-  background: #6342d8;
+  background: var(--primary-dark);
   text-decoration: none;
 }
 .header nav.small-only {
@@ -232,7 +232,7 @@
   font-family: "Lato", "Times New Roman", Times, serif;
 }
 .header nav.small-only .login-btn {
-  background: #6342d8;
+  background: var(--primary-dark);
   margin-left: auto;
   color: white;
   padding: 10px 28px;
@@ -243,7 +243,7 @@
   cursor: pointer;
 }
 .header nav.small-only .login-btn:hover {
-  background: #6342d8;
+  background: var(--primary-dark);
   text-decoration: none;
 }
 .header #mobileSidebar {
@@ -260,23 +260,23 @@
   width: 80%;
   max-width: 300px;
   height: 100%;
-  background-color: #1f1c2e;
+  background-color: var(--bg-dark);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
 }
 .header #mobileSidebar #sidebarContent .close-icon {
   position: absolute;
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   right: 12px;
   color: white;
   top: 12px;
   padding: 10px 12px;
   border-radius: 4px;
   cursor: pointer;
-  border: 1.5px solid #ffffff;
+  border: 1.5px solid var(--text-light);
 }
 .header #mobileSidebar #sidebarContent .close-icon:hover {
-  background-color: #1f1c2e;
+  background-color: var(--bg-dark);
   transition: 0.3s ease;
 }
 .header #mobileSidebar #sidebarContent .close-icon span {
@@ -307,7 +307,7 @@
   width: 36px;
 }
 .header #mobileSidebar #sidebarContent ul li:hover {
-  background-color: #252236;
+  background-color: var(--bg-dark2);
 }
 
 @media screen and (min-width: 641px) {

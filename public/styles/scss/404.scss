@@ -1,7 +1,6 @@
-@use 'global' as *;
 
 body {
-  color: $text-light;
+  color: var(--text-light);
   font-family: 'Lato', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
@@ -20,7 +19,7 @@ body {
   height: calc(100vh - 47px);
 
   h2 {
-    color: $primary;
+    color: var(--primary);
     font-size: 3.2rem;
     margin: 0;
   }
@@ -28,19 +27,19 @@ body {
   .heading {
     font-size: 2.4rem;
     margin: 0;
-    color: $primary;
+    color: var(--primary);
   }
 
   .message {
     margin: 1rem 0;
-    color: $text-muted;
+    color: var(--text-muted);
     font-size: 1.1rem;
   }
 
   .back-btn {
     display: inline-block;
     margin-top: 1rem;
-    background-color: $primary-dark;
+    background-color: var(--primary-dark);
     color: #fff;
     padding: 0.6rem 1.2rem;
     border-radius: 5px;
@@ -48,7 +47,7 @@ body {
     transition: background 0.3s;
 
     &:hover {
-      background-color: $primary;
+      background-color: var(--primary);
     }
 
     span {

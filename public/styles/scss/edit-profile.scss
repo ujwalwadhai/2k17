@@ -1,4 +1,4 @@
-@use 'global' as *;
+
 
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
@@ -20,7 +20,7 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
-    color: $primary;
+    color: var(--primary);
   }
 
   .photo-section {
@@ -34,7 +34,7 @@ body {
       cursor: pointer;
       text-align: center;
       font-size: 0.85rem;
-      color: $text-muted;
+      color: var(--text-muted);
 
       img {
         width: 120px;
@@ -45,11 +45,11 @@ body {
       }
 
       span {
-        background-color: $bg-dark2;
+        background-color: var(--bg-dark2);
         padding: 0.5rem 1rem;
         border-radius: 4px;
         margin-top: 6px;
-        border: 0.5px solid $text-muted;
+        border: 0.5px solid var(--text-muted);
       }
 
       input[type="file"] {
@@ -71,7 +71,7 @@ body {
     textarea {
       width: 100%;
       padding: 0.75rem;
-      border: 1px solid $text-muted;
+      border: 1px solid var(--text-muted);
       border-radius: 6px;
       background: transparent;
       backdrop-filter: blur(10px);
@@ -80,7 +80,7 @@ body {
 
       &:focus {
         outline: none;
-        border-color: $primary-dark;
+        border-color: var(--primary-dark);
       }
     }
 
@@ -92,7 +92,7 @@ body {
   .btn-save {
     width: 100%;
     padding: 0.75rem;
-    background-color: $primary-dark;
+    background-color: var(--primary-dark);
     color: white;
     border: none;
     font-size: 1rem;
@@ -102,7 +102,7 @@ body {
     transition: background 0.3s ease;
 
     &:hover {
-      background-color: $primary;
+      background-color: var(--primary);
     }
   }
 }
@@ -127,7 +127,7 @@ body {
   margin-top: 12px;
   padding: 8px 12px;
   border-radius: 4px;
-  background-color: $primary-dark;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   cursor: pointer;

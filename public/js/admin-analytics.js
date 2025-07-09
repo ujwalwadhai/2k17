@@ -198,7 +198,7 @@ async function updateDailyRouteChart(dateStr) {
                         {
                             label: `Visits (${dateStr})`,
                             data: values,
-                            backgroundColor: '#4120bb',
+                            backgroundColor: themeColor,
                             categoryPercentage: 0.9,
                             barPercentage: 1
                         }
@@ -321,15 +321,11 @@ async function loadMonthlySummary() {
                         </tr>
                         <tr>
                             <td>Most viewed file</td>
-                            <td>${data.topFile ? `<a href='${data.topFile}'>View Folder</a>` : '<span class="grey-1">No data available</span>'}</td>
+                            <td>${data.topFile ? `<a href='${data.topFile}'>View File</a>` : '<span class="grey-1">No data available</span>'}</td>
                         </tr>
                         <tr>
                             <td>New users this month</td>
                             <td>${data.newUsers || '<span class="grey-1">No data available</span>'}</td>
-                        </tr>
-                        <tr>
-                            <td>Peak visit time</td>
-                            <td>${data.peakHour || '<span class="grey-1">No data available</span>'}</td>
                         </tr>
                         `
 
@@ -367,7 +363,7 @@ async function loadPlatformPieChart(data) {
                     labels: labels,
                     datasets: [{
                         data: values,
-                        backgroundColor: ['#7b5cf0', '#4dd0e1', '#81c784', '#ffb74d'],
+                        backgroundColor: [themeColor, '#4dd0e1', '#81c784', '#ffb74d'],
                         borderWidth: 0
                     }]
                 },

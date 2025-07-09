@@ -1,4 +1,4 @@
-@use 'global' as *;
+
 
 body{
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
@@ -10,12 +10,12 @@ body{
 
 .analytics-page {
   background-color: transparent;
-  color: $text-light;
+  color: var(--text-light);
   min-height: 100vh;
 
   h2 {
     font-size: 1.6rem;
-    color: $primary;
+    color: var(--primary);
     margin: 2rem;
     margin-bottom: 1.6rem;
     text-align: left;
@@ -28,7 +28,7 @@ body{
     border-radius: 10px;
 
     h3 {
-      color: $primary-light;
+      color: var(--primary-light);
       margin-bottom: 1rem;
       font-size: 1.25rem;
     }
@@ -36,25 +36,25 @@ body{
     .analytics-table {
       width: 100%;
       border-collapse: collapse;
-      background-color: $bg-dark3;
-      color: $text-light;
+      background-color: var(--bg-dark3);
+      color: var(--text-light);
 
       th,
       td {
         padding: 0.75rem 1rem;
         text-align: left;
-        border-bottom: 1px solid $input-border;
+        border-bottom: 1px solid var(--input-border);
 
       }
 
       th {
-        background-color: $bg-dark2;
-        color: $text-muted;
+        background-color: var(--bg-dark2);
+        color: var(--text-muted);
         font-weight: normal;
       }
 
       tr:hover {
-        background-color: rgba($primary-light, 0.05);
+        background-color: rgba(var(--primary-light), 0.05);
       }
 
       tr:last-child td {
@@ -65,7 +65,7 @@ body{
         background-color: #2e2a42;
 
         &:hover {
-          background-color: rgba($primary-light, 0.1);
+          background-color: rgba(var(--primary-light), 0.1);
         }
       }
 
@@ -73,7 +73,7 @@ body{
         background-color: #29253d;
 
         &:hover {
-          background-color: rgba($primary-light, 0.1);
+          background-color: rgba(var(--primary-light), 0.1);
         }
       }
     }
@@ -88,11 +88,11 @@ body{
     width: 50%;
 
     .summary-card {
-      background: $bg-dark2;
+      background: var(--bg-dark2);
       border-radius: 0.8rem;
       padding: 1.5rem 1.4rem;
       flex: 1 1 200px;
-      color: $text-light;
+      color: var(--text-light);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
@@ -144,7 +144,7 @@ body{
   margin-top: 0;
   margin-right: 1.2rem;
   box-shadow: none;
-  background: $bg-dark2;
+  background: var(--bg-dark2);
   width: calc(50% - 1.5rem);
   min-width: 300px;
 
@@ -216,7 +216,7 @@ body{
   }
 
   #platform-distribution {
-    background: $bg-dark2;
+    background: var(--bg-dark2);
     padding: 2rem;
     max-width: 350px;
     padding-top: 1.5rem;
@@ -229,7 +229,7 @@ body{
   }
 
   #daily-route-stats {
-    background: $bg-dark2;
+    background: var(--bg-dark2);
     padding: 1rem;
     padding-top: 0.8rem;
 
@@ -248,9 +248,9 @@ body{
       }
 
       input[type="date"] {
-        background: $input-bg;
-        color: $text-light;
-        border: 1px solid $input-border;
+        background: var(--input-bg);
+        color: var(--text-light);
+        border: 1px solid var(--input-border);
         padding: 0.4rem 0.8rem;
         border-radius: 6px;
         font-family: inherit;

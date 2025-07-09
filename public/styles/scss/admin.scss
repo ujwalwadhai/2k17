@@ -1,4 +1,4 @@
-@use 'global' as *;
+
 @use 'components/popup/mixins' as *;
 
 body{
@@ -23,21 +23,21 @@ body{
   }
 
   .tool-btn {
-    background: $bg-dark2;
+    background: var(--bg-dark2);
     display: flex;
     gap: 12px;
     padding: 0.8rem;
     width: 100%;
     border: none;
     border-radius: 4px;
-    color: $text-light;
+    color: var(--text-light);
     font-weight: bold;
     margin-top: 1rem;
     cursor: pointer;
     align-items: center;
 
     &:hover {
-      background: $primary-dark;
+      background: var(--primary-dark);
     }
 
     span.fal {
@@ -74,23 +74,23 @@ body{
   padding: 8px 20px;
 
   h2{
-    color: $primary-dark;
+    color: var(--primary-dark);
     font-size: 22px;
   }
   
   .search-bar {
     padding:12px 10px;
-    border: 0.5px solid $text-muted;
+    border: 0.5px solid var(--text-muted);
     border-radius: 5px;
     background: transparent;
     backdrop-filter: blur(6px);
-    color: $text-light;
+    color: var(--text-light);
     margin-bottom: 15px;
     width: 100%;
     font-size: 16px;
     
     &::placeholder {
-      color: $text-muted;
+      color: var(--text-muted);
     }
   }
 }
@@ -99,22 +99,22 @@ body{
   padding: 8px 20px;
   
   h2{
-    color: $primary-dark;
+    color: var(--primary-dark);
     font-size: 22px;
   }
   .search-bar {
     padding:12px 10px;
-    border: 0.5px solid $text-muted;
+    border: 0.5px solid var(--text-muted);
     border-radius: 5px;
     backdrop-filter: blur(6px);
     background: transparent;
-    color: $text-light;
+    color: var(--text-light);
     margin-bottom: 15px;
     width: 100%;
     font-size: 16px;
 
     &::placeholder {
-      color: $text-muted;
+      color: var(--text-muted);
     }
   }
 
@@ -125,22 +125,22 @@ body{
   background: transparent;
   backdrop-filter: blur(6px);
   text-align: center;
-  border: 0.5px solid $text-muted;
+  border: 0.5px solid var(--text-muted);
 
   #loadMoreLogsBtn {
-    background: $primary-dark;
+    background: var(--primary-dark);
     padding: 10px 12px;
     width: 90%;
     max-width: 200px;
     border: none;
     border-radius: 4px;
-    color: $text-light;
+    color: var(--text-light);
     font-weight: bold;
     margin: 12px auto;
     cursor: pointer;
 
     &:hover {
-      background: $primary;
+      background: var(--primary);
     }
   }
 }
@@ -148,7 +148,7 @@ body{
 .logs-table {
   width: 100%;
   border-collapse: collapse;
-  color: $text-light;
+  color: var(--text-light);
   text-align: left;
   
 
@@ -158,27 +158,27 @@ body{
     th {
       text-align: left;
       padding: 12px;
-      color: $primary;
+      color: var(--primary);
       font-weight: 600;
     }
   }
 
   tbody {
     tr {
-      border-bottom: 1px solid $bg-dark;
+      border-bottom: 1px solid var(--bg-dark);
 
       &:hover {
-        background: $bg-dark2;
+        background: var(--bg-dark2);
       }
     }
 
     td {
       padding: 10px 12px;
-      color: $text-light;
+      color: var(--text-light);
       font-size: 14px;
 
       .resolve-link {
-        color: $primary;
+        color: var(--primary);
         cursor: pointer;
       }
     }
@@ -199,7 +199,7 @@ body{
         font-size: 14px;
 
         #report-user {
-          color: $primary;
+          color: var(--primary);
           cursor: pointer;
         }
       }
@@ -234,7 +234,7 @@ body{
         font-size: 14px;
 
         #report-user {
-          color: $primary;
+          color: var(--primary);
           cursor: pointer;
         }
       }
@@ -268,7 +268,7 @@ body{
         font-size: 14px;
 
         #report-user {
-          color: $primary;
+          color: var(--primary);
           cursor: pointer;
         }
       }
@@ -320,8 +320,8 @@ body{
   width: 100%;
   min-width: 400px;
   border-collapse: collapse;
-  background: $bg-dark2;
-  color: $text-light;
+  background: var(--bg-dark2);
+  color: var(--text-light);
   overflow: hidden;
 
   td {
@@ -346,7 +346,7 @@ body{
     font-size: 14px;
   }
   tr:nth-of-type(even) {
-    background: rgba($bg-dark, 0.8);
+    background: rgba(var(--bg-dark), 0.8);
   }
 
   #user-btn-action {

@@ -1,4 +1,4 @@
-@use '../global' as *;
+
 
 .toast {
   position: relative;
@@ -6,8 +6,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  background-color: $bg-dark;
-  color: $text-light;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
   padding: 12px 16px;
   margin-top: 10px;
   border-radius: 6px;
@@ -17,7 +17,7 @@
   min-width: 240px;
   max-width: 400px;
   overflow: hidden;
-  border: 2px solid $bg-dark2;
+  border: 2px solid var(--bg-dark2);
   border-bottom: none;
 
   .fa-xmark {
@@ -31,25 +31,25 @@
 
   .toast-error {
     .fal {
-      color: $error;
+      color: var(--error);
     }
   }
 
   .toast-info {
     .fal {
-      color: $info;
+      color: var(--info);
     }
   }
 
   .toast-warning {
     .fal {
-      color: $warning;
+      color: var(--warning);
     }
   }
 
   .toast-success {
     .fal {
-      color: $success;
+      color: var(--success);
     }
   }
 
@@ -60,7 +60,7 @@
     font-size: 1rem;
     cursor: pointer;
     padding: 4px 8px;
-    border: 0.1px solid $bg-dark2;
+    border: 0.1px solid var(--bg-dark2);
     border-radius: 2px;
   }
 
@@ -73,19 +73,19 @@
     width: 100%;
 
     &.error {
-      background-color: $error;
+      background-color: var(--error);
     }
 
     &.info {
-      background-color: $info;
+      background-color: var(--info);
     }
 
     &.warning {
-      background-color: $warning;
+      background-color: var(--warning);
     }
 
     &.success {
-      background-color: $success;
+      background-color: var(--success);
     }
   }
 

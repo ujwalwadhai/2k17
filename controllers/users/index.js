@@ -3,5 +3,6 @@ module.exports = {
   updateProfile: require('./updateProfile'),
   updateSettings: require('./updateSettings'),
   updatePrivacySettings: require('./updatePrivacySettings'),
-  changePassword: require('./changePassword')
+  changePassword: require('./changePassword'),
+  changeTheme: require('./changeTheme')
 };

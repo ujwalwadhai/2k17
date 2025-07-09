@@ -1,7 +1,7 @@
 .posts {
   width: 100%;
   max-width: 600px;
-  background-color: #1f1c2e;
+  background-color: var(--bg-dark);
   border-radius: 8px;
   margin: auto;
   padding: 12px 24px;
@@ -13,7 +13,7 @@
   width: 100%;
   height: 350px;
   background-color: transparent;
-  color: #ffffff;
+  color: var(--text-light);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -67,7 +67,7 @@
 }
 .posts .post {
   margin-top: 16px;
-  border-top: 1px solid #9e9e9e;
+  border-top: 1px solid var(--text-muted);
   padding-top: 16px;
 }
 .posts .post .user-info {
@@ -77,7 +77,7 @@
 }
 .posts .post .user-info .username {
   font-size: 14px;
-  color: #9e9e9e;
+  color: var(--text-muted);
 }
 .posts .post .user-info img.user-profile {
   width: 36px;
@@ -119,7 +119,7 @@
   padding: 0;
 }
 .posts .post .post-buttons button:hover {
-  color: #9e9e9e;
+  color: var(--text-muted);
 }
 .posts .post .post-buttons button span.fal,
 .posts .post .post-buttons button span.fas {
@@ -173,7 +173,7 @@
   transform: translate(-50%, -50%);
   width: 90vw;
   max-width: 800px;
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 12px;
   padding: 1rem 1rem 1rem 1rem;
   padding-top: 0;
@@ -193,8 +193,8 @@
 #post-popup.popup-wrapper .post-box .heading .close-icon {
   cursor: pointer;
   font-size: 1.1rem;
-  background: #252236;
-  border: 1px solid #9e9e9e;
+  background: var(--bg-dark2);
+  border: 1px solid var(--text-muted);
   border-radius: 4px;
   padding: 0.3rem 0.5rem;
   color: white;
@@ -203,8 +203,8 @@
   resize: vertical;
   height: 100px;
   padding: 0.6rem;
-  background: #2c283d;
-  border: 1px solid #9e9e9e;
+  background: var(--input-bg);
+  border: 1px solid var(--text-muted);
   border-radius: 6px;
   color: white;
   font-size: 1rem;
@@ -212,7 +212,7 @@
 }
 #post-popup.popup-wrapper .post-box .upload-label {
   cursor: pointer;
-  background: #6342d8;
+  background: var(--primary-dark);
   color: white;
   padding: 0.4rem 1rem;
   border-radius: 4px;
@@ -221,7 +221,7 @@
   transition: background 0.2s ease;
 }
 #post-popup.popup-wrapper .post-box .upload-label:hover {
-  background: #7b5cf0;
+  background: var(--primary);
 }
 #post-popup.popup-wrapper .post-box input[type=file] {
   display: none;
@@ -251,17 +251,17 @@
   cursor: pointer;
 }
 #post-popup.popup-wrapper .post-box .action-buttons button.create-post-btn {
-  background: #6342d8;
+  background: var(--primary-dark);
   margin-left: 8px;
 }
 #post-popup.popup-wrapper .post-box .action-buttons button.create-post-btn:hover {
-  background: #7b5cf0;
+  background: var(--primary);
 }
 #post-popup.popup-wrapper .post-box .action-buttons button.cancel-btn {
-  background: #252236;
+  background: var(--bg-dark2);
 }
 #post-popup.popup-wrapper .post-box .action-buttons button.cancel-btn:hover {
-  background: #7b5cf0;
+  background: var(--primary);
 }
 
 @media (max-width: 600px) {
@@ -273,7 +273,7 @@
   }
 }
 .create-post-box.small-only {
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   padding: 12px 20px;
   margin: 0 1.5rem;
   border-radius: 8px;
@@ -295,13 +295,13 @@
   margin: 0.5rem 0;
   border: 1px solid rgb(55, 55, 55);
   border-radius: 6px;
-  background: #1f1c2e;
-  color: #ffffff;
+  background: var(--bg-dark);
+  color: var(--text-light);
   outline: none;
   cursor: pointer;
 }
 .create-post-box.small-only input:focus {
-  border: 1px solid #7b5cf0;
+  border: 1px solid var(--primary);
 }
 .create-post-box.small-only span.fal {
   font-size: 20px;
@@ -331,8 +331,8 @@
 
 .profile-page {
   font-family: "Lato", sans-serif;
-  color: #ffffff;
-  background-color: #1f1c2e;
+  color: var(--text-light);
+  background-color: var(--bg-dark);
   padding-bottom: 3rem;
 }
 .profile-page .cover-photo {
@@ -362,7 +362,7 @@
   height: 150px;
   border-radius: 50%;
   overflow: hidden;
-  border: 5px solid #1f1c2e;
+  border: 5px solid var(--bg-dark);
   margin-bottom: 0.5rem;
 }
 .profile-page .profile-info-container .profile-photo img {
@@ -394,11 +394,11 @@
   font-weight: 500;
 }
 .profile-page .profile-info-container .user-details .action-buttons button.message-btn {
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
 }
 .profile-page .profile-info-container .user-details .action-buttons button.message-btn:hover {
-  background-color: #7b5cf0;
+  background-color: var(--primary);
 }
 .profile-page .profile-info-container .user-details .action-buttons button.email-btn, .profile-page .profile-info-container .user-details .action-buttons button.call-btn {
   background-color: rgba(72, 72, 72, 0.6);
@@ -414,7 +414,7 @@
   font-size: 12px;
 }
 .profile-page .profile-info-container .user-details .bio {
-  color: #9e9e9e;
+  color: var(--text-muted);
   max-width: 500px;
   margin-top: 0.5rem;
 }
@@ -441,7 +441,7 @@
 .profile-page .user-posts-section h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid var(--text-disabled);
   padding-bottom: 0.5rem;
 }
 .profile-page .user-posts-section .posts-grid {
@@ -450,7 +450,7 @@
   gap: 1.5rem;
 }
 .profile-page .user-posts-section .posts-grid .post-card {
-  background: #252236;
+  background: var(--bg-dark2);
   border-radius: 8px;
   padding: 0.75rem;
   overflow: hidden;
@@ -463,7 +463,7 @@
   object-fit: cover;
 }
 .profile-page .user-posts-section .posts-grid .post-card p {
-  color: #ffffff;
+  color: var(--text-light);
   font-size: 0.95rem;
 }
 
@@ -529,7 +529,7 @@
 .tabs-container .tabs .tab-btn.active {
   background-color: rgba(122, 104, 147, 0.1);
   color: white;
-  border-bottom: 2px solid #7b5cf0;
+  border-bottom: 2px solid var(--primary);
   border-radius: 4px 4px 0 0;
 }
 .tabs-container .tab-content .tab-panel {
@@ -548,7 +548,7 @@
   overflow: hidden;
   width: auto;
   height: auto;
-  border: 1.5px solid #1f1c2e;
+  border: 1.5px solid var(--bg-dark);
 }
 .tabs-container .tab-content .tab-panel .posts-grid .post-card img, .tabs-container .tab-content .tab-panel .posts-grid .post-card video {
   width: 100%;
@@ -558,14 +558,14 @@
   padding: 0;
 }
 .tabs-container .tab-content .tab-panel .posts-grid .post-card p {
-  color: #ffffff;
+  color: var(--text-light);
   font-size: 0.95rem;
 }
 .tabs-container .tab-content .tab-panel.active {
   display: block;
 }
 .tabs-container .tab-content .tab-panel .empty-msg {
-  color: #9e9e9e;
+  color: var(--text-muted);
   text-align: center;
   margin-top: 2rem;
 }
@@ -589,7 +589,7 @@
   padding: 8px 16px;
   width: 50%;
   background-color: rgba(128, 128, 128, 0.25);
-  border: 0.1px solid #9e9e9e;
+  border: 0.1px solid var(--text-muted);
   border-radius: 8px;
   line-height: 36px;
 }
@@ -601,7 +601,7 @@
   padding: 0 16px;
   width: 100%;
   background-color: rgba(128, 128, 128, 0.25);
-  border: 0.1px solid #9e9e9e;
+  border: 0.1px solid var(--text-muted);
   border-radius: 8px;
 }
 .tabs-container .tab-content .tab-panel .about-section div.low-box p.heading {
@@ -612,7 +612,7 @@
   font-weight: 300;
 }
 .tabs-container .tab-content .tab-panel .about-section div.low-box p.no-links {
-  color: #9e9e9e;
+  color: var(--text-muted);
 }
 .tabs-container .tab-content .tab-panel .about-section div.low-box p span {
   font-size: 16px;
@@ -655,7 +655,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   text-align: center;
@@ -679,18 +679,18 @@
   border: 2px solid rgb(81, 80, 80);
 }
 .login-banner .login-required-box .signup-btn {
-  background: #7b5cf0;
+  background: var(--primary);
   padding: 0.8rem;
   width: 100%;
   border: none;
   border-radius: 4px;
-  color: #ffffff;
+  color: var(--text-light);
   font-weight: bold;
   margin-top: 1rem;
   cursor: pointer;
 }
 .login-banner .login-required-box .signup-btn:hover {
-  background: #6342d8;
+  background: var(--primary-dark);
 }
 .login-banner .login-required-box .login-btn {
   background: rgba(111, 111, 111, 0.2);
@@ -698,7 +698,7 @@
   width: 100%;
   border: none;
   border-radius: 4px;
-  color: #ffffff;
+  color: var(--text-light);
   font-weight: bold;
   margin-top: 1rem;
   cursor: pointer;

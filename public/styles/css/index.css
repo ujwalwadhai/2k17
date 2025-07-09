@@ -50,15 +50,15 @@ main {
   line-height: 26px;
 }
 .hero .hero-text .cta-btn {
-  background: #6342d8;
-  color: #ffffff;
+  background: var(--primary-dark);
+  color: var(--text-light);
   padding: 0.75rem 1.5rem;
   text-decoration: none;
   border-radius: 8px;
   transition: 0.3s;
 }
 .hero .hero-text .cta-btn:hover {
-  background: #7b5cf0;
+  background: var(--primary);
 }
 .hero .featured-photo {
   padding: 0;
@@ -66,7 +66,7 @@ main {
   display: inline-block;
   width: 100%;
   max-width: 40vw;
-  border: 1px solid #9e9e9e;
+  border: 1px solid var(--text-muted);
   border-radius: 12px;
 }
 .hero .featured-photo img.featured-photo-img {
@@ -146,7 +146,7 @@ main {
   padding-bottom: 6px;
 }
 .members-grid .member-card {
-  background: #1f1c2e;
+  background: var(--bg-dark);
   user-select: none;
   padding: 1.2rem;
   text-align: left;
@@ -192,7 +192,7 @@ main {
   padding-bottom: 32px;
 }
 .gallery-grid .image-card {
-  background: #1f1c2e;
+  background: var(--bg-dark);
   user-select: none;
   padding: 0;
   border-radius: 1rem;
@@ -221,7 +221,7 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 .features-grid .feature-card {
-  background: #1f1c2e;
+  background: var(--bg-dark);
   user-select: none;
   padding: 1.5rem;
   text-align: left;
@@ -249,10 +249,10 @@ main {
 footer {
   text-align: center;
   padding: 1.5rem;
-  background: #1f1c2e;
+  background: var(--bg-dark);
   color: grey;
   font-size: 0.9rem;
-  border-top: 1px solid #9e9e9e;
+  border-top: 1px solid var(--text-muted);
 }
 
 @media (max-width: 900px) {
@@ -286,7 +286,7 @@ footer {
     width: 70%;
   }
   .about-and-newsletter .newsletter-sub {
-    background: #1f1c2e;
+    background: var(--bg-dark);
   }
 }
 @media screen and (min-width: 890px) {
@@ -297,9 +297,9 @@ footer {
     width: 70%;
   }
   .about-and-newsletter .newsletter-sub {
-    background: #1f1c2e;
+    background: var(--bg-dark);
     box-sizing: border-box;
-    border: 3px solid #7b5cf0;
+    border: 3px solid var(--primary);
     border-radius: 8px;
     margin: 5rem 0;
     margin-right: 5%;
@@ -315,16 +315,16 @@ footer {
     margin: 0.5rem 0;
     border: none;
     border-radius: 8px;
-    background: #2c283d;
-    color: #ffffff;
+    background: var(--input-bg);
+    color: var(--text-light);
     outline: none;
   }
   .about-and-newsletter .newsletter-sub input:focus {
-    border: 1px solid #7b5cf0;
+    border: 1px solid var(--primary);
   }
   .about-and-newsletter .newsletter-sub button {
-    background: #7b5cf0;
-    color: #ffffff;
+    background: var(--primary);
+    color: var(--text-light);
     padding: 0.8rem;
     border: none;
     border-radius: 8px;
@@ -335,16 +335,16 @@ footer {
     width: 100%;
   }
   .about-and-newsletter .newsletter-sub button:hover {
-    background: #6342d8;
+    background: var(--primary-dark);
   }
 }
 @media (max-width: 890px) {
   .newsletter-sub {
-    background: #1f1c2e;
+    background: var(--bg-dark);
     box-sizing: border-box;
     margin: 4rem 8%;
     padding: 8px 32px;
-    border: 3px solid #7b5cf0;
+    border: 3px solid var(--primary);
     border-radius: 8px;
     width: auto;
     min-width: 250px;
@@ -355,16 +355,16 @@ footer {
     margin: 0.5rem 0;
     border: none;
     border-radius: 8px;
-    background: #2c283d;
-    color: #ffffff;
+    background: var(--input-bg);
+    color: var(--text-light);
     outline: none;
   }
   .newsletter-sub input:focus {
-    border: 1px solid #7b5cf0;
+    border: 1px solid var(--primary);
   }
   .newsletter-sub button {
-    background: #7b5cf0;
-    color: #ffffff;
+    background: var(--primary);
+    color: var(--text-light);
     padding: 0.8rem;
     border: none;
     border-radius: 8px;
@@ -375,7 +375,7 @@ footer {
     width: 100%;
   }
   .newsletter-sub button:hover {
-    background: #6342d8;
+    background: var(--primary-dark);
   }
 }
 .contact input {
@@ -384,17 +384,17 @@ footer {
   margin: 0.5rem 0;
   border: none;
   border-radius: 8px;
-  background: #2c283d;
-  color: #ffffff;
+  background: var(--input-bg);
+  color: var(--text-light);
   outline: none;
   max-width: 400px;
 }
 .contact input:focus {
-  border: 1px solid #7b5cf0;
+  border: 1px solid var(--primary);
 }
 .contact button {
-  background: #7b5cf0;
-  color: #ffffff;
+  background: var(--primary);
+  color: var(--text-light);
   padding: 0.8rem;
   border: none;
   border-radius: 8px;
@@ -406,7 +406,7 @@ footer {
   max-width: 400px;
 }
 .contact button:hover {
-  background: #6342d8;
+  background: var(--primary-dark);
 }
 .contact h3 {
   margin-bottom: 2rem;
@@ -427,29 +427,29 @@ footer {
   }
 }
 #birthday-spotlight {
-  background: #1f1c2e;
+  background: var(--bg-dark);
   padding: 4rem 10%;
   border-radius: 10px;
   margin-top: 2rem;
   padding-bottom: 1rem;
 }
 #birthday-spotlight h3 {
-  color: #ffffff;
+  color: var(--text-light);
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 #birthday-spotlight p {
-  color: #9e9e9e;
+  color: var(--text-muted);
   font-size: 1rem;
   margin-bottom: 0;
 }
 #birthday-spotlight p a {
-  color: #9a7fff;
+  color: var(--primary-light);
   text-decoration: underline;
 }
 #birthday-spotlight p a:hover {
-  color: #7b5cf0;
+  color: var(--primary);
 }
 #birthday-spotlight .gallery-grid {
   display: flex;
@@ -459,7 +459,7 @@ footer {
   padding-bottom: 0;
 }
 #birthday-spotlight .gallery-grid .image-card {
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 10px;
   height: max-content;
   cursor: pointer;
@@ -469,7 +469,7 @@ footer {
 #birthday-spotlight .gallery-grid .image-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  background: #332f48;
+  background: var(--bg-dark3);
 }
 #birthday-spotlight .gallery-grid .image-card img {
   width: 48px;
@@ -478,12 +478,12 @@ footer {
   border-radius: 10px;
 }
 #birthday-spotlight .gallery-grid .image-card h4 {
-  color: #7b5cf0;
+  color: var(--primary);
   font-size: 1.3rem;
   margin: 10px 0;
 }
 #birthday-spotlight .gallery-grid .image-card p {
-  color: #9e9e9e;
+  color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.6;
   margin-top: 8px;

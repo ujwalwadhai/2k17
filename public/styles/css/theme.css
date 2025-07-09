@@ -1,0 +1,48 @@
+/* Default Theme — Purple */
+:root {
+  /* Brand Colors */
+  --primary: #7b5cf0;
+  --primary-dark: #6342d8;
+  --primary-light: #9a7fff;
+
+  /* Backgrounds */
+  --bg-dark: #1f1c2e;
+  --bg-dark2: #252236;
+  --bg-dark3: #332f48;
+
+  /* Text Colors */
+  --text-light: #ffffff;
+  --text-muted: #9e9e9e;
+  --text-disabled: #555;
+
+  /* Input & Elements */
+  --input-bg: #2c283d;
+  --input-border: #3e3a50;
+
+  /* Feedback */
+  --success: #4bb543;
+  --error: #ff4d4f;
+  --warning: #ffcc00;
+  --info: #2db7f5;
+}
+
+/* Green Theme */
+[data-theme="green"] {
+  --primary: #28a745;
+  --primary-dark: #1e7e34;
+  --primary-light: #62c476;
+}
+
+/* Blue Theme */
+[data-theme="blue"] {
+  --primary: #007bff;
+  --primary-dark: #0056b3;
+  --primary-light: #66b2ff;
+}
+
+/* Orange Theme */
+[data-theme="orange"] {
+  --primary: #fd7e14;
+  --primary-dark: #e8590c;
+  --primary-light: #ffa94d;
+}

@@ -7,6 +7,7 @@ module.exports = function (req, res, next) {
   res.locals.formatDOB = formatDOB;
   res.locals.PLATFORM_TYPE = process.env.PLATFORM_TYPE || 'development';
   res.locals.hasUnreadNotifications = false
+  res.locals.theme = req?.user?.theme || 'purple'
   next();
 };
  

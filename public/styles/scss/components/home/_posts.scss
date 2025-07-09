@@ -1,9 +1,9 @@
-@use '../../global' as *;
+
 
 .posts {
   width: 100%;
   max-width: 600px;
-  background-color: $bg-dark;
+  background-color: var(--bg-dark);
   border-radius: 8px;
   margin: auto;
   padding: 12px 24px;
@@ -15,7 +15,7 @@
     width: 100%;
     height: 350px;
     background-color: transparent;
-    color: $text-light;
+    color: var(--text-light);
     z-index: 9999;
     display: flex;
     align-items: center;
@@ -88,7 +88,7 @@
 
   .post {
     margin-top: 16px;
-    border-top: 1px solid $text-muted;
+    border-top: 1px solid var(--text-muted);
     padding-top: 16px;
 
     .user-info {
@@ -98,7 +98,7 @@
 
       .username {
         font-size: 14px;
-        color: $text-muted;
+        color: var(--text-muted);
       }
 
       img.user-profile {
@@ -149,7 +149,7 @@
         padding: 0;
 
         &:hover {
-          color: $text-muted;
+          color: var(--text-muted);
         }
 
         span.fal,
@@ -213,7 +213,7 @@
     transform: translate(-50%, -50%);
     width: 90vw;
     max-width: 800px;
-    background: $bg-dark;
+    background: var(--bg-dark);
     border-radius: 12px;
     padding: 1rem 1rem 1rem 1rem;
     padding-top: 0;
@@ -233,8 +233,8 @@
       .close-icon {
         cursor: pointer;
         font-size: 1.1rem;
-        background: $bg-dark2;
-        border: 1px solid $text-muted;
+        background: var(--bg-dark2);
+        border: 1px solid var(--text-muted);
         border-radius: 4px;
         padding: 0.3rem 0.5rem;
         color: white;
@@ -245,8 +245,8 @@
       resize: vertical;
       height: 100px;
       padding: 0.6rem;
-      background: $input-bg;
-      border: 1px solid $text-muted;
+      background: var(--input-bg);
+      border: 1px solid var(--text-muted);
       border-radius: 6px;
       color: white;
       font-size: 1rem;
@@ -255,7 +255,7 @@
 
     .upload-label {
       cursor: pointer;
-      background: $primary-dark;
+      background: var(--primary-dark);
       color: white;
       padding: 0.4rem 1rem;
       border-radius: 4px;
@@ -264,7 +264,7 @@
       transition: background 0.2s ease;
 
       &:hover {
-        background: $primary;
+        background: var(--primary);
       }
     }
 
@@ -299,19 +299,19 @@
         cursor: pointer;
 
         &.create-post-btn {
-          background: $primary-dark;
+          background: var(--primary-dark);
           margin-left: 8px;
 
           &:hover {
-            background: $primary;
+            background: var(--primary);
           }
         }
 
         &.cancel-btn {
-          background: $bg-dark2;
+          background: var(--bg-dark2);
 
           &:hover {
-            background: $primary;
+            background: var(--primary);
           }
         }
       }
@@ -331,7 +331,7 @@
 }
 
 .create-post-box.small-only {
-  background-color: $bg-dark2;
+  background-color: var(--bg-dark2);
   padding: 12px 20px;
   margin: 0 1.5rem;
   border-radius: 8px;
@@ -355,13 +355,13 @@
     margin: 0.5rem 0;
     border: 1px solid rgb(55, 55, 55);
     border-radius: 6px;
-    background: $bg-dark;
-    color: $text-light;
+    background: var(--bg-dark);
+    color: var(--text-light);
     outline: none;
     cursor: pointer;
 
     &:focus {
-      border: 1px solid $primary;
+      border: 1px solid var(--primary);
     }
   }
 

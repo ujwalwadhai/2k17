@@ -1,6 +1,6 @@
-@use '../../global' as *;
 
-@mixin fullscreen-popup($overlay: 0.6) {
+
+@mixin fullscreen-popup($overlay: 'var(--overlay, 0.6)') {
     position: fixed;
     top: 0;
     left: 0;
@@ -21,7 +21,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, $overlay);
+        background: rgba(0, 0, 0, 0.6);
         transition: opacity 0.3s ease;
         
         &.show {
@@ -30,15 +30,15 @@
     }
 }
 
-@mixin popup-box($maxWidth : 700px, $maxHeight: 600px) {
+@mixin popup-box($maxWidth: 'var(--maxWidth, 700px)', $maxHeight: 'var(--maxHeight, 600px)') {
     width: 85vw;
-    max-width: $maxWidth;
-    max-height: $maxHeight;
+    max-width: #{$maxWidth};
+    max-height: #{$maxHeight};
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: $bg-dark;
+    background: var(--bg-dark);
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     display: flex;
@@ -54,7 +54,7 @@
         width: 100%;
         flex-direction: row;
         align-items: center;
-        border-bottom: 1px solid $text-muted;
+        border-bottom: 1px solid var(--text-muted);
 
         .title {
             span {
@@ -66,12 +66,12 @@
             margin: 12px;
             margin-left: auto;
             margin-right: 16px;
-            background-color: $bg-dark2;
+            background-color: var(--bg-dark2);
             padding: 8px;
             font-size: 14px;
             width: 32px;
             height: 32px;
-            border: 0.2px solid $text-muted;
+            border: 0.2px solid var(--text-muted);
             color: white;
             border-radius: 4px;
             text-align: center;
@@ -86,18 +86,18 @@
     margin: 0.5rem 0;
     border: none;
     border-radius: 8px;
-    background: $input-bg;
-    color: $text-light;
+    background: var(--input-bg);
+    color: var(--text-light);
     outline: none;
     resize: vertical;
 
     &:focus {
-        border: 1px solid $primary;
+        border: 1px solid var(--primary);
     }
 }
 
 @mixin popup-button {
-    background-color: $primary-dark;
+    background-color: var(--primary-dark);
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -108,6 +108,6 @@
     transition: background 0.3s;
 
     &:hover {
-        background-color: $primary;
+        background-color: var(--primary);
     }
 }

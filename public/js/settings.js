@@ -59,6 +59,51 @@ function closeNotificationSettings(){
   notificationSettingsOverlay.classList.remove('show');
 }
 
+function openChangeTheme(){
+  var changeThemePopup = document.getElementById('change-theme-popup');
+  var changeThemeOverlay = changeThemePopup.querySelector('.overlay');
+  changeThemePopup.classList.add('show');
+  changeThemeOverlay.classList.add('show');
+}
+
+function closeChangeTheme(){
+  var changeThemePopup = document.getElementById('change-theme-popup');
+  var changeThemeOverlay = changeThemePopup.querySelector('.overlay');
+  changeThemePopup.classList.remove('show');
+  changeThemeOverlay.classList.remove('show');
+}
+
+document.getElementById("change-theme-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var statusBox = document.getElementById("change-theme-status");
+  statusBox.style.color = "green";
+  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'><span> &nbsp;Changing theme...";
+
+  fetch("/change-theme", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({theme: this.elements['theme'].value})
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.documentElement.setAttribute("data-theme", this.elements['theme'].value);
+        statusBox.innerHTML = "<i class='fal fa-check-circle'></i> &nbsp;Theme changed to "+this.elements['theme'].value+"!";
+        setTimeout(closeChangeTheme, 2000);
+      } else {
+        statusBox.style.color = "red";
+        statusBox.innerHTML = `<i class='fal fa-times-circle'></i> &nbsp;${data.message || 'Failed to change theme'}`;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      statusBox.style.color = "red";
+      statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
+    });
+});
+
 document.getElementById("change-password-form").addEventListener("submit", function (e) {
   e.preventDefault();
   var statusBox = document.getElementById("change-password-status");

@@ -1,10 +1,10 @@
-@use 'global' as *;
+
 @use 'components/popup/mixins' as *;
 
 body {
   margin: 0;
   background: transparent;
-  color: $text-light;
+  color: var(--text-light);
 }
 
 .container {
@@ -50,7 +50,7 @@ body {
       font-size: 0.9rem;
 
       a {
-        color: $primary;
+        color: var(--primary);
         text-decoration: none;
       }
     }
@@ -62,12 +62,12 @@ body {
       border: none;
       border-radius: 8px;
       background: transparent;
-      color: $text-light;
+      color: var(--text-light);
       outline: none;
-      border: 1px solid $text-disabled;
+      border: 1px solid var(--text-disabled);
 
       &:focus {
-        border: 1px solid $primary;
+        border: 1px solid var(--primary);
       }
     }
 
@@ -137,31 +137,31 @@ body {
       }
 
       a {
-        color: $primary;
+        color: var(--primary);
         text-decoration: none;
       }
     }
 
     .primary-btn {
-      background: $primary-dark;
+      background: var(--primary-dark);
       padding: 0.8rem;
       width: 100%;
       border: none;
       border-radius: 8px;
-      color: $text-light;
+      color: var(--text-light);
       font-weight: bold;
       margin-top: 1rem;
       cursor: pointer;
 
       &:hover {
-        background: $primary;
+        background: var(--primary);
       }
     }
 
     .divider {
       text-align: center;
       margin: 1rem 0;
-      color: $text-muted;
+      color: var(--text-muted);
     }
 
     .social-buttons {
@@ -170,15 +170,15 @@ body {
 
       button {
         flex: 1;
-        background: $input-bg;
-        color: $text-light;
+        background: var(--input-bg);
+        color: var(--text-light);
         border: none;
         padding: 0.8rem;
         border-radius: 8px;
         cursor: pointer;
 
         &:hover {
-          background: $text-muted;
+          background: var(--text-muted);
         }
       }
     }

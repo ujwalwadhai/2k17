@@ -1,4 +1,4 @@
-@use 'global' as *;
+
 @use 'components/popup/mixins' as *;
 
 body{
@@ -32,7 +32,7 @@ body{
       list-style: none;
       padding: 0;
       padding-bottom: 12px;
-      border-bottom: 1px solid $text-muted;
+      border-bottom: 1px solid var(--text-muted);
 
       &:last-of-type{
         border-bottom: none;
@@ -96,6 +96,41 @@ body{
       }
 
       #settings-status {
+        margin: 1rem 0;
+        font-weight: 500;
+      }
+
+      button[type="submit"] {
+        @include popup-button;
+      }
+    }
+  }
+}
+
+#change-theme-popup{
+  @include fullscreen-popup;
+
+  .change-theme-box {
+    @include popup-box;
+
+    .change-theme-list{
+      padding: 20px;
+
+      .form-section {
+        line-height: 28px;
+        
+        label {
+          display: block;
+          margin-bottom: 0.75rem;
+          cursor: pointer;
+
+          input[type="radio"] {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      #change-theme-status {
         margin: 1rem 0;
         font-weight: 500;
       }
@@ -243,7 +278,7 @@ body{
 }
 
 @media (max-width: 600px) {
-  .notification-settings-box, .privacy-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box, .change-email-box {
+  .notification-settings-box, .change-theme-box, .privacy-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box, .change-email-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;

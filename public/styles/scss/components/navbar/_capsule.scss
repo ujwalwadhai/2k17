@@ -1,4 +1,4 @@
-@use '../../global' as *;
+
 
 .header {
     .user-capsule-wrapper {
@@ -10,8 +10,8 @@
             position: absolute;
             top: 112%;
             right: 0;
-            background: $bg-dark;
-            border: 1px solid $text-muted;
+            background: var(--bg-dark);
+            border: 1px solid var(--text-muted);
             border-radius: 0.5rem;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             opacity: 0;
@@ -36,7 +36,7 @@
                 cursor: pointer;
 
                 &:hover {
-                    background: $bg-dark2;
+                    background: var(--bg-dark2);
                 }
 
                 
@@ -70,9 +70,9 @@
             padding: 2px;
             padding-right: 12px;
             margin: 0;
-            border: 1px solid $text-muted;
+            border: 1px solid var(--text-muted);
             border-radius: 24px;
-            background-color: $bg-dark;
+            background-color: var(--bg-dark);
             cursor: pointer;
 
             img {
@@ -97,7 +97,7 @@
 
 
             a{
-                color: $primary;
+                color: var(--primary);
                 text-decoration: none;
                 user-select: none;
                 height: 32px;

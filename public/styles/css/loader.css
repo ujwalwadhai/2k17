@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
-  color: #ffffff;
+  color: var(--text-light);
   z-index: 9999;
   display: flex;
   align-items: center;

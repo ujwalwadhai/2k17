@@ -30,7 +30,7 @@ body {
   list-style: none;
   padding: 0;
   padding-bottom: 12px;
-  border-bottom: 1px solid #9e9e9e;
+  border-bottom: 1px solid var(--text-muted);
 }
 .settings-container .links ul:last-of-type {
   border-bottom: none;
@@ -87,13 +87,13 @@ body {
 }
 #notification-settings-popup .notification-settings-box {
   width: 85vw;
-  max-width: 700px;
-  max-height: 600px;
+  max-width: var(--maxWidth, 700px);
+  max-height: var(--maxHeight, 600px);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -109,7 +109,7 @@ body {
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #9e9e9e;
+  border-bottom: 1px solid var(--text-muted);
 }
 #notification-settings-popup .notification-settings-box .heading .title span {
   margin-right: 16px;
@@ -118,12 +118,12 @@ body {
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   padding: 8px;
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #9e9e9e;
+  border: 0.2px solid var(--text-muted);
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -148,7 +148,7 @@ body {
   font-weight: 500;
 }
 #notification-settings-popup .notification-settings-box .notification-settings-list button[type=submit] {
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -159,7 +159,110 @@ body {
   transition: background 0.3s;
 }
 #notification-settings-popup .notification-settings-box .notification-settings-list button[type=submit]:hover {
-  background-color: #7b5cf0;
+  background-color: var(--primary);
+}
+
+#change-theme-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#change-theme-popup.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+#change-theme-popup .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  transition: opacity 0.3s ease;
+}
+#change-theme-popup .overlay.show {
+  opacity: 1;
+}
+#change-theme-popup .change-theme-box {
+  width: 85vw;
+  max-width: var(--maxWidth, 700px);
+  max-height: var(--maxHeight, 600px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-dark);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#change-theme-popup .change-theme-box .heading {
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 16px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid var(--text-muted);
+}
+#change-theme-popup .change-theme-box .heading .title span {
+  margin-right: 16px;
+}
+#change-theme-popup .change-theme-box .heading p.close-icon {
+  margin: 12px;
+  margin-left: auto;
+  margin-right: 16px;
+  background-color: var(--bg-dark2);
+  padding: 8px;
+  font-size: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0.2px solid var(--text-muted);
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
+#change-theme-popup .change-theme-box .change-theme-list {
+  padding: 20px;
+}
+#change-theme-popup .change-theme-box .change-theme-list .form-section {
+  line-height: 28px;
+}
+#change-theme-popup .change-theme-box .change-theme-list .form-section label {
+  display: block;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+#change-theme-popup .change-theme-box .change-theme-list .form-section label input[type=radio] {
+  margin-right: 10px;
+}
+#change-theme-popup .change-theme-box .change-theme-list #change-theme-status {
+  margin: 1rem 0;
+  font-weight: 500;
+}
+#change-theme-popup .change-theme-box .change-theme-list button[type=submit] {
+  background-color: var(--primary-dark);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  transition: background 0.3s;
+}
+#change-theme-popup .change-theme-box .change-theme-list button[type=submit]:hover {
+  background-color: var(--primary);
 }
 
 #change-password-popup {
@@ -190,13 +293,13 @@ body {
 }
 #change-password-popup .change-password-box {
   width: 85vw;
-  max-width: 700px;
-  max-height: 600px;
+  max-width: var(--maxWidth, 700px);
+  max-height: var(--maxHeight, 600px);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -212,7 +315,7 @@ body {
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #9e9e9e;
+  border-bottom: 1px solid var(--text-muted);
 }
 #change-password-popup .change-password-box .heading .title span {
   margin-right: 16px;
@@ -221,12 +324,12 @@ body {
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   padding: 8px;
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #9e9e9e;
+  border: 0.2px solid var(--text-muted);
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -241,20 +344,20 @@ body {
   margin: 0.5rem 0;
   border: none;
   border-radius: 8px;
-  background: #2c283d;
-  color: #ffffff;
+  background: var(--input-bg);
+  color: var(--text-light);
   outline: none;
   resize: vertical;
 }
 #change-password-popup .change-password-box .change-password-list input:focus {
-  border: 1px solid #7b5cf0;
+  border: 1px solid var(--primary);
 }
 #change-password-popup .change-password-box .change-password-list #change-password-status {
   margin-top: 4px;
   font-weight: 500;
 }
 #change-password-popup .change-password-box .change-password-list button[type=submit] {
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -265,7 +368,7 @@ body {
   transition: background 0.3s;
 }
 #change-password-popup .change-password-box .change-password-list button[type=submit]:hover {
-  background-color: #7b5cf0;
+  background-color: var(--primary);
 }
 
 #report-problem-popup {
@@ -296,13 +399,13 @@ body {
 }
 #report-problem-popup .report-problem-box {
   width: 85vw;
-  max-width: 700px;
-  max-height: 600px;
+  max-width: var(--maxWidth, 700px);
+  max-height: var(--maxHeight, 600px);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -318,7 +421,7 @@ body {
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #9e9e9e;
+  border-bottom: 1px solid var(--text-muted);
 }
 #report-problem-popup .report-problem-box .heading .title span {
   margin-right: 16px;
@@ -327,12 +430,12 @@ body {
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   padding: 8px;
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #9e9e9e;
+  border: 0.2px solid var(--text-muted);
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -347,20 +450,20 @@ body {
   margin: 0.5rem 0;
   border: none;
   border-radius: 8px;
-  background: #2c283d;
-  color: #ffffff;
+  background: var(--input-bg);
+  color: var(--text-light);
   outline: none;
   resize: vertical;
 }
 #report-problem-popup .report-problem-box .report-problem-list input:focus, #report-problem-popup .report-problem-box .report-problem-list textarea:focus {
-  border: 1px solid #7b5cf0;
+  border: 1px solid var(--primary);
 }
 #report-problem-popup .report-problem-box .report-problem-list #report-problem-status {
   margin-top: 4px;
   font-weight: 500;
 }
 #report-problem-popup .report-problem-box .report-problem-list button[type=submit] {
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -371,7 +474,7 @@ body {
   transition: background 0.3s;
 }
 #report-problem-popup .report-problem-box .report-problem-list button[type=submit]:hover {
-  background-color: #7b5cf0;
+  background-color: var(--primary);
 }
 
 #give-suggestion-popup {
@@ -402,13 +505,13 @@ body {
 }
 #give-suggestion-popup .give-suggestion-box {
   width: 85vw;
-  max-width: 700px;
-  max-height: 600px;
+  max-width: var(--maxWidth, 700px);
+  max-height: var(--maxHeight, 600px);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -424,7 +527,7 @@ body {
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #9e9e9e;
+  border-bottom: 1px solid var(--text-muted);
 }
 #give-suggestion-popup .give-suggestion-box .heading .title span {
   margin-right: 16px;
@@ -433,12 +536,12 @@ body {
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   padding: 8px;
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #9e9e9e;
+  border: 0.2px solid var(--text-muted);
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -453,20 +556,20 @@ body {
   margin: 0.5rem 0;
   border: none;
   border-radius: 8px;
-  background: #2c283d;
-  color: #ffffff;
+  background: var(--input-bg);
+  color: var(--text-light);
   outline: none;
   resize: vertical;
 }
 #give-suggestion-popup .give-suggestion-box .give-suggestion-list input:focus, #give-suggestion-popup .give-suggestion-box .give-suggestion-list textarea:focus {
-  border: 1px solid #7b5cf0;
+  border: 1px solid var(--primary);
 }
 #give-suggestion-popup .give-suggestion-box .give-suggestion-list #give-suggestion-status {
   margin-top: 4px;
   font-weight: 500;
 }
 #give-suggestion-popup .give-suggestion-box .give-suggestion-list button[type=submit] {
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -477,7 +580,7 @@ body {
   transition: background 0.3s;
 }
 #give-suggestion-popup .give-suggestion-box .give-suggestion-list button[type=submit]:hover {
-  background-color: #7b5cf0;
+  background-color: var(--primary);
 }
 
 #change-email-popup {
@@ -508,13 +611,13 @@ body {
 }
 #change-email-popup .change-email-box {
   width: 85vw;
-  max-width: 700px;
-  max-height: 600px;
+  max-width: var(--maxWidth, 700px);
+  max-height: var(--maxHeight, 600px);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -530,7 +633,7 @@ body {
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #9e9e9e;
+  border-bottom: 1px solid var(--text-muted);
 }
 #change-email-popup .change-email-box .heading .title span {
   margin-right: 16px;
@@ -539,12 +642,12 @@ body {
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   padding: 8px;
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #9e9e9e;
+  border: 0.2px solid var(--text-muted);
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -559,20 +662,20 @@ body {
   margin: 0.5rem 0;
   border: none;
   border-radius: 8px;
-  background: #2c283d;
-  color: #ffffff;
+  background: var(--input-bg);
+  color: var(--text-light);
   outline: none;
   resize: vertical;
 }
 #change-email-popup .change-email-box .change-email-list input:focus {
-  border: 1px solid #7b5cf0;
+  border: 1px solid var(--primary);
 }
 #change-email-popup .change-email-box .change-email-list #change-email-status {
   margin-top: 4px;
   font-weight: 500;
 }
 #change-email-popup .change-email-box .change-email-list button[type=submit] {
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -583,7 +686,7 @@ body {
   transition: background 0.3s;
 }
 #change-email-popup .change-email-box .change-email-list button[type=submit]:hover {
-  background-color: #7b5cf0;
+  background-color: var(--primary);
 }
 
 #privacy-settings-popup {
@@ -614,13 +717,13 @@ body {
 }
 #privacy-settings-popup .privacy-settings-box {
   width: 85vw;
-  max-width: 700px;
-  max-height: 600px;
+  max-width: var(--maxWidth, 700px);
+  max-height: var(--maxHeight, 600px);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1f1c2e;
+  background: var(--bg-dark);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -636,7 +739,7 @@ body {
   width: 100%;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid #9e9e9e;
+  border-bottom: 1px solid var(--text-muted);
 }
 #privacy-settings-popup .privacy-settings-box .heading .title span {
   margin-right: 16px;
@@ -645,12 +748,12 @@ body {
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   padding: 8px;
   font-size: 14px;
   width: 32px;
   height: 32px;
-  border: 0.2px solid #9e9e9e;
+  border: 0.2px solid var(--text-muted);
   color: white;
   border-radius: 4px;
   text-align: center;
@@ -675,7 +778,7 @@ body {
   font-weight: 500;
 }
 #privacy-settings-popup .privacy-settings-box .privacy-settings-list button[type=submit] {
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -686,11 +789,11 @@ body {
   transition: background 0.3s;
 }
 #privacy-settings-popup .privacy-settings-box .privacy-settings-list button[type=submit]:hover {
-  background-color: #7b5cf0;
+  background-color: var(--primary);
 }
 
 @media (max-width: 600px) {
-  .notification-settings-box, .privacy-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box, .change-email-box {
+  .notification-settings-box, .change-theme-box, .privacy-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box, .change-email-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;

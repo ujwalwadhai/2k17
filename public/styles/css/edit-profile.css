@@ -19,7 +19,7 @@ body {
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2rem;
-  color: #7b5cf0;
+  color: var(--primary);
 }
 .edit-profile-container .photo-section {
   text-align: center;
@@ -32,7 +32,7 @@ body {
   cursor: pointer;
   text-align: center;
   font-size: 0.85rem;
-  color: #9e9e9e;
+  color: var(--text-muted);
 }
 .edit-profile-container .photo-section label img {
   width: 120px;
@@ -42,11 +42,11 @@ body {
   margin-bottom: 8px;
 }
 .edit-profile-container .photo-section label span {
-  background-color: #252236;
+  background-color: var(--bg-dark2);
   padding: 0.5rem 1rem;
   border-radius: 4px;
   margin-top: 6px;
-  border: 0.5px solid #9e9e9e;
+  border: 0.5px solid var(--text-muted);
 }
 .edit-profile-container .photo-section label input[type=file] {
   display: none;
@@ -63,7 +63,7 @@ body {
 .edit-profile-container .form-group textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #9e9e9e;
+  border: 1px solid var(--text-muted);
   border-radius: 6px;
   background: transparent;
   backdrop-filter: blur(10px);
@@ -73,7 +73,7 @@ body {
 .edit-profile-container .form-group input:focus,
 .edit-profile-container .form-group textarea:focus {
   outline: none;
-  border-color: #6342d8;
+  border-color: var(--primary-dark);
 }
 .edit-profile-container .form-group input + input {
   margin-top: 0.75rem;
@@ -81,7 +81,7 @@ body {
 .edit-profile-container .btn-save {
   width: 100%;
   padding: 0.75rem;
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   font-size: 1rem;
@@ -91,7 +91,7 @@ body {
   transition: background 0.3s ease;
 }
 .edit-profile-container .btn-save:hover {
-  background-color: #7b5cf0;
+  background-color: var(--primary);
 }
 
 @media (max-width: 600px) {
@@ -111,7 +111,7 @@ body {
   margin-top: 12px;
   padding: 8px 12px;
   border-radius: 4px;
-  background-color: #6342d8;
+  background-color: var(--primary-dark);
   color: white;
   border: none;
   cursor: pointer;

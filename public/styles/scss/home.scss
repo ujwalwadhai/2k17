@@ -1,4 +1,4 @@
-@use 'global' as *;
+
 @use 'components/home/comments';
 @use 'components/home/posts';
 @use 'components/home/notifications';
@@ -13,7 +13,7 @@ body {
   scroll-behavior: smooth;
   box-sizing: border-box;
   color: white;
-  background-color: $bg-dark;
+  background-color: var(--bg-dark);
 }
 
 .events-container {
@@ -26,7 +26,7 @@ body {
     max-width: 600px;
     margin: auto;
     margin-top: 48px;
-    background-color: $bg-dark2;
+    background-color: var(--bg-dark2);
     border-radius: 8px;
 
     .heading {
@@ -48,7 +48,7 @@ body {
 
       p.description {
         font-size: 14px;
-        color: $text-muted;
+        color: var(--text-muted);
         margin-top: 4px;
         margin-bottom: 12px;
       }
@@ -95,8 +95,8 @@ body {
     }
 
     .cta-btn {
-      background: $primary-dark;
-      color: $text-light;
+      background: var(--primary-dark);
+      color: var(--text-light);
       padding: 0.75rem 1.5rem;
       text-decoration: none;
       border-radius: 8px;
@@ -104,7 +104,7 @@ body {
       cursor: pointer;
 
       &:hover {
-        background: $primary;
+        background: var(--primary);
       }
     }
   }
@@ -116,7 +116,7 @@ body {
     width: 100%;
     max-width: max(40vw, 500px);
     ;
-    border: 1px solid $text-muted;
+    border: 1px solid var(--text-muted);
     border-radius: 12px;
     transition: 0.3s transform ease;
 
@@ -205,7 +205,7 @@ body {
         gap: 12px;
 
         button {
-          background-color: $input-bg;
+          background-color: var(--input-bg);
           color: white;
           border: none;
           padding: 0.75rem 1.5rem;
@@ -216,7 +216,7 @@ body {
           transition: background 0.3s;
 
           &:hover {
-            background-color: $text-disabled;
+            background-color: var(--text-disabled);
           }
         }
 
@@ -230,7 +230,7 @@ body {
 
 
 #birthday-spotlight {
-  background: $bg-dark;
+  background: var(--bg-dark);
   padding: 1rem 10%;
   border-radius: 10px;
   margin-top: 2rem;
@@ -242,7 +242,7 @@ body {
   }
 
   h3 {
-    color: $text-light;
+    color: var(--text-light);
     font-size: 1.4rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
@@ -254,16 +254,16 @@ body {
   }
 
   p {
-    color: $text-muted;
+    color: var(--text-muted);
     font-size: 1rem;
     margin-bottom: 0;
 
     a {
-      color: $primary-light;
+      color: var(--primary-light);
       text-decoration: underline;
 
       &:hover {
-        color: $primary;
+        color: var(--primary);
       }
     }
   }
@@ -277,19 +277,19 @@ body {
     overflow-x: auto;
 
     .image-card {
-      background: $bg-dark;
+      background: var(--bg-dark);
       border-radius: 10px;
       height: max-content;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       box-shadow: 0 0 0 transparent;
-      border: 0.5px solid $text-light;
+      border: 0.5px solid var(--text-light);
       min-width: 225px;
 
       &:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        background: rgba($bg-dark, 0.75);
+        background: rgba(var(--bg-dark), 0.75);
       }
 
       img {
@@ -300,14 +300,14 @@ body {
       }
 
       h4 {
-        color: $primary;
+        color: var(--primary);
         font-size: 1.2rem;
         margin: 4px 0;
         margin-top: 12px;
       }
 
       p {
-        color: $text-muted;
+        color: var(--text-muted);
         font-size: 1rem;
         line-height: 1.6;
         margin-top: 0;

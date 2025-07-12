@@ -7,6 +7,7 @@ var postsController = require('../controllers/posts');
 var reportsController = require('../controllers/reports');
 var memoriesController = require('../controllers/memories');
 var analyticsController = require('../controllers/analytics');
+var usersController = require('../controllers/users');
 var { isLoggedIn } = require('../middlewares/auth');
 
 
@@ -81,6 +82,10 @@ router.get('/api/analytics/daily-users', analyticsController.dailyUsers);
 router.get('/api/analytics/daily-route-views', analyticsController.dailyRouteViews);
 
 router.get('/api/analytics/monthly-users', analyticsController.monthlyUsers);
+
+// GET /api/search-users?keyword=ujwal
+router.get('/search-users', isLoggedIn, usersController.searchUsers);
+
 
 
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping

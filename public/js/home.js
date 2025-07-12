@@ -187,7 +187,7 @@ async function deleteComment(commentId, postId, userId, isHomePage = true) {
     if (isHomePage) {
       loadComments(postId, userId);
       var id = `comment-btn-${postId}`
-      document.getElementById(id).innerHTML = `<span class="fal fa-comment"></span>${data.commentsLength}`
+      document.getElementById(id).innerHTML = `<span class="fal fa-messages"></span>${data.commentsLength}`
     } else {
       document.getElementById(`comment-${commentId}`).style.display = 'none'
     }
@@ -220,9 +220,9 @@ function loadNotifications() {
             data.notifications.forEach(n => {
               if (n.seen) {
                 list.innerHTML += `<div class="notification" onclick="window.location.href = '${n.url}'">
-          <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
+          <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment', 'mention'].includes(n.type) ? (n.fromUser.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
           <div class="content">
-            <div class="text">${['like', 'comment'].includes(n.type)
+            <div class="text">${['like', 'comment', 'mention'].includes(n.type)
                     ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
                     </div>
@@ -232,9 +232,9 @@ function loadNotifications() {
         </div>`
               } else {
                 list.innerHTML += `<div class="notification unread" onclick="window.location.href = '${n.url}'">
-                        <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment'].includes(n.type) ? (n.user.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
+                        <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment', 'mention'].includes(n.type) ? (n.fromUser.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
                         <div class="content">
-                          <div class="text">${['like', 'comment'].includes(n.type)
+                          <div class="text">${['like', 'comment', 'mention'].includes(n.type)
                     ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
                         </div>
@@ -346,7 +346,7 @@ function loadPosts(userId) {
 
 function openPostPopup() {
   document.getElementById('post-popup').classList.add('show');
-  document.getElementById('post-text').focus();
+  document.getElementById('editor').focus();
 }
 
 function closePostPopup() {
@@ -354,7 +354,7 @@ function closePostPopup() {
 }
 
 function createPost(userId) {
-  var text = document.getElementById('post-text').value;
+  var text = document.getElementById('editor').textContent;
   var media = document.getElementById('media-input').files;
   if (media.length > 0) {
     var formData = new FormData();
@@ -392,7 +392,7 @@ function createPost(userId) {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          document.getElementById('post-text').value = '';
+          document.getElementById('editor').innerHTML = '';
           document.getElementById('media-input').value = '';
           document.getElementById('media-preview').innerHTML = '';
           closePostPopup()

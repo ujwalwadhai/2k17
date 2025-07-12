@@ -23,8 +23,6 @@ const newComment = async (req, res) => {
 
     // In-app notification logic
     if(post.author._id.toString() !== req.user._id.toString()){
-      // sendMail('newcomment', post.author.email, { user: req.user, comment: req.body.text, postLink: `${req.protocol}://${req.get('host')}/post/${post._id}` });
-      // Email notifications for comments are not needed
       var notification = new Notifications({
         user: post.author._id,
         type: 'comment',

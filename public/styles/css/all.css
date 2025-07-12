@@ -92,6 +92,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 *:before,
 *:after {
   box-sizing: inherit;
+  accent-color: var(--primary);
 }
 
 @font-face {

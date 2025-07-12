@@ -19,6 +19,7 @@ html, body{
 *:before,
 *:after {
   box-sizing: inherit;
+  accent-color: var(--primary);
 }
 
 @font-face {

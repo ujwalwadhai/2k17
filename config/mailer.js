@@ -295,6 +295,17 @@ async function NewsLetterSubscribeMail(to, data) {
   sendEmail(to, 'Newsletter subscription • 2k17 Platform', template);
 }
 
+async function PostMentionMail(to, data) {
+  var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
+              <h3 style="color: #7b5cf0;">Post mentions</h3>
+              <p><a href="https://twok17.onrender.com/${data.username}">${data.username}</a> mentioned you in a post.</p>
+              <a href="${data.url}" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">See post</a>
+              <p style="color: #888;">Mail System</p><p style="color: #888;">2k17 Platform</p>
+            </div>`
+  logActivity('', "Sent Email", `for post mention`)
+  sendEmail(to, 'Post mention • 2k17 Platform', template);
+}
+
 async function UserRegisteredMail(to, data) {
   var template = `<div style="font-family: sans-serif; background: #1f1c2e; color: #ffffffcc; padding: 20px; border-radius: 10px;">
               <h3 style="color: #7b5cf0;">New User Registration</h3>
@@ -387,6 +398,7 @@ async function sendMail(type, to, data) {
   if (type == 'user_registered') UserRegisteredMail(to, data);
   if (type == 'new_user_registration') RegisteredDataMail(to, data);
   if (type == 'weekly_report') WeeklyReportMail(to, data);
+  if (type == 'post_mention') PostMentionMail(to, data);
 }
 
 module.exports = sendMail;

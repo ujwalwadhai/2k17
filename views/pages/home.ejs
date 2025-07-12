@@ -103,7 +103,10 @@
         <p>Create a new post</p>
         <p class="close-icon fal fa-xmark" onclick="closePostPopup()"></p>
       </div>
-      <textarea name="content" placeholder="What's on your mind?" id="post-text" required></textarea>
+      <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;You can mention people by typing @ followed by their name or username. Use @all to mention everyone.</span>
+      <div id="editor" contenteditable="true" class="editor" placeholder="Say hi to everyone..."></div>
+      <textarea id="hiddenContent" name="content" hidden></textarea>
+      <ul id="mentionBox" class="mention-box hidden"></ul>
       <input type="file" id="media-input" accept="image/*">
       <label for="media-input" class="upload-label"><span class="fal fa-upload"></span> &nbsp; Add photo</label>
       <div class="preview" id="media-preview"></div>
@@ -159,6 +162,7 @@
   <script src="/js/all.js"></script>
   <script src="/js/notifications.js"></script>
   <script src="/js/home.js"></script>
+  <script src="/js/createPost.js"></script>
 
   <script>
     let deferredPrompt;

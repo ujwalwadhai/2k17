@@ -34,7 +34,8 @@ const postSchema = new mongoose.Schema({
   },
   visits: { type: Number, default: 0 },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
-  comments: [commentSchema]
+  comments: [commentSchema],
+  mentions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }]
 });
 
 function autoPopulateAuthor(next) {

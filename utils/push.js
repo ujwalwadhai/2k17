@@ -25,6 +25,13 @@ const templates = {
     url: `/post/${data.postId}#comment-${data.commentId}`,
     tag: `comment`
   }),
+  mention: (data) => ({
+    title: `${data.user.username} mentioned you in a post`,
+    body: `"${data.text?.substring(0, 50)}${data.text?.length > 50 ? '...' : ''}"`,
+    icon: data.user.profile || '/images/web_logo.png',
+    url: `/post/${data.postId}`,
+    tag: `mention`
+  }),
   like: (data) => ({
     title: `${data.user.name} liked your post`,
     body: `Click to see.`,

@@ -33,7 +33,7 @@
       </div>
       <div class="post-data">
         <p class="post-text">
-          <%= post.text %>
+          <%- post.text %>
         </p>
         <% if(post.media && post.media.url && post.media?.type.startsWith('image')) { %>
         <img src="<%= post.media.url %>" alt="" class="post-img">

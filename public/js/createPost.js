@@ -20,7 +20,7 @@ textarea.addEventListener('input', async (e) => {
   mentionStartOffset = offset;
 
   const textUpToCursor = node.textContent.slice(0, offset);
-  const match = textUpToCursor.match(/@([a-zA-Z0-9_]{1,20})$/);
+  const match = textUpToCursor.match(/@([a-zA-Z0-9_.]{1,20})$/);
 
   if (match) {
     const keyword = match[1];

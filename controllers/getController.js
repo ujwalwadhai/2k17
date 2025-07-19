@@ -41,6 +41,7 @@ exports.termsOfService = (req, res) => {
 }
 
 exports.login = (req, res) => {
+  if(req?.user) return res.redirect('/home');
   res.render('pages/login');
 }
 
@@ -95,10 +96,12 @@ exports.home = async (req, res) => {
 }
 
 exports.register = (req, res) => {
+  if(req?.user) return res.redirect('/home');
   res.render('pages/register');
 }
 
 exports.emailLogin = (req, res) => {
+  if(req?.user) return res.redirect('/home');
   res.render('pages/email-login');
 }
 

@@ -64,7 +64,7 @@ function insertMention(username) {
   if (!mentionStartNode) return;
 
   const text = mentionStartNode.textContent;
-  const before = text.slice(0, mentionStartOffset).replace(/@([a-zA-Z0-9_]{1,20})$/, '');
+  const before = text.slice(0, mentionStartOffset).replace(/@([a-zA-Z0-9_.]{1,20})$/, '');
   const after = text.slice(mentionStartOffset);
 
   const span = document.createElement('span');

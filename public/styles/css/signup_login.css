@@ -132,6 +132,7 @@ body {
   font-weight: bold;
   margin-top: 1rem;
   cursor: pointer;
+  font-size: 1rem;
 }
 .right-pane .signup-form .primary-btn:hover {
   background: var(--primary);
@@ -312,6 +313,35 @@ body {
     height: 100vh !important;
     border-radius: 0 !important;
   }
+}
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  width: 100%;
+  color: rgb(78, 78, 78);
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s;
+}
+.google-btn:hover {
+  background: #f2f2f2;
+}
+.google-btn .google-icon {
+  position: absolute;
+  left: 1rem;
+  width: 20px;
+  height: 20px;
+}
+.google-btn span {
+  color: var(--primary-dark);
 }
 
 /*# sourceMappingURL=signup_login.css.map */

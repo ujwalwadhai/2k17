@@ -40,10 +40,10 @@ cron.schedule('2 0 * * *', async () => {
         });
 
         const deleted = await Posts.deleteOne({
-    createdAt: { $gte: startOfYesterday, $lte: endOfYesterday },
-    author: '685680c4709e2711271639d1',
-    text: { $regex: /^Here's the most viewed memory of yesterday!/ }
-});
+            createdAt: { $gte: startOfYesterday, $lte: endOfYesterday },
+            author: '685680c4709e2711271639d1',
+            text: { $regex: /^Here's the most viewed memory of yesterday!/ }
+        });
         console.log('[CRON] Deleted yesterday\'s post:', deleted);
 
         const topFile = await PageViews.aggregate([

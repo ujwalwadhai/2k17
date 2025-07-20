@@ -5,7 +5,7 @@ async function getUpcomingBirthdays() {
 
   const today = new Date();
   const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  const daysToConsider = 14;
+  const daysToConsider = 10;
 
   const upcomingBirthdays = [];
 

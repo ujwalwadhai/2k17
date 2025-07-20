@@ -24,7 +24,11 @@
         </div><br>
 
         <a href="/login">Login with Password instead</a>
-        <button class="primary-btn" id="send-otp-btn" onclick="sendOTP()">Send OTP</button><br><br>
+        <button class="primary-btn" id="send-otp-btn" onclick="sendOTP(); document.querySelector('.google-btn').style.display = 'none'; ">Send OTP</button><br>
+        <a href="/auth/google" class="google-btn">
+          <img src="/images/icons/google.svg" alt="Google Logo" class="google-icon">
+          Continue with Google
+        </a><br>
         <button class="primary-btn" style="display: none;" id="login-btn" onclick="email_login()">Verify and Login</button><br><br>
 
         <!-- <div class="divider">Or register with</div>

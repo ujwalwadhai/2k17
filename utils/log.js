@@ -7,13 +7,15 @@ async function logActivity(userId, action, detail = '', data={}) {
         action,
         detail,
         system: true,
-        data
+        data,
+        createdAt: new Date()
       });
     } else {
       await Logs.create({
         user: userId,
         action,
-        detail
+        detail,
+        createdAt: new Date(),
     });
     }
   } catch (err) {

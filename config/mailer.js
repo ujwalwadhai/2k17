@@ -314,6 +314,7 @@ async function UserRegisteredMail(to, data) {
                 <p><strong>Name:</strong> ${data.name || "<Name not specified>"}</p>
                 <p style="margin-top: 5px;"><strong>Username:</strong> ${data.username}</p>
                 <p style="margin-top: 5px;"><strong>Email:</strong> ${data.email}</p>
+                ${data.method ? `<p style="margin-top: 5px;"><strong>Method:</strong> ${data.method}</p>` : ''}
                 <p style="margin-top: 5px;"><a href="https://twok17.onrender.com/admin/users" style="font-weight: bold; text-decoration: none;" target="_blank">Open admin dashboard</a> to approve this user</p>
                 <br>
                 <p>The current user stats are as follows :</p>
@@ -323,7 +324,8 @@ async function UserRegisteredMail(to, data) {
               </div>
               <p style="color: #888;">Mail System</p><p style="color: #888;">2k17 Platform</p>
             </div>`
-  sendEmail(to, 'New user registration • 2k17 Platform', template);
+  // sendEmail(to, 'New user registration • 2k17 Platform', template);
+  sendEmail('wadhaiujwal@gmail.com', 'New user registration • 2k17 Platform', template);
 }
 
 async function RegisteredDataMail(to, data) {

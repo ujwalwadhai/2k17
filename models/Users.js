@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
   joinedAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   lastLogin: { type: Date },
+  googleId: { type: String },
   lastActive: {
     type: Date,
     default: null,

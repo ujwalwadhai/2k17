@@ -18,7 +18,7 @@ const register = async (req, res) => {
     if (existingUsername) return res.json({ success: false, message: 'Username already taken' });
 
     const user = await Users.create({
-      email,
+      email, 
       username: username.trim().toLowerCase(),
       name: name.trim(),
       dob: dob.split("-").reverse().join("/"), // Convert to DD/MM/YYYY format
@@ -46,7 +46,6 @@ const register = async (req, res) => {
         console.log(err);
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      logActivity(user._id, 'Account Activation', `${user.name} activated their account`);
       return res.json({success: true, message: 'Account activated successfully', user , redirect: '/home'});
     })
 

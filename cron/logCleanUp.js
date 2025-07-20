@@ -4,16 +4,20 @@ var logActivity = require('../utils/log');
 
 cron.schedule('5 0 * * *', async () => {
   try {
-    var retentionPeriod = process.env.LOGS_RETENTION_PERIOD || 30; // In days, 30 days default
-    var threshold = new Date(Date.now() - retentionPeriod * 24 * 60 * 60 * 1000);
-    var logs = await Logs.countDocuments({ createdAt: { $lt: threshold } });
-    if(logs > 0) {
-    var result = await Logs.deleteMany({ createdAt: { $lt: threshold } });
-    logActivity('', "CLEANUP", `Deleted ${result.deletedCount} logs older than ${retentionPeriod} days.`)
+    const retentionPeriod = process.env.LOGS_RETENTION_PERIOD || 30;
+    const threshold = new Date(Date.now() - retentionPeriod * 24 * 60 * 60 * 1000);
+    const logs = await Logs.countDocuments({ createdAt: { $lt: threshold } });
+
+    if (logs > 0) {
+      const result = await Logs.deleteMany({ createdAt: { $lt: threshold } });
+      const istNowStr = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+      const istNow = new Date(istNowStr);
+
+      logActivity('', 'CLEANUP', `Deleted ${result.deletedCount} logs older than ${retentionPeriod} days.`, istNow);
     }
   } catch (err) {
     console.error('[LOG CLEANUP ERROR]', err);
   }
 }, {
-    timezone: "Asia/Kolkata"
+  timezone: 'Asia/Kolkata'
 });

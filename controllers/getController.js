@@ -42,6 +42,9 @@ exports.termsOfService = (req, res) => {
 
 exports.login = (req, res) => {
   if(req?.user) return res.redirect('/home');
+  if(req.query.failure) {
+    return res.render('pages/login', { error: 'Something went wrong. Please try again later.' });
+  }
   res.render('pages/login');
 }
 

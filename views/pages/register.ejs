@@ -13,22 +13,16 @@
   <div class="container">
 
     <div class="right-pane">
-      <div class="signup-form" id="register-form">
-        <span class="only-small"><br /><br /><br /><br /><br /><br /><br /><br /></span>
+      <div class="signup-form" id="register-form" style="height:90vh">
+        <span class="only-small"><br></span>
 
 
         <h1 class="error">Create account</h1>
-        <p>Already have an account? &nbsp;<a href="/login">Login instead</a></p><br>
-        <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; Please <a href="mailto:2k17platform@gmail.com?cc=wadhaiujwal@gmail.com&subject=2k17 Platform Support">contact us</a> if you face any problems.</small><br><br>
+        <p>Already have an account? &nbsp;<a href="/login">Login instead</a></p>
         <div>
 
 
           <div>
-            <!-- <div class="username-field">
-            <input type="text" autocomplete="off" oninput="checkUsername(this, this.value)" id="signup-username" name="username" placeholder="Choose username" />
-            <span id="status-icon" class="status-icon fal fa-user-circle"></span>
-        </div>
-        <small id="status-message" class="grey-1"></small> -->
             <div>
               <input type="input" autocomplete="name" name="name" id="name" placeholder="Full Name *" oninput="updateUsername(this.value)" required />
             </div>
@@ -36,15 +30,6 @@
               <input type="input" autocomplete="username" name="username" id="username" placeholder="Username *" required />
             </div>
             <input type="email" autocomplete="email" name="email" id="email" placeholder="Email *" required />
-            <!-- <input
-              type="text"
-              name="code"
-              autocomplete="off"
-              oninput="this.value = this.value.toUpperCase()"
-              id="code"
-              placeholder="Enter activation code *"
-              required
-            /> -->
             <div class="password-field">
               <input type="password" id="password" placeholder="Enter password of your choice *" />
               <span class="eye-icon fal fa-eye" id="toggle" onclick="togglePassword()"></span>
@@ -57,15 +42,14 @@
             <label class="terms">
               <input type="checkbox" id="terms-box" />
               I agree to the &nbsp;
-              <a href="/terms-of-service"> Terms of Service</a> </label><br />
+              <a href="/terms-of-service"> Terms of Service</a> </label>
           </div>
 
-          <button onclick="register()" id="signup-btn" class="primary-btn">Create Account</button><br /><br />
-          <!-- <div class="divider">Or register with</div>
-        <div class="social-buttons">
-          <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
-          <button class="apple">Apple</button>
-        </div>-->
+          <button onclick="register()" id="signup-btn" class="primary-btn">Create Account</button><br />
+          <a href="/auth/google" class="google-btn">
+            <img src="/images/icons/google.svg" alt="Google Logo" class="google-icon">
+            Continue with Google
+          </a><br />
           <span class="only-small"><br /><br /></span>
         </div>
       </div>

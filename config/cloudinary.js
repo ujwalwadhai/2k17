@@ -63,4 +63,19 @@ const destroy = async (url, type='image') => {
   }
 }
 
-module.exports = { upload, destroy };
+const uploadFromUrl = async (url, publicId = '', folder = '2k17/profiles') => {
+  try {
+    const result = await cloudinary.uploader.upload(url, {
+      folder,
+      public_id: publicId || undefined,
+      overwrite: true
+    });
+    return result.secure_url;
+  } catch (err) {
+    console.error('Cloudinary remote upload failed:', err);
+    return null;
+  }
+};
+
+
+module.exports = { upload, destroy, uploadFromUrl };

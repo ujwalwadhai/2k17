@@ -15,7 +15,11 @@
       <div class="signup-form">
         <h1>Login to 2k17 ❤️</h1>
         <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
-        <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; Please <a href="mailto:2k17platform@gmail.com?cc=wadhaiujwal@gmail.com&subject=2k17 Platform Support">contact us</a> if you face any problems.</small><br><br>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div style="color: red; margin-top: 5px;"><%= error %></div>
+        <% } else { %>
+        <small class="grey-1" id="info"><span class="fal fa-info-circle"></span> &nbsp; Please <a href="mailto:2k17platform@gmail.com?cc=wadhaiujwal@gmail.com&subject=2k17 Platform Support">contact us</a> if you face any problems.</small>
+        <% } %><br><br>
         <div>
           <input type="text" id="username" name="username" placeholder="Enter email or username" oninput="this.value = this.value.toLowerCase().replace(/[^a-zA-Z0-9_@.]/g, '')" onkeyup="if(event.key === 'Enter') document.getElementById('password').focus()" />
           <div class="password-field">
@@ -26,7 +30,12 @@
 
         <p><a href="/login/email">Login with Email OTP instead</a></p>
         <p><a style="margin-top: 8px;" onclick="openForgottenPassword()">Forgotten password?</a></p>
-        <button onclick="login('/home')" class="primary-btn" id="login_btn">Continue</button><br><br>
+        <button onclick="login('/home')" class="primary-btn" id="login_btn">Continue</button><br>
+        <a href="/auth/google" class="google-btn">
+          <img src="/images/icons/google.svg" alt="Google Logo" class="google-icon">
+          Continue with Google
+        </a>
+        <br>
         <span class="only-small"><br><br></span>
       </div>
     </div>

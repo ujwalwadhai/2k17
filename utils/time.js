@@ -87,23 +87,33 @@ function createDate() {
   return FinalDate;
 }
 
+const IST_OFFSET_MINUTES = 330;
+
+function toIST(date) {
+  const utc = date.getTime() + date.getTimezoneOffset() * 60000;
+  return new Date(utc + IST_OFFSET_MINUTES * 60000);
+}
+
+function fromIST(istDate) {
+  return new Date(istDate.getTime() - IST_OFFSET_MINUTES * 60000);
+}
+
 function subDays(date, days) {
-  const result = new Date(date);
-  result.setDate(result.getDate() - days);
-  return result;
+  const ist = toIST(date);
+  ist.setDate(ist.getDate() - days);
+  return fromIST(ist);
 }
 
 function startOfDay(date) {
-  const result = new Date(date);
-  result.setHours(0, 0, 0, 0);
-  return result;
+  const ist = toIST(date);
+  ist.setHours(0, 0, 0, 0);
+  return fromIST(ist);
 }
 
 function endOfDay(date) {
-  const result = new Date(date);
-  result.setHours(23, 59, 59, 999);
-  return result;
+  const ist = toIST(date);
+  ist.setHours(23, 59, 59, 999);
+  return fromIST(ist);
 }
-
 
 module.exports = { getRelativeTime, formatDOB, createDate, subDays, startOfDay, endOfDay };

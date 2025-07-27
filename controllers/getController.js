@@ -1,4 +1,6 @@
 var Users = require('../models/Users');
+var ActiveUsers = require('../models/ActiveUsers');
+var DailyUsers = require('../models/DailyUsers');
 var Files = require('../models/Files');
 var Posts = require('../models/Posts');
 var Notifications = require('../models/Notifications');
@@ -21,7 +23,8 @@ exports.indexPage = async (req, res) => {
 
   var birthdayUsers = await Users.find({
     dob: { $regex: `^${todayStr}/` }
-  , verified: true}, {
+    , verified: true
+  }, {
     name: 1,
     username: 1,
     profile: 1,
@@ -41,8 +44,8 @@ exports.termsOfService = (req, res) => {
 }
 
 exports.login = (req, res) => {
-  if(req?.user) return res.redirect('/home');
-  if(req.query.failure) {
+  if (req?.user) return res.redirect('/home');
+  if (req.query.failure) {
     return res.render('pages/login', { error: 'Something went wrong. Please try again later.' });
   }
   res.render('pages/login');
@@ -60,14 +63,20 @@ exports.admin = async (req, res) => {
     .sort({ createdAt: -1 })
     .limit(100);
 
-  res.render('pages/admin', { reports });
+  const since = new Date(Date.now() - 20000);
+  const activeUsers = await ActiveUsers.countDocuments({ last_ping: { $gte: since } })
+
+  const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' });
+  const usersToday = await DailyUsers.countDocuments({ date: today });
+
+  res.render('pages/admin', { reports, activeUsers, usersToday });
 }
 
 exports.adminUserlist = async (req, res) => {
   try {
-    var users = await Users.find({role: { $ne: 'admin' }})
-    .sort({ registered: -1, name: 1 })
-  
+    var users = await Users.find({ role: { $ne: 'admin' } })
+      .sort({ registered: -1, name: 1 })
+
     res.render('pages/admin-users', { users });
   } catch (err) {
     console.error(err);
@@ -83,11 +92,11 @@ exports.home = async (req, res) => {
   try {
     res.locals.hasUnreadNotifications = false;
     var birthdays = await getUpcomingBirthdays();
-    var hasUnreadNotifications = await Notifications.findOne({ $or: [{ user: req.user._id },{ user: null }], seen: false });
+    var hasUnreadNotifications = await Notifications.findOne({ $or: [{ user: req.user._id }, { user: null }], seen: false });
     const [photo] = await Files.aggregate([
-  { $match: { tags: 'featured' } },
-  { $sample: { size: 1 } }
-]);
+      { $match: { tags: 'featured' } },
+      { $sample: { size: 1 } }
+    ]);
     if (hasUnreadNotifications) {
       res.locals.hasUnreadNotifications = true;
     }
@@ -99,12 +108,12 @@ exports.home = async (req, res) => {
 }
 
 exports.register = (req, res) => {
-  if(req?.user) return res.redirect('/home');
+  if (req?.user) return res.redirect('/home');
   res.render('pages/register');
 }
 
 exports.emailLogin = (req, res) => {
-  if(req?.user) return res.redirect('/home');
+  if (req?.user) return res.redirect('/home');
   res.render('pages/email-login');
 }
 
@@ -126,10 +135,10 @@ exports.donate = (req, res) => {
 
 exports.adminUserInfo = async (req, res) => {
   var user = await Users.findOne({ _id: req.params.userId }).select("+code");
-  if(user){
-    return res.json({success: true, user });
+  if (user) {
+    return res.json({ success: true, user });
   }
-  res.json({success:false, user });
+  res.json({ success: false, user });
 }
 
 async function getSortedUsers(loggedInUserId = null) {

@@ -21,6 +21,8 @@ const userSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now },
   lastLogin: { type: Date },
   googleId: { type: String },
+  gender: { type: String, enum: ['male', 'female']},
+  house: { type: String, enum: ['Arawali', 'Nilgiri', 'Shiwalika', 'Udaygiri']},
   lastActive: {
     type: Date,
     default: null,
@@ -28,7 +30,7 @@ const userSchema = new mongoose.Schema({
   theme: {
     type: String,
     default: 'purple',
-    enum: ['purple', 'blue', 'green', 'orange']
+    enum: ['purple', 'blue', 'green', 'red', 'teal', 'pink', 'cyan', 'brown']
   },
   pushSubscriptions: [{
     endpoint: String,

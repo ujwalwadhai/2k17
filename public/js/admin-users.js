@@ -39,6 +39,8 @@ function openUserInfo(userId) {
                 document.getElementById('user-phone').innerHTML = `<a href='tel:${data.user?.phone || ''}'">${data.user?.phone || '<span class="grey-1">No data available</span>'}</a>`;
                 document.getElementById('user-dob').textContent = data.user?.dob || '-';
                 document.getElementById('user-code').textContent = data.user?.code || '-';
+                document.getElementById('user-gender').textContent = (data.user?.gender.charAt(0).toUpperCase() + data.user?.gender.slice(1)) || '<span class="grey-1">No data available</span>';
+                document.getElementById('user-house').textContent = data.user?.house || '<span class="grey-1">No data available</span>';
                 document.getElementById('user-joinedAt').textContent = data.user?.joinedAt ? new Date(data.user.joinedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
                 document.getElementById('user-lastLogin').innerHTML = data.user?.lastLogin ? new Date(data.user.lastLogin).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '<span class="grey-1">No data available</span>';
                 document.getElementById('user-action-btn').innerHTML = data.user?.registered ? `<button id="user-disable-login-btn" class="btn btn-danger" onclick="disableLoginUser('${userId}')">Disable Login</button>` : `<button id="user-enable-login-btn" class="btn btn-success" onclick="disableLoginUser('${userId}')">Enable Login</button>`;

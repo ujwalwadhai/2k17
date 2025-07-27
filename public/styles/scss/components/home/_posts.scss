@@ -125,14 +125,16 @@
 
       .btns-right {
         margin-left: auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
 
         .fa-trash {
           cursor: pointer;
+          margin-left: 12px;
         }
-
-        button {
-          margin-left: 10px;
-
+        button{
+          margin-right: 0 !important;
         }
       }
 
@@ -153,6 +155,10 @@
         span.fal,
         span.fas {
           margin-right: 6px;
+        }
+
+        span.fas{
+          color: var(--primary);
         }
       }
     }

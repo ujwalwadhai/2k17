@@ -16,7 +16,7 @@ const folderSchema = new mongoose.Schema({
   },
   access: {
     type: String,
-    enum: ['girls', 'boys', 'both'],
+    enum: ['male', 'female', 'both'],
     default: 'both'
   },
   path: {

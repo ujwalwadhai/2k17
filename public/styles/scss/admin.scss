@@ -1,7 +1,6 @@
-
 @use 'components/popup/mixins' as *;
 
-body{
+body {
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 
   @media (max-width: 768px) {
@@ -60,12 +59,13 @@ body{
 
   // Large screens: all in one row
   @media (min-width: 1025px) {
-  flex-wrap: nowrap; // ensures all in one row
-  button {
-    flex: 1 1 0; // allow buttons to shrink/grow equally
-    max-width: none;
+    flex-wrap: nowrap; // ensures all in one row
+
+    button {
+      flex: 1 1 0; // allow buttons to shrink/grow equally
+      max-width: none;
+    }
   }
-}
 
 }
 
@@ -73,13 +73,13 @@ body{
 .reports-logs {
   padding: 8px 20px;
 
-  h2{
+  h2 {
     color: var(--primary-dark);
     font-size: 22px;
   }
-  
+
   .search-bar {
-    padding:12px 10px;
+    padding: 12px 10px;
     border: 0.5px solid var(--text-muted);
     border-radius: 5px;
     background: transparent;
@@ -88,7 +88,7 @@ body{
     margin-bottom: 15px;
     width: 100%;
     font-size: 16px;
-    
+
     &::placeholder {
       color: var(--text-muted);
     }
@@ -97,13 +97,14 @@ body{
 
 .activity-logs {
   padding: 8px 20px;
-  
-  h2{
+
+  h2 {
     color: var(--primary-dark);
     font-size: 22px;
   }
+
   .search-bar {
-    padding:12px 10px;
+    padding: 12px 10px;
     border: 0.5px solid var(--text-muted);
     border-radius: 5px;
     backdrop-filter: blur(6px);
@@ -150,7 +151,7 @@ body{
   border-collapse: collapse;
   color: var(--text-light);
   text-align: left;
-  
+
 
   thead {
     background: transparent;
@@ -255,6 +256,7 @@ body{
     }
   }
 }
+
 #send-notification-popup {
   @include fullscreen-popup;
 
@@ -291,7 +293,10 @@ body{
 }
 
 @media (max-width: 600px) {
-  .resolve-report-box, .newsletter-box, .send-notification-box {
+
+  .resolve-report-box,
+  .newsletter-box,
+  .send-notification-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;
@@ -342,9 +347,10 @@ body{
 }
 
 #users-table {
-  tbody tr td{
+  tbody tr td {
     font-size: 14px;
   }
+
   tr:nth-of-type(even) {
     background: rgba(var(--bg-dark), 0.8);
   }
@@ -413,10 +419,46 @@ body{
 }
 
 @media (max-width: 600px) {
-  .user-info-box, .resolve-report-box, .newsletter-box {
+
+  .user-info-box,
+  .resolve-report-box,
+  .newsletter-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;
     border-radius: 0 !important;
+  }
+}
+
+.analytics-capsule {
+  background: var(--bg-dark2);
+  border-radius: 0.6rem;
+  padding: 1.5rem 1.4rem;
+  color: var(--text-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  width: 90%;
+  max-width: 572px;
+  margin: 1rem auto;
+
+  .capsule-head{
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+  }
+
+  .label {
+    font-size: 0.95rem;
+    color: #aaaaaa;
+    margin-top: 0;
+    margin-bottom: 0.3rem;
+  }
+
+  .value{
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-top: 0.3rem;
+    margin-bottom: 0.2rem;
+    font-weight: bold;
   }
 }

@@ -101,12 +101,16 @@
 }
 .posts .post .post-buttons .btns-right {
   margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
 }
 .posts .post .post-buttons .btns-right .fa-trash {
   cursor: pointer;
+  margin-left: 12px;
 }
 .posts .post .post-buttons .btns-right button {
-  margin-left: 10px;
+  margin-right: 0 !important;
 }
 .posts .post .post-buttons button {
   background-color: transparent;
@@ -124,6 +128,9 @@
 .posts .post .post-buttons button span.fal,
 .posts .post .post-buttons button span.fas {
   margin-right: 6px;
+}
+.posts .post .post-buttons button span.fas {
+  color: var(--primary);
 }
 .posts .post .extend-like-msg {
   display: flex;

@@ -19,7 +19,7 @@
             Update profile</a></li>
         <li onclick="openChangePassword()"><a><span class="fal fa-unlock-keyhole"></span> Change password</a></li>
         <li onclick="openChangeEmail()"><a><span class="fal fa-envelope"></span> <%- user.email ? 'Change' : 'Add' %> email</a></li>
-        <li onclick="openChangeTheme()"><a><span class="fal fa-palette"></span> Change theme &nbsp; <span class="fal fa-sparkles" style="color: yellow; font-size: 20px"></span></a></li>
+        <li onclick="openChangeTheme()"><a><span class="fal fa-palette"></span> Change theme &nbsp; <span class="grey-1">(New themes added)</span></span></a></li>
         <li onclick="openNotificationSettings()"><a><span class="fal fa-bell"></span> Notifications</a></li>
         <li onclick="openPrivacySettings()"><a><span class="fal fa-eye-slash"></span> Privacy & Visibility</a></li>
       </ul>
@@ -101,12 +101,27 @@
               Green <%- theme == 'green' ? '<span class="grey-1">(current theme)</span>' : '' %>
             </label>
             <label>
-              <input type="radio" value="orange" name="theme" <%- theme == 'orange' ? 'checked' : '' %>>
-              Orange <%- theme == 'orange' ? '<span class="grey-1">(current theme)</span>' : '' %>
+              <input type="radio" value="red" name="theme" <%- theme == 'red' ? 'checked' : '' %>>
+              Red <%- theme == 'red' ? '<span class="grey-1">(current theme)</span>' : '' %>
             </label>
-          </div><br>
-
-          <div id="change-theme-status"></div>
+            <label>
+              <input type="radio" value="pink" name="theme" <%- theme == 'pink' ? 'checked' : '' %>>
+              Pink <%- theme == 'pink' ? '<span class="grey-1">(current theme)</span>' : '' %>
+            </label>
+            <label>
+              <input type="radio" value="teal" name="theme" <%- theme == 'teal' ? 'checked' : '' %>>
+              Teal <%- theme == 'teal' ? '<span class="grey-1">(current theme)</span>' : '' %>
+            </label>
+            <label>
+              <input type="radio" value="cyan" name="theme" <%- theme == 'cyan' ? 'checked' : '' %>>
+              Ocean <%- theme == 'cyan' ? '<span class="grey-1">(current theme)</span>' : '' %>
+            </label>
+            <label>
+              <input type="radio" value="brown" name="theme" <%- theme == 'brown' ? 'checked' : '' %>>
+              Chocolate <%- theme == 'brown' ? '<span class="grey-1">(current theme)</span>' : '' %>
+            </label>
+          </div>
+          <div style="margin-top: 4px" id="change-theme-status"></div>
           <button type="submit">Change</button>
         </form>
 

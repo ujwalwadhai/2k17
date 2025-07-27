@@ -19,6 +19,18 @@
     <button onclick="window.location.href='/admin/analytics'" class="tool-btn"><span class="fal fa-chart-mixed"></span> Analytics</button>
   </div>
 
+  <div class="analytics-capsule">
+    <p class="capsule-head"><b>Analytics overview</b></p>
+    <div class="users-active">
+      <p class="label">Users active now</p>
+      <p class="value"><%= activeUsers %></p>
+    </div><br>
+    <div class="users-today">
+      <p class="label">Users today</p>
+      <p class="value"><%= usersToday %></p>
+    </div>
+  </div>
+
   <% if(reports.length > 0){ %>
   <div class="reports-logs">
     <h2>Submitted Reports</h2>
@@ -63,7 +75,7 @@
 
   <div class="activity-logs">
     <h2>Activity Logs</h2>
-    <input type="text" id="logSearch" placeholder="Search logs..." class="search-bar">
+    <input type="text" id="logSearch" placeholder="Search logs..." class="search-bar" style="display: none">
     <div class="logs-table-wrapper">
       <table class="logs-table" id="logs-table">
         <thead>

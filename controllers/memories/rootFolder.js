@@ -3,7 +3,13 @@ var Files = require('../../models/Files');
 
 var rootFolder = async (req, res) => {
     try {
-        var subfolders = await Folders.find({ parent: null });
+        const subfolders = await Folders.find({
+            parent: null,
+            $or: [
+                { access: 'both' },
+                { access: req.user?.gender }
+            ]
+        });
         var files = await Files.find({ folder: null }).populate('likes', '_id name username profile');
         var featuredImages = await Files.find({
             tags: 'featured'

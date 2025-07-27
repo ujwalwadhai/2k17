@@ -26,7 +26,17 @@ var fetchFolder = async (req, res) => {
     if (!folder) {
       return res.status(404).json({ success: false, message: 'Folder not found' });
     }
-    var subfolders = await Folders.find({ parent: folderId });
+    var userGender = req.user?.gender;
+    if (folder.access !== userGender && folder.access !== 'both') {
+      return res.status(403).json({ success: false, message: 'Access Denied' });
+    }
+    const subfolders = await Folders.find({
+      parent: folderId,
+      $or: [
+        { access: 'both' },
+        { access: userGender }
+      ]
+    });
     var files = await Files.find({ folder: folderId }).populate('likes', '_id name username profile');
     var featuredImages = await Files.find({
       tags: 'featured'

@@ -48,23 +48,13 @@ dotenv.config();
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
 
-const Users = require('./models/Users')
+require('./models/Users')
 require('./models/DailyUsers')
 require('./models/Posts')
 require('./models/Notifications')
 require('./models/Settings')
 require('./models/ActiveUsers')
 require('./models/PageViews')
-
-app.get(['/memories', '/settings', '/profile', '/home'], async (req, res, next) => {
-  if (req.user) {
-    var user = await Users.findById(req.user._id)
-    if (user && !user.registered) {
-      return res.redirect('/logout')
-    }
-  }
-  next()
-})
 
 app.use(express.json({ type: 'application/json' }))
 app.use(express.urlencoded({ extended: true }));
@@ -125,9 +115,6 @@ const generalLimiter = rateLimit({
   }
 });
 app.use(generalLimiter);
-
-
-
 
 // CRON Jobs for recurring events
 require('./cron/logCleanUp')

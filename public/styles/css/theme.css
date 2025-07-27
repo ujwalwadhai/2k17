@@ -40,9 +40,37 @@
   --primary-light: #66b2ff;
 }
 
-/* Orange Theme */
-[data-theme="orange"] {
-  --primary: #fd7e14;
-  --primary-dark: #e8590c;
-  --primary-light: #ffa94d;
+/* Red Theme */
+[data-theme="red"] {
+  --primary: #dc3545;
+  --primary-dark: #a71d2a;
+  --primary-light: #f78da7;
+}
+
+/* Teal Theme */
+[data-theme="teal"] {
+  --primary: #20c997;
+  --primary-dark: #158f70;
+  --primary-light: #63e6be;
+}
+
+/* Pink Theme */
+[data-theme="pink"] {
+  --primary: #e83e8c;
+  --primary-dark: #c2185b;
+  --primary-light: #f7a1c4;
+}
+
+/* Cyan Theme */
+[data-theme="cyan"] {
+  --primary: #17a2b8;
+  --primary-dark: #117a8b;
+  --primary-light: #69d3e4;
+}
+
+/* Brown Theme */
+[data-theme="brown"] {
+  --primary: #795548;
+  --primary-dark: #5d4037;
+  --primary-light: #bcaaa4;
 }

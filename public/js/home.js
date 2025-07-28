@@ -369,7 +369,7 @@ function createPost(userId) {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          document.getElementById('post-text').value = '';
+          document.getElementById('editor').innerHTML = ''; 
           document.getElementById('media-input').value = '';
           document.getElementById('media-preview').innerHTML = '';
 

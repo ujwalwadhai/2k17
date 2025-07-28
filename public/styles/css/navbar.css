@@ -67,6 +67,7 @@
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
+  object-fit: cover;
 }
 .header .user-capsule-wrapper .user-capsule p {
   margin: 0;

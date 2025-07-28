@@ -9,7 +9,7 @@ function deviceInfo(ua) {
     ? "Tablet"
     : "Desktop";
 
-  return `${browser} on ${os} (${platformType})`;
+  return `${browser} on ${platformType}`;
 }
 
 module.exports = deviceInfo

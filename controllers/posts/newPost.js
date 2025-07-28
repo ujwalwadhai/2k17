@@ -85,7 +85,7 @@ const newPost = async (req, res) => {
       }
     }
 
-    //logActivity(req.user._id, 'New Post', `Created new post (${newPost._id})`);
+    logActivity(req.user._id, 'New Post', `Created new post (${newPost._id})`);
 
     return res.json({ success: true, message: 'Post created' });
 

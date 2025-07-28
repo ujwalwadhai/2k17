@@ -144,66 +144,43 @@ exports.adminUserInfo = async (req, res) => {
 async function getSortedUsers(loggedInUserId = null) {
   try {
     const pipeline = [];
-
-    // Add roleOrder for sorting
+    
     pipeline.push({
       $addFields: {
-        roleOrder: {
-          $switch: {
-            branches: [
-              { case: { $eq: ["$role", "admin"] }, then: 1 },
-              { case: { $eq: ["$role", "moderator"] }, then: 2 },
-              ...(loggedInUserId
-                ? [{ case: { $eq: ["$_id", loggedInUserId] }, then: 3 }]
-                : [])
-            ],
-            default: 4
+        isAdmin: {
+          $cond: { if: { $eq: ["$role", "admin"] }, then: 1, else: 0 }
+        },
+        isLoggedInUser: {
+          $cond: {
+            if: { $and: [
+                loggedInUserId,
+                { $eq: ["$_id", loggedInUserId] }
+            ]},
+            then: 1,
+            else: 0
           }
         }
       }
     });
 
-    // Sort by role priority
     pipeline.push({
-      $sort: { roleOrder: 1 }
-    });
-
-    // Split into admins and others
-    pipeline.push({
-      $facet: {
-        admins: [
-          { $match: { role: "admin" } },
-          { $sort: { name: -1 } }
-        ],
-        others: [
-          { $match: { role: { $ne: "admin" } } },
-          { $sort: { name: 1 } }
-        ]
+      $sort: {
+        isAdmin: -1,    
+        isLoggedInUser: -1,  
+        house: 1,
+        name: 1            
       }
     });
 
-    // Merge admins and others back
-    pipeline.push({
-      $project: {
-        users: { $concatArrays: ["$admins", "$others"] }
-      }
-    });
-
-    // Flatten the array back into documents
-    pipeline.push({ $unwind: "$users" });
-    pipeline.push({ $replaceRoot: { newRoot: "$users" } });
-
-    // Lookup settings
     pipeline.push({
       $lookup: {
-        from: "settings",          // collection name (MongoDB, lowercase plural)
-        localField: "_id",         // Users._id
-        foreignField: "user",    // Settings.userId
+        from: "settings",
+        localField: "_id",     
+        foreignField: "user",  
         as: "settings"
       }
     });
 
-    // Unwind to get a single settings object (optional)
     pipeline.push({
       $unwind: {
         path: "$settings",
@@ -211,8 +188,16 @@ async function getSortedUsers(loggedInUserId = null) {
       }
     });
 
+    pipeline.push({
+      $project: {
+        isAdmin: 0,
+        isLoggedInUser: 0
+      }
+    });
+
     const users = await Users.aggregate(pipeline);
     return users;
+
   } catch (err) {
     console.log(err);
     return [];
@@ -241,7 +226,7 @@ exports.viewProfile = async (req, res) => {
 }
 
 exports.myProfile = async (req, res) => {
-  var user = await Users.findOne({ username: req.user.username });
+  var user = await Users.findOne({ username: req.user.username }).populate('settings');
   if (!user) return res.redirect('/');
   if (req.user) {
     var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 });

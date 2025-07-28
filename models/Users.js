@@ -68,6 +68,9 @@ userSchema.methods.validatePassword = async function (enteredPassword) {
   return enteredPassword === this.code;
 };
 
+userSchema.set('toJSON', { virtuals: true });
+userSchema.set('toObject', { virtuals: true });
+
 userSchema.virtual('settings', {
   ref: 'Settings',
   localField: '_id',

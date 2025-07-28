@@ -136,13 +136,37 @@ function openViewImage(name, url, id, thumbnail) {
   var imgName = document.querySelector('#imgName')
   img.src = url;
   imgName.textContent = name;
+  ViewImagePopup.querySelector('#tagBtnImg').innerHTML = "I'm in this memory"
+  ViewImagePopup.querySelector('#tagBtnImg').disabled = false
+  ViewImagePopup.querySelector('#tagBtnImg').setAttribute('onclick', `tagMemory("${id}")`)
   ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
   ViewImagePopup.querySelector("#share-icon").setAttribute('onclick', `shareImage("${id}", "${thumbnail}")`)
   ViewImagePopup.classList.add('show');
   ViewImageOverlay.classList.add('show');
-  if(!localStorage.getItem('viewedImages') || !localStorage.getItem('viewedImages').includes(id)) {
-    navigator.sendBeacon('/api/analytics/addFileView', JSON.stringify({ fileId: id }));
-    localStorage.setItem('viewedImages', localStorage.getItem('viewedImages') ? localStorage.getItem('viewedImages') + ',' + id : id)
+  navigator.sendBeacon('/api/analytics/addFileView', JSON.stringify({ fileId: id }));
+}
+
+async function tagMemory(fileId) {
+  if (USER_ID) {
+    const tagBtn = document.getElementById('tagBtnImg');
+    tagBtn.innerHTML = "Tagging..."
+    tagBtn.disabled = true;
+    const res = await fetch(`/file/${fileId}/tag`, { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      if (data.tag) {
+        Toast('Memory tagged!', 'success');
+        tagBtn.innerHTML = "Tagged successfully!"
+      } else {
+        Toast('Memory untagged!', 'success');
+        tagBtn.innerHTML = "Untagged successfully!"
+      }
+    } else {
+      Toast('Failed to tag memory.', 'error');
+      tagBtn.innerHTML = "Tagging failed"
+    }
+  } else {
+    alert("Please login to tag yourself in memories")
   }
 }
 
@@ -345,15 +369,10 @@ async function loadFolder(folderId, updateURL = true) {
 
 
 async function shareImage(fileId, url){
-  const response = await fetch(url);
-  const blob = await response.blob();
-  const file = new File([blob], 'image.jpg', { type: blob.type });
-
   const shareData = {
     title: 'Check this memory',
     text: 'See this memory I found on 2k17 Platform.',
     url: `https://twok17.onrender.com/memories/file/${fileId}`,
-    files: [file]
   };
 
   try {

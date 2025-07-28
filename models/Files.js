@@ -29,6 +29,10 @@ const fileSchema = new mongoose.Schema({
   },
   path: String,
   tags: [String],
+  people: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users'
+  }],
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'

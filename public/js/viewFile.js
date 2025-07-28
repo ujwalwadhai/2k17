@@ -1,156 +1,38 @@
-var userId;
+document.addEventListener('DOMContentLoaded', () => {
+  const popup = document.querySelector('.view-file-popup');
+  if (!popup) return;
 
-async function submitComment(fileId) {
-  document.querySelector('#newCommentBtn').disabled = true;
-  var text = document.getElementById('new-comment').value;
-  var res = await fetch(`/file/${fileId}/new/comment`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text })
-  });
-  var data = await res.json()
-  if (data.success) {
-    document.getElementById('new-comment').value = ''
-    document.querySelector('#newCommentBtn').disabled = false;
-    openComments(fileId);
-  } else {
-    Toast('Failed to add comment! Please try again later.','error')
-    document.querySelector('#newCommentBtn').disabled = false;
-  }
-}
+  popup.addEventListener('click', (event) => {
+    const target = event.target.closest('[data-action]');
+    if (!target) return;
 
+    const action = target.dataset.action;
 
-async function deleteFileComment(commentId, fileId) {
-  var conf = confirm('Are you sure you want to delete this comment?')
-  if (!conf) {
-    return
-  }
-  var res = await fetch(`/file/${fileId}/comment/${commentId}/delete`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  });
-  var data = await res.json();
-  if (data.success) {
-    Toast('Comment deleted successfully!', 'success')
-      openComments(fileId);
-  } else {
-    Toast('Failed to delete comment! Please try again later.', 'error')
-  }
-}
-
-
-async function openComments(fileId, userId) {
-  var commentsPopup = document.getElementById('comments-popup')
-  var overlay = document.getElementById('overlay')
-  commentsPopup.classList.add('show');
-  overlay.classList.add('show');
-
-  commentsPopup.querySelector('#newCommentBtn').removeEventListener('click', () => { submitComment(fileId) })
-  commentsPopup.querySelector('#newCommentBtn').addEventListener('click', () => { submitComment(fileId) })
-  document.getElementById('new-comment').value = ''
-
-  if(!fileId) closeComments()
-  var list = document.getElementById('comments-list');
-  list.innerHTML = '';
-  list.innerHTML = `<div id="comments-loader">
-  <div class="comments-loader-text" id="comments-loader-text">
-      <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
-      <span class="letter" style="animation-delay: 0.15s"><span class='letter-green'>k</span></span>
-      <span class="letter" style="animation-delay: 0.3s"><span class='letter-red'>1</span></span>
-      <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
-  </div>
-</div>`
-  var res = await fetch(`/file/${fileId}/comments`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  });
-  var comments = await res.json();
-  setTimeout(() => {
-    if (comments.length > 0) {
-
-      document.getElementById('comments-loader').classList.add('hidden');
-      comments.forEach(c => {
-        if (userId && c.user._id.toString() === userId.toString()) {
-          var trashIcon = `<span class='fal fa-trash' onclick='deleteFileComment("${c._id}", "${fileId}")'></span>`
-        } else {
-          var trashIcon = ''
-        }
-        list.innerHTML += `<div class="comment" id="comment-${c._id}">
-                                  <img src="${c.user.profile ? c.user.profile : '/images/user.png'}" alt="" onclick="window.location.href='/${c.user.username}'" class="user-profile">
-                                  <div class="comment-info">
-                                  <p class="name" onclick="window.location.href='/${c.user.username}'">${c.user.name} &nbsp; <span class="time">${c.timeAgo || 'moments ago'}</span></p>
-                              <span class="text">${c.text}</span>
-                            </div>
-                            <div class="action-buttons">
-                              ${trashIcon}
-                            </div>
-                          </div>`;
-      });
-
-      setTimeout(() => {
-        document.querySelectorAll('.comment').forEach(c => {
-          c.style.display = 'flex'
-        })
-      }, 100)
-    } else {
-      list.innerHTML = "No comments yet"
+    switch (action) {
+      case 'like':
+        likeFile(FILE_ID);
+        break;
+      case 'comment':
+        openComments(FILE_ID);
+        break;
+      case 'share':
+        const thumbnail = target.dataset.thumbnail;
+        shareImage(FILE_ID, thumbnail);
+        break;
     }
-  }, 500)
-}
+  });
 
-function closeComments() {
-  var CommentsPopup = document.getElementById('comments-popup');
-  var CommentsOverlay = CommentsPopup.querySelector('.overlay');
-  CommentsPopup.classList.remove('show');
-  CommentsOverlay.classList.remove('show');
-}
+  navigator.sendBeacon('/api/analytics/addFileView', JSON.stringify({ fileId: FILE_ID }));
 
-function openViewImage(id, userId) {
-    userId = userId
-  var ViewImagePopup = document.getElementById('view-image-popup');
-  var ViewImageOverlay = ViewImagePopup.querySelector('.overlay');
-  ViewImagePopup.classList.add('show');
-  ViewImageOverlay.classList.add('show');
-  if(!localStorage.getItem('viewedImages') || !localStorage.getItem('viewedImages').includes(id)) {
-    navigator.sendBeacon('/api/analytics/addFileView', JSON.stringify({ fileId: id }));
-    localStorage.setItem('viewedImages', localStorage.getItem('viewedImages') ? localStorage.getItem('viewedImages') + ',' + id : id)
+  const newCommentBtn = document.getElementById('newCommentBtn');
+  if (newCommentBtn) {
+    newCommentBtn.addEventListener('click', () => submitComment(FILE_ID));
   }
-}
-
-function closeViewImage() {
-  var ViewImagePopup = document.getElementById('view-image-popup');
-  var ViewImageOverlay = ViewImagePopup.querySelector('.overlay');
-  ViewImagePopup.classList.remove('show');
-  ViewImageOverlay.classList.remove('show');
-  var img = document.querySelector('#imgLarge')
-  var name = document.querySelector('#imgName')
-  img.src = ''
-  name.textContent = ''
-}
-function openViewVideo(name, url, id) {
-  var ViewVideoPopup = document.getElementById('view-video-popup');
-  var ViewVideoOverlay = ViewVideoPopup.querySelector('.overlay');
-  var videoIframe = document.querySelector('#videoIframe')
-  var videoName = document.querySelector('#videoName')
-  videoIframe.src = url;
-  videoName.textContent = name;
-  ViewVideoPopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
-  ViewVideoPopup.classList.add('show');
-  ViewVideoOverlay.classList.add('show');
-}
-
-function closeViewVideo() {
-  var ViewVideoPopup = document.getElementById('view-video-popup');
-  var ViewVideoOverlay = ViewVideoPopup.querySelector('.overlay');
-  ViewVideoPopup.classList.remove('show');
-  ViewVideoOverlay.classList.remove('show');
-  var videoIframe = document.querySelector('#videoIframe')
-  var videoName = document.querySelector('#videoName')
-  videoIframe.src = ''
-  videoName.textContent = ''
-}
+});
 
 async function likeFile(fileId) {
+  if (!USER_ID) return alert("Please login to like this file")
+
   try {
     var icon = document.getElementById(`like-icon-${fileId}`);
     icon.classList.remove("fa-heart");
@@ -160,10 +42,8 @@ async function likeFile(fileId) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     });
-
     var data = await res.json();
     if (!data.success) return Toast('Failed to update like', 'error');
-
     // Toggle icon style
     icon.classList.remove('fa-spin');
     icon.classList.remove('fa-spinner-third');
@@ -175,29 +55,138 @@ async function likeFile(fileId) {
       icon.classList.remove('fas');
       icon.classList.add('fal');
     }
-
   } catch (err) {
     console.log(err);
     Toast('Error while liking post', 'error');
   }
 }
 
-async function shareImage(fileId, url){
-  const response = await fetch(url);
-  const blob = await response.blob();
-  const file = new File([blob], 'image.jpg', { type: blob.type });
+async function submitComment(fileId) {
+  const commentBtn = document.getElementById('newCommentBtn');
+  const commentInput = document.getElementById('new-comment');
+  const text = commentInput.value;
 
-  const shareData = {
-    title: 'Check this memory',
-    text: 'See this memory I found on 2k17 Platform.',
-    url: `https://twok17.onrender.com/memories/file/${fileId}`,
-    files: [file]
-  };
+  if (!text) return;
+
+  commentBtn.disabled = true;
 
   try {
-    await navigator.share(shareData);
-    console.log('Shared successfully');
+    const res = await fetch(`/file/${fileId}/new/comment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
+    });
+    const data = await res.json();
+    if (data.success) {
+      commentInput.value = '';
+      openComments(fileId);
+    } else {
+      Toast('Failed to add comment!', 'error');
+    }
+  } catch (error) {
+    Toast('An error occurred.', 'error');
+  } finally {
+    commentBtn.disabled = false;
+  }
+}
+
+async function deleteFileComment(commentId, fileId) {
+  if (!confirm('Are you sure you want to delete this comment?')) return;
+
+  const res = await fetch(`/file/${fileId}/comment/${commentId}/delete`, { method: 'POST' });
+  const data = await res.json();
+  if (data.success) {
+    Toast('Comment deleted!', 'success');
+    openComments(fileId);
+  } else {
+    Toast('Failed to delete comment.', 'error');
+  }
+}
+
+async function openComments(fileId) {
+  const commentsPopup = document.getElementById('comments-popup');
+  commentsPopup.classList.add('show');
+  document.getElementById('new-comment').value = '';
+
+  const list = document.getElementById('comments-list');
+  list.innerHTML = '';
+  list.innerHTML = `<div id="comments-loader">
+      <div class="comments-loader-text" id="comments-loader-text">
+        <span class="letter" style="animation-delay: 0s"><span class='letter-blue'>2</span></span>
+        <span class="letter" style="animation-delay: 0.15s"><span class='letter-green'>k</span></span>
+        <span class="letter" style="animation-delay: 0.3s"><span class='letter-red'>1</span></span>
+        <span class="letter" style="animation-delay: 0.45s"><span class='letter-yellow'>7</span></span>
+      </div>
+      </div>`
+
+  const res = await fetch(`/file/${fileId}/comments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  const comments = await res.json();
+
+  if (comments.length > 0) {
+    list.innerHTML = '';
+    comments.forEach(c => {
+      const isOwner = USER_ID && c.user._id.toString() === USER_ID.toString();
+      const trashIcon = isOwner ? `<span class='fal fa-trash' onclick='deleteFileComment("${c._id}", "${fileId}")'></span>` : '';
+      list.innerHTML += `
+                <div class="comment" id="comment-${c._id}">
+                    <img src="${c.user.profile || '/images/user.png'}" alt="" class="user-profile">
+                    <div class="comment-info">
+                        <p class="name">${c.user.name} &nbsp; <span class="time">${c.timeAgo || 'moments ago'}</span></p>
+                        <span class="text">${c.text}</span>
+                    </div>
+                    <div class="action-buttons">${trashIcon}</div>
+                </div>`;
+    });
+  } else {
+    list.innerHTML = "<p style='color: var(--text-muted); margin-top: 0'>No comments yet.</p>";
+  }
+}
+
+function closeComments() {
+  const commentsPopup = document.getElementById('comments-popup');
+  commentsPopup.classList.remove('show');
+}
+
+async function shareImage(fileId, url) {
+  try {
+    const shareData = {
+      title: 'Check out this memory!',
+      text: 'See this memory I found on the 2k17 Platform.',
+      url: `https://twok17.onrender.com/memories/file/${fileId}`
+    };
+    if (navigator.canShare && navigator.canShare(shareData)) {
+      await navigator.share(shareData);
+    } else {
+      Toast('Web Share not supported on this browser.', 'info');
+    }
   } catch (err) {
     console.error('Sharing failed', err);
+  }
+}
+
+async function tagMemory(fileId) {
+  if (USER_ID) {
+    const tagBtn = document.getElementById('tagBtn');
+    tagBtn.innerHTML = "Tagging..."
+    tagBtn.disabled = true;
+    const res = await fetch(`/file/${fileId}/tag`, { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      if (data.tag) {
+        Toast('Memory tagged!', 'success');
+        tagBtn.innerHTML = "Tagged successfully!"
+      } else {
+        Toast('Memory untagged!', 'success');
+        tagBtn.innerHTML = "Untagged successfully!"
+      }
+    } else {
+      Toast('Failed to tag memory.', 'error');
+      tagBtn.innerHTML = "Tagging failed"
+    }
+  } else {
+    alert("Please login to tag yourself in memories")
   }
 }

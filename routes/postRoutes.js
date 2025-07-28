@@ -119,4 +119,6 @@ router.post('/file/:fileId/new/comment', isLoggedIn, memoriesController.newComme
 
 router.post('/file/:fileId/comment/:commentId/delete', isLoggedIn, memoriesController.deleteComment);
 
+router.post('/file/:fileId/tag', isLoggedIn, memoriesController.tagFile);
+
 module.exports = router;

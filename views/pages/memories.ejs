@@ -57,9 +57,10 @@
           <p id="comments-icon" class="comments-icon fal fa-message"></p>
           <p class="close-icon fal fa-xmark" onclick="closeViewImage()"></p>
         </div>
-      </div>
+      </div> 
       <div class="view-image-large" id="view-image-large">
         <img src="" oncontextmenu="return false;" alt="Image" id="imgLarge">
+        <button class="action-btn tag-memory" id="tagBtnImg" aria-label="Tag Memory">I'm in this memory</button>
       </div>
     </div>
   </div>
@@ -100,12 +101,13 @@
     </div>
   </div>
 
-  <script src="/js/memories.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       loadFolder('<%= currentFolder?._id %>')
     })
+    const USER_ID = '<%- user ? user._id : null %>'
   </script>
+  <script src="/js/memories.js"></script>
 
 </body>
 

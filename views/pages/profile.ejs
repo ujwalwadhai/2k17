@@ -48,10 +48,10 @@
       </div>
     </div>
 
-    <div class="tabs-container">
+    <div class="tabs-container"> 
       <div class="tabs">
         <button class="tab-btn active" data-tab="posts" id="posts-tab"><span class="helper-text">POSTS</span></button>
-        <button class="tab-btn" data-tab="media" id="media-tab"><span class="helper-text">MEMORIES</span></button>
+        <button class="tab-btn" data-tab="memories" id="memories-tab"><span class="helper-text">MEMORIES</span></button>
         <% if(user){ %>
         <button class="tab-btn" data-tab="about" id="about-tab"><span class="helper-text">ABOUT</span></button>
         <% } else { %>
@@ -126,10 +126,9 @@
           </div>
           <% } %>
         </div>
-        <div class="tab-panel" id="media">
-          <% const media = posts.filter(p => p.media?.url); %>
-          <% if (media.length === 0) { %>
-          <p class="empty-msg"><span class="fal fa-image-slash"></span><br>No media found.</p>
+        <div class="tab-panel" id="memories">
+          <% if (memories.length === 0) { %>
+          <p class="empty-msg"><span class="fal fa-image-slash"></span><br>No tagged memories found.<br>Click <b>I'm in this memory</b> on files to tag yourself.</p>
           <% } else if(!user) { %>
             <div class="login-box">
               <p>Please log in to see memories of <%= account.name %>.</p>
@@ -137,22 +136,15 @@
             </div>
           <% } else { %>
           <div class="media-grid">
-            <% media.forEach(post => { %>
-            <div class="media-card">
+            <% memories.forEach(memory => { %>
+            <div class="media-card" onclick="window.location.href= '/memories/file/<%= memory._id %>'">
               <div class="media-overlay">
                 <div class="overlay-content">
-                  <span><i class="fal fa-heart"></i> <%= post.likes.length %></span>
-                  <span><i class="fal fa-message"></i> <%= post.comments.length %></span>
+                  <span><i class="fal fa-heart"></i> <%= memory.likes.length %></span>
+                  <span><i class="fal fa-message"></i> <%= memory.comments.length %></span>
                 </div>
               </div>
-              <% if (post.media.type.startsWith('image')) { %>
-              <img src="<%= post.media.url %>" alt="Media" />
-              <% } else if (post.media.type.startsWith('video')) { %>
-              <span class="video-icon"><i class="fas fa-play"></i></span>
-              <video>
-                <source src="<%= post.media.url %>" type="video/mp4">
-              </video>
-              <% } %>
+              <img src="<%= memory.thumbnail %>" alt="Media" />
             </div>
             <% }) %>
           </div>

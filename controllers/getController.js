@@ -216,24 +216,26 @@ exports.members = async (req, res) => {
 
 exports.viewProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.params.username }).populate("settings");
+  var memories = await Files.find({ people: user._id }).select("url thumbnail people")
   if (!user) return res.redirect('/');
   if (req.user) {
     var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 });
   } else {
     var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 }).limit(5);
   }
-  res.render('pages/profile', { account: user, posts });
+  res.render('pages/profile', { account: user, posts, memories });
 }
 
 exports.myProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.user.username }).populate('settings');
+  var memories = await Files.find({ people: user._id })
   if (!user) return res.redirect('/');
   if (req.user) {
     var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 });
   } else {
     var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 }).limit(5);
   }
-  res.render('pages/profile', { account: user, posts });
+  res.render('pages/profile', { account: user, posts, memories });
 }
 
 exports.editProfile = async (req, res) => {

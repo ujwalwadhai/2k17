@@ -91,7 +91,7 @@
         gap: 0.75rem;
 
         .action-btn {
-          padding: 0.6rem 1.2rem;
+          padding: 0.5rem 1rem;
           border-radius: 4px;
           cursor: pointer;
           font-size: 14px;
@@ -195,7 +195,7 @@
     overflow: hidden;
     cursor: pointer;
     text-align: center;
-    background-color: var(--bg-dark2);
+    background-color: var(--bg-dark);
     max-height: 320px;
 
     img,
@@ -205,8 +205,8 @@
       object-fit: cover;
       transition: transform 0.3s ease;
 
-      @media (max-width: 600px) {
-        width: calc(100vw - 16px);
+      @media (max-width: 508px) {
+        width: calc(100% - 16px);
         margin: 0 auto;
         border-radius: 8px;
       }
@@ -276,7 +276,7 @@
     background: var(--bg-dark2);
     border-radius: 12px;
     padding: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
 
     .about-heading {
       font-size: 18px;

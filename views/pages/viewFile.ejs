@@ -4,58 +4,77 @@
 <head>
   <%- include('../partials/head') %>
   <title><%= file.name %> - 2k17</title>
-  <link rel="stylesheet" href="/styles/css/memories.css">
+  <link rel="stylesheet" href="/styles/css/viewFile.css">
+  <meta property="og:image" content="<%= file.thumbnail || '/images/web_logo.png' %>">
 </head>
 
 <body>
-  <% if(file.type == 'image') { %>
-  <div id="view-image-popup" class="view-file-popup">
-    <div class="overlay" onclick="window.location.href = '/memories'"></div>
+  <%- include('../partials/navbar') %>
+  <br><br>
+
+  <% if(file.type === 'image') { %>
+  <div id="view-image-popup" class="view-file-popup" data-file-id="<%= file._id %>">
+    <div class="overlay" data-action="close"></div>
     <div class="view-file-box">
-      <div class="heading">
-        <p class="title"><span class="fal fa-image file-type-icon"></span> <span id="imgName"><%= file.name %></span></p>
-        <div class="right-btns">
-          <p id="share-icon" class="comments-icon fal fa-share" onclick="shareImage('<%= file._id %>', '<%= file.thumbnail %>')"></p>
-          <p id="comments-icon" class="comments-icon fal fa-message" onclick="openComments('<%= file._id %>')"></p>
-          <p class="close-icon fal fa-xmark" onclick="window.location.href = '/memories'"></p>
+      <header class="view-file-header">
+        <div class="file-info">
+          <i class="fal fa-image"></i>
+          <span class="file-name"><%= file.name %></span>
         </div>
-      </div>
-      <div class="view-image-large" id="view-image-large">
-        <img src="<%= file.url %>" oncontextmenu="return false;" alt="Image" id="imgLarge">
+        <div class="action-buttons">
+          <button class="action-btn" data-action="like" aria-label="Like"><i class="<%- user && file.likes.includes(user._id) ? 'fas' : 'fal' %> fa-heart" id="like-icon-<%= file.id %>"></i></button>
+          <button class="action-btn" data-action="share" data-thumbnail="<%= file.thumbnail %>" aria-label="Share"><i class="fal fa-share"></i></button>
+          <button class="action-btn" data-action="comment" aria-label="Comments"><i class="fal fa-message-lines"></i></button>
+        </div>
+      </header>
+      <div class="view-file-content">
+        <% if(user && file.people && file.people.includes(user._id)){ %>
+        <button class="action-btn tag-memory" id="tagBtn" style="background-color: #ff4757; border: 0.5px solid #ff4757;" onclick="tagMemory('<%= file._id %>')" aria-label="Tag Memory">Untag from this memory</button>
+        <% } else { %>
+        <button class="action-btn tag-memory" id="tagBtn" onclick="tagMemory('<%= file._id %>')" aria-label="Tag Memory">I'm in this memory</button>
+        <% } %>
+        <img src="<%= file.url %>" alt="<%= file.name %>" oncontextmenu="return false;">
       </div>
     </div>
   </div>
-  <% } else if (file.type == 'video') { %>
-  <div id="view-video-popup" class="view-file-popup">
-    <div class="overlay" onclick="window.location.href = '/memories'"></div>
+
+  <% } else if (file.type === 'video') { %>
+  <div id="view-video-popup" class="view-file-popup" data-file-id="<%= file._id %>">
+    <div class="overlay" data-action="close"></div>
     <div class="view-file-box">
-      <div class="heading">
-        <p class="title"><span class="fal fa-video"></span> <span id="videoName"><%= file.name %></span></p>
-        <div class="right-btns">
-          <p id="share-icon" class="comments-icon fal fa-share" onclick="shareImage('<%= file._id %>', '<%= file.thumbnail %>')"></p>
-          <p id="comments-icon" class="comments-icon fal fa-message" onclick="openComments('<%= file._id %>', '<%- user? user._id : null %>')"></p>
-          <p class="close-icon fal fa-xmark" onclick="window.location.href = '/memories'"></p>
+      <header class="view-file-header">
+        <div class="file-info">
+          <i class="fal fa-video"></i>
+          <span class="file-name"><%= file.name %></span>
         </div>
-      </div>
-      <div class="view-video-large" id="view-video-large">
-        <div class="iframe-wrapper">
-          <iframe id="videoIframe" frameborder="0" width="650" height="900" src="<%= file.url %>" allowfullscreen></iframe>
-          <div class="overlay-text">2k17 Platform ❤️</div>
+        <div class="action-buttons">
+          <button class="action-btn" data-action="like" aria-label="Like"><i class="fal fa-heart" id="like-icon-<%= file.id %>"></i></button>
+          <button class="action-btn" data-action="share" data-thumbnail="<%= file.thumbnail %>" aria-label="Share"><i class="fal fa-share"></i></button>
+          <button class="action-btn" data-action="comment" aria-label="Comments"><i class="fal fa-message-lines"></i></button>
         </div>
+      </header>
+      <div class="view-file-content">
+        <% if(user && file.people && file.people.includes(user._id)){ %>
+        <button class="action-btn tag-memory" id="tagBtn" style="background-color: #ff4757; border: 0.5px solid #ff4757;" onclick="tagMemory('<%= file._id %>')" aria-label="Tag Memory">Untag from this memory</button>
+        <% } else { %>
+        <button class="action-btn tag-memory" id="tagBtn" onclick="tagMemory('<%= file._id %>')" aria-label="Tag Memory">I'm in this memory</button>
+        <% } %>
+        <video src="<%= file.url %>" controls controlslist="nodownload" oncontextmenu="return false;">
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   </div>
   <% } %>
 
   <div id="comments-popup">
-    <div class="overlay" onclick="closeComments()" id="overlay"></div>
+    <div class="overlay" onclick="closeComments()"></div>
     <div class="comments-box">
       <div class="heading">
         <p>Comments</p>
         <p class="close-icon fas fa-times" onclick="closeComments()"></p>
       </div>
-      <div class="comments-list" id="comments-list">
-      </div>
+      <div class="comments-list" id="comments-list"></div>
       <div class="input-area">
         <input id="new-comment" autocomplete="off" placeholder="Write a comment..." />
         <button type="button" id="newCommentBtn">Post</button>
@@ -63,10 +82,14 @@
     </div>
   </div>
 
-  <script src="/js/viewFile.js"></script>
   <script>
-    openViewImage('<%= file._id %>', '<%- user? user._id : null %>')
+    const FILE_ID = "<%= file._id %>";
+    const USER_ID = "<%- user ? user._id : null %>";
   </script>
+  <script src="/js/viewFile.js"></script>
+
+  <div id="toast-container" style="position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;"></div>
+
 </body>
 
 </html>

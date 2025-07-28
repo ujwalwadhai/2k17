@@ -7,5 +7,6 @@ module.exports = {
     likeFile: require('./likeFile.js'),
     fetchComments: require('./fetchComments.js'),
     newComment: require('./newComment.js'),
-    deleteComment: require('./deleteComment.js')
+    deleteComment: require('./deleteComment.js'),
+    tagFile: require('./tagFile.js'),
 }

@@ -14,7 +14,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 document.addEventListener('DOMContentLoaded', () => {
   var urlParams = new URLSearchParams(window.location.search);
   var s = urlParams.get('s');
-  if (['about', 'media', 'posts'].includes(s)) {
+  if (['about', 'memories', 'posts'].includes(s)) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     var btn = document.getElementById(s);

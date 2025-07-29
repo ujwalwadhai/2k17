@@ -123,7 +123,6 @@
         .action-buttons {
           margin-left: auto;
           color: var(--text-muted);
-          visibility: hidden;
 
           span {
             cursor: pointer;
@@ -133,10 +132,6 @@
             color: red;
             margin-left: 16px;
           }
-        }
-
-        &:hover .action-buttons {
-          visibility: visible;
         }
       }
 

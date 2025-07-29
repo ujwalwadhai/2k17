@@ -17,7 +17,7 @@
 
       <div class="photo-section">
         <label for="profilePhoto">
-          <img class="profile-pic" src="<%= user.profile || '/images/user.png' %>" alt="Profile Photo">
+          <img class="profile-pic" src="<%= account.profile || '/images/user.png' %>" alt="Profile Photo">
           <input type="file" id="profilePhoto" accept="image/jpg, image/jpeg, image/png">
           <span>Change Profile Photo</span>
         </label>
@@ -25,33 +25,33 @@
 
       <div class="form-group">
         <label>Name &nbsp;<span class="grey-1">(Can't be changed)</span></label>
-        <input type="text" placeholder="<%= user.name %>" disabled>
+        <input type="text" placeholder="<%= account.name %>" disabled>
       </div>
 
       <div class="form-group">
         <label>Email &nbsp;<span class="grey-1">(Go to settings to change email)</span></label>
-        <input disabled type="email" placeholder="<%- user.email ?? 'Your email is not verified. Check your email app for verification email' %>">
+        <input disabled type="email" placeholder="<%- account.email ?? 'Your email is not verified. Check your email app for verification email' %>">
       </div>
 
       <div class="form-group">
         <label>Username</label>
-        <input style="margin-bottom: 4px;" type="text" name="username" value="<%= user.username %>" oninput="checkUsername(this, this.value, '<%= user.username %>')" required>
+        <input style="margin-bottom: 4px;" type="text" name="username" value="<%= account.username %>" oninput="checkUsername(this, this.value, '<%= account.username %>')" required>
         <span id="status-icon" class="grey-1 fal"></span>&nbsp; <span id="status-message"></span>
       </div>
 
       <div class="form-group">
         <label>Phone number</label>
-        <input type="tel" maxlength="10" max="9999999999" name="phone" value="<%= user.phone %>">
+        <input type="tel" maxlength="10" max="9999999999" name="phone" value="<%= account.phone %>">
       </div>
 
       <div class="form-group">
         <label>Bio</label>
-        <textarea style="resize: vertical;" name="bio" rows="3" placeholder="Write something about yourself..."><%= user.bio %></textarea>
+        <textarea style="resize: vertical;" name="bio" rows="3" placeholder="Write something about yourself..."><%= account.bio %></textarea>
       </div>
 
       <div class="form-group" id="social-links-group">
         <label style="margin-bottom: 16px;">Social Links</label>
-        <% if (user.socialLinks) { Object.entries(user.socialLinks).forEach(([key, value]) => { %>
+        <% if (account.socialLinks) { Object.entries(account.socialLinks).forEach(([key, value]) => { %>
         <% if(value.length > 0){ %>
         <input type="url" name="<%= key %>" placeholder="<%= key.charAt(0).toUpperCase() + key.slice(1) %> URL" value="<%= value %>">
         <% } %>
@@ -82,7 +82,7 @@
       </script>
 
 
-      <div id="edit-profile-status"></div><br>
+      <div id="edit-profile-status"><b>Last updated: </b><%= new Date(account.updatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true, }) %></div><br>
 
       <button type="submit" class="btn-save">Save Changes</button>
     </form>

@@ -159,7 +159,6 @@
 #comments-popup .comments-box .comments-list .comment .action-buttons {
   margin-left: auto;
   color: var(--text-muted);
-  visibility: hidden;
 }
 #comments-popup .comments-box .comments-list .comment .action-buttons span {
   cursor: pointer;
@@ -167,9 +166,6 @@
 #comments-popup .comments-box .comments-list .comment .action-buttons .fa-trash {
   color: red;
   margin-left: 16px;
-}
-#comments-popup .comments-box .comments-list .comment:hover .action-buttons {
-  visibility: visible;
 }
 #comments-popup .comments-box .comments-list p {
   margin-bottom: 0.75rem;

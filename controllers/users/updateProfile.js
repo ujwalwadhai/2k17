@@ -6,29 +6,30 @@ const updateProfile = async (req, res) => {
   try {
     const { username, phone, bio, ...rest } = req.body;
 
-const socialLinks = {};
+    const socialLinks = {};
 
-for (let key in rest) {
-  const url = rest[key];
-  if (!url || !url.startsWith('http')) continue;
+    for (let key in rest) {
+      const url = rest[key];
+      if (!url || !url.startsWith('http')) continue;
 
-  try {
-    const hostname = new URL(url).hostname;
-    const domain = hostname.split('.').slice(-2, -1)[0].toLowerCase(); // e.g. 'reddit' from 'u.reddit.com'
-    if (domain) {
-      socialLinks[domain] = url;
+      try {
+        const hostname = new URL(url).hostname;
+        const domain = hostname.split('.').slice(-2, -1)[0].toLowerCase(); // e.g. 'reddit' from 'u.reddit.com'
+        if (domain) {
+          socialLinks[domain] = url;
+        }
+      } catch (e) {
+        console.warn(`Invalid URL skipped: ${url}`);
+      }
     }
-  } catch (e) {
-    console.warn(`Invalid URL skipped: ${url}`);
-  }
-}
 
-const update = {
-  username,
-  phone,
-  bio,
-  socialLinks
-};
+    const update = {
+      username,
+      phone,
+      bio,
+      socialLinks,
+      updatedAt: Date.now()
+    };
 
     var userCheck = await Users.findOne({ username });
     if (userCheck && String(userCheck._id) !== String(req.user._id)) {
@@ -40,7 +41,7 @@ const update = {
       update.profile = req.file.path;
     }
 
-    var user = await Users.findOneAndUpdate({_id: req.user._id}, update);
+    var user = await Users.findOneAndUpdate({ _id: req.user._id }, update);
     logActivity(req.user._id, 'Profile Update');
     res.json({ success: true });
   } catch (err) {

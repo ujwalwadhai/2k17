@@ -126,9 +126,9 @@ async function openComments(fileId) {
   const comments = await res.json();
 
   if (comments.length > 0) {
-    list.innerHTML = '';
+    list.innerHTML = ''; 
     comments.forEach(c => {
-      const isOwner = USER_ID && c.user._id.toString() === USER_ID.toString();
+      const isOwner = (USER_ID && c.user._id.toString() === USER_ID.toString()) || currentUser.role == 'admin';
       const trashIcon = isOwner ? `<span class='fal fa-trash' onclick='deleteFileComment("${c._id}", "${fileId}")'></span>` : '';
       list.innerHTML += `
                 <div class="comment" id="comment-${c._id}">

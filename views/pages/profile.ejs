@@ -102,7 +102,7 @@
                   <span class="fal fa-heart" id="like-icon-<%= post._id %>"></span>
                 </button>
                 <% } %>
-                <button class="comment-btn" onclick="loadComments('<%= post._id %>', '<%= user ? user._id : '' %>')" id="comment-btn-<%= post._id %>">
+                <button class="comment-btn" onclick="loadComments('<%= post._id %>')" id="comment-btn-<%= post._id %>">
                   <span class="fal fa-messages"></span>
                 </button>
                 <div class="btns-right">
@@ -125,7 +125,7 @@
             <% } %>
           </div>
           <% } %>
-        </div>
+        </div> 
         <div class="tab-panel" id="memories">
           <% if (memories.length === 0) { %>
           <p class="empty-msg"><span class="fal fa-image-slash"></span><br>No tagged memories found.<br>Click <b>I'm in this memory</b> on files to tag yourself.</p>
@@ -176,6 +176,13 @@
                 <div class="info-text">
                   <span class="label">Batch Year</span>
                   <span class="value"><%= account.year %></span>
+                </div>
+              </div>
+              <div class="info-item" style="margin-top: 16px">
+                <i class="fal fa-user-clock icon" style="font-size: 17px"></i>
+                <div class="info-text">
+                  <span class="label">Join date</span>
+                  <span class="value"><%= account.joinedAt.toLocaleString("en-IN", { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' }) %></span>
                 </div>
               </div>
             </div>

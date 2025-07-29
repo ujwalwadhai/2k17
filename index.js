@@ -66,12 +66,20 @@ app.set('views', __dirname + '/views');
 
 app.use((req, res, next) => {
   if (req.body) {
-    for (let key in req.body) {
+    for (let key in req.body) { 
       if (typeof req.body[key] === 'string') {
         if (key === 'newsLetterContent') {
           req.body[key] = sanitizeHtml(req.body[key], {
-            allowedTags: ['p', 'a', 'b', 'strong', 'div', 'section', 'table', 'tr', 'th', 'tbody', 'thead', 'span', 'em', 'i'],
+            allowedTags: ['p', 'a', 'b', 'strong', 'div', 'section', 'table', 'tr', 'th', 'tbody', 'thead', 'span', 'em', 'i', 'br'],
             allowedAttributes: false,
+            disallowedTagsMode: 'discard',
+            nonTextTags: ['script'],
+            allowedSchemes: ['http', 'https', 'mailto', 'tel'],
+          });
+        } else if(key === 'text'){
+          req.body[key] = sanitizeHtml(req.body[key], {
+            allowedTags: ['a', 'b', 'span', 'em', 'i', 'br'],
+            allowedAttributes: true,
             disallowedTagsMode: 'discard',
             nonTextTags: ['script'],
             allowedSchemes: ['http', 'https', 'mailto', 'tel'],

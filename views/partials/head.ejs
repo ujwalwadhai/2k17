@@ -27,6 +27,10 @@
 <link rel="stylesheet" href="/styles/css/home.css">
 <script src="/js/all.js"></script>
 
+<script>
+  const currentUser = <%- JSON.stringify(user) || 'null' %>;
+</script>
+
 <% if(PLATFORM_TYPE==='production' ) { %>
 <script>
   window.__USER_ID__ = "<%= user ? user._id : null %>";

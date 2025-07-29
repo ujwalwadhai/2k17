@@ -94,8 +94,8 @@
           <div class="action-buttons">
             <span class="fal fa-triangle-exclamation"></span>
             <% if (user) { %>
-            <% if (user._id.toString()===comment.user._id.toString()) { %>
-            <span class="fal fa-trash-alt" onclick="deleteComment('<%= comment._id %>','<%= post._id %>','<%= user._id %>', false)"></span>
+            <% if (user._id.toString()===comment.user._id.toString() || user.role == 'admin') { %>
+            <span class="fal fa-trash-alt" onclick="deleteComment('<%= comment._id %>','<%= post._id %>', false)"></span>
             <% } %>
             <% } %>
           </div>
@@ -108,7 +108,7 @@
       <% if(user) { %>
       <div class="input-area">
         <input id="new-comment" autocomplete="off" placeholder="Write a comment..." />
-        <button type="button" onclick="submitComment('<%= post._id %>', '<%= user._id %>', false)" id="newCommentBtn">Post</button>
+        <button type="button" onclick="submitComment('<%= post._id %>', false)" id="newCommentBtn">Post</button>
       </div>
       <% } %>
     </div>

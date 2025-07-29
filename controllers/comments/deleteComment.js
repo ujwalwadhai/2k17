@@ -11,7 +11,7 @@ const deleteComment = async (req, res) => {
     var comment = post.comments.id(commentId);
     if (!comment) return res.status(404).json({ message: 'Comment not found' });
 
-    if (String(comment.user._id) !== String(userId) || req.user.role !== 'admin') {
+    if (String(comment.user._id) !== String(userId) && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Unauthorized' });
     }
 

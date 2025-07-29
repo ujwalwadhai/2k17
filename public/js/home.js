@@ -1,23 +1,4 @@
-function getGreeting() {
-  var now = new Date();
-  var hours = now.getHours();
-
-  if (hours >= 5 && hours < 12) {
-    return "Good morning";
-  } else if (hours >= 12 && hours < 17) {
-    return "Good afternoon";
-  } else if (hours >= 17 && hours < 21) {
-    return "Good evening";
-  } else {
-    return "Welcome"; // No greeting (e.g., for night time)
-  }
-}
-
-var userid;
-
-var greeting = getGreeting();
-var greetingElement = document.getElementById("greeting-msg")
-if (greetingElement) greetingElement.innerHTML = greeting;
+const userId = currentUser ? currentUser.id : null;
 
 function partialLoader(id) {
   return `<div id="${id}">
@@ -53,7 +34,6 @@ async function sharePost(button) {
   }
 }
 
-
 async function toggleLike(postId) {
   try {
     var icon = document.getElementById(`like-icon-${postId}`);
@@ -86,7 +66,6 @@ async function toggleLike(postId) {
   }
 }
 
-
 function hidePopup(popupId = 'comments-popup') {
   var commentsPopup = document.getElementById(popupId)
   var overlay = commentsPopup.querySelector('.overlay')
@@ -94,8 +73,7 @@ function hidePopup(popupId = 'comments-popup') {
   overlay.classList.remove('show');
 }
 
-
-async function loadComments(postId, userId = '') {
+async function loadComments(postId) {
   var commentsPopup = document.getElementById('comments-popup')
   var overlay = document.getElementById('overlay')
   commentsPopup.classList.add('show');
@@ -119,8 +97,8 @@ async function loadComments(postId, userId = '') {
 
       document.getElementById('comments-loader').classList.add('hidden');
       comments.forEach(c => {
-        if (c.user._id.toString() === userId.toString()) {
-          var trashIcon = `<span class='fal fa-trash' onclick='deleteComment("${c._id}", "${postId}", "${userId}")'></span>`
+        if (c.user._id.toString() === userId.toString() || (currentUser && currentUser.role == 'admin')) {
+          var trashIcon = `<span class='fal fa-trash' onclick='deleteComment("${c._id}", "${postId}")'></span>`
         } else {
           var trashIcon = ''
         }
@@ -147,8 +125,7 @@ async function loadComments(postId, userId = '') {
   }, 500)
 }
 
-
-async function submitComment(postId, userId, isHomePage = true) {
+async function submitComment(postId, isHomePage = true) {
   document.querySelector('#newCommentBtn').disabled = true;
   var text = document.getElementById('new-comment').value;
   var res = await fetch(`/post/${postId}/new/comment`, {
@@ -159,7 +136,7 @@ async function submitComment(postId, userId, isHomePage = true) {
   var data = await res.json()
   if (data.success) {
     if (isHomePage) {
-      loadComments(postId, userId);
+      loadComments(postId);
       document.getElementById('new-comment').value = ''
       var id = `comment-btn-${postId}`
       document.getElementById(id).innerHTML = `<span class="fal fa-messages"></span>${data.commentsLength}`
@@ -173,7 +150,7 @@ async function submitComment(postId, userId, isHomePage = true) {
   }
 }
 
-async function deleteComment(commentId, postId, userId, isHomePage = true) {
+async function deleteComment(commentId, postId, isHomePage = true) {
   var conf = confirm('Are you sure you want to delete this comment?')
   if (!conf) {
     return
@@ -185,7 +162,7 @@ async function deleteComment(commentId, postId, userId, isHomePage = true) {
   var data = await res.json();
   if (data.success) {
     if (isHomePage) {
-      loadComments(postId, userId);
+      loadComments(postId);
       var id = `comment-btn-${postId}`
       document.getElementById(id).innerHTML = `<span class="fal fa-messages"></span>${data.commentsLength}`
     } else {
@@ -263,8 +240,7 @@ function closeNotifications() {
   notificationsOverlay.classList.remove('show');
 }
 
-function loadPosts(userId) {
-  userid = userId;
+function loadPosts() {
   var posts = document.getElementById('posts');
   posts.innerHTML = '<p class="heading">Recent posts</p>';
   posts.innerHTML += partialLoader('posts-loader')
@@ -300,7 +276,7 @@ function loadPosts(userId) {
               if (post.likes.length > 2) {
                 var likedBy = `<p class="extend-like-msg"><img src="${post.likes[1].profile || '/images/user.png'}" alt="" class="user-profile"> Liked by <span style='margin: 0 3px' onclick='window.location.href="/${post.likes[1].username}"'> ${post.likes[1].username} </span> and <span style="margin: 0 3px" onclick="openPostLikes('${post._id}')">${post.likes.length - 1} others</span></p>`
               }
-              if (post.author._id.toString() === userId.toString()) {
+              if (post.author._id.toString() === userId.toString() || (currentUser && currentUser.role == 'admin')) {
                 var trashIcon = `<span class="fal fa-trash red" aria-label="Delete this post" onclick="deletePost('${post._id}')"></span>`
               }
               posts.innerHTML += `<div class="post" id="post-${post._id}">
@@ -320,7 +296,7 @@ function loadPosts(userId) {
                 <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${post._id}"></span>
               </button> &nbsp; 
 
-              <button class="comment-btn" onclick="loadComments('${post._id}', '${userId}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span>&nbsp; ${post.comments.length > 0 ? post.comments.length : ''}</button>
+              <button class="comment-btn" onclick="loadComments('${post._id}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span>&nbsp; ${post.comments.length > 0 ? post.comments.length : ''}</button>
               <div class="btns-right">
               <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://twok17.onrender.com/post/${post._id}"><span class="fal fa-share"></span></button>
               ${trashIcon || ''}
@@ -342,8 +318,6 @@ function loadPosts(userId) {
     })
 }
 
-
-
 function openPostPopup() {
   document.getElementById('post-popup').classList.add('show');
   document.getElementById('editor').focus();
@@ -353,8 +327,8 @@ function closePostPopup() {
   document.getElementById('post-popup').classList.remove('show');
 }
 
-function createPost(userId) {
-  var text = document.getElementById('editor').textContent;
+function createPost() {
+  var text = document.getElementById('editor').innerText.replace(/\n/g, '<br>');
   var media = document.getElementById('media-input').files;
   if (media.length > 0) {
     var formData = new FormData();
@@ -376,7 +350,7 @@ function createPost(userId) {
           document.getElementById('posts').scrollIntoView({
             behavior: 'smooth'
           });
-          loadPosts(userId)
+          loadPosts()
         } else {
           Toast("Can't create post at the moment. Please try again later.", 'error')
         }
@@ -399,7 +373,7 @@ function createPost(userId) {
           document.getElementById('posts').scrollIntoView({
             behavior: 'smooth'
           });
-          loadPosts(userId);
+          loadPosts();
         } else {
           Toast("Can't create post at the moment. Please try again later.", 'error')
         }
@@ -421,7 +395,7 @@ function deletePost(postId) {
     .then(data => {
       if (data.success) {
         Toast("Post deleted!", "success")
-        loadPosts(userid)
+        loadPosts()
       } else {
         Toast("Can't delete post. Try again later.", 'error')
       }

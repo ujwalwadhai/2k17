@@ -1,21 +1,4 @@
-var userId = document.getElementById('userId').value;
-
 document.addEventListener('DOMContentLoaded', () => {
-  /* var tabs = document.querySelectorAll('.tab');
-  var tabContents = document.querySelectorAll('.tab-content');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tabContents.forEach(tc => tc.classList.add('hidden'));
-
-      tab.classList.add('active');
-      var target = document.getElementById(`${tab.dataset.tab}-tab`);
-      document.title = tab.dataset.title;
-      target.classList.remove('hidden');
-    });
-  }); */
-
   window.addEventListener('popstate', (event) => {
     var folderId = event.state?.folderId || 'root';
     loadFolder(folderId, false);
@@ -92,7 +75,7 @@ async function openComments(fileId) {
 
       document.getElementById('comments-loader').classList.add('hidden');
       comments.forEach(c => {
-        if (c.user._id.toString() === userId.toString()) {
+        if (currentUser && (c.user._id.toString() === currentUser._id.toString() || currentUser.role == 'admin')) {
           var trashIcon = `<span class='fal fa-trash' onclick='deleteFileComment("${c._id}", "${fileId}")'></span>`
         } else {
           var trashIcon = ''
@@ -311,37 +294,37 @@ async function loadFolder(folderId, updateURL = true) {
               <img onclick="${viewAction}" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
             </div>`;
         }).join('');
-      }
+      } else {
+        data.files.forEach(file => {
+          const wrapper = document.createElement('div');
+          wrapper.className = file.type === 'image' ? 'file-image' : 'file-video';
 
-      data.files.forEach(file => {
-        const wrapper = document.createElement('div');
-        wrapper.className = file.type === 'image' ? 'file-image' : 'file-video';
+          const fileName = file.name.replace(/\.[^/.]+$/, '');
+          const isLiked = data.userId && file.likes.some(u => u._id.toString() === data.userId.toString());
+          const likeAction = data.userId ? `onclick="likeFile('${file._id}')"` : '';
 
-        const fileName = file.name.replace(/\.[^/.]+$/, '');
-        const isLiked = data.userId && file.likes.some(u => u._id.toString() === data.userId.toString());
-        const likeAction = data.userId ? `onclick="likeFile('${file._id}')"` : '';
-
-        const fileInfoHTML = `
+          const fileInfoHTML = `
           <p class="fileinfo">
             <span class="filename"><span class="fal ${file.type === 'image' ? 'fa-image' : 'fa-video'}"></span>${fileName}</span>
             <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${file._id}" ${likeAction}></span>
           </p>`;
 
-        const img = new Image();
-        img.src = file.thumbnail;
-        img.alt = `Drive ${file.type}`;
-        img.loading = 'lazy';
-        img.oncontextmenu = () => false;
-        img.onload = () => img.classList.add('loaded');
-        const viewAction = file.type === 'image'
-          ? `openViewImage('${fileName}', '${file.url}', '${file._id}', '${file.thumbnail}')`
-          : `openViewVideo('${fileName}', '${file.url}', '${file._id}', '${file.thumbnail}')`;
-        img.setAttribute('onclick', viewAction);
+          const img = new Image();
+          img.src = file.thumbnail;
+          img.alt = `Drive ${file.type}`;
+          img.loading = 'lazy';
+          img.oncontextmenu = () => false;
+          img.onload = () => img.classList.add('loaded');
+          const viewAction = file.type === 'image'
+            ? `openViewImage('${fileName}', '${file.url}', '${file._id}', '${file.thumbnail}')`
+            : `openViewVideo('${fileName}', '${file.url}', '${file._id}', '${file.thumbnail}')`;
+          img.setAttribute('onclick', viewAction);
 
-        wrapper.innerHTML = fileInfoHTML;
-        wrapper.appendChild(img);
-        driveGallery.appendChild(wrapper);
-      });
+          wrapper.innerHTML = fileInfoHTML;
+          wrapper.appendChild(img);
+          driveGallery.appendChild(wrapper);
+        });
+      }
 
     } else {
       throw new Error(data.message || 'Failed to load data.');
@@ -354,7 +337,7 @@ async function loadFolder(folderId, updateURL = true) {
 }
 
 
-async function shareImage(fileId, url) {
+async function shareImage(fileId) {
   const shareData = {
     title: 'Check this memory',
     text: 'See this memory I found on 2k17 Platform.',

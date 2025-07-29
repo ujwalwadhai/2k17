@@ -55,8 +55,6 @@ userSchema.pre('save', async function (next) {
       console.log(err);
     }
   }
-
-  this.updatedAt = Date.now();
   next();
 });
 

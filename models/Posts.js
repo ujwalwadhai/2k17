@@ -11,7 +11,7 @@ const postSchema = new mongoose.Schema({
   text: {
     type: String,
     required: true,
-    maxlength: 1024
+    maxlength: 2048
   },
   media:{
     url: String,
@@ -32,6 +32,7 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  deleted: Boolean,
   visits: { type: Number, default: 0 },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
   comments: [commentSchema],
@@ -55,6 +56,13 @@ commentSchema.virtual('timeAgo').get(function () {
 
 postSchema.virtual('timeAgo').get(function () {
   return getRelativeTime(this.createdAt);
+});
+
+postSchema.pre(/^find/, function(next) {
+  if (this.getOptions().withDeleted !== true) {
+    this.where({ deleted: { $ne: true } });
+  }
+  next();
 });
 
 postSchema.set('toJSON', { virtuals: true });

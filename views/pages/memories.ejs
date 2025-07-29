@@ -3,9 +3,10 @@
 
 <head>
   <%- include('../partials/head') %>
-  <title><%- currentFolder ? currentFolder.name : 'Featured Memories' %></title>
+  <title>Memories • 2k17 Platform</title>
   <link rel="preconnect" href="https://res.cloudinary.com" />
   <link rel="stylesheet" href="/styles/css/memories.css">
+  <link rel="stylesheet" href="/styles/css/viewFile.css">
 </head>
 
 <body>
@@ -15,22 +16,8 @@
   <br><br>
   <section class="memories-container">
     <h1>Batch Memories</h1>
-    <div class="tabs">
-      <button onclick="loadFolder('root', true)" class="tab <%- typeof tab && tab === 'drive' ? '' : 'active' %>" data-title="Featured Memories" data-tab="featured"><span class="fal fa-sparkles"></span>Featured</button>
-      <% if(userId){ %>
-      <button onclick="loadFolder('root')" class="tab <%- typeof tab && tab === 'drive' ? 'active' : '' %>" data-title="2k17 Drive" data-tab="drive">Drive</button>
-      <% } else { %>
-      <button onclick="window.location.href = '/login'" class="tab" data-title="2k17 Drive" data-tab="">Login for all memories</button>
-      <% } %>
-    </div>
 
-    <div class="tab-content <%- tab && tab === 'drive' ? 'hidden' : '' %>" id="featured-tab">
-      <div class="gallery featured-gallery">
-
-      </div>
-    </div>
-
-    <div class="tab-content <%- typeof tab && tab === 'drive' ? '' : 'hidden' %>" id="drive-tab">
+    <div id="drive">
       <div class="breadcrumb">
         <a onclick="loadFolder('root')"><span class="fal fa-house"></span></a>
 
@@ -39,7 +26,7 @@
       <div class="folders">
 
       </div>
-      <div class="gallery drive-gallery">
+      <div class="gallery">
 
       </div>
     </div>
@@ -50,14 +37,17 @@
   <div id="view-image-popup" class="view-file-popup">
     <div class="overlay" onclick="closeViewImage()"></div>
     <div class="view-file-box">
-      <div class="heading">
-        <p class="title"><span class="fal fa-image file-type-icon"></span> <span id="imgName"></span></p>
-        <div class="right-btns">
-          <p id="share-icon" class="comments-icon fal fa-share"></p>
-          <p id="comments-icon" class="comments-icon fal fa-message"></p>
-          <p class="close-icon fal fa-xmark" onclick="closeViewImage()"></p>
+      <header class="view-file-header">
+        <div class="file-info">
+          <i class="fal fa-image"></i>
+          <span class="file-name" id="imgName"></span>
         </div>
-      </div> 
+        <div class="action-buttons">
+          <button class="action-btn" id="share-icon"><i class="fal fa-share"></i></button>
+          <button class="action-btn" data-action="comment" id="comments-icon" aria-label="Comments"><i class="fal fa-message-lines"></i></button>
+          <button class="action-btn close-icon" onclick="closeViewImage()" aria-label="Close"><i class="fal fa-times"></i></button>
+        </div>
+      </header>
       <div class="view-image-large" id="view-image-large">
         <img src="" oncontextmenu="return false;" alt="Image" id="imgLarge">
         <button class="action-btn tag-memory" id="tagBtnImg" aria-label="Tag Memory">I'm in this memory</button>
@@ -102,12 +92,21 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      loadFolder('<%= currentFolder?._id %>')
-    })
     const USER_ID = '<%- user ? user._id : null %>'
   </script>
   <script src="/js/memories.js"></script>
+  <script>
+    const currentFolder = <%- JSON.stringify(currentFolder || null) %>;
+    document.addEventListener('DOMContentLoaded', () => {
+      if (currentFolder && currentFolder.name === "My Memories") {
+        loadFolder("my-memories");
+      } else if (currentFolder && currentFolder._id) {
+        loadFolder(currentFolder._id);
+      } else {
+        loadFolder('root', false)
+      }
+    });
+  </script>
 
 </body>
 

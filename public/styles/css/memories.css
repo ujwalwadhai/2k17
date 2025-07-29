@@ -250,48 +250,21 @@ body {
   color: var(--primary);
   user-select: none;
 }
-.memories-container .tabs {
-  display: flex;
-  margin-bottom: 1.4rem;
-}
-.memories-container .tabs .tab {
-  background: var(--bg-dark2);
-  border: none;
-  color: var(--text-light);
-  padding: 0.6rem 1.2rem;
-  padding-right: 1.5rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin-right: 0.5rem;
-  border-radius: 4px;
-}
-.memories-container .tabs .tab.active {
-  background: var(--primary-dark);
-}
-.memories-container .tabs .tab:hover {
-  background: var(--primary);
-}
-.memories-container .tabs .tab .fal {
-  margin-right: 12px;
-}
-.memories-container .tab-content {
+.memories-container #drive {
   min-height: 60vh;
 }
-.memories-container .tab-content.hidden {
-  display: none;
-}
-.memories-container .tab-content .gallery {
+.memories-container #drive .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
 }
-.memories-container .tab-content .gallery div {
+.memories-container #drive .gallery div {
   cursor: pointer;
   background-color: var(--bg-dark2);
   padding: 6px 8px;
   border-radius: 6px;
 }
-.memories-container .tab-content .gallery div p.fileinfo {
+.memories-container #drive .gallery div p.fileinfo {
   margin: 0;
   margin-bottom: 4px;
   border-top-left-radius: 6px;
@@ -303,32 +276,24 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-.memories-container .tab-content .gallery div p.fileinfo .fal.fa-heart,
-.memories-container .tab-content .gallery div p.fileinfo .fal.fa-message,
-.memories-container .tab-content .gallery div p.fileinfo .fas {
+.memories-container #drive .gallery div p.fileinfo .fal.fa-heart,
+.memories-container #drive .gallery div p.fileinfo .fal.fa-message,
+.memories-container #drive .gallery div p.fileinfo .fas {
   margin-right: 6px;
 }
-.memories-container .tab-content .gallery div p.fileinfo .fal.fa-heart.fa-heart,
-.memories-container .tab-content .gallery div p.fileinfo .fal.fa-message.fa-heart,
-.memories-container .tab-content .gallery div p.fileinfo .fas.fa-heart {
+.memories-container #drive .gallery div p.fileinfo .fal.fa-heart.fa-heart,
+.memories-container #drive .gallery div p.fileinfo .fal.fa-message.fa-heart,
+.memories-container #drive .gallery div p.fileinfo .fas.fa-heart {
   font-size: 15px;
 }
-.memories-container .tab-content .gallery div p.fileinfo .filename {
-  white-space: nowrap;
-  max-width: 50rem;
-  overflow: hidden;
-  margin-right: 8px;
-  text-overflow: ellipsis;
-  display: inline-block;
-}
-.memories-container .tab-content .gallery div p.fileinfo .fal.fa-image,
-.memories-container .tab-content .gallery div p.fileinfo .fal.fa-video::before {
+.memories-container #drive .gallery div p.fileinfo .fal.fa-image,
+.memories-container #drive .gallery div p.fileinfo .fal.fa-video::before {
   margin-right: 12px;
   padding-bottom: 3px;
 }
-.memories-container .tab-content .gallery div img {
+.memories-container #drive .gallery div img {
   width: 100%;
-  height: 200px;
+  height: 180px;
   border-radius: 4px;
   object-fit: cover;
   background: var(--bg-dark2);
@@ -337,7 +302,7 @@ body {
   -webkit-user-drag: none;
   cursor: pointer;
 }
-.memories-container .tab-content .drive-gallery .skeleton {
+.memories-container #drive .gallery .skeleton {
   width: 100%;
   height: 200px;
   border-radius: 4px;
@@ -345,20 +310,13 @@ body {
   background-size: 200% 100%;
   animation: shimmer 1.2s infinite linear;
 }
-.memories-container .tab-content .drive-gallery img {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.memories-container .tab-content .drive-gallery img.loaded {
-  opacity: 1;
-}
-.memories-container .tab-content .folders {
+.memories-container #drive .folders {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
-.memories-container .tab-content .folders .folder {
+.memories-container #drive .folders .folder {
   background: var(--bg-dark3);
   padding: 12px 16px;
   border-radius: 4px;
@@ -371,7 +329,7 @@ body {
   align-items: center;
   justify-content: left;
 }
-.memories-container .tab-content .folders .folder .foldername {
+.memories-container #drive .folders .folder .foldername {
   white-space: nowrap;
   max-width: 50rem;
   overflow: hidden;
@@ -379,16 +337,16 @@ body {
   text-overflow: ellipsis;
   display: inline-block;
 }
-.memories-container .tab-content .folders .folder span.fal {
+.memories-container #drive .folders .folder span.fal {
   font-size: 18px;
   display: block;
   margin-right: 12px;
 }
-.memories-container .tab-content .folders .folder:hover {
+.memories-container #drive .folders .folder:hover {
   color: var(--text-light);
   background: var(--primary-dark);
 }
-.memories-container .tab-content .folders .skeleton-folder {
+.memories-container #drive .folders .skeleton-folder {
   width: 100%;
   max-width: 300px;
   height: 44px;

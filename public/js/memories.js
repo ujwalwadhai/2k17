@@ -1,7 +1,7 @@
 var userId = document.getElementById('userId').value;
 
 document.addEventListener('DOMContentLoaded', () => {
-  var tabs = document.querySelectorAll('.tab');
+  /* var tabs = document.querySelectorAll('.tab');
   var tabContents = document.querySelectorAll('.tab-content');
 
   tabs.forEach(tab => {
@@ -14,14 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
       document.title = tab.dataset.title;
       target.classList.remove('hidden');
     });
-  });
+  }); */
 
   window.addEventListener('popstate', (event) => {
     var folderId = event.state?.folderId || 'root';
     loadFolder(folderId, false);
   });
-
-  loadFolder('root', false);
 });
 
 async function submitComment(fileId) {
@@ -38,7 +36,7 @@ async function submitComment(fileId) {
     document.querySelector('#newCommentBtn').disabled = false;
     openComments(fileId);
   } else {
-    Toast('Failed to add comment! Please try again later.','error')
+    Toast('Failed to add comment! Please try again later.', 'error')
     document.querySelector('#newCommentBtn').disabled = false;
   }
 }
@@ -56,7 +54,7 @@ async function deleteFileComment(commentId, fileId) {
   var data = await res.json();
   if (data.success) {
     Toast('Comment deleted successfully!', 'success')
-      openComments(fileId);
+    openComments(fileId);
   } else {
     Toast('Failed to delete comment! Please try again later.', 'error')
   }
@@ -73,7 +71,7 @@ async function openComments(fileId) {
   commentsPopup.querySelector('#newCommentBtn').addEventListener('click', () => { submitComment(fileId) })
   document.getElementById('new-comment').value = ''
 
-  if(!fileId) closeComments()
+  if (!fileId) closeComments()
   var list = document.getElementById('comments-list');
   list.innerHTML = '';
   list.innerHTML = `<div id="comments-loader">
@@ -136,6 +134,7 @@ function openViewImage(name, url, id, thumbnail) {
   var imgName = document.querySelector('#imgName')
   img.src = url;
   imgName.textContent = name;
+  document.querySelector(".memories-container").style.filter = "blur(6px)"
   ViewImagePopup.querySelector('#tagBtnImg').innerHTML = "I'm in this memory"
   ViewImagePopup.querySelector('#tagBtnImg').disabled = false
   ViewImagePopup.querySelector('#tagBtnImg').setAttribute('onclick', `tagMemory("${id}")`)
@@ -173,6 +172,7 @@ async function tagMemory(fileId) {
 function closeViewImage() {
   var ViewImagePopup = document.getElementById('view-image-popup');
   var ViewImageOverlay = ViewImagePopup.querySelector('.overlay');
+  document.querySelector(".memories-container").style.filter = "none"
   ViewImagePopup.classList.remove('show');
   ViewImageOverlay.classList.remove('show');
   var img = document.querySelector('#imgLarge')
@@ -236,139 +236,125 @@ async function likeFile(fileId) {
   }
 }
 
+const createSkeletons = (count, skeletonHTML) => {
+  return Array(count).fill(skeletonHTML).join('');
+};
 
 async function loadFolder(folderId, updateURL = true) {
-  var folders = document.querySelector('.folders');
-  var breadcrumb = document.querySelector('.breadcrumb');
-  var driveGallery = document.querySelector('.drive-gallery');
-  var featuredImages = document.querySelector('.featured-gallery');
-  folders.innerHTML = '';
-  for (let i = 0; i < 5; i++) {
-    folders.innerHTML += `<div class="skeleton-folder"></div>`;
-  }
+  const folders = document.querySelector('.folders');
+  const breadcrumb = document.querySelector('.breadcrumb');
+  const driveGallery = document.querySelector('.gallery');
 
-  driveGallery.innerHTML = '';
-  for (let i = 0; i < 6; i++) {
-    driveGallery.innerHTML += `<div><div class="skeleton"></div></div>`;
-  }
+  folders.innerHTML = createSkeletons(5, '<div class="skeleton-folder"></div>');
+  driveGallery.innerHTML = createSkeletons(6, '<div><div class="skeleton"></div></div>');
 
-
-  if (!folderId) return
+  if (!folderId) return;
 
   if (updateURL) {
-    var newPath = folderId === 'root' ? '/memories' : `/memories/folder/${folderId}`;
+    const newPath = folderId === 'root' ? '/memories' : `/memories/folder/${folderId}`;
     window.history.pushState({ folderId }, '', newPath);
   }
 
-  let response;
-  if (folderId === 'root') {
-    response = await fetch(`/memories/root`, {
+  try {
+    const endpoint = folderId === 'root' ? '/memories/root' : folderId == 'my-memories' ? '/memories/my-memories' : `/memories/folders/${folderId}`;
+    const response = await fetch(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
-  } else {
-    response = await fetch(`/memories/folders/${folderId}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    });
-  }
 
-  var data = await response.json();
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-  if (data.success) {
-    if (data.currentFolder) {
-      document.title = data.currentFolder.name + " - 2k17"
+    const data = await response.json();
+
+    if (data.success) {
+      document.title = data.currentFolder ? `${data.currentFolder.name} • 2k17` : 'Memories • 2k17 Platform';
+
+      const homeLink = `<a onclick="loadFolder('root')"><span class="fal fa-house"></span></a>`;
+      let pathLinks;
+      if (folderId == 'my-memories') {
+        pathLinks = `<a onclick="loadFolder('my-memories')">My Memories</a>`;
+      } else {
+        pathLinks = data.breadcrumb.map(folder => `<a onclick="loadFolder('${folder.id}')">${folder.name}</a>`).join('');
+      }
+      breadcrumb.innerHTML = homeLink + pathLinks;
+
+      let subfoldersHTML = '';
+
+      if (folderId === 'root') {
+        subfoldersHTML += `<div class="folder" onclick="loadFolder('my-memories')">
+        <span class="fal fa-folder-user"></span>
+        <span class="foldername">My Memories</span>
+    </div>`;
+      }
+
+      subfoldersHTML += data.subfolders.map(folder => `
+    <div class="folder" onclick="loadFolder('${folder._id}')">
+    <span class="fal fa-folder"></span>
+    <span class="foldername">${folder.name}</span>
+    </div>`).join('');
+
+      folders.innerHTML = subfoldersHTML;
+      driveGallery.innerHTML = ''
+      if (folderId === 'root') {
+        driveGallery.innerHTML += data.featuredImages.map(img => {
+          const isLiked = data.userId && img.likes.some(u => u._id.toString() === data.userId.toString());
+          const likeAction = data.userId ? `onclick="likeFile('${img._id}')"` : '';
+          const viewAction = `openViewImage('Featured Image', '${img.url}', '${img._id}', '${img.thumbnail}')`;
+          return `
+            <div>
+              <p class="fileinfo">
+                <span class="filename"><span class="fal fa-image"></span>Featured Image</span>
+                <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${img._id}" ${likeAction}></span>
+              </p>
+              <img onclick="${viewAction}" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
+            </div>`;
+        }).join('');
+      }
+
+      data.files.forEach(file => {
+        const wrapper = document.createElement('div');
+        wrapper.className = file.type === 'image' ? 'file-image' : 'file-video';
+
+        const fileName = file.name.replace(/\.[^/.]+$/, '');
+        const isLiked = data.userId && file.likes.some(u => u._id.toString() === data.userId.toString());
+        const likeAction = data.userId ? `onclick="likeFile('${file._id}')"` : '';
+
+        const fileInfoHTML = `
+          <p class="fileinfo">
+            <span class="filename"><span class="fal ${file.type === 'image' ? 'fa-image' : 'fa-video'}"></span>${fileName}</span>
+            <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${file._id}" ${likeAction}></span>
+          </p>`;
+
+        const img = new Image();
+        img.src = file.thumbnail;
+        img.alt = `Drive ${file.type}`;
+        img.loading = 'lazy';
+        img.oncontextmenu = () => false;
+        img.onload = () => img.classList.add('loaded');
+        const viewAction = file.type === 'image'
+          ? `openViewImage('${fileName}', '${file.url}', '${file._id}', '${file.thumbnail}')`
+          : `openViewVideo('${fileName}', '${file.url}', '${file._id}', '${file.thumbnail}')`;
+        img.setAttribute('onclick', viewAction);
+
+        wrapper.innerHTML = fileInfoHTML;
+        wrapper.appendChild(img);
+        driveGallery.appendChild(wrapper);
+      });
+
     } else {
-      document.title = '2k17 Drive'
+      throw new Error(data.message || 'Failed to load data.');
     }
-
-    breadcrumb.innerHTML = '<a onclick="loadFolder(`root`)"><span class="fal fa-house"></span></a>';
-    data.breadcrumb.forEach(folder => {
-      breadcrumb.innerHTML += `<a onclick="loadFolder('${folder.id}')">${folder.name}</a>`;
-    });
-
-    folders.innerHTML = '';
-    data.subfolders.forEach(folder => {
-      folders.innerHTML += `<div class="folder" onclick="loadFolder('${folder._id}')">
-        <span class="fal fa-folder"></span>
-        <span class="foldername">${folder.name}</span>
-      </div>`;
-    });
-    
+  } catch (error) {
+    console.log('Failed to load folder:', error);
+    folders.innerHTML = `<p class="error-message">Please try again later!</p>`;
     driveGallery.innerHTML = '';
-    featuredImages.innerHTML = '';
-    if(folderId === 'root'){
-      driveGallery.innerHTML += `<div class="upload-own-banner folder" style="padding: 10px 14px; line-height:25px" onclick="window.open('https://drive.google.com/drive/folders/1uy7KZjeHKomo2Ml80_bixL_mDAcVFxUf', '_blank')">
-        <span class="fal fa-images"></span> &nbsp; Want to upload images and videos?<br>
-        <span class='grey-1'>Click here to upload your own memories</span>
-      </div>`;
-    }
-
-    data.featuredImages.forEach(img => {
-      var isLiked = false
-      if(data.userId){
-        isLiked = img.likes.some(u=> u._id.toString() === data.userId.toString())
-        featuredImages.innerHTML += `<div>
-        <p class="fileinfo">
-          <span class="filename"><span class="fal fa-image"></span>${img.name.replace(/\.[^/.]+$/, '')}</span>
-          <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${img._id}" onclick="likeFile('${img._id}')"></span>
-        </p>
-        <img onclick="openViewImage("${img.name.replace(/\.[^/.]+$/, '')}",'${img.url}', '${img._id}', '${img.thumbnail}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
-      </div>`
-      } else {
-      featuredImages.innerHTML += `<div>
-      <p class="fileinfo">
-        <span class="filename"><span class="fal fa-image"></span>${img.name.replace(/\.[^/.]+$/, '')}</span>
-        <span class="fal fa-heart" id="like-icon-${img._id}"></span>
-      </p>
-      <img onclick="openViewImage("${img.name.replace(/\.[^/.]+$/, '')}",'${img.url}', '${img._id}', '${img.thumbnail}')" oncontextmenu="return false;" src="${img.thumbnail}" alt="Featured Image">
-    </div>`
-      }
-    })
-
-    data.files.forEach(file => {
-      const wrapper = document.createElement('div');
-      wrapper.className = file.type === 'image' ? 'file-image' : 'file-video';
-      
-      if(data.userId){
-        var isLiked = file.likes.some(u=> u._id.toString() === data.userId.toString())
-        var fileInfoHTML = `
-          <p class="fileinfo">
-            <span class="filename"><span class="fal ${file.type === 'image' ? 'fa-image' : 'fa-video'}"></span>${file.name.replace(/\.[^/.]+$/, '')}</span>
-            <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${file._id}" onclick="likeFile('${file._id}')"></span>
-          </p>`;
-      } else {
-        var fileInfoHTML = `
-          <p class="fileinfo">
-            <span class="filename"><span class="fal ${file.type === 'image' ? 'fa-image' : 'fa-video'}"></span>${file.name.replace(/\.[^/.]+$/, '')}</span>
-            <span class="fal fa-heart" id="like-icon-${file._id}"></span>
-          </p>`;
-      }
-      const img = new Image();
-      img.src = file.thumbnail;
-      img.alt = 'Drive ' + file.type;
-      img.loading = 'lazy';
-      img.setAttribute('onclick',
-        file.type === 'image'
-          ? `openViewImage("${file.name.replace(/\.[^/.]+$/, '')}", '${file.url}', '${file._id}', '${file.thumbnail}')`
-          : `openViewVideo("${file.name.replace(/\.[^/.]+$/, '')}", '${file.url}', '${file._id}', '${file.thumbnail}')`
-      );
-      img.oncontextmenu = () => false;
-      img.onload = () => img.classList.add('loaded');
-
-      wrapper.innerHTML = fileInfoHTML;
-      wrapper.appendChild(img);
-      driveGallery.appendChild(wrapper);
-    });
-
-  } else {
-    Toast(data.message, 'error');
-    folders.innerHTML = data.message;
   }
 }
 
 
-async function shareImage(fileId, url){
+async function shareImage(fileId, url) {
   const shareData = {
     title: 'Check this memory',
     text: 'See this memory I found on 2k17 Platform.',

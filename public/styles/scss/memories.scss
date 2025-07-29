@@ -28,41 +28,8 @@ body {
     user-select: none;
   }
 
-  .tabs {
-    display: flex;
-    margin-bottom: 1.4rem;
-
-    .tab {
-      background: var(--bg-dark2);
-      border: none;
-      color: var(--text-light);
-      padding: 0.6rem 1.2rem;
-      padding-right: 1.5rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      margin-right: 0.5rem;
-      border-radius: 4px;
-
-      &.active {
-        background: var(--primary-dark);
-      }
-
-      &:hover {
-        background: var(--primary);
-      }
-
-      .fal {
-        margin-right: 12px;
-      }
-    }
-  }
-
-  .tab-content {
+  #drive {
     min-height: 60vh;
-
-    &.hidden {
-      display: none;
-    }
 
     .gallery {
       display: grid;
@@ -97,16 +64,6 @@ body {
             }
           }
 
-          .filename {
-            white-space: nowrap;
-            max-width: 50rem;
-            overflow: hidden;
-            margin-right: 8px;
-            text-overflow: ellipsis;
-            display: inline-block;
-          }
-
-
           .fal.fa-image,
           .fal.fa-video::before {
             margin-right: 12px;
@@ -116,7 +73,7 @@ body {
 
         img {
           width: 100%;
-          height: 200px;
+          height: 180px;
           border-radius: 4px;
           object-fit: cover;
           background: var(--bg-dark2);
@@ -127,32 +84,18 @@ body {
         }
       }
 
-
-    }
-
-    .drive-gallery .skeleton {
-      width: 100%;
-      height: 200px;
-      border-radius: 4px;
-      background: linear-gradient(90deg,
-          var(--bg-dark2) 25%,
-          var(--bg-dark3) 50%,
-          var(--bg-dark2) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.2s infinite linear;
-    }
-
-
-
-    .drive-gallery img {
-      opacity: 0;
-      transition: opacity 0.4s ease;
-
-      &.loaded {
-        opacity: 1;
+      .skeleton {
+        width: 100%;
+        height: 200px;
+        border-radius: 4px;
+        background: linear-gradient(90deg,
+            var(--bg-dark2) 25%,
+            var(--bg-dark3) 50%,
+            var(--bg-dark2) 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.2s infinite linear;
       }
     }
-
 
     .folders {
       display: grid;

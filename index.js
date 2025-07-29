@@ -117,7 +117,6 @@ const generalLimiter = rateLimit({
 app.use(generalLimiter);
 
 // CRON Jobs for recurring events
-require('./cron/logCleanUp')
 require('./cron/birthday')
 require('./cron/newsletter')
 require('./cron/weeklyReport')
@@ -133,6 +132,7 @@ mongoose.connect(process.env.MONGO_URI, {}).then(() => {
   app.listen(PORT, () => {
     console.log(`🚀 Server is running\n`);
   });
+  require('./cron/logCleanUp')
   require('./utils/cleanup')()
 }).catch((err) => {
   console.error('❌ MongoDB connection error:', err);

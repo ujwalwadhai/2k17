@@ -72,6 +72,8 @@ router.get('/admin/userinfo/:userId', getController.adminUserInfo);
 
 router.get('/memories', memoriesController.showMemories)
 
+router.get('/memories/folder/my-memories', isLoggedIn, memoriesController.showMyMemories)
+
 router.get('/memories/folder/:folderId', isLoggedIn, memoriesController.showFolder)
 
 router.get('/memories/file/:fileId', isLoggedIn, memoriesController.showFile)

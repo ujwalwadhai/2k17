@@ -109,7 +109,9 @@ router.post('/api/analytics/addFileView', express.text({ type: '*/*' }), analyti
 
 router.post('/memories/folders/:folderId', isLoggedIn, memoriesController.fetchFolder)
 
-router.post('/memories/root', memoriesController.rootFolder)
+router.post('/memories/root', isLoggedIn, memoriesController.rootFolder)
+
+router.post('/memories/my-memories', isLoggedIn, memoriesController.myMemories)
 
 router.post('/file/:fileId/like', isLoggedIn, memoriesController.likeFile)
 

@@ -49,6 +49,8 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage, fileFilter });
 
 const destroy = async (url, type='image') => {
+  if(!url) return;
+  if(url.includes('Arawali') || url.includes('Nilgiri') || url.includes('Shiwalika') || url.includes('Udaygiri')) return
   var parts = url.split('/upload/')[1];
   var noVersion = parts.split('/').slice(1).join('/');
   var publicId = noVersion.replace(/\.[^/.]+$/, '');

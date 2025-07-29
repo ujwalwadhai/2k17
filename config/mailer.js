@@ -324,8 +324,7 @@ async function UserRegisteredMail(to, data) {
               </div>
               <p style="color: #888;">Mail System</p><p style="color: #888;">2k17 Platform</p>
             </div>`
-  // sendEmail(to, 'New user registration • 2k17 Platform', template);
-  sendEmail('wadhaiujwal@gmail.com', 'New user registration • 2k17 Platform', template);
+  sendEmail(to, 'New user registration • 2k17 Platform', template);
 }
 
 async function RegisteredDataMail(to, data) {

@@ -10,15 +10,9 @@ var showFolder = async (req, res) => {
     if (folder.access !== req?.user?.gender && folder.access !== 'both') {
         return res.status(403).json({ success: false, message: 'Access Denied' });
     }
-    
-    var featuredImages = await Files.find({
-        tags: 'featured'
-    }).populate('likes', '_id name username profile')
 
     res.render('pages/memories', {
         currentFolder: folder,
-        tab: 'drive',
-        featuredImages,
         userId: req?.user?._id || null
     })
 }

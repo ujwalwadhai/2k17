@@ -9,4 +9,6 @@ module.exports = {
     newComment: require('./newComment.js'),
     deleteComment: require('./deleteComment.js'),
     tagFile: require('./tagFile.js'),
+    myMemories: require('./myMemories.js'),
+    showMyMemories: require('./showMyMemories.js')
 }

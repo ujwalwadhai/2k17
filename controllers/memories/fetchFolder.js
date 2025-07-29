@@ -38,9 +38,6 @@ var fetchFolder = async (req, res) => {
       ]
     });
     var files = await Files.find({ folder: folderId }).populate('likes', '_id name username profile');
-    var featuredImages = await Files.find({
-      tags: 'featured'
-    }).populate('likes', '_id name username profile')
     var breadcrumb = await getBreadcrumb(folderId);
     const date = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' });
     await PageViews.findOneAndUpdate(
@@ -48,7 +45,7 @@ var fetchFolder = async (req, res) => {
       { $inc: { visits: 1 } },
       { upsert: true }
     );
-    res.json({ success: true, currentFolder: folder, subfolders, files, breadcrumb, featuredImages, userId: req.user?._id || null });
+    res.json({ success: true, currentFolder: folder, subfolders, files, breadcrumb, userId: req.user?._id || null });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Server error' });

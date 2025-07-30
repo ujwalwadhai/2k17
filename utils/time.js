@@ -87,6 +87,39 @@ function createDate() {
   return FinalDate;
 }
 
+function createLongDate() {
+  // returns date in format "DD Month YYYY, HH:MM AM/PM"
+  var hour = new Date().getHours();
+  var mins = new Date().getMinutes();
+  var date = new Date().getDate();
+  var month = new Date().toLocaleString('en-IN', { month: 'long' });
+  var year = new Date().getFullYear();
+  if (hour > 12) {
+    hour = hour - 12;
+    if (hour < 10) {
+      hour = "0" + hour;
+    }
+    if (mins < 10) {
+      mins = "0" + mins;
+    }
+    var time = hour + ":" + mins + " PM";
+  } else {
+    if (hour < 10) {
+      hour = "0" + hour;
+    }
+    if (mins < 10) {
+      mins = "0" + mins;
+    }
+    var time = hour + ":" + mins + " AM"
+  }
+  if (date < 10) {
+    date = "0" + date;
+  }
+
+  var FinalDate = date + " " + month + " " + year + ", " + time;
+  return FinalDate;
+}
+
 const IST_OFFSET_MINUTES = 330;
 
 function toIST(date) {
@@ -116,4 +149,4 @@ function endOfDay(date) {
   return fromIST(ist);
 }
 
-module.exports = { getRelativeTime, formatDOB, createDate, subDays, startOfDay, endOfDay };
+module.exports = { getRelativeTime, createLongDate, formatDOB, createDate, subDays, startOfDay, endOfDay };

@@ -58,7 +58,7 @@ module.exports = function (passport) {
               googleId: profile.id,
               lastLogin: new Date()
             });
-
+ 
             if (profile.photos?.[0]?.value) {
               try {
                 const uploaded = await uploadFromUrl(profile.photos[0].value, `profile_${newUser._id}`);

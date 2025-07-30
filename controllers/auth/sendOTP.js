@@ -14,7 +14,7 @@ const sendOTP = async (req, res) => {
       return res.json({ success: false, message: 'No user with this email found!' });
     }
 
-    var otp = Math.floor(100000 + Math.random() * 900000);
+    var otp = Math.floor(1000 + Math.random() * 9000);
 
     sendMail('otp', email, {otp, useragent: req.useragent});
     var newOtp = new otps({

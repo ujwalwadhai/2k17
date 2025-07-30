@@ -89,9 +89,8 @@ router.get('/api/analytics/daily-route-views', analyticsController.dailyRouteVie
 
 router.get('/api/analytics/monthly-users', analyticsController.monthlyUsers);
 
-// GET /api/search-users?keyword=ujwal
-router.get('/search-users', isLoggedIn, usersController.searchUsers);
 
+router.get('/search-users', isLoggedIn, usersController.searchUsers);
 
 
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping

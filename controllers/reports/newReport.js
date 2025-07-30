@@ -22,7 +22,7 @@ const newReport = async (req, res) => {
     var adminEmails = admins.map(user => user.email);
 
     if(req.user?.email) {
-      await sendMail('report_user', req.user.email, { subject, details, name: req.user.name, reportId: newReport._id });
+      await sendMail('report_user', req.user.email, { subject, details, name: req.user.name.split(' ')[0], reportId: newReport._id });
     }
     await sendMail('report_admins', adminEmails, { subject, details, name: req.user?.name || ''});
     logActivity(req.user._id, 'Filed Report', `Filed a report (${newReport._id})`);

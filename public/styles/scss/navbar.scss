@@ -163,10 +163,11 @@
         right: 12px;
         color: white;
         top: 12px;
-        padding: 10px 12px;
+        padding: 10px 8px;
         border-radius: 4px;
         cursor: pointer;
         border: 1.5px solid var(--text-light);
+        box-shadow: 4px 12px 16px rgba(0, 0, 0, 0.75);
 
         &:hover {
           background-color: var(--bg-dark);
@@ -202,6 +203,7 @@
 
             span {
               width: 36px;
+              margin-right: 12px;
             }
           }
 

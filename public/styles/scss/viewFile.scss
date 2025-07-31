@@ -98,14 +98,6 @@
     border-radius: 4px;
 }
 
-.view-file-popup {
-    opacity: 1;
-
-    .view-file-box {
-        top: -50%;
-    }
-}
-
 @media (max-width: 768px) {
     .view-file-box {
         max-width: 100vw;

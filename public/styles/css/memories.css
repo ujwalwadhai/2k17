@@ -532,8 +532,8 @@ body {
   .view-file-popup .tag-memory-box {
     position: static;
     display: block;
-    width: calc(100vw - 1rem);
-    margin: auto auto 5rem auto;
+    width: calc(100vw - 4rem);
+    margin: auto auto 6rem auto;
   }
   .view-file-popup .tag-memory-box p {
     margin: 0 0 1rem 0;

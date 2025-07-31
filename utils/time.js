@@ -88,36 +88,21 @@ function createDate() {
 }
 
 function createLongDate() {
-  // returns date in format "DD Month YYYY, HH:MM AM/PM"
-  var hour = new Date().getHours();
-  var mins = new Date().getMinutes();
-  var date = new Date().getDate();
-  var month = new Date().toLocaleString('en-IN', { month: 'long' });
-  var year = new Date().getFullYear();
-  if (hour > 12) {
-    hour = hour - 12;
-    if (hour < 10) {
-      hour = "0" + hour;
-    }
-    if (mins < 10) {
-      mins = "0" + mins;
-    }
-    var time = hour + ":" + mins + " PM";
-  } else {
-    if (hour < 10) {
-      hour = "0" + hour;
-    }
-    if (mins < 10) {
-      mins = "0" + mins;
-    }
-    var time = hour + ":" + mins + " AM"
-  }
-  if (date < 10) {
-    date = "0" + date;
-  }
+  const now = new Date();
 
-  var FinalDate = date + " " + month + " " + year + ", " + time;
-  return FinalDate;
+  const options = {
+    timeZone: 'Asia/Kolkata',
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  };
+
+  const dateString = now.toLocaleString('en-GB', options);
+
+  return dateString.replace('am', 'AM').replace('pm', 'PM').replace(' at', ',');
 }
 
 const IST_OFFSET_MINUTES = 330;

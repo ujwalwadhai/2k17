@@ -87,28 +87,6 @@
     position: relative;
     display: inline-block;
     max-height: 80vh;
-
-    .action-btn.tag-memory {
-        position: absolute;
-        top: 1.5rem;
-        right: 1.2rem;
-        z-index: 10; 
-        border: 0.5px solid var(--primary);
-        color: var(--text-light);
-        background-color: var(--primary-dark);
-        font-size: 14px;
-        border-radius: 4px;
-        width: auto;
-        height: auto;
-        padding: 8px 12px;
-        margin-right: 4px;
-        box-shadow: 0 0 16px rgba(0, 0, 0, 1);
-        cursor: pointer;
-
-        &:hover {
-            background-color: var(--primary);
-        }
-    }
 }
 
 .view-file-content img,
@@ -118,6 +96,14 @@
     height: 100%;
     object-fit: contain;
     border-radius: 4px;
+}
+
+.view-file-popup {
+    opacity: 1;
+
+    .view-file-box {
+        top: -50%;
+    }
 }
 
 @media (max-width: 768px) {

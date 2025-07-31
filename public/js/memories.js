@@ -118,9 +118,13 @@ function openViewImage(name, url, id, thumbnail) {
   img.src = url;
   imgName.textContent = name;
   document.querySelector(".memories-container").style.filter = "blur(6px)"
-  ViewImagePopup.querySelector('#tagBtnImg').innerHTML = "I'm in this memory"
+  ViewImagePopup.querySelector('#tagBtnImg').parentElement.parentElement.style.display = 'block'
+  ViewImagePopup.querySelector('#tagBtnImg').parentElement.style.display = "flex"
   ViewImagePopup.querySelector('#tagBtnImg').disabled = false
-  ViewImagePopup.querySelector('#tagBtnImg').setAttribute('onclick', `tagMemory("${id}")`)
+  document.querySelector("#tag-memory-que").innerHTML = `<span class="fal fa-user-question" style="margin-right: 8px;"></span> Are you in this memory?`
+  document.querySelector("#tag-memory-que").style.margin = '0 0 16px 0'
+  ViewImagePopup.querySelector('#tagBtnImg').setAttribute('onclick', `tagMemory("${id}", 'yes')`)
+  ViewImagePopup.querySelector('.no').setAttribute('onclick', `tagMemory("${id}", 'no')`)
   ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
   ViewImagePopup.querySelector("#share-icon").setAttribute('onclick', `shareImage("${id}", "${thumbnail}")`)
   ViewImagePopup.classList.add('show');
@@ -128,24 +132,23 @@ function openViewImage(name, url, id, thumbnail) {
   navigator.sendBeacon('/api/analytics/addFileView', JSON.stringify({ fileId: id }));
 }
 
-async function tagMemory(fileId) {
+async function tagMemory(fileId, yesorno) {
   if (USER_ID) {
     const tagBtn = document.getElementById('tagBtnImg');
-    tagBtn.innerHTML = "Tagging..."
+    const tagQue = document.querySelector("#tag-memory-que");
     tagBtn.disabled = true;
-    const res = await fetch(`/file/${fileId}/tag`, { method: 'POST' });
+    const res = await fetch(`/file/${fileId}/tag?s=${yesorno || 'yes'}`, { method: 'POST' });
     const data = await res.json();
     if (data.success) {
+      tagBtn.parentElement.style.display = 'none'
+      tagQue.style.margin = '0'
       if (data.tag) {
-        Toast('Memory tagged!', 'success');
-        tagBtn.innerHTML = "Tagged successfully!"
+        tagQue.innerHTML = `<span class="fal fa-user-check" style="margin-right: 8px;"></span> Added to My Memories`
       } else {
-        Toast('Memory untagged!', 'success');
-        tagBtn.innerHTML = "Untagged successfully!"
+        tagQue.innerHTML = `<span class="fal fa-user-xmark" style="margin-right: 8px;"></span> Removed from My Memories`
       }
     } else {
-      Toast('Failed to tag memory.', 'error');
-      tagBtn.innerHTML = "Tagging failed"
+      tagBtn.parentElement.parentElement.style.display = 'none'
     }
   } else {
     alert("Please login to tag yourself in memories")

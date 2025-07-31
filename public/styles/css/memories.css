@@ -486,6 +486,63 @@ body {
   border: 1px solid var(--text-light);
   padding: 6px 8px;
 }
+.view-file-popup .tag-memory-box {
+  position: absolute;
+  bottom: 8rem;
+  right: 2rem;
+  background: var(--bg-dark);
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--text-light);
+  min-width: 250px;
+  box-shadow: 16px 16px 16px rgb(0, 0, 0);
+}
+.view-file-popup .tag-memory-box p {
+  margin: 0 0 16px 0;
+}
+.view-file-popup .tag-memory-box .tag-memory-box-btns {
+  justify-content: right;
+  display: flex;
+  gap: 8px;
+}
+.view-file-popup .tag-memory-box .tag-memory-box-btns button {
+  cursor: pointer;
+}
+.view-file-popup .tag-memory-box .tag-memory-box-btns button.yes {
+  padding: 6px 16px;
+  border-radius: 4px;
+  border: none;
+  background: var(--primary-dark);
+  color: white;
+}
+.view-file-popup .tag-memory-box .tag-memory-box-btns button.yes:hover {
+  background: var(--primary);
+}
+.view-file-popup .tag-memory-box .tag-memory-box-btns button.no {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+}
+.view-file-popup .tag-memory-box .tag-memory-box-btns button.no:hover {
+  background: rgb(40, 40, 40);
+}
+@media (max-width: 400px) {
+  .view-file-popup .tag-memory-box {
+    position: static;
+    display: block;
+    width: calc(100vw - 1rem);
+    margin: auto auto 5rem auto;
+  }
+  .view-file-popup .tag-memory-box p {
+    margin: 0 0 1rem 0;
+  }
+  .view-file-popup .tag-memory-box .tag-memory-box-btns {
+    justify-content: left;
+    flex-direction: row-reverse;
+  }
+}
 
 .view-image-large {
   text-align: center;

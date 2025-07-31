@@ -4,6 +4,7 @@
 <head>
   <%- include('../partials/head') %>
   <title><%= file.name %> - 2k17</title>
+  <link rel="stylesheet" href="/styles/css/memories.css">
   <link rel="stylesheet" href="/styles/css/viewFile.css">
   <meta property="og:image" content="<%= file.thumbnail || '/images/web_logo.png' %>">
 </head>
@@ -28,12 +29,14 @@
         </div>
       </header>
       <div class="view-file-content">
-        <% if(user && file.people && file.people.includes(user._id)){ %>
-        <button class="action-btn tag-memory" id="tagBtn" style="background-color: #ff4757; border: 0.5px solid #ff4757;" onclick="tagMemory('<%= file._id %>')" aria-label="Tag Memory">Untag from this memory</button>
-        <% } else { %>
-        <button class="action-btn tag-memory" id="tagBtn" onclick="tagMemory('<%= file._id %>')" aria-label="Tag Memory">I'm in this memory</button>
-        <% } %>
         <img src="<%= file.url %>" alt="<%= file.name %>" oncontextmenu="return false;">
+      </div>
+      <div class="tag-memory-box" aria-label="Tag Memory">
+        <p id="tag-memory-que"><span class="fal fa-user-question" style="margin-right: 8px;"></span> Are you in this memory?</p>
+        <div class="tag-memory-box-btns">
+          <button class="no" onclick="tagMemory('<%= file._id %>', 'no')">No</button>
+          <button class="yes" id="tagBtnImg" onclick="tagMemory('<%= file._id %>', 'yes')">Yes</button>
+        </div>
       </div>
     </div>
   </div>
@@ -54,15 +57,11 @@
         </div>
       </header>
       <div class="view-file-content">
-        <% if(user && file.people && file.people.includes(user._id)){ %>
-        <button class="action-btn tag-memory" id="tagBtn" style="background-color: #ff4757; border: 0.5px solid #ff4757;" onclick="tagMemory('<%= file._id %>')" aria-label="Tag Memory">Untag from this memory</button>
-        <% } else { %>
-        <button class="action-btn tag-memory" id="tagBtn" onclick="tagMemory('<%= file._id %>')" aria-label="Tag Memory">I'm in this memory</button>
-        <% } %>
         <video src="<%= file.url %>" controls controlslist="nodownload" oncontextmenu="return false;">
           Your browser does not support the video tag.
         </video>
       </div>
+
     </div>
   </div>
   <% } %>

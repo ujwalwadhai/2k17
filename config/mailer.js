@@ -512,7 +512,7 @@ async function WeeklyReportMail(to, data) {
 
 async function sendMail(type, to, data) {
   if (type == 'otp') OTPMail(to, data);
-  if (type == 'login') LoginMail(to, data);
+  //if (type == 'login') LoginMail(to, data);
   if (type == 'report_user') UserReportMail(to, data);
   if (type == 'report_admins') AdminReportMail(to, data);
   if (type == 'verify-new-email') VerifyNewEmailMail(to, data);

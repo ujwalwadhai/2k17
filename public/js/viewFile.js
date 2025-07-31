@@ -126,7 +126,7 @@ async function openComments(fileId) {
   const comments = await res.json();
 
   if (comments.length > 0) {
-    list.innerHTML = ''; 
+    list.innerHTML = '';
     comments.forEach(c => {
       const isOwner = (USER_ID && c.user._id.toString() === USER_ID.toString()) || currentUser.role == 'admin';
       const trashIcon = isOwner ? `<span class='fal fa-trash' onclick='deleteFileComment("${c._id}", "${fileId}")'></span>` : '';
@@ -167,24 +167,26 @@ async function shareImage(fileId, url) {
   }
 }
 
-async function tagMemory(fileId) {
+async function tagMemory(fileId, yesorno) {
   if (USER_ID) {
-    const tagBtn = document.getElementById('tagBtn');
-    tagBtn.innerHTML = "Tagging..."
+    const tagBtn = document.getElementById('tagBtnImg');
+    const tagQue = document.querySelector("#tag-memory-que");
     tagBtn.disabled = true;
-    const res = await fetch(`/file/${fileId}/tag`, { method: 'POST' });
+    const res = await fetch(`/file/${fileId}/tag?s=${yesorno || 'yes'}`, { method: 'POST' });
     const data = await res.json();
     if (data.success) {
+      tagBtn.parentElement.style.display = 'none'
+      tagQue.style.margin = '0'
+      setTimeout(() =>{
+        tagQue.parentElement.style.display = 'none'
+      }, 2000)
       if (data.tag) {
-        Toast('Memory tagged!', 'success');
-        tagBtn.innerHTML = "Tagged successfully!"
+        tagQue.innerHTML = `<span class="fal fa-user-check" style="margin-right: 8px;"></span> Added to My Memories`
       } else {
-        Toast('Memory untagged!', 'success');
-        tagBtn.innerHTML = "Untagged successfully!"
+        tagQue.innerHTML = `<span class="fal fa-user-xmark" style="margin-right: 8px;"></span> Removed from My Memories`
       }
     } else {
-      Toast('Failed to tag memory.', 'error');
-      tagBtn.innerHTML = "Tagging failed"
+      tagBtn.parentElement.parentElement.style.display = 'none'
     }
   } else {
     alert("Please login to tag yourself in memories")

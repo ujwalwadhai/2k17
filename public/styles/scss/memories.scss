@@ -262,6 +262,72 @@ body {
 
   }
 
+  .tag-memory-box {
+    position: absolute;
+    bottom: 8rem;
+    right: 2rem;
+    background: var(--bg-dark);
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid var(--text-light);
+    min-width: 250px;
+    box-shadow: 16px 16px 16px rgba(0, 0, 0, 1);
+
+    p {
+      margin: 0 0 16px 0;
+    }
+
+    .tag-memory-box-btns {
+      justify-content: right;
+      display: flex;
+      gap: 8px;
+
+      button {
+        cursor: pointer;
+
+        &.yes {
+          padding: 6px 16px;
+          border-radius: 4px;
+          border: none;
+          background: var(--primary-dark);
+          color: white;
+
+          &:hover{
+            background: var(--primary);
+          }
+        }
+
+        &.no{
+          padding: 6px 10px;
+          border-radius: 4px;
+          border: none;
+          background: transparent;
+          color: var(--text-muted);
+
+          &:hover{
+            background: rgba(40, 40, 40, 1);
+          }
+        }
+
+      }
+    }
+
+    @media (max-width: 400px){
+      position: static;
+      display: block;
+      width: calc(100vw - 1rem);
+      margin: auto auto 5rem auto;
+
+      p{
+        margin: 0 0 1rem 0;
+      }
+
+      .tag-memory-box-btns{
+        justify-content: left;
+        flex-direction: row-reverse;
+      }
+    }
+  }
 }
 
 .view-image-large {

@@ -116,7 +116,7 @@ function loadLogs() {
         <td>${log.system ? '<span style="color: yellow;">System</span>' : log.user?.username || 'Unknown'}</td>
         <td>${log.action}</td>
         <td>${log.detail || '-'}</td>
-        <td>${new Date(log.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
+        <td>${new Date(log.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</td>
         `;
           tbody.appendChild(row);
         });

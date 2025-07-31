@@ -5,12 +5,14 @@
   <%- include('../partials/head.ejs') %>
   <title>Home ❤️ 2k17</title>
   <link rel="stylesheet" href="/styles/css/home.css" />
+  <link rel="stylesheet" href="/styles/css/quill/min.css" />
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1f1c2e">
   <meta name="accent-color" content="<%= theme? theme : 'purple' %>">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="icon" sizes="192x192" href="/images/icons/logo_192x192.png">
+  <script src="/js/quill/min.js"></script>
 
 </head>
 
@@ -103,8 +105,8 @@
         <p>Create a new post</p>
         <p class="close-icon fal fa-xmark" onclick="closePostPopup()"></p>
       </div>
-      <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;You can mention people by typing @ followed by their name or username. Use @all to mention everyone.</span>
-      <div id="editor" contenteditable="true" class="editor" placeholder="Say hi to everyone..."></div>
+      <span class="grey-1" style="margin: 1rem 0;"><span class="fal fa-info-circle"></span> &nbsp;You can mention people by typing @ followed by their name or username. Use @all to mention everyone.</span>
+      <div id="editor" class="editor" placeholder="Say hi to everyone..."></div>
       <textarea id="hiddenContent" name="content" hidden></textarea>
       <ul id="mentionBox" class="mention-box hidden"></ul>
       <input type="file" id="media-input" accept="image/*">

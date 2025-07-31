@@ -77,9 +77,7 @@
                 </div>
               </div>
               <div class="post-data">
-                <p class="post-text">
-                  <%- post.text %>
-                </p>
+                <%- post.text %>
                 <% if(post.media !== undefined && post.media !== null && post.media.url !== undefined && post.media.url !== null){ %>
                 <% if(post.media.type.startsWith('image')) { %>
                 <img src="<%= post.media.url %>" alt="" class="post-img">

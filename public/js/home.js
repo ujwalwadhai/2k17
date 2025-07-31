@@ -288,7 +288,7 @@ function loadPosts() {
               </div>
             </div>
             <div class="post-data"> 
-              <p class="post-text">${post.text}</p>
+              ${post.text}
               ${mediaItem}
             </div>
             <div class="post-buttons">
@@ -318,8 +318,29 @@ function loadPosts() {
     })
 }
 
+let quill;
+
+// This function should be called when your popup opens, or on page load.
+function initializeQuillEditor() {
+  // Prevent re-initializing
+  if (quill) return;
+
+  quill = new Quill('#editor', {
+    theme: 'snow', // Use the 'snow' theme for a clean toolbar
+    placeholder: 'Say hi to everyone...',
+    modules: {
+      // Configure the toolbar for bold, italics, underline, and links
+      toolbar: [
+        ['bold', 'italic', 'underline'],
+        ['link']
+      ]
+    }
+  });
+}
+
 function openPostPopup() {
   document.getElementById('post-popup').classList.add('show');
+  initializeQuillEditor()
   document.getElementById('editor').focus();
 }
 
@@ -328,11 +349,17 @@ function closePostPopup() {
 }
 
 function createPost() {
-  var text = document.getElementById('editor').innerText.replace(/\n/g, '<br>');
+  const contentHTML = quill.root.innerHTML;
   var media = document.getElementById('media-input').files;
+  if (contentHTML === '<p><br></p>' && !media) {
+    alert('Your post cannot be empty!');
+    return;
+  }
+  document.getElementById('hiddenContent').value = contentHTML;
+
   if (media.length > 0) {
     var formData = new FormData();
-    formData.append('text', text);
+    formData.append('text', contentHTML);
     formData.append('media', media[0]);
     closePostPopup()
     Toast("Uploading the file. Please wait...", 'info')
@@ -361,7 +388,7 @@ function createPost() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ text })
+      body: JSON.stringify({ text: contentHTML })
     })
       .then(res => res.json())
       .then(data => {

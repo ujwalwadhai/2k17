@@ -19,7 +19,7 @@
 
 <body>
   <%- include('../partials/navbar') %>
-  <br><br>
+  <br><br><br><br><br>
   <div class="posts">
     <div class="post" style="border-top: none;">
       <div class="user-info" onclick="window.location.href='/<%= post.author.username %>'">
@@ -32,9 +32,7 @@
         </div>
       </div>
       <div class="post-data">
-        <p class="post-text">
-          <%- post.text %>
-        </p>
+        <%- post.text %>
         <% if(post.media && post.media.url && post.media?.type.startsWith('image')) { %>
         <img src="<%= post.media.url %>" alt="" class="post-img">
         <% } else if(post.media && post.media.url && post.media?.type.startsWith('video')) { %>

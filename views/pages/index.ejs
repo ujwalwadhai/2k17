@@ -34,8 +34,8 @@
       <div class="gallery-grid">
         <% birthdayUsers.forEach(bdayuser => { %>
         <div class="image-card" style="padding: 1.2rem;" onclick="window.location.href='/<%= bdayuser.username %>'">
-          <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo">
-          <h4 style="color: #7b5cf0; margin-bottom: 10px;"><%= bdayuser.name %> 🎂</h4>
+          <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo" style="border-radius: 50%">
+          <h4 style="color: var(--primary); margin-bottom: 10px;"><%= bdayuser.name %> 🎂</h4>
           <p style="line-height: 26px;">We wish you a happy birthday from 2k17 ❤️</p>
           <p><a href="/<%= bdayuser.username %>">View profile</a></p>
         </div>

@@ -43,6 +43,8 @@ router.post('/fetch/posts', isLoggedIn, postsController.fetchPosts);
 
 router.post('/post/:postId/like', isLoggedIn, postsController.likePost);
 
+router.post('/post/:postId/react', isLoggedIn, postsController.toggleReaction);
+
 router.post('/posts', isLoggedIn, postsController.fetchPosts)
 
 router.post('/new/post/file', isLoggedIn, upload.single('media'), postsController.newPost)

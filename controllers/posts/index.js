@@ -4,5 +4,6 @@ module.exports = {
   fetchPostLikes: require('./fetchPostLikes'),
   deletePost: require('./deletePost'),
   likePost: require('./likePost'),
-  viewPost: require('./viewPost')
+  viewPost: require('./viewPost'),
+  toggleReaction: require('./toggleReaction')
 };

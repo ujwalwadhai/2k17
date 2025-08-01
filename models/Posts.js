@@ -7,6 +7,19 @@ const commentSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 })
 
+const reactionSchema = new mongoose.Schema({
+  reaction: {
+    type: String,
+    enum: ['😂', '🔥', '🎉'],
+    required: true,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  }
+});
+
 const postSchema = new mongoose.Schema({
   text: {
     type: String,
@@ -36,6 +49,7 @@ const postSchema = new mongoose.Schema({
   visits: { type: Number, default: 0 },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }],
   comments: [commentSchema],
+  reactions: [reactionSchema],
   mentions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }]
 });
 

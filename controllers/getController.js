@@ -9,10 +9,7 @@ var getUpcomingBirthdays = require('../utils/birthdays');
 const Reports = require('../models/Reports');
 
 exports.indexPage = async (req, res) => {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0');
-  var todayStr = `${dd}/${mm}`;
+  var todayStr = new Date().toLocaleDateString('en-GB', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit' });
 
   var members = await Users.find(
     { name: { $ne: "Ujwal Wadhai" } },

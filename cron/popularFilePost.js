@@ -42,7 +42,7 @@ cron.schedule('2 0 * * *', async () => {
         const deleted = await Posts.deleteOne({
             createdAt: { $gte: startOfYesterday, $lte: endOfYesterday },
             author: '685680c4709e2711271639d1',
-            text: { $regex: /^Here's the most viewed memory of yesterday!/ }
+            text: { $regex: /^<p>Here's the most viewed memory of yesterday!/ }
         });
         console.log('[CRON] Deleted yesterday\'s post:', deleted);
 
@@ -81,7 +81,7 @@ cron.schedule('2 0 * * *', async () => {
         }
 
         const newPost = new Posts({
-            text: `Here's the most viewed memory of yesterday! <a href='${topFile[0]._id}'>Click here</a> to view in full screen.`,
+            text: `<p>Here's the most viewed memory of yesterday! <a href='${topFile[0]._id}'>Click here</a> to view in full screen.</p>`,
             media: {
                 url: file.url,
                 type: 'image'

@@ -112,10 +112,11 @@
       }
     }
 
-    .post-data{
+    .post-data {
       padding-top: 12px;
       line-height: 24px;
-      p{
+
+      p {
         margin: 0;
       }
     }
@@ -129,7 +130,7 @@
     }
 
     .post-buttons {
-      margin-top: 12px;
+      margin-top: 8px;
       padding: 8px 0;
       display: flex;
 
@@ -158,6 +159,10 @@
         cursor: pointer;
         margin-right: 16px;
         padding: 0;
+
+        &.like-btn {
+          margin-right: 12px;
+        }
 
         &:hover {
           color: var(--text-muted);
@@ -244,7 +249,8 @@
       color: var(--text-light);
       border-radius: 0 0 8px 8px;
       white-space: pre-wrap;
-      @media (max-width: 600px){
+
+      @media (max-width: 600px) {
         max-height: 200px;
       }
 
@@ -491,4 +497,36 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+.reaction-buttons {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  padding-bottom: 2px;
+}
+
+.reaction-emoji {
+  background-color: #f0f2f5;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reaction-emoji:hover {
+  transform: scale(1.15);
+}
+
+.reaction-emoji.reacted {
+  background-color: rgba(128, 128, 128, 0.15) !important;
+  border: 1px solid var(--primary) !important;
+  padding: 2px 3px 5px 3px !important;
+  width: 30px;
+  height: 30px;
+  margin-top: 4px;
 }

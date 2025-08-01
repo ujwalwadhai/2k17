@@ -73,106 +73,6 @@ function hidePopup(popupId = 'comments-popup') {
   overlay.classList.remove('show');
 }
 
-async function loadComments(postId) {
-  var commentsPopup = document.getElementById('comments-popup')
-  var overlay = document.getElementById('overlay')
-  commentsPopup.classList.add('show');
-  overlay.classList.add('show');
-
-  if (userId) {
-    commentsPopup.querySelector('#newCommentBtn').removeEventListener('click', () => { submitComment(postId) })
-    commentsPopup.querySelector('#newCommentBtn').addEventListener('click', () => { submitComment(postId) })
-    document.getElementById('new-comment').value = ''
-  }
-  var list = document.getElementById('comments-list');
-  list.innerHTML = '';
-  list.innerHTML = partialLoader('comments-loader');
-  var res = await fetch(`/post/${postId}/comments`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  });
-  var comments = await res.json();
-  setTimeout(() => {
-    if (comments.length > 0) {
-
-      document.getElementById('comments-loader').classList.add('hidden');
-      comments.forEach(c => {
-        if (c.user._id.toString() === userId.toString() || (currentUser && currentUser.role == 'admin')) {
-          var trashIcon = `<span class='fal fa-trash' onclick='deleteComment("${c._id}", "${postId}")'></span>`
-        } else {
-          var trashIcon = ''
-        }
-        list.innerHTML += `<div class="comment" id="comment-${c._id}">
-                                  <img src="${c.user.profile ? c.user.profile : '/images/user.png'}" alt="" onclick="window.location.href='/${c.user.username}'" class="user-profile">
-                                  <div class="comment-info">
-                                  <p class="name" onclick="window.location.href='/${c.user.username}'">${c.user.name} &nbsp; <span class="time">${c.timeAgo}</span></p>
-                              <span class="text">${c.text}</span>
-                            </div>
-                            <div class="action-buttons">
-                              ${trashIcon}
-                            </div>
-                          </div>`;
-      });
-
-      setTimeout(() => {
-        document.querySelectorAll('.comment').forEach(c => {
-          c.style.display = 'flex'
-        })
-      }, 100)
-    } else {
-      list.innerHTML = "No comments yet"
-    }
-  }, 500)
-}
-
-async function submitComment(postId, isHomePage = true) {
-  document.querySelector('#newCommentBtn').disabled = true;
-  var text = document.getElementById('new-comment').value;
-  var res = await fetch(`/post/${postId}/new/comment`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text })
-  });
-  var data = await res.json()
-  if (data.success) {
-    if (isHomePage) {
-      loadComments(postId);
-      document.getElementById('new-comment').value = ''
-      var id = `comment-btn-${postId}`
-      document.getElementById(id).innerHTML = `<span class="fal fa-messages"></span>${data.commentsLength}`
-    } else {
-      window.location.reload()
-    }
-    document.querySelector('#newCommentBtn').disabled = false;
-  } else {
-    Toast('Failed to add comment! Please try again later.', 'error')
-    document.querySelector('#newCommentBtn').disabled = false;
-  }
-}
-
-async function deleteComment(commentId, postId, isHomePage = true) {
-  var conf = confirm('Are you sure you want to delete this comment?')
-  if (!conf) {
-    return
-  }
-  var res = await fetch(`/post/${postId}/comment/${commentId}/delete`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  });
-  var data = await res.json();
-  if (data.success) {
-    if (isHomePage) {
-      loadComments(postId);
-      var id = `comment-btn-${postId}`
-      document.getElementById(id).innerHTML = `<span class="fal fa-messages"></span>${data.commentsLength}`
-    } else {
-      document.getElementById(`comment-${commentId}`).style.display = 'none'
-    }
-  } else {
-    Toast('Failed to delete comment! Please try again later.', 'error')
-  }
-}
-
 function loadNotifications() {
   var notificationsPopup = document.getElementById('notifications-popup');
   var notificationsOverlay = document.querySelector('#notifications-popup .overlay');
@@ -199,7 +99,7 @@ function loadNotifications() {
                 list.innerHTML += `<div class="notification" onclick="window.location.href = '${n.url}'">
           <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment', 'mention'].includes(n.type) ? (n.fromUser.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
           <div class="content">
-            <div class="text">${['like', 'comment', 'mention'].includes(n.type)
+            <div class="text">${['like', 'comment', 'mention', 'postreact'].includes(n.type)
                     ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
                     </div>
@@ -211,7 +111,7 @@ function loadNotifications() {
                 list.innerHTML += `<div class="notification unread" onclick="window.location.href = '${n.url}'">
                         <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment', 'mention'].includes(n.type) ? (n.fromUser.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
                         <div class="content">
-                          <div class="text">${['like', 'comment', 'mention'].includes(n.type)
+                          <div class="text">${['like', 'comment', 'mention', 'postreact'].includes(n.type)
                     ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
                         </div>
@@ -240,6 +140,8 @@ function closeNotifications() {
   notificationsOverlay.classList.remove('show');
 }
 
+const EMOJIS = ['😂', '🔥', '🎉'];
+
 function loadPosts() {
   var posts = document.getElementById('posts');
   posts.innerHTML = '<p class="heading">Recent posts</p>';
@@ -259,6 +161,24 @@ function loadPosts() {
             document.getElementById('posts-loader').classList.add('hidden');
             data.posts.forEach(post => {
               var isLiked = post.likes.some(u => u._id.toString() === userId.toString())
+
+              const userReaction = post.reactions.find(r => r.user === userId);
+
+              let reactionButtonsHTML = `<div class="reaction-buttons" id="reactions-${post._id}">`;
+
+              EMOJIS.forEach(emoji => {
+                const reactedClass = (userReaction && userReaction.reaction === emoji) ? 'reacted' : '';
+                reactionButtonsHTML += `
+                  <button 
+                    class="reaction-emoji ${reactedClass}" 
+                    data-emoji="${emoji}" 
+                    onclick="toggleReaction('${post._id}', '${emoji}')">
+                    ${emoji}
+                  </button>`;
+              });
+
+              reactionButtonsHTML += `</div>`;
+
               if (post.media) {
                 if (post.media.type.startsWith('image')) {
                   var mediaItem = `<img src="${post.media.url}" alt="" class="post-img">`
@@ -277,7 +197,7 @@ function loadPosts() {
                 var likedBy = `<p class="extend-like-msg"><img src="${post.likes[1].profile || '/images/user.png'}" alt="" class="user-profile"> Liked by <span style='margin: 0 3px' onclick='window.location.href="/${post.likes[1].username}"'> ${post.likes[1].username} </span> and <span style="margin: 0 3px" onclick="openPostLikes('${post._id}')">${post.likes.length - 1} others</span></p>`
               }
               if (post.author._id.toString() === userId.toString() || (currentUser && currentUser.role == 'admin')) {
-                var trashIcon = `<span class="fal fa-trash red" aria-label="Delete this post" onclick="deletePost('${post._id}')"></span>`
+                var trashIcon = `<button><span class="fal fa-trash red" aria-label="Delete this post" onclick="deletePost('${post._id}')"></span></button>`
               }
               posts.innerHTML += `<div class="post" id="post-${post._id}">
             <div class="user-info">
@@ -291,11 +211,12 @@ function loadPosts() {
               ${post.text}
               ${mediaItem}
             </div>
-            <div class="post-buttons">
+            <div class="post-buttons" ${userReaction ? 'style="padding: 2px 0"' : ''}>
               <button class="like-btn" onclick="toggleLike('${post._id}')" id="like-btn-${post._id}">
                 <span class="${isLiked ? 'fas' : 'fal'} fa-heart" id="like-icon-${post._id}"></span>
               </button> &nbsp; 
 
+              ${reactionButtonsHTML}
               <button class="comment-btn" onclick="loadComments('${post._id}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span>&nbsp; ${post.comments.length > 0 ? post.comments.length : ''}</button>
               <div class="btns-right">
               <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://twok17.onrender.com/post/${post._id}"><span class="fal fa-share"></span></button>
@@ -316,6 +237,48 @@ function loadPosts() {
         Toast("Can't load posts at the moment. Please try again later.", 'error')
       }
     })
+}
+
+async function toggleReaction(postId, emoji) {
+  try { 
+    const res = await fetch(`/post/${postId}/react`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reaction: emoji })
+    });
+
+    if (!res.ok) throw new Error('Server responded with an error.');
+
+    // The backend returns the new list of all reactions for the post
+    const updatedReactions = await res.json();
+    
+    // ---- DYNAMICALLY UPDATE THE UI ----
+    
+    // Find what the user's new reaction is (it could be null if they un-reacted)
+    const newUserReaction = updatedReactions.find(r => r.user === userId);
+
+    if(newUserReaction){
+      document.querySelector(`#post-${postId} .post-buttons`).style.padding = '2px 0'
+    } else {
+      document.querySelector(`#post-${postId} .post-buttons`).style.padding = '8px 0'
+    }
+
+    // Get all emoji buttons for the specific post that was clicked
+    const reactionButtons = document.querySelectorAll(`#reactions-${postId} .reaction-emoji`);
+
+    reactionButtons.forEach(button => {
+      // First, remove the 'reacted' class from all buttons
+      button.classList.remove('reacted');
+      
+      // Then, add the 'reacted' class ONLY to the button that matches the new reaction
+      if (newUserReaction && button.dataset.emoji === newUserReaction.reaction) {
+        button.classList.add('reacted');
+      }
+    });
+
+  } catch (err) {
+    console.error("Failed to toggle reaction:", err);
+  }
 }
 
 let quill;
@@ -370,7 +333,7 @@ function createPost() {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          document.getElementById('editor').innerHTML = ''; 
+          document.getElementById('editor').innerHTML = '';
           document.getElementById('media-input').value = '';
           document.getElementById('media-preview').innerHTML = '';
 

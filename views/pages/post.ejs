@@ -21,7 +21,7 @@
   <%- include('../partials/navbar') %>
   <br><br><br><br><br>
   <div class="posts">
-    <div class="post" style="border-top: none;">
+    <div class="post" style="border-top: none;" id="post-<%= post._id %>">
       <div class="user-info" onclick="window.location.href='/<%= post.author.username %>'">
         <img src="<%= post.author.profile %>" alt="" class="user-profile">
         <div class="user-info-helper">
@@ -42,22 +42,33 @@
         </video>
         <% } %>
       </div>
-      <div class="post-buttons">
+      <div class="post-buttons" style="padding: 2px 0">
         <% if(user) { %>
         <% var isLiked=post.likes.some(u=> u._id.toString() === user._id.toString()) %>
         <button class="like-btn" onclick="toggleLike('<%= post._id %>')" id="like-btn-<%=post._id %>">
           <span class="<%- isLiked ? 'fas' : 'fal' %> fa-heart" id="like-icon-<%= post._id %>"></span>
-          <span id="like-count-<%= post._id %>">
-            <%= post.likes.length %>
-          </span>
         </button>
         <% } else { %>
-        <button class="like-btn" id="like-btn-<%=post._id %>">
+        <button class="like-btn" id="like-btn-<%=post._id %>" onclick="alert('Please login to like this post')">
           <span class="fal fa-heart" id="like-icon-<%= post._id %>"></span>
-          <span id="like-count-<%= post._id %>">
-            <%= post.likes.length %>
-          </span>
         </button>
+        <% } %>
+        <% if(user) { %>
+        <% const userReaction = post.reactions.find(r => r.user == user.id) %>
+        <div class="reaction-buttons" id="reactions-<%= post._id %>">
+        <% ['😂', '🔥', '🎉'].forEach(emoji => { %>
+        <% const reactedClass = (userReaction && userReaction.reaction === emoji) ? 'reacted' : '' %>
+          <button class="reaction-emoji <%= reactedClass %>" data-emoji="<%= emoji %>" onclick="toggleReaction('<%= post._id %>', '<%= emoji %>')">
+            <%= emoji %>
+          </button>
+        <% }) %>
+        </div>
+        <% } else { %>
+        <% ['😂', '🔥', '🎉'].forEach(emoji => { %>
+          <button class="reaction-emoji" data-emoji="<%= emoji %>" onclick="alert('Please login to react to this post')">
+            <%= emoji %>
+          </button>
+        <% }) %>
         <% } %>
 
         <button class="comment-btn" onclick="document.getElementById('comments').scrollIntoView({behavior: 'smooth'}); " id="comment-btn-<%= post._id %>"><span class="fal fa-messages"></span>
@@ -127,7 +138,7 @@
 
   <%- include('../partials/footer') %>
 
-  <script src="/js/home.js"></script>
+  <script src="/js/comment.js"></script>
 </body>
 
 </html>

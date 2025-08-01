@@ -296,7 +296,8 @@ body {
         width: 48px;
         height: 48px;
         display: block;
-        border-radius: 10px;
+        border-radius: 50%;
+        object-fit: cover;
       }
 
       h4 {

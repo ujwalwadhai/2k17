@@ -33,11 +33,18 @@ const templates = {
     tag: `mention`
   }),
   like: (data) => ({
-    title: `${data.user.name} liked your post`,
+    title: `${data.user.username} liked your post`,
     body: `Click to see.`,
     icon: data.user.profile || '/images/web_logo.png',
     url: `/post/${data.postId}`,
     tag: `like`
+  }),
+  postreact: (data) => ({
+    title: `${data.user.username} reacted ${data.reaction} to your post.`,
+    body: `Click to see.`,
+    icon: data.user.profile || '/images/web_logo.png',
+    url: `/post/${data.postId}`,
+    tag: `postreact`
   }),
   admin: (data) => ({
     title: data.title,

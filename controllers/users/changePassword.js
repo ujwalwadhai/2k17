@@ -22,7 +22,7 @@ const changePassword = async (req, res) => {
 
     user.password = newPassword;
     await user.save();
-    logActivity(user._id, 'Password Change');
+    logActivity(user._id, 'Changed password');
     return res.json({ success: true, message: "Password updated successfully." });
   } catch (err) {
     console.error(err);

@@ -40,7 +40,7 @@ const register = async (req, res) => {
     var registeredUsers = await Users.countDocuments({ registered: true });
     await sendMail('user_registered', adminEmails, { name: user.name, email, username: user.username, totalUsers, verifiedUsers, registeredUsers});
 
-    logActivity(user._id, 'Account Activation', `${user.name} activated their account`);
+    logActivity(user._id, `${user.name} activated their account`);
     req.login(user, (err) => {
       if (err) {
         console.log(err);

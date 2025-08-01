@@ -42,7 +42,7 @@ const updateProfile = async (req, res) => {
     }
 
     var user = await Users.findOneAndUpdate({ _id: req.user._id }, update);
-    logActivity(req.user._id, 'Profile Update');
+    logActivity(req.user._id, 'Updated profile');
     res.json({ success: true });
   } catch (err) {
     console.log(err);

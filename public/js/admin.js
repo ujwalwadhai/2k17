@@ -114,8 +114,7 @@ function loadLogs() {
           const row = document.createElement('tr');
           row.innerHTML = `
         <td>${log.system ? '<span style="color: yellow;">System</span>' : log.user?.username || 'Unknown'}</td>
-        <td>${log.action}</td>
-        <td>${log.detail || '-'}</td>
+        <td>${log.activity || '-'}</td>
         <td>${new Date(log.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</td>
         `;
           tbody.appendChild(row);

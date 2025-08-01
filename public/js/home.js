@@ -469,7 +469,12 @@ async function openPostLikes(postId) {
   if (data.success) {
     data.likes.forEach(like => {
       var li = document.createElement('li');
-      li.innerHTML = `<a href="/${like.username}"><img src="${like.profile || '/images/user.png'}" alt="${like.username}">${like.username}</a>`;
+      li.innerHTML = `<a href="/${like.username}"><img src="${like.profile || '/images/user.png'}" alt="${like.username}">${like.username}</a><span style="color: var(--primary); margin-bottom: 12px;" class="fas fa-heart"></span>`;
+      PostLikesPopup.querySelector('.post-likes-list').appendChild(li);
+    })
+    data.reactions.forEach(reaction => {
+      var li = document.createElement('li');
+      li.innerHTML = `<a href="/${reaction.user.username}"><img src="${reaction.user.profile || '/images/user.png'}" alt="${reaction.user.username}">${reaction.user.username}</a><span style="margin-bottom: 12px;">${reaction.reaction}</span>`;
       PostLikesPopup.querySelector('.post-likes-list').appendChild(li);
     })
     PostLikesPopup.classList.add('show');

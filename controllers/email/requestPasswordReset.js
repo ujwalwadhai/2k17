@@ -20,7 +20,7 @@ const requestPasswordReset = async (req, res) => {
 
     var link = `${req.protocol}://${req.get('host')}/reset-password/${token}`;
     await sendMail('reset-password', email, {link, name: user.name});
-    logActivity(user._id, 'Password Reset Request', `Requested password reset.`);
+    logActivity(user._id, `Requested password reset link.`);
     res.json({ success: true, message: "Reset link sent to your email." });
   } catch (err) {
     console.log(err);

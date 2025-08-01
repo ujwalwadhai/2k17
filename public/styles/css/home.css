@@ -615,6 +615,9 @@
 .post-likes-list li {
   list-style: none;
   text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .post-likes-list li a {
   display: flex;

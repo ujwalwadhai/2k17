@@ -1,9 +1,6 @@
 var Posts = require('../../models/Posts');
 var Users = require('../../models/Users');
 var Notifications = require('../../models/Notifications');
-var sendMail = require('../../config/mailer');
-var logActivity = require('../../utils/log');
-// var webpush = require('web-push'); 
 var sendPushNotification = require('../../utils/push');
 
 const newComment = async (req, res) => {

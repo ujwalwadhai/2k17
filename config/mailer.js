@@ -265,7 +265,7 @@ async function LoginMail(to, data) {
       <p><strong>Time:</strong>${createLongDate()}</p>
     </div>`;
 
-  logActivity('', "Sent Email", `to ${to} for login alert`, { device: deviceInfo(data.useragent), method: data.method })
+  logActivity('', `Sent email to ${to} for login alert`, { device: deviceInfo(data.useragent), method: data.method })
   sendEmail(to, 'Login Alert • 2k17 Platform', createEmailTemplate(content));
 }
 
@@ -281,7 +281,7 @@ async function OTPMail(to, data) {
           This code is valid for the next 10 minutes. If you didn’t request this, you can safely ignore this message.<br><br>
           OTP Requested from ${deviceInfo(data.useragent)}
         </p>`
-  logActivity('', "Sent Email", `to ${to} for login OTP`, { device: deviceInfo(data.useragent), otp: data.otp })
+  logActivity('', `Sent email to ${to} for login OTP`, { device: deviceInfo(data.useragent), otp: data.otp })
   sendEmail(to, 'OTP for login • 2k17 Platform', createEmailTemplate(content));
 }
 
@@ -300,7 +300,7 @@ async function UserReportMail(to, data) {
 
     <p style="margin-top: 16px;">We'll look into it as soon as possible.</p>`
 
-  logActivity('', "Sent Email", `to ${to} for report acknowledgement`, { report: data.reportId })
+  logActivity('', `Sent email to ${to} for report acknowledgement`, { report: data.reportId })
   sendEmail(to, "Report received • 2k17 Platform", createEmailTemplate(content));
 }
 
@@ -318,7 +318,7 @@ async function ReportResolvedMail(to, data) {
 
     <p style="margin-top: 16px;">You may reply to this email if you're not satisfied with this resolution.</p>`
 
-  logActivity('', "Sent Email", `to ${to} for report resolution`, { report: data.reportId })
+  logActivity('', `Sent email to ${to} for report resolution`, { report: data.reportId })
   sendEmail(to, "Report resolved • 2k17 Platform", createEmailTemplate(content));
 }
 
@@ -336,7 +336,7 @@ async function AdminReportMail(to, data) {
 
     <p style="color: #888; margin-top: 16px">Open the <a href="https://twok17.onrender.com/admin">admin dashboard</a> to manage this report.</p>`
 
-  logActivity('', "Sent Email", `to admins for new report`)
+  logActivity('', `Sent email to admins for new report`)
   sendEmail(to, "New Report Submitted • 2k17 Platform", createEmailTemplate(content));
 }
 
@@ -363,7 +363,7 @@ async function VerifyNewEmailMail(to, data) {
     <p style="margin-top: 16px; color: #888;">
       This link is valid for 30 minutes. If you did not request this change, please ignore this email or reply to this email.
     </p>`
-  logActivity('', "Sent Email", `to ${to} for email verification`, { VerificationLink: data.link })
+  logActivity('', `Sent email to ${to} for email verification`, { VerificationLink: data.link })
   sendEmail(to, 'Verify your new email • 2k17 Platform', createEmailTemplate(content));
 }
 
@@ -378,7 +378,7 @@ async function AccountActivationMail(to, data) {
       This link is valid for 2 days. If you didn't create an account on 2k17 Platform, please ignore this email or reply to this email.
     </p>`
 
-  logActivity('', "Sent Email", `to ${to} for account activation`, { VerificationLink: data.link })
+  logActivity('', `Sent email to ${to} for account activation`, { VerificationLink: data.link })
   sendEmail(to, 'Verify your email • 2k17 Platform', createEmailTemplate(content));
 }
 
@@ -393,7 +393,7 @@ async function ResetPasswordMail(to, data) {
       This link is valid for 1 hour. If you did not request this change, please ignore this email or reply to this email.
     </p>`
 
-  logActivity('', "Sent Email", `to ${to} for password reset link`, { resetLink: data.link })
+  logActivity('', `Sent email to ${to} for password reset link`, { resetLink: data.link })
   sendEmail(to, 'Password reset link • 2k17 Platform', createEmailTemplate(content));
 }
 
@@ -409,18 +409,18 @@ async function BirthdayMail(to, data) {
 
   <a href="https://twok17.onrender.com/#birthday-spotlight" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Visit 2k17 Platform</a>`
 
-  logActivity('', "Sent Email", `to ${to} for birthday wish`)
+  logActivity('', `Sent email to ${to} for birthday wish`)
   sendEmail(to, 'Happy Birthday 🎂 • 2k17 Platform', createEmailTemplate(content));
 }
 
 async function NewsLetterPreviewMail(to, data) {
   var template = `<p>Scheduled at ${data.scheduledAt}</p><br>${data.content}`
-  logActivity('', "Sent Email", `to admins for ${data.title} preview`)
+  logActivity('', `Sent email to admins for ${data.title} preview`)
   sendEmail(to, `${data.title} Preview • 2k17 Platform`, template);
 }
 
 async function NewsLetterMail(to, data) {
-  logActivity('', "Sent Email", `to everyone for ${data.title}`)
+  logActivity('', `Sent email to everyone for ${data.title}`)
   sendEmail(to, `${data.title} • 2k17 Platform`, data.content);
 }
 
@@ -440,7 +440,7 @@ async function PostMentionMail(to, data) {
     <p style="margin-bottom: 16px;"><a href="https://twok17.onrender.com/${data.username}">${data.username}</a> mentioned you in their post.</p>
     <a href="${data.url}" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">See post</a>`
 
-  logActivity('', "Sent Email", `for post mention`)
+  logActivity('', `Sent email for post mention`)
   sendEmail(to, 'Post mention • 2k17 Platform', createEmailTemplate(content));
 }
 

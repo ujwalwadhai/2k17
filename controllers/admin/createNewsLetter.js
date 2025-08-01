@@ -14,7 +14,7 @@ var createNewsLetter = async (req, res) => {
             scheduledAt
         });
         await newsletter.save();
-        await logActivity(req.user._id, 'Newsletter', `New newsletter created (${newsletter._id})`);
+        await logActivity(req.user._id, `New newsletter created (${newsletter._id})`);
         await sendMail('newsletter_preview', adminEmails, { title, content: newsLetterContent, scheduledAt });
         res.json({success: true, message: 'Newsletter created successfully' });
     } catch (error) {

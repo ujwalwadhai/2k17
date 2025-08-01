@@ -16,7 +16,7 @@ const resetPassword = async (req, res) => {
 
   settings.passwordReset = undefined;
   await settings.save();
-  logActivity(settings.user._id, 'Password Reset', `Password reset by email verification.`);
+  logActivity(settings.user._id, `Password reset by email verification.`);
 
   res.json({ success: true, message: "Password updated successfully." });
 };

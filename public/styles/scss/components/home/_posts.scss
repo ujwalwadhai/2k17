@@ -470,6 +470,9 @@
   li {
     list-style: none;
     text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     a {
       display: flex;

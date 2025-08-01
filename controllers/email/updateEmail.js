@@ -19,7 +19,7 @@ const updateEmail = async (req, res) => {
     var link = `${req.protocol}://${req.get('host')}/verify-email/${token}`;
 
     await sendMail('verify-new-email', newEmail, {link, name: req.user.name});
-    logActivity(req.user._id, 'Email Update Request', `Requested change of email.`);
+    logActivity(req.user._id, `Requested change of email.`);
     return res.json({ success: true, message: 'Verification email sent.' });
   } catch (err) {
     console.log(err);

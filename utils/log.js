@@ -1,12 +1,11 @@
 var Logs = require('../models/Logs');
 
-async function logActivity(userId, action, detail = '', data={}) {
+async function logActivity(userId, activity = '', data={}) {
   try {
     if(process.env.PLATFORM_TYPE == 'developement') return
     if(!userId) {
       await Logs.create({
-        action,
-        detail,
+        activity,
         system: true,
         data,
         createdAt: new Date()
@@ -14,8 +13,7 @@ async function logActivity(userId, action, detail = '', data={}) {
     } else {
       await Logs.create({
         user: userId,
-        action,
-        detail,
+        activity,
         createdAt: new Date(),
     });
     }

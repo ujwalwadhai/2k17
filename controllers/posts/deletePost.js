@@ -15,11 +15,11 @@ const deletePost = async (req, res) => {
 		if (String(post.author._id) === String(req.user._id)) {
 			if (post.media?.url) await destroy(post.media.url, post.media.type);
 			await Posts.deleteOne({ _id: req.body.postId });
-			logActivity(req.user._id, 'Post Delete', `Deleted a post`);
+			logActivity(req.user._id, `Deleted a post`);
 			return res.json({ success: true, message: 'Post deleted' });
 		} else {
 			await Posts.findByIdAndUpdate(req.body.postId, { deleted: true });
-			logActivity(req.user._id, 'Post Delete', `Admin deleted a post`);
+			logActivity(req.user._id, `Deleted ${post.author.username}'s post`);
 			return res.json({ success: true, message: 'Post deleted' });
 		}
 	} catch (err) {

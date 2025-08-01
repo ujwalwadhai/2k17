@@ -47,7 +47,7 @@ const loginEmail = async (req, res) => {
         console.log(err);
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      logActivity(user._id, 'User Login', `Logged in with email OTP.`);
+      logActivity(user._id, `Logged in with email OTP.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Email OTP'});
       await Users.findOneAndUpdate({ email: email }, { lastLogin: Date.now() }, { new: true });
       await otps.deleteMany({ email: email })

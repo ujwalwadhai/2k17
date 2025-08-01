@@ -3,7 +3,7 @@
 
 <head>
   <%- include('../partials/head') %>
-  <title>Post by <%= post.author.name %> on 2k17</title>
+  <title>Post by <%= post.author.name.split(" ")[0] %> <%= post.author.name.split(" ")[1][0] %>. on 2k17</title>
   <link rel="stylesheet" href="/styles/css/home.css">
   <link rel="stylesheet" href="/styles/css/post.css">
   <link rel="icon" href="/images/web_logo.png" type="image/png">

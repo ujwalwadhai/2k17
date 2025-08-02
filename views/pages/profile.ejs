@@ -143,7 +143,7 @@
         </div>
         <div class="tab-panel" id="memories">
           <% if (memories.length === 0) { %>
-          <p class="empty-msg"><span class="fal fa-image-slash"></span><br>No tagged memories found.<br>Click <b>I'm in this memory</b> on files to tag yourself.</p>
+          <p class="empty-msg"><span class="fal fa-image-slash"></span><br>No tagged memories found.<br>Go to <a href="/memories">Memories</a> to add some.</p>
           <% } else if(!user) { %>
           <div class="login-box">
             <p>Please log in to see memories of <%= account.name %>.</p>
@@ -172,13 +172,15 @@
 
             <div class="about-card">
               <h3 class="about-heading">Basic Info</h3>
+              <% if((account.settings?.privacy?.dob || user._id.toString() == account._id.toString())){ %>
               <div class="info-item" style="margin: 16px 0">
                 <i class="fal fa-cake-candles icon"></i>
                 <div class="info-text">
                   <span class="label">Birthday</span>
-                  <span class="value"><%- (account.settings?.privacy?.dob || user._id.toString() == account._id.toString()) ? formatDOB(account.dob) : "Private" %></span>
+                  <span class="value"><%= formatDOB(account.dob) %> <%- (!account.settings?.privacy?.dob && user._id.toString() == account._id.toString()) ? '<span class="grey-1">(Visible only to you)</span>' : '' %></span>
                 </div>
               </div>
+              <% } %>
               <div class="info-item" style="margin: 16px 0">
                 <i class="fal fa-user-group icon" style="font-size: 16px"></i>
                 <div class="info-text">
@@ -197,7 +199,7 @@
                 <i class="fal fa-user-clock icon" style="font-size: 17px"></i>
                 <div class="info-text">
                   <span class="label">Join date</span>
-                  <span class="value"><%= account.joinedAt.toLocaleString("en-IN", { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' }) %></span>
+                  <span class="value"><%= account.joinedAt.toLocaleString("en-IN", { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' }) %></span>
                 </div>
               </div>
             </div>

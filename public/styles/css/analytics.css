@@ -133,6 +133,7 @@ body {
 #monthly-overview table tr td,
 #monthly-overview table tr th {
   font-size: 14px;
+  min-width: 148px;
 }
 #active-users h3,
 #monthly-overview h3 {
@@ -242,6 +243,14 @@ body {
   }
 }
 
+#monthly-overview {
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#monthly-overview::-webkit-scrollbar {
+  width: 0;
+}
 #monthly-overview tr:last-of-type td:first-of-type {
   border-bottom-left-radius: 0.8rem;
 }

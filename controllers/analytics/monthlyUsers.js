@@ -1,6 +1,8 @@
 const DailyUsers = require('../../models/DailyUsers');
 const Users = require('../../models/Users');
 const PageViews = require('../../models/PageViews');
+const Files = require('../../models/Files');
+const Folders = require('../../models/Folders');
 
 const getMonthRange = (offset = 0) => {
     const now = new Date();
@@ -106,7 +108,8 @@ const monthlyUsers = async (req, res) => {
         const topRoute = await PageViews.aggregate([
             {
                 $match: {
-                    date: { $regex: `${currentMonthStr.replace('/', '\\/')}$` }
+                    date: { $regex: `${currentMonthStr.replace('/', '\\/')}$` },
+                    route: { $not: /\/memories\// }
                 }
             },
             {
@@ -150,7 +153,7 @@ const monthlyUsers = async (req, res) => {
         ]);
 
         // Monthly top file/folder from Memories
-        const topFile = await PageViews.aggregate([
+        const monthlyTopFile = await PageViews.aggregate([
             {
                 $match: {
                     date: { $regex: `${currentMonthStr.replace('/', '\\/')}$` },
@@ -166,7 +169,16 @@ const monthlyUsers = async (req, res) => {
             { $sort: { total: -1 } },
             { $limit: 1 }
         ]);
-        const topFolder = await PageViews.aggregate([
+        let topFile = {}
+        const topFileName = await Files.findOne({ _id: monthlyTopFile[0]?._id.split('/').pop() }).select('name');
+        if (topFileName) {
+            topFile = {
+                _id: monthlyTopFile[0]?._id,
+                name: topFileName.name.split('.')[0]
+            };
+        }
+
+        const monthlyTopFolder = await PageViews.aggregate([
             {
                 $match: {
                     date: { $regex: `${currentMonthStr.replace('/', '\\/')}$` },
@@ -182,12 +194,14 @@ const monthlyUsers = async (req, res) => {
             { $sort: { total: -1 } },
             { $limit: 1 }
         ]);
-
-
-        // New users this month
-        const newUsers = await Users.countDocuments({
-            joinedAt: { $gte: currentStart, $lte: currentEnd }
-        });
+        let topFolder = {}
+        const topFolderName = await Folders.findOne({ _id: monthlyTopFolder[0]?._id.split('/').pop() }).select('name');
+        if (topFolderName) {
+            topFolder = {
+                _id: monthlyTopFolder[0]?._id,
+                name: topFolderName.name
+            };
+        }
 
         res.json({
             current,
@@ -204,9 +218,8 @@ const monthlyUsers = async (req, res) => {
             },
             topUser: topUserAgg[0] || null,
             topRoute: topRoute[0]?._id || null,
-            topFolder: topFolder[0]?._id || null,
-            topFile: topFile[0]?._id || null,
-            newUsers,
+            topFolder,
+            topFile,
             platform_breakdown
         });
     } catch (err) {

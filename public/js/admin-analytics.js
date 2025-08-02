@@ -41,6 +41,10 @@ async function updateOnlineUsers() {
                 secondTd = `<a href="/${u.profileOwnerName}">${u.profileOwnerName}'s Profile</a>`;
             } else if (u.postOwnerName) {
                 secondTd = `<a href="/post/${u.postId}">Post by ${u.postOwnerName}</a>`;
+            } else if(u.file){
+                secondTd = `<a href="/memories/file/${u.file._id}"><span class="fal fa-image"></span>&nbsp; ${u.file.name.split('.')[0]}</a>`;
+            } else if(u.folder){
+                secondTd = `<a href="/memories/folder/${u.folder._id}"><span class="fal fa-folder-open"></span>&nbsp; ${u.folder.name}</a>`;
             } else {
                 secondTd = u.current_route;
             }
@@ -313,19 +317,15 @@ async function loadMonthlySummary() {
                         </tr>
                         <tr>
                             <td>Most visited route</td>
-                            <td>${data.topRoute || '<span class="grey-1">No data available</span>'}</td>
+                            <td>${data.topRoute ? `<a href='${data.topRoute}'>${data.topRoute}</a>` : '<span class="grey-1">No data available</span>'}</td>
                         </tr>
                         <tr>
                             <td>Most viewed folder</td>
-                            <td>${data.topFolder ? `<a href='${data.topFolder}'>View Folder</a>` : '<span class="grey-1">No data available</span>'}</td>
+                            <td>${data.topFolder ? `<a href='${data.topFolder._id}'>${data.topFolder.name}</a>` : '<span class="grey-1">No data available</span>'}</td>
                         </tr>
                         <tr>
                             <td>Most viewed file</td>
-                            <td>${data.topFile ? `<a href='${data.topFile}'>View File</a>` : '<span class="grey-1">No data available</span>'}</td>
-                        </tr>
-                        <tr>
-                            <td>New users this month</td>
-                            <td>${data.newUsers || '<span class="grey-1">No data available</span>'}</td>
+                            <td>${data.topFile ? `<a href='${data.topFile._id}'>${data.topFile.name}</a>` : '<span class="grey-1">No data available</span>'}</td>
                         </tr>
                         `
 

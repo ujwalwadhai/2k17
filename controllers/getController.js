@@ -162,8 +162,8 @@ async function getSortedUsers(loggedInUserId = null) {
 
     pipeline.push({
       $sort: {
-        isAdmin: -1,    
         isLoggedInUser: -1,  
+        isAdmin: -1,    
         house: 1,
         name: 1            
       }

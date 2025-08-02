@@ -123,9 +123,15 @@ function openViewImage(name, url, id, thumbnail) {
   ViewImagePopup.querySelector('#tagBtnImg').disabled = false
   document.querySelector("#tag-memory-que").innerHTML = `<span class="fal fa-user-question" style="margin-right: 8px;"></span> Are you in this memory?`
   document.querySelector("#tag-memory-que").style.margin = '0 0 16px 0'
-  ViewImagePopup.querySelector('#tagBtnImg').setAttribute('onclick', `tagMemory("${id}", 'yes')`)
-  ViewImagePopup.querySelector('.no').setAttribute('onclick', `tagMemory("${id}", 'no')`)
-  ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
+  if (USER_ID) {
+    ViewImagePopup.querySelector('#tagBtnImg').setAttribute('onclick', `tagMemory("${id}", 'yes')`)
+    ViewImagePopup.querySelector('.no').setAttribute('onclick', `tagMemory("${id}", 'no')`)
+    ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
+  } else {
+    ViewImagePopup.querySelector('#tagBtnImg').setAttribute('onclick', `alert("Please login to tag yourself in memories")`)
+    ViewImagePopup.querySelector('.no').setAttribute('onclick', `alert("Please login to remove yourself from memories")`)
+    ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `alert("Please login to comment on this image")`)
+  }
   ViewImagePopup.querySelector("#share-icon").setAttribute('onclick', `shareImage("${id}", "${thumbnail}")`)
   ViewImagePopup.classList.add('show');
   ViewImageOverlay.classList.add('show');
@@ -235,6 +241,12 @@ async function loadFolder(folderId, updateURL = true) {
   driveGallery.innerHTML = createSkeletons(6, '<div><div class="skeleton"></div></div>');
 
   if (!folderId) return;
+
+  if (folderId !== 'root' && !USER_ID) {
+    folderId = 'root'
+    alert("Please login to view more memories")
+    return window.location.href = '/login'
+  }
 
   if (updateURL) {
     const newPath = folderId === 'root' ? '/memories' : `/memories/folder/${folderId}`;

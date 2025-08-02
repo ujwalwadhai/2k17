@@ -64,7 +64,7 @@ async function submitComment(postId, isHomePage = true) {
       loadComments(postId);
       document.getElementById('new-comment').value = ''
       var id = `comment-btn-${postId}`
-      document.getElementById(id).innerHTML = `<span class="fal fa-messages"></span>${data.commentsLength}`
+      document.getElementById(id).innerHTML = `<span class="fal fa-message-lines"></span>${data.commentsLength}`
     } else {
       window.location.reload()
     }
@@ -89,7 +89,7 @@ async function deleteComment(commentId, postId, isHomePage = true) {
     if (isHomePage) {
       loadComments(postId);
       var id = `comment-btn-${postId}`
-      document.getElementById(id).innerHTML = `<span class="fal fa-messages"></span>${data.commentsLength}`
+      document.getElementById(id).innerHTML = `<span class="fal fa-message-lines"></span>${data.commentsLength}`
     } else {
       document.getElementById(`comment-${commentId}`).style.display = 'none'
     }

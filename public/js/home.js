@@ -93,13 +93,14 @@ function loadNotifications() {
           document.querySelectorAll('.fa-bell').forEach(el => {
             el.classList.remove('has-unread')
           })
+          const showUserProfileTypes = ['like', 'comment', 'mention', 'postreact']
           setTimeout(() => {
             data.notifications.forEach(n => {
               if (n.seen) {
                 list.innerHTML += `<div class="notification" onclick="window.location.href = '${n.url}'">
-          <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment', 'mention'].includes(n.type) ? (n.fromUser.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
+          <img class="notification-img" src="${n.icon ? n.icon : showUserProfileTypes.includes(n.type) ? (n.fromUser.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
           <div class="content">
-            <div class="text">${['like', 'comment', 'mention', 'postreact'].includes(n.type)
+            <div class="text">${showUserProfileTypes.includes(n.type)
                     ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
                     </div>
@@ -109,9 +110,9 @@ function loadNotifications() {
         </div>`
               } else {
                 list.innerHTML += `<div class="notification unread" onclick="window.location.href = '${n.url}'">
-                        <img class="notification-img" src="${n.icon ? n.icon : ['like', 'comment', 'mention'].includes(n.type) ? (n.fromUser.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
+                        <img class="notification-img" src="${n.icon ? n.icon : showUserProfileTypes.includes(n.type) ? (n.fromUser.profile || '/images/user.png') : '/images/bell.png'}" alt="Icon">
                         <div class="content">
-                          <div class="text">${['like', 'comment', 'mention', 'postreact'].includes(n.type)
+                          <div class="text">${showUserProfileTypes.includes(n.type)
                     ? `<a href='/${n.fromUser.username}'>${n.fromUser.username}</a>`
                     : ''} ${n.message}</div>
                         </div>
@@ -217,7 +218,7 @@ function loadPosts() {
               </button> &nbsp; 
 
               ${reactionButtonsHTML}
-              <button class="comment-btn" onclick="loadComments('${post._id}')" id="comment-btn-${post._id}"><span class="fal fa-messages"></span>&nbsp; ${post.comments.length > 0 ? post.comments.length : ''}</button>
+              <button class="comment-btn" onclick="loadComments('${post._id}')" id="comment-btn-${post._id}"><span class="fal fa-message-lines"></span>&nbsp; ${post.comments.length > 0 ? post.comments.length : ''}</button>
               <div class="btns-right">
               <button class="share-btn" onclick="sharePost(this)" data-text="See this post by ${post.author.name} on 2k17" data-title="2k17 Platform" data-media="${post.media ? post.media.url : ''}" data-url="https://twok17.onrender.com/post/${post._id}"><span class="fal fa-share"></span></button>
               ${trashIcon || ''}

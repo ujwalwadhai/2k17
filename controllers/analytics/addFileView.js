@@ -10,6 +10,7 @@ const addFileView = async (req, res) => {
             return res.sendStatus(400);
         }
         if (!payload.fileId) return res.sendStatus(400);
+        if(!req.user) return
         const date = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' });
         if(req.user.role == "admin") return
         await PageViews.findOneAndUpdate(

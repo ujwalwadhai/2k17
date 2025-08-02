@@ -142,6 +142,7 @@
   height: 36px;
   border-radius: 50%;
   margin-right: 12px;
+  object-fit: cover;
   cursor: pointer;
 }
 #comments-popup .comments-box .comments-list .comment .comment-info .name {
@@ -283,7 +284,7 @@ body {
   font-size: 15px;
 }
 .memories-container #drive .gallery div p.fileinfo .fal.fa-image,
-.memories-container #drive .gallery div p.fileinfo .fal.fa-video::before {
+.memories-container #drive .gallery div p.fileinfo .fal.fa-video {
   margin-right: 12px;
   padding-bottom: 3px;
 }

@@ -83,7 +83,7 @@
 
     <div class="card">
       <div class="card-header">
-        <h2>Active sessions</h2>
+        <h2>Account sessions</h2>
         <p class="sessions-list-info">This is a list of devices where your account is logged in.</p>
       </div>
       <div class="card-body">
@@ -92,22 +92,16 @@
           <% sessions.forEach(sessionDoc => { %>
           <li class="session-item" id="<%= sessionDoc._id %>">
             <div class="session-info">
-              <div class="icon">
-                <% if (sessionDoc.session?.device && sessionDoc.session?.device.toLowerCase().includes('mobile')) { %>
-                <i class="fal fa-mobile-screen"></i>
-                <% } else if (sessionDoc.session?.device && sessionDoc.session?.device.toLowerCase().includes('tablet')) { %>
-                <i class="fal fa-tablet-screen"></i>
-                <% } else { %>
-                <i class="fal fa-display"></i>
-                <% } %>
-              </div>
+                <% let deviceIcon = 'fal fa-display' %>
+                <% if (sessionDoc.session?.device && sessionDoc.session?.device.toLowerCase().includes('mobile')) { deviceIcon = 'fal fa-mobile-screen' } %>
+                <% if (sessionDoc.session?.device && sessionDoc.session?.device.toLowerCase().includes('tablet')) { deviceIcon = 'fal fa-tablet-screen' } %>
               <div class="session-details">
                 <div class="device"><%= sessionDoc.session?.device %></div>
                 <div class="last-seen">
                   <% if (sessionDoc.isCurrent) { %>
-                    <span class="current-session">This device</span>
+                    <span class="current-session"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; This device</span>
                   <% } else { %>
-                    <span class="last-active">Last seen <%= sessionDoc.session.lastActive.toLocaleString('en-In', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true}).replace('am','AM').replace('pm', 'PM') %></span>
+                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last seen <%= sessionDoc.session.lastActive.toLocaleString('en-In', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true}).replace('am','AM').replace('pm', 'PM') %></span>
                   <% } %>
                 </div>
               </div>
@@ -166,6 +160,8 @@
       </div>
     </div>
   </div>
+
+  <script src="/js/myAccount.js"></script>
 
   <script>
     function logOut(sessionId) {

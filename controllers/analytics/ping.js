@@ -30,7 +30,7 @@ var ping = async (req, res) => {
         }
     }
 
-    const ignoredRoutes = ['/api/', '/admin', '/analytics'];
+    const ignoredRoutes = ['/api/', '/admin', '/analytics', '/reset-password', '/auth', '/verify-email'];
     if (ignoredRoutes.some(prefix => current_route.startsWith(prefix))) {
         return res.sendStatus(204);
     }

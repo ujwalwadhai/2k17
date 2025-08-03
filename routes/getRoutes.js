@@ -19,6 +19,8 @@ router.get('/auth/google', authController.google.googleAuth);
 
 router.get('/auth/google/callback', authController.google.googleAuthCallback, authController.google.googleRedirectSuccess);
 
+router.get('/account', isLoggedIn, authController.myAccount);
+
 
 router.get('/verify-email/:token', emailController.verifyEmail);
 

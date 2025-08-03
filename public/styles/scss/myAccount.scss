@@ -1,0 +1,222 @@
+@use 'components/popup/mixins' as *;
+
+body {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+
+    @media (max-width: 768px) {
+        background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+    }
+}
+
+.account-container {
+    width: calc(100% - 1rem);
+    max-width: 700px;
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+    background-color: transparent;
+}
+
+.card {
+    background-color: transparent;
+    border-radius: 12px;
+    padding: 1.75rem 1.75rem 0.5rem 1.75rem;
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--input-border);
+    box-shadow: 0 4px 20px rgba(31, 31, 31, 0.2);
+
+    h2 {
+        font-size: 1.4rem;
+        margin: 0 0 1.75rem;
+    }
+
+    .profile-box {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 28px;
+
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-name-info {
+            p {
+                margin: 0;
+
+                &.name {
+                    color: var(--text-light);
+                }
+
+                &.username {
+                    color: var(--text-muted);
+                    font-size: 14px;
+                    margin-top: 4px;
+                }
+            }
+        }
+    }
+
+    button {
+        padding: 0;
+        border: none;
+        color: var(--text-muted);
+        background: transparent;
+        cursor: pointer;
+        font-size: 13px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &.red {
+            color: var(--error);
+        }
+
+        &.green {
+            color: var(--success);
+        }
+    }
+
+    .email-box,
+    .password-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 16px;
+
+        p,
+        div.email {
+            margin: 0;
+            color: var(--text-light);
+
+            .fal {
+                margin-right: 16px;
+                font-size: 24px;
+            }
+        }
+
+        .item-head {
+            margin-bottom: 4px;
+        }
+
+        .item-value {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .email {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .google-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 16px 0;
+
+        p {
+            margin: 0;
+        }
+
+        .email {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            color: var(--text-light);
+        }
+
+        .item-head {
+            margin-bottom: 4px;
+        }
+
+        .item-value {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .google-icon {
+            width: 22px;
+            height: 22px;
+            margin: 0 19px 0 4px;
+            ;
+        }
+    }
+}
+
+.sessions-list-info {
+    margin: -12px 0 4px 0;
+    color: var(--text-muted);
+    line-height: 23px;
+}
+
+.session-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.session-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-top: 1px solid var(--input-border);
+
+    &:first-child {
+        border-top: none;
+    }
+}
+
+.session-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .icon {
+        font-size: 2rem;
+        color: var(--text-muted);
+        width: 40px;
+        text-align: center;
+    }
+}
+
+.session-details {
+    .device {
+        font-weight: 500;
+        color: var(--text-light);
+        margin-bottom: 6px;
+    }
+
+    .last-active {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .current-session {
+        color: var(--success);
+        font-weight: 500;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+        padding-bottom: 0.4rem;
+    }
+
+    .session-item {
+        gap: 1rem;
+    }
+}

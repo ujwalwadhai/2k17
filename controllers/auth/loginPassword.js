@@ -2,6 +2,7 @@ var Users = require('../../models/Users');
 var Settings = require('../../models/Settings');
 var sendMail = require('../../config/mailer')
 var logActivity = require('../../utils/log');
+var deviceInfo = require('../../middlewares/device')
 
 const loginPassword = async (req, res) => {
   var { username, password } = req.body;
@@ -46,6 +47,8 @@ const loginPassword = async (req, res) => {
         console.log(err);
         return res.json({ success: false, message: 'Something went wrong' });
       }
+      req.session.device = deviceInfo(req.headers['user-agent']);
+      req.session.method = 'password';
       logActivity(user._id, `Logged in with password.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
       await Users.findOneAndUpdate({ email: user.email }, { lastLogin: Date.now() }, { new: true });

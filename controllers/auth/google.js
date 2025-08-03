@@ -1,4 +1,5 @@
 const passport = require("passport");
+var deviceInfo = require('../../middlewares/device')
 
 const googleAuth = passport.authenticate("google", { scope: ["profile", "email"] });
 
@@ -7,6 +8,8 @@ const googleAuthCallback = passport.authenticate("google", {
 });
 
 const googleRedirectSuccess = (req, res) => {
+  req.session.device = deviceInfo(req.headers['user-agent']);
+  req.session.method = 'google';
   res.redirect("/home");
 };
 

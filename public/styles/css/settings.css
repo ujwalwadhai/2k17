@@ -444,7 +444,8 @@ body {
 #report-problem-popup .report-problem-box .report-problem-list {
   padding: 20px;
 }
-#report-problem-popup .report-problem-box .report-problem-list input, #report-problem-popup .report-problem-box .report-problem-list textarea {
+#report-problem-popup .report-problem-box .report-problem-list input,
+#report-problem-popup .report-problem-box .report-problem-list textarea {
   width: 100%;
   padding: 0.8rem;
   margin: 0.5rem 0;
@@ -455,7 +456,8 @@ body {
   outline: none;
   resize: vertical;
 }
-#report-problem-popup .report-problem-box .report-problem-list input:focus, #report-problem-popup .report-problem-box .report-problem-list textarea:focus {
+#report-problem-popup .report-problem-box .report-problem-list input:focus,
+#report-problem-popup .report-problem-box .report-problem-list textarea:focus {
   border: 1px solid var(--primary);
 }
 #report-problem-popup .report-problem-box .report-problem-list #report-problem-status {
@@ -550,7 +552,8 @@ body {
 #give-suggestion-popup .give-suggestion-box .give-suggestion-list {
   padding: 20px;
 }
-#give-suggestion-popup .give-suggestion-box .give-suggestion-list input, #give-suggestion-popup .give-suggestion-box .give-suggestion-list textarea {
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list input,
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list textarea {
   width: 100%;
   padding: 0.8rem;
   margin: 0.5rem 0;
@@ -561,7 +564,8 @@ body {
   outline: none;
   resize: vertical;
 }
-#give-suggestion-popup .give-suggestion-box .give-suggestion-list input:focus, #give-suggestion-popup .give-suggestion-box .give-suggestion-list textarea:focus {
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list input:focus,
+#give-suggestion-popup .give-suggestion-box .give-suggestion-list textarea:focus {
   border: 1px solid var(--primary);
 }
 #give-suggestion-popup .give-suggestion-box .give-suggestion-list #give-suggestion-status {
@@ -792,8 +796,22 @@ body {
   background-color: var(--primary);
 }
 
+#moved-things-chip {
+  padding: 12px 14px;
+  margin-bottom: 36px;
+  border-radius: 6px;
+  background: var(--bg-dark);
+  line-height: 24px;
+}
+
 @media (max-width: 600px) {
-  .notification-settings-box, .change-theme-box, .privacy-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box, .change-email-box {
+  .notification-settings-box,
+  .change-theme-box,
+  .privacy-settings-box,
+  .change-password-box,
+  .give-suggestion-box,
+  .report-problem-box,
+  .change-email-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;

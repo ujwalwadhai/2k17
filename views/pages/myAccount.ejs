@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/head") %>
+  <title>My Account</title>
+  <link rel="stylesheet" href="/styles/css/myAccount.css">
+  <link rel="stylesheet" href="/styles/css/settings.css">
+</head>
+
+<body>
+  <%- include("../partials/navbar") %>
+  <br><br><br><br><br>
+  <div class="account-container">
+    <div class="card">
+      <h2>My account</h2>
+      <div class="profile-box" onclick="window.location.href = '/profile'">
+        <img src="<%= user.profile ?? '/images/user.png' %>" alt="">
+        <div class="user-name-info">
+          <p class="name"><%= user.name %></p>
+          <p class="username"><%= user.username %></p>
+        </div>
+      </div>
+      <div class="email-box">
+        <div class="email">
+          <p class="fal fa-circle-envelope"></p>
+          <div>
+            <p class="item-head">Email</p>
+            <p style="padding-bottom: 4px" class="item-value"><%= user.email %></p>
+          </div>
+        </div>
+        <button onclick="openChangeEmail()">Change</button>
+      </div>
+
+      <% if(hasPassword) { %>
+        <div class="password-box">
+          <div class="email">
+            <p class="fal fa-shield-keyhole"></p>
+            <div>
+              <p class="item-head">Password</p>
+              <p style="padding-bottom: 4px" class="item-value">Added</p>
+            </div>
+          </div>
+          <button onclick="openChangePassword(true)">Change</button>
+        </div>
+      <% } else { %>
+        <div class="password-box">
+          <div class="email">
+            <p class="fal fa-shield-keyhole"></p>
+            <div>
+              <p class="item-head">Password</p>
+              <p style="padding-bottom: 4px; color: rgb(210, 36, 36)" class="item-value">Not added</p>
+            </div>
+          </div>
+          <button onclick="openChangePassword(false)">Add now</button>
+        </div>
+      <% } %>
+
+      <% if (user.googleId) { %>
+      <div class="google-box">
+        <div class="email">
+          <img src="/images/icons/google.svg" alt="Google Logo" class="google-icon">
+          <div>
+            <p class="item-head">Google account</p>
+            <p style="padding-bottom: 4px" class="item-value">Linked</p>
+          </div>
+        </div>
+        <button class="red" onclick="unlinkGoogle()">Unlink</button>
+      </div>
+      <% } else { %>
+      <div class="google-box">
+        <div class="email">
+          <img src="/images/icons/google.svg" alt="Google Logo" class="google-icon">
+          <div>
+            <p class="item-head">Google account</p>
+            <p style="padding-bottom: 4px" class="item-value">Use for signing in</p>
+          </div>
+        </div>
+        <button class="green" onclick="window.location.href = '/auth/google'">Link</button>
+      </div>
+      <% } %>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2>Active sessions</h2>
+        <p class="sessions-list-info">This is a list of devices where your account is logged in.</p>
+      </div>
+      <div class="card-body">
+        <ul class="session-list">
+          <% if (sessions && sessions.length > 0) { %>
+          <% sessions.forEach(sessionDoc => { %>
+          <li class="session-item" id="<%= sessionDoc._id %>">
+            <div class="session-info">
+              <div class="icon">
+                <% if (sessionDoc.session?.device && sessionDoc.session?.device.toLowerCase().includes('mobile')) { %>
+                <i class="fal fa-mobile-screen"></i>
+                <% } else if (sessionDoc.session?.device && sessionDoc.session?.device.toLowerCase().includes('tablet')) { %>
+                <i class="fal fa-tablet-screen"></i>
+                <% } else { %>
+                <i class="fal fa-display"></i>
+                <% } %>
+              </div>
+              <div class="session-details">
+                <div class="device"><%= sessionDoc.session?.device %></div>
+                <div class="last-seen">
+                  <% if (sessionDoc.isCurrent) { %>
+                    <span class="current-session">This device</span>
+                  <% } else { %>
+                    <span class="last-active">Last seen <%= sessionDoc.session.lastActive.toLocaleString('en-In', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true}).replace('am','AM').replace('pm', 'PM') %></span>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+            <% if (!sessionDoc.isCurrent) { %>
+              <button onclick="logOut('<%= sessionDoc._id %>')" class="red">Log out</button>
+            <% } %>
+          </li>
+          <% }); %>
+          <% } else { %>
+          <p>No active sessions found.</p>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <br><br><br><br>
+
+  <div id="change-email-popup">
+    <div class="overlay" onclick="closeChangeEmail()"></div>
+    <div class="change-email-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-envelope"></span> <%- user.email ? 'Change' : 'Add' %> email</p>
+        <p class="close-icon fal fa-xmark" onclick="closeChangeEmail()"></p>
+      </div>
+      <div class="change-email-list" id="change-email-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; A verification link will be sent to this email.</span><br><br>
+        <form id="change-email-form">
+          <input type="email" autocomplete="off" name="newEmail" placeholder="New email" required id="newEmail">
+          <br>
+          <div id="change-email-status"></div><br>
+          <button type="submit">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="change-password-popup">
+    <div class="overlay" onclick="closeChangePassword()"></div>
+    <div class="change-password-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-lock"></span> Change password</p>
+        <p class="close-icon fal fa-xmark" onclick="closeChangePassword()"></p>
+      </div>
+      <div class="change-password-list" id="change-password-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Send an email to <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a> if you face any issues.</span><br><br>
+        <form id="change-password-form">
+          <input type="text" autocomplete="off" name="currentPassword" placeholder="Current password" required id="currentPassword">
+          <input type="text" autocomplete="off" name="newPassword" placeholder="New password" required id="newPassword">
+          <input type="text" autocomplete="off" name="confirmPassword" placeholder="Confirm new password" required id="confirmPassword">
+          <br>
+          <div id="change-password-status"></div><br>
+          <button type="submit">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function logOut(sessionId) {
+      const response = fetch(`/logout/${sessionId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      setTimeout(() => {
+        document.getElementById(sessionId).style.display = 'none'
+      }, 1000);
+    }
+
+    function unlinkGoogle(){
+      var conf = confirm("Are you sure you want to unlink your Google account?");
+      if(!conf) return;
+      const response = fetch(`/unlinkGoogle`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
+  </script>
+
+</body>
+
+</html>

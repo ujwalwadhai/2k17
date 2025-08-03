@@ -124,10 +124,10 @@
 
     .post-data .post-img {
       width: 100%;
-      border-radius: 4px;
-      object-fit: cover;
+      object-fit: contain;
       max-height: 500px;
       margin-top: 12px;
+      border-radius: 4px;
     }
 
     .post-buttons {

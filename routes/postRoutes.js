@@ -23,6 +23,10 @@ router.post('/login/email', authController.loginEmail);
 
 router.post('/signup', authController.register);
 
+router.post('/unlinkGoogle', isLoggedIn, authController.unlinkGoogle);
+
+router.post('/logout/:sessionId', isLoggedIn, authController.logoutSession);
+
 
 
 router.post('/check/username', usersController.checkUsername);

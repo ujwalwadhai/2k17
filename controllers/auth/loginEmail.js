@@ -3,7 +3,7 @@ var Settings = require('../../models/Settings');
 var sendMail = require('../../config/mailer');
 var otps = require('../../models/OTP');
 var logActivity = require('../../utils/log');
-
+var deviceInfo = require('../../middlewares/device')
 
 const loginEmail = async (req, res) => {
   var { email, otp } = req.body;
@@ -47,6 +47,8 @@ const loginEmail = async (req, res) => {
         console.log(err);
         return res.json({ success: false, message: 'Something went wrong' });
       }
+      req.session.device = deviceInfo(req.headers['user-agent']);
+      req.session.method = 'email';
       logActivity(user._id, `Logged in with email OTP.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Email OTP'});
       await Users.findOneAndUpdate({ email: email }, { lastLogin: Date.now() }, { new: true });

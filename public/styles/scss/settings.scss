@@ -1,7 +1,6 @@
-
 @use 'components/popup/mixins' as *;
 
-body{
+body {
   height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 
@@ -24,29 +23,30 @@ body{
     text-align: center;
   }
 
-  .links{
+  .links {
     width: 100%;
     text-align: left;
-    ul{
+
+    ul {
       text-decoration: none;
       list-style: none;
       padding: 0;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--text-muted);
 
-      &:last-of-type{
+      &:last-of-type {
         border-bottom: none;
       }
 
-      &#account{
-        li{
-          a{
+      &#account {
+        li {
+          a {
             color: red !important
           }
         }
       }
 
-      li{
+      li {
         padding: 8px 12px;
         padding-left: 0;
         line-height: 30px;
@@ -54,36 +54,37 @@ body{
         border-radius: 4px;
         min-width: 250px !important;
         cursor: pointer;
-        
-        &:hover{
+
+        &:hover {
           background-color: rgba(81, 81, 81, 0.2);
         }
-        a{
-          padding-left: 16px;
-          color:white;
 
-          span{
+        a {
+          padding-left: 16px;
+          color: white;
+
+          span {
             width: 28px;
             margin-right: 4px;
           }
         }
       }
     }
-  } 
+  }
 }
 
-#notification-settings-popup{
+#notification-settings-popup {
   @include fullscreen-popup;
 
   .notification-settings-box {
     @include popup-box;
 
-    .notification-settings-list{
+    .notification-settings-list {
       padding: 20px;
 
       .form-section {
         line-height: 28px;
-        
+
         label {
           display: block;
           margin-bottom: 0.75rem;
@@ -107,18 +108,18 @@ body{
   }
 }
 
-#change-theme-popup{
+#change-theme-popup {
   @include fullscreen-popup;
 
   .change-theme-box {
     @include popup-box;
 
-    .change-theme-list{
+    .change-theme-list {
       padding: 20px;
 
       .form-section {
         line-height: 28px;
-        
+
         label {
           display: block;
           margin-bottom: 0.75rem;
@@ -141,14 +142,14 @@ body{
     }
   }
 }
- 
-#change-password-popup{
+
+#change-password-popup {
   @include fullscreen-popup;
 
   .change-password-box {
     @include popup-box;
 
-    .change-password-list{
+    .change-password-list {
       padding: 20px;
 
       input {
@@ -167,16 +168,17 @@ body{
   }
 }
 
-#report-problem-popup{
+#report-problem-popup {
   @include fullscreen-popup;
 
   .report-problem-box {
     @include popup-box;
 
-    .report-problem-list{
+    .report-problem-list {
       padding: 20px;
 
-      input, textarea{
+      input,
+      textarea {
         @include popup-inputs;
       }
 
@@ -192,16 +194,17 @@ body{
   }
 }
 
-#give-suggestion-popup{
+#give-suggestion-popup {
   @include fullscreen-popup;
 
   .give-suggestion-box {
     @include popup-box;
 
-    .give-suggestion-list{
+    .give-suggestion-list {
       padding: 20px;
 
-      input, textarea {
+      input,
+      textarea {
         @include popup-inputs;
       }
 
@@ -217,13 +220,13 @@ body{
   }
 }
 
-#change-email-popup{
+#change-email-popup {
   @include fullscreen-popup;
 
   .change-email-box {
     @include popup-box;
 
-    .change-email-list{
+    .change-email-list {
       padding: 20px;
 
       input {
@@ -242,18 +245,18 @@ body{
   }
 }
 
-#privacy-settings-popup{
+#privacy-settings-popup {
   @include fullscreen-popup;
 
   .privacy-settings-box {
     @include popup-box;
 
-    .privacy-settings-list{
+    .privacy-settings-list {
       padding: 20px;
 
       .form-section {
         line-height: 28px;
-        
+
         label {
           display: block;
           margin-bottom: 0.75rem;
@@ -277,8 +280,23 @@ body{
   }
 }
 
+#moved-things-chip {
+  padding: 12px 14px;
+  margin-bottom: 36px;
+  border-radius: 6px;
+  background: var(--bg-dark);
+  line-height: 24px;
+}
+
 @media (max-width: 600px) {
-  .notification-settings-box, .change-theme-box, .privacy-settings-box, .change-password-box, .give-suggestion-box, .report-problem-box, .change-email-box {
+
+  .notification-settings-box,
+  .change-theme-box,
+  .privacy-settings-box,
+  .change-password-box,
+  .give-suggestion-box,
+  .report-problem-box,
+  .change-email-box {
     width: 100vw !important;
     max-height: 100vh !important;
     height: 100vh !important;

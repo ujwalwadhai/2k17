@@ -26,7 +26,8 @@
         </div>
 
         <ul class="user-dropdown">
-          <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>Profile</a></li>
+          <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user"></span>My profile</a></li>
+          <li onclick="window.location.href = '/account'"><a href="/account"><span class="fal fa-user-circle"></span>My account</a></li>
           <% if(user && user.role == 'admin'){ %>
           <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-shield-user"></span>Admin Page</a></li>
           <% } %>
@@ -54,7 +55,8 @@
       </div>
 
       <ul class="user-dropdown user-dropdown-2">
-        <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>Profile</a></li>
+        <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user"></span>My profile</a></li>
+        <li onclick="window.location.href = '/account'"><a href="/account"><span class="fal fa-user-circle"></span>My account</a></li>
         <% if(user && user?.role == 'admin'){ %>
         <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-shield-user"></span>Admin Page</a></li>
         <% } %>
@@ -84,7 +86,8 @@
       <ul class="nav-items">
         <% if(user) { %>
         <li onclick="window.location.href = '/home'"><a href="/home"><span class="fal fa-house"></span>Home</a></li>
-        <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user-circle"></span>My profile</a></li>
+        <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user"></span>My profile</a></li>
+        <li onclick="window.location.href = '/account'"><a href="/account"><span class="fal fa-user-circle"></span>My account</a></li>
         <% } %>
         <li onclick="window.location.href = '/memories'"><a href="/memories"><span class="fal fa-images"></span>Memories</a></li>
         <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>

@@ -14,11 +14,11 @@
   <div class="settings-container">
     <h2>Settings</h2><br>
     <div class="links">
+    <div id="moved-things-chip"><span class="fal fa-info-circle"></span>&nbsp; Email and password related settings are now inside <a href="/account">My account</a>.</div>
       <ul>
         <li onclick="window.location.href='/profile/edit'"><a href="/profile/edit"><span class="fal fa-user"></span>
             Update profile</a></li>
-        <li onclick="openChangePassword()"><a><span class="fal fa-unlock-keyhole"></span> Change password</a></li>
-        <li onclick="openChangeEmail()"><a><span class="fal fa-envelope"></span> <%- user.email ? 'Change' : 'Add' %> email</a></li>
+        <li onclick="window.location.href='/account'"><a href="/account"><span class="fal fa-user-circle"></span> My account</a></li>
         <li onclick="openChangeTheme()"><a><span class="fal fa-palette"></span> Change theme &nbsp; <span class="grey-1">(New themes)</span></span></a></li>
         <li onclick="openNotificationSettings()"><a><span class="fal fa-bell"></span> Notifications</a></li>
         <li onclick="openPrivacySettings()"><a><span class="fal fa-eye-slash"></span> Privacy & Visibility</a></li>
@@ -129,27 +129,6 @@
     </div>
   </div>
 
-  <div id="change-password-popup">
-    <div class="overlay" onclick="closeChangePassword()"></div>
-    <div class="change-password-box">
-      <div class="heading">
-        <p class="title"><span class="fal fa-lock"></span> Change password</p>
-        <p class="close-icon fal fa-xmark" onclick="closeChangePassword()"></p>
-      </div>
-      <div class="change-password-list" id="change-password-list">
-        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Use activation code as current password if you didn't set password before.</span><br><br>
-        <form id="change-password-form">
-          <input type="text" autocomplete="off" name="currentPassword" placeholder="Current password" required id="currentPassword">
-          <input type="text" autocomplete="off" name="newPassword" placeholder="New password" required id="newPassword">
-          <input type="text" autocomplete="off" name="confirmPassword" placeholder="Confirm new password" required id="confirmPassword">
-          <br>
-          <div id="change-password-status"></div><br>
-          <button type="submit">Update</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <div id="report-problem-popup">
     <div class="overlay" onclick="closeReportProblem()"></div>
     <div class="report-problem-box">
@@ -185,25 +164,6 @@
           <br>
           <div id="give-suggestion-status"></div><br>
           <button type="submit">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div id="change-email-popup">
-    <div class="overlay" onclick="closeChangeEmail()"></div>
-    <div class="change-email-box">
-      <div class="heading">
-        <p class="title"><span class="fal fa-envelope"></span> <%- user.email ? 'Change' : 'Add' %> email</p>
-        <p class="close-icon fal fa-xmark" onclick="closeChangeEmail()"></p>
-      </div>
-      <div class="change-email-list" id="change-email-list">
-        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; A verification link will be sent to this email.</span><br><br>
-        <form id="change-email-form">
-          <input type="email" autocomplete="off" name="newEmail" placeholder="New email" required id="newEmail">
-          <br>
-          <div id="change-email-status"></div><br>
-          <button type="submit">Update</button>
         </form>
       </div>
     </div>

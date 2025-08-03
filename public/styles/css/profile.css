@@ -99,10 +99,10 @@
 }
 .posts .post .post-data .post-img {
   width: 100%;
-  border-radius: 4px;
-  object-fit: cover;
+  object-fit: contain;
   max-height: 500px;
   margin-top: 12px;
+  border-radius: 4px;
 }
 .posts .post .post-buttons {
   margin-top: 8px;

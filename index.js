@@ -93,6 +93,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next)=> {
+  if (req.session && req.user) {
+    req.session.lastActive = new Date();
+  }
+  next();
+})
+
 app.use('/admin', isLoggedIn, hasRole(['admin']))
 app.get('/api/analytics', isLoggedIn, hasRole(['admin']))
 app.use('/', require('./middlewares/locals'), getRoutes);
@@ -138,6 +145,7 @@ mongoose.connect(process.env.MONGO_URI, {}).then(() => {
     console.log(`🚀 Server is running\n`);
   });
   require('./cron/logCleanUp')
+  require('./cron/sessionCleanUp')
   require('./utils/cleanup')()
 }).catch((err) => {
   console.error('❌ MongoDB connection error:', err);

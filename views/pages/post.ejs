@@ -9,7 +9,8 @@
   <link rel="icon" href="/images/web_logo.png" type="image/png">
 
   <!-- Open Graph tags for social sharing -->
-  <meta property="og:title" content="View post by <%= post.author.name %> on 2k17">
+  <% const processedTitle = post.text.replace(/<[^>]+>/g, '') %>
+  <meta property="og:title" content="<%= processedTitle.length > 40 ? processedTitle.substring(0, processedTitle.lastIndexOf(' ', 40) ?? 40).trim() + '...' : processedTitle %> • 2k17 Platform">
   <meta property="og:description" content="2k17 Platform">
   <meta property="og:image" content="<%- post?.media?.url || 'https://twok17.onrender.com/images/web_logo.png' %>">
   <meta property="og:url" content="/post/<%= post._id %>">
@@ -75,7 +76,7 @@
           <%= post.comments.length %>
         </button>
         <div class="btns-right">
-          <button class="share-btn" onclick="sharePost(this)" data-text="See this post by <%= post.author.name %> on 2k17" data-title="2k17 Platform" data-media="<%= post.media ? post.media.url : '' %>" data-url="https://twok17.onrender.com/post/<%= post._id %>"><span class="fal fa-share"></span></button>
+          <button class="share-btn" onclick="sharePost(this)" data-text="<%= post.text.replace(/<[^>]+>/g, '') %> • 2k17 Platform" data-title="2k17 Platform" data-media="<%= post.media ? post.media.url : '' %>" data-url="https://twok17.onrender.com/post/<%= post._id %>"><span class="fal fa-share"></span></button>
         </div>
       </div>
       <% if(post.likes.length > 2) { %>

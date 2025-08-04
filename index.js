@@ -102,6 +102,7 @@ app.use((req, res, next)=> {
 
 app.use('/admin', isLoggedIn, hasRole(['admin']))
 app.get('/api/analytics', isLoggedIn, hasRole(['admin']))
+app.use('/quiz', require('./routes/quiz'));
 app.use('/', require('./middlewares/locals'), getRoutes);
 app.use('/', postRoutes);
 

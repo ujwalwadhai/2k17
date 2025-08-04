@@ -1,4 +1,17 @@
-const CACHE_NAME = '2k17-v4';
+const CACHE_NAME = `2k17-v8${new Date().getTime()}`; 
+
+
+
+
+
+// change CACHE_NAME
+
+
+
+
+
+
+
 const OFFLINE_URL = '/offline.html';
 
 const URLS_TO_CACHE = [

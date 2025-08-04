@@ -68,16 +68,22 @@ exports.admin = async (req, res) => {
   res.render('pages/admin', { reports, activeUsers, usersToday });
 }
 
-exports.adminUserlist = async (req, res) => {
-  try {
-    var users = await Users.find({ role: { $ne: 'admin' } })
-      .sort({ registered: -1, name: 1 })
+exports.moderator = async (req, res) => {
+  var reports = await Reports.find({
+    $or: [
+      { resolution: { $exists: false } },
+      { resolution: null },
+      { resolution: '' }
+    ]
+  })
+    .populate('user', 'username')
+    .sort({ createdAt: -1 })
+    .limit(100);
 
-    res.render('pages/admin-users', { users });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
+  const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' });
+  const usersToday = await DailyUsers.countDocuments({ date: today });
+
+  res.render('pages/admin', { reports, activeUsers: 0, usersToday });
 }
 
 exports.analyticsPage = async (req, res) => {
@@ -158,7 +164,7 @@ exports.donate = (req, res) => {
 }
 
 exports.adminUserInfo = async (req, res) => {
-  var user = await Users.findOne({ _id: req.params.userId }).select("+code");
+  var user = await Users.findOne({ _id: req.params.userId }).select(`+code ${req.user?.role == 'moderator' ? '-lastLogin': ''}`);
   if (user) {
     return res.json({ success: true, user });
   }

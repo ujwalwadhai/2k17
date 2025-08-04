@@ -8,6 +8,7 @@ var reportsController = require('../controllers/reports');
 var memoriesController = require('../controllers/memories');
 var analyticsController = require('../controllers/analytics');
 var usersController = require('../controllers/users');
+var adminController = require('../controllers/admin');
 var { isLoggedIn } = require('../middlewares/auth');
 
 
@@ -21,17 +22,15 @@ router.get('/auth/google/callback', authController.google.googleAuthCallback, au
 
 router.get('/account', isLoggedIn, authController.myAccount);
 
-
-router.get('/verify-email/:token', emailController.verifyEmail);
-
-
 router.get('/', getController.indexPage);
 
 router.get('/terms-of-service', getController.termsOfService);
 
 router.get('/home', isLoggedIn, getController.home);
 
-router.get('/admin', getController.admin);
+
+router.get('/verify-email/:token', emailController.verifyEmail);
+
 
 router.get("/pre-register", (req, res) => res.redirect('/create-account'));
 
@@ -64,11 +63,15 @@ router.get('/post/:postId/likes', postsController.fetchPostLikes);
 
 router.get('/admin/report/:id', reportsController.fetchReport);
 
-router.get('/admin/users', getController.adminUserlist);
+router.get('/moderator/users', adminController.adminUserlist);
+
+router.get('/admin/users', adminController.adminUserlist);
 
 router.get('/admin/analytics', getController.analyticsPage);
 
-router.get('/admin/userinfo/:userId', getController.adminUserInfo);
+router.get('/admin', getController.admin);
+
+router.get('/moderator', getController.moderator);
 
 
 

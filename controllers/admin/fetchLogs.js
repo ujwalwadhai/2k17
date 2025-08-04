@@ -9,16 +9,20 @@ const fetchLogs = async (req, res) => {
   var end = endOfDay(targetDate);
 
   try {
-    var logs = await Logs.find({
+    var query = {
       createdAt: { $gte: start, $lte: end }
-    })
-    .populate('user', 'username')
-    .sort({ createdAt: -1 });
+    }
+    if (req.user?.role == 'moderator') {
+      query.activity = { $not: /logged in|updated profile/i }
+    }
+    var logs = await Logs.find(query)
+      .populate('user', 'username')
+      .sort({ createdAt: -1 });
 
-    res.json({success:true, logs, date: targetDate });
+    res.json({ success: true, logs, date: targetDate });
   } catch (err) {
     console.log(err);
-    res.status(500).json({success:false, error: 'Failed to load logs' });
+    res.status(500).json({ success: false, error: 'Failed to load logs' });
   }
 };
 

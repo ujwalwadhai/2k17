@@ -27,7 +27,7 @@ function openUserInfo(userId) {
     const UserInfoOverlay = UserInfoPopup.querySelector('.overlay');
     UserInfoPopup.classList.add('show');
     UserInfoOverlay.classList.add('show');
-    fetch(`/admin/userinfo/${userId}`)
+    fetch(`/userinfo/${userId}`, {method: "POST", headers: {'Content-Type': 'application/json'}})
         .then(res => res.json())
         .then(data => {
             if (data.success) {
@@ -42,7 +42,9 @@ function openUserInfo(userId) {
                 document.getElementById('user-gender').textContent = (data.user?.gender.charAt(0).toUpperCase() + data.user?.gender.slice(1)) || '<span class="grey-1">No data available</span>';
                 document.getElementById('user-house').textContent = data.user?.house || '<span class="grey-1">No data available</span>';
                 document.getElementById('user-joinedAt').textContent = data.user?.joinedAt ? new Date(data.user.joinedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '-';
+                if(data.user?.lastLogin){
                 document.getElementById('user-lastLogin').innerHTML = data.user?.lastLogin ? new Date(data.user.lastLogin).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '<span class="grey-1">No data available</span>';
+                }
                 document.getElementById('user-action-btn').innerHTML = data.user?.registered ? `<button id="user-disable-login-btn" class="btn btn-danger" onclick="disableLoginUser('${userId}')">Disable Login</button>` : `<button id="user-enable-login-btn" class="btn btn-success" onclick="disableLoginUser('${userId}')">Enable Login</button>`;
             } else {
                 alert("No user found")

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var authController = require('../controllers/auth');
+var getController = require('../controllers/getController');
 var usersController = require('../controllers/users');
 var postsController = require('../controllers/posts');
 var commentsController = require('../controllers/comments');
@@ -11,7 +12,7 @@ var adminController = require('../controllers/admin');
 var memoriesController = require('../controllers/memories');
 var analyticsController = require('../controllers/analytics');
 var { upload } = require('../config/cloudinary');
-var { isLoggedIn } = require('../middlewares/auth');
+var { isLoggedIn, hasRole } = require('../middlewares/auth');
 
 
 
@@ -97,11 +98,15 @@ router.post('/contact', emailController.contactForm)
 router.post('/newsletter/subscribe', emailController.newsletterSubscribe)
 
 
-router.post('/admin/logs', adminController.fetchLogs)
+router.post('/logs', hasRole('admin', 'moderator'), adminController.fetchLogs)
 
 router.post('/admin/newsletter/new', adminController.createNewsLetter)
 
-router.post('/admin/send-notification', adminController.pushNotification)
+router.post('/send-notification', hasRole('admin', 'moderator'), adminController.pushNotification)
+
+router.post('/users', hasRole('admin', 'moderator'), adminController.adminUserlist);
+
+router.post('/userinfo/:userId', getController.adminUserInfo);
 
 
 router.post('/api/analytics/ping', express.text({ type: '*/*' }), analyticsController.ping)

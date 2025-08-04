@@ -3,7 +3,7 @@
 
 <head>
   <%-include('../partials/head') %>
-  <title>Admin Dashboard</title>
+  <title>Manage Users</title>
   <link rel="stylesheet" href="/styles/css/admin.css">
 </head>
 
@@ -20,7 +20,8 @@
           <tr>
             <th>User (<%= users.length %> total)</th>
             <th>Username</th>
-            <th>Last Active</th>
+            <% const isAdmin = user?.role == 'admin' %>
+            <%- user?.role == 'admin' ? '<th>Last Active</th>' : '<th>Email</th>' %>
             <th>Action</th>
           </tr>
         </thead>
@@ -34,9 +35,15 @@
             <td>
               <%= user.username %>
             </td>
+            <% if (isAdmin){ %>
             <td>
               <%- user.lastActive ? new Date(user.lastActive).toLocaleString("en-IN", {timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'}) : '<span class="grey-1">No data available</span>' %>
             </td>
+            <% } else { %>
+            <td>
+              <%= user.email %>
+            </td>
+            <% } %>
             <td data-action>
               <button class="btn btn-primary" id="user-btn-action" onclick="openUserInfo('<%= user._id %>')">User Info</button>
             </td>
@@ -109,6 +116,7 @@
               <td><b>Joined At</b></td>
               <td><span id="user-joinedAt"></span></td>
             </tr>
+            <% if(user?.role == 'admin'){ %>
             <tr>
               <td><b>Last Login</b></td>
               <td><span id="user-lastLogin"></span></td>
@@ -117,6 +125,7 @@
               <td><b>Action</b></td>
               <td id="user-action-btn"></td>
             </tr>
+            <% } %>
           </table>
         </div>
       </div>

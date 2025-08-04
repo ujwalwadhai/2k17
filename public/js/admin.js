@@ -99,7 +99,7 @@ document.getElementById("resolve-report-form").addEventListener("submit", functi
 let dayOffset = 0;
 
 function loadLogs() {
-  fetch(`/admin/logs?dayOffset=${dayOffset}`, {
+  fetch(`/logs?dayOffset=${dayOffset}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -207,7 +207,7 @@ document.getElementById("send-notification-form").addEventListener("submit", fun
   var statusBox = document.getElementById("send-notification-status");
   statusBox.style.color = "green";
   statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'><span> &nbsp;Sending notification...";
-  fetch("/admin/send-notification", {
+  fetch("/send-notification", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

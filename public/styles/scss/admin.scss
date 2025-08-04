@@ -177,6 +177,7 @@ body {
       padding: 10px 12px;
       color: var(--text-light);
       font-size: 14px;
+      min-width: 84px;
 
       .resolve-link {
         color: var(--primary);
@@ -441,7 +442,7 @@ body {
   max-width: 572px;
   margin: 1rem auto;
 
-  .capsule-head{
+  .capsule-head {
     font-size: 1.2rem;
     margin-top: 0;
     margin-bottom: 1.2rem;
@@ -454,7 +455,7 @@ body {
     margin-bottom: 0.3rem;
   }
 
-  .value{
+  .value {
     font-size: 1.2rem;
     color: var(--text-light);
     margin-top: 0.3rem;

@@ -100,8 +100,16 @@ app.use((req, res, next)=> {
   next();
 })
 
-app.use('/admin', isLoggedIn, hasRole(['admin']))
-app.get('/api/analytics', isLoggedIn, hasRole(['admin']))
+function allowIfNotGet(req, res, next) {
+  if(req?.user?.role == 'moderator' && req.method == 'GET') {
+    return res.redirect('/home')
+  }
+  next()
+}
+
+app.use('/admin', allowIfNotGet, hasRole('admin'))
+app.use('/moderator', isLoggedIn, hasRole('moderator'))
+app.get('/api/analytics', isLoggedIn, hasRole('admin'))
 app.use('/quiz', require('./routes/quiz'));
 app.use('/', require('./middlewares/locals'), getRoutes);
 app.use('/', postRoutes);

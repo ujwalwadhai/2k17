@@ -153,6 +153,7 @@ body {
   padding: 10px 12px;
   color: var(--text-light);
   font-size: 14px;
+  min-width: 84px;
 }
 .logs-table tbody td .resolve-link {
   color: var(--primary);

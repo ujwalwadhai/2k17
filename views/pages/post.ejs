@@ -11,7 +11,7 @@
   <!-- Open Graph tags for social sharing -->
   <% const processedTitle = post.text.replace(/<[^>]+>/g, '') %>
   <meta property="og:title" content="<%= processedTitle.length > 40 ? processedTitle.substring(0, processedTitle.lastIndexOf(' ', 40) ?? 40).trim() + '...' : processedTitle %> • 2k17 Platform">
-  <meta property="og:description" content="2k17 Platform">
+  <meta property="og:description" content="Post by <%= post.author.name.split(" ")[0] %> <%= post.author.name.split(" ")[1][0] %>. on 2k17 Platform">
   <meta property="og:image" content="<%- post?.media?.url || 'https://twok17.onrender.com/images/web_logo.png' %>">
   <meta property="og:url" content="/post/<%= post._id %>">
   <meta property="og:type" content="website">

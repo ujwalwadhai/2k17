@@ -1,42 +1,95 @@
-const CACHE_NAME = 'offline-cache-v1';
+const CACHE_NAME = '2k17-v4';
 const OFFLINE_URL = '/offline.html';
-const OFFLINE_ASSETS = [OFFLINE_URL, '/favicon.ico'];
+
+const URLS_TO_CACHE = [
+  '/',
+  '/fonts/Lato.ttf',
+  '/icons/css/all.css',
+  '/icons/webfonts/fa-brands-400.woff2',
+  '/icons/webfonts/fa-light-300.woff2',
+  '/icons/webfonts/fa-solid-900.woff2',
+  '/icons/webfonts/fa-brands-400.ttf',
+  '/icons/webfonts/fa-light-300.ttf',
+  '/icons/webfonts/fa-solid-900.ttf',
+  '/styles/css/theme.css',
+  '/images/web_logo.png',
+  '/images/icons/logo_72x72.png',
+  '/images/icons/logo_96x96.png',
+  '/images/icons/maskable_icon.png',
+  '/favicon.ico',
+  OFFLINE_URL
+];
 
 self.addEventListener('install', event => {
-    console.log('[Service Worker] Installing Service Worker ...');
+    console.log('[Service Worker] Installing...');
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll(OFFLINE_ASSETS);
+            console.log('[Service Worker] Caching App Shell');
+            return cache.addAll(URLS_TO_CACHE);
         })
     );
     self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
-    console.log('[Service Worker] Activating Service Worker ...');
-    event.waitUntil(self.clients.claim());
+    console.log('[Service Worker] Activating...');
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.filter(cacheName => cacheName !== CACHE_NAME)
+                          .map(cacheName => caches.delete(cacheName))
+            );
+        }).then(() => self.clients.claim())
+    );
 });
 
 self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
 
-    event.respondWith(
-        fetch(event.request).catch(() => {
-            if (event.request.mode === 'navigate') {
-                // For page navigations, return offline fallback
+    if (event.request.destination === 'style' || event.request.destination === 'script') {
+        event.respondWith(
+            caches.open(CACHE_NAME).then(cache => {
+                return cache.match(event.request).then(cachedResponse => {
+                    const fetchPromise = fetch(event.request).then(networkResponse => {
+                        cache.put(event.request, networkResponse.clone());
+                        return networkResponse;
+                    });
+                    return cachedResponse || fetchPromise;
+                });
+            })
+        );
+        return;
+    }
+
+    if (['image', 'font', 'manifest'].includes(event.request.destination)) {
+        event.respondWith(
+            caches.match(event.request).then(response => {
+                return response || fetch(event.request);
+            })
+        );
+        return;
+    }
+
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request).catch(() => {
                 return caches.match(OFFLINE_URL);
-            } else if (event.request.url.endsWith('/favicon.ico')) {
-                // Fallback for favicon
+            })
+        );
+        return;
+    }
+
+    event.respondwith(
+        fetch(event.request).catch(() => {
+            if (event.request.url.endsWith('/favicon.ico')) {
                 return caches.match('/favicon.ico');
             }
-
-            // Default fallback: return empty response (to prevent TypeError)
             return new Response('', { status: 204 });
         })
     );
 });
 
-// === Push Notification Handling ===
+
 self.addEventListener('push', event => {
     console.log('[Service Worker] Push Received.');
     let data = {
@@ -50,7 +103,6 @@ self.addEventListener('push', event => {
         try {
             data = event.data.json();
         } catch (e) {
-            console.error('[Service Worker] Push event data is not JSON', e);
             data.body = event.data.text();
         }
     }
@@ -59,8 +111,7 @@ self.addEventListener('push', event => {
     const options = {
         body: data.body,
         icon: data.icon || '/images/web_logo.png',
-        badge: '/images/icons/logo_72x72.png',
-        tag: data.tag || 'general-notification',
+        badge: '/images/icons/2k17.png',
         data: {
             url: data.url || '/'
         }
@@ -71,7 +122,6 @@ self.addEventListener('push', event => {
 
 self.addEventListener('notificationclick', event => {
     console.log('[Service Worker] Notification click Received.');
-
     event.notification.close();
 
     event.waitUntil(
@@ -87,4 +137,14 @@ self.addEventListener('notificationclick', event => {
             }
         })
     );
+});
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.action === 'clear-notifications') {
+    self.registration.getNotifications().then(notifications => {
+      notifications.forEach(notification => {
+        notification.close();
+      });
+    });
+  }
 });

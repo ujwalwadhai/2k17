@@ -35,7 +35,6 @@ exports.indexPage = async (req, res) => {
   });
 };
 
-
 exports.termsOfService = (req, res) => {
   res.render('pages/terms-of-service');
 }
@@ -85,24 +84,52 @@ exports.analyticsPage = async (req, res) => {
   res.render('pages/analytics');
 }
 
+let cachedBirthdays = [];
+let cachedFeaturedPhotos = [];
+let cachedMembers = []
+
+const refreshCache = async () => {
+  try {
+    const [birthdays, photos, members] = await Promise.all([
+      getUpcomingBirthdays(),
+      Files.aggregate([{ $match: { tags: 'featured' } }]),
+      getSortedUsers()
+    ]);
+    
+    cachedBirthdays = birthdays;
+    cachedFeaturedPhotos = photos;
+    cachedMembers = members
+
+  } catch (err) {
+    console.error('Failed to refresh cache:', err);
+  }
+};
+
+setInterval(refreshCache, 3600000 * 12); 
+
+refreshCache();
+
 exports.home = async (req, res) => {
   try {
-    res.locals.hasUnreadNotifications = false;
-    var birthdays = await getUpcomingBirthdays();
-    var hasUnreadNotifications = await Notifications.findOne({ $or: [{ user: req.user._id }, { user: null }], seen: false });
-    const [photo] = await Files.aggregate([
-      { $match: { tags: 'featured' } },
-      { $sample: { size: 1 } }
-    ]);
-    if (hasUnreadNotifications) {
-      res.locals.hasUnreadNotifications = true;
-    }
-    res.render('pages/home', { birthdays, featuredPhoto: photo, isHome: true, onboarding: Boolean(req.query.onboarding) || false });
+    const hasUnreadNotifications = await Notifications.countDocuments(
+      { $or: [{ user: req.user._id }, { user: null }], seen: false })
+
+    const randomPhoto = cachedFeaturedPhotos.length 
+      ? cachedFeaturedPhotos[Math.floor(Math.random() * cachedFeaturedPhotos.length)] 
+      : null;
+
+    res.render('pages/home', {
+      birthdays: cachedBirthdays, 
+      featuredPhoto: randomPhoto,
+      hasUnreadNotifications: hasUnreadNotifications > 0,
+      isHome: true
+    });
+
   } catch (err) {
     console.log(err);
-    res.redirect("/login")
+    res.redirect("/login");
   }
-}
+};
 
 exports.register = (req, res) => {
   if (req?.user) return res.redirect('/home');
@@ -203,11 +230,7 @@ async function getSortedUsers(loggedInUserId = null) {
 
 
 exports.members = async (req, res) => {
-  if (req.user) {
-    var members = await getSortedUsers(req.user._id);
-  } else {
-    var members = await getSortedUsers();
-  }
+  var members = cachedMembers
   res.render('pages/members', { members });
 }
 
@@ -242,7 +265,7 @@ exports.editProfile = async (req, res) => {
 }
 
 exports.settings = async (req, res) => {
-  var user = await Users.findOne({ username: req.user.username });
+  var user = await Users.findOne({ username: req.user.username }).lean();
   if (!user) return res.redirect('/');
   var settings = await Settings.findOne({ user: user._id });
   res.render('pages/settings', { account: user, settings });

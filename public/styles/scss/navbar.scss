@@ -159,14 +159,14 @@
         position: absolute;
         background-color: var(--bg-dark2);
         right: 12px;
-        color: white;
+        color: var(--text-muted);
         top: 12px;
         padding: 8px 6px;
         border-radius: 4px;
         z-index: 900;
         cursor: pointer;
         border: 1.5px solid var(--text-light);
-        box-shadow: 4px 12px 16px rgba(0, 0, 0, 0.75);
+        box-shadow: 3px 8px 8px rgba(0, 0, 0, 0.55);
 
         &:hover {
           background-color: var(--bg-dark);

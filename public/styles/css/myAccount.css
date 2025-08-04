@@ -180,6 +180,7 @@ body {
 .session-details .current-session {
   color: var(--success);
   font-weight: 500;
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {

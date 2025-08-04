@@ -8,7 +8,7 @@ const googleAuthCallback = passport.authenticate("google", {
 });
 
 const googleRedirectSuccess = (req, res) => {
-  req.session.device = deviceInfo(req.headers['user-agent']);
+  req.session.device = deviceInfo(req.useragent);
   req.session.method = 'google';
   res.redirect("/home");
 };

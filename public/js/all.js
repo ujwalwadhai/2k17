@@ -37,3 +37,15 @@ document.querySelectorAll('img').forEach(img => {
 document.addEventListener('contextmenu', function (e) {
   e.preventDefault();
 });
+
+function clearNotifications() {
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+      action: 'clear-notifications'
+    });
+  }
+}
+
+window.addEventListener('focus', clearNotifications);
+
+document.addEventListener('DOMContentLoaded', clearNotifications);

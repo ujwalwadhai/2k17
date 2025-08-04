@@ -1,4 +1,5 @@
 const Users = require('../../models/Users');
+const Sessions = require('../../models/Sessions');
 const mongoose = require('mongoose');
 
 async function disableLoginUser(req, res) {
@@ -13,6 +14,9 @@ async function disableLoginUser(req, res) {
 
     user.registered = !user.registered;
     await user.save();
+    if(!user.registered){
+        await Sessions.deleteMany({ session: {$regex : userId} });
+    }
 
     return res.status(200).json({
         success: true,

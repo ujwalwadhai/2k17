@@ -47,7 +47,7 @@ const loginEmail = async (req, res) => {
         console.log(err);
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      req.session.device = deviceInfo(req.headers['user-agent']);
+      req.session.device = deviceInfo(req.useragent);
       req.session.method = 'email';
       logActivity(user._id, `Logged in with email OTP.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Email OTP'});

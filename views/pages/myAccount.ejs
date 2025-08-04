@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <%- include("../partials/loader") %>
   <%- include("../partials/navbar") %>
   <br><br><br><br><br>
   <div class="account-container">
@@ -23,7 +24,7 @@
       </div>
       <div class="email-box">
         <div class="email">
-          <p class="fal fa-circle-envelope"></p>
+          <p class="fal fa-envelope-circle-check"></p>
           <div>
             <p class="item-head">Email</p>
             <p style="padding-bottom: 4px" class="item-value"><%= user.email %></p>
@@ -101,7 +102,8 @@
                   <% if (sessionDoc.isCurrent) { %>
                     <span class="current-session"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; This device</span>
                   <% } else { %>
-                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last seen <%= sessionDoc.session.lastActive.toLocaleString('en-In', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true}).replace('am','AM').replace('pm', 'PM') %></span>
+                  <% const lastSeen = sessionDoc.session?.lastActive %>
+                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last seen <%= lastSeen < 1000 * 60 * 60 ? sessionDoc.session.lastActive.toLocaleString('en-In', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true}).replace('am','AM').replace('pm', 'PM') : getRelativeTime(lastSeen) + ' ago' %></span>
                   <% } %>
                 </div>
               </div>

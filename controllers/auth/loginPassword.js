@@ -47,7 +47,7 @@ const loginPassword = async (req, res) => {
         console.log(err);
         return res.json({ success: false, message: 'Something went wrong' });
       }
-      req.session.device = deviceInfo(req.headers['user-agent']);
+      req.session.device = deviceInfo(req.useragent);
       req.session.method = 'password';
       logActivity(user._id, `Logged in with password.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});

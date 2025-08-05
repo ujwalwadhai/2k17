@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <%- include('../../partials/head') %>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/styles/css/quiz/main.css">
+  <%- include('../../partials/head') %>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles/css/quiz/main.css">
 </head>
+
 <body>
-    <%- include('../../partials/navbar') %>
-    <div class="leaderboard-container">
-        <h1>Leaderboard</h1>
-        <ol class="leaderboard-list">
-            <% players.forEach(player => { %>
-                <li>
-                    <span class="name"><%= player.name %></span>
-                    <span class="score"><%= player.quizScore %> pts</span>
-                </li>
-            <% }); %>
-        </ol>
+  <%- include('../../partials/navbar') %><br><br><br>
+  <div class="leaderboard-container">
+    <h2>Birthday Quiz Leaderboard</h2>
+    <% if(user?.quizScore) { %>
         <div class="actions">
-            <a href="/quiz" class="btn">Back to Quiz Page</a>
+        <a href="/home" class="btn"><span class="fal fa-house"></span>&nbsp; Back to home page</a>
         </div>
-    </div>
+    <% } else { %>
+        <div class="actions">
+            <a href="/quiz" class="btn">Start quiz</a>
+        </div>
+    <% } %>
+    <table class="leaderboard-table">
+      <thead>
+        <tr>
+          <th style="text-align: right">Rank</th>
+          <th>Name of player</th>
+          <th style="text-align: right">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% players.forEach((player, index) => { %>
+        <tr>
+          <td class="rank"><%- index == 0 ? '<span class="fal fa-user-crown" style="margin-left: 8px; color: white;"></span>' : index + 1 %></td>
+          <td class="name" onclick="window.location.href='/<%= player.username %>'"><%= player.name %></td>
+          <td class="score"><%= player.quizScore %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <br><br><br>
+  <script src="/js/components/confetti.js"></script>
+
+  <script>
+    Confetti()
+  </script>
 </body>
+
 </html>

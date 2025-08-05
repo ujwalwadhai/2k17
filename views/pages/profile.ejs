@@ -172,7 +172,6 @@
 
             <div class="about-card">
               <h3 class="about-heading">Basic Info</h3>
-<% if(false){ %>
               <% if((account.settings?.privacy?.dob || user._id.toString() == account._id.toString())){ %>
               <div class="info-item" style="margin: 16px 0;">
                 <i class="fal fa-cake-candles icon"></i>
@@ -181,7 +180,7 @@
                   <span class="value"><%= formatDOB(account.dob) %> <%- (!account.settings?.privacy?.dob && user._id.toString() == account._id.toString()) ? '<span class="grey-1">(Visible only to you)</span>' : '' %></span>
                 </div>
               </div>
-              <% }} %>
+              <% }%>
               <div class="info-item" style="margin: 16px 0">
                 <i class="fal fa-user-group icon" style="font-size: 16px"></i>
                 <div class="info-text">

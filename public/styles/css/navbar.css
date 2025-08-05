@@ -277,7 +277,7 @@
   border-radius: 4px;
   z-index: 900;
   cursor: pointer;
-  border: 1.5px solid var(--text-light);
+  border: 1.5px solid var(--text-muted);
   box-shadow: 3px 8px 8px rgba(0, 0, 0, 0.55);
 }
 .header #mobileSidebar #sidebarContent .close-icon:hover {

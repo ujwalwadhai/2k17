@@ -2,16 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const dotenv = require('dotenv');
+const sendMail = require('./config/mailer')
 const { rateLimit } = require('express-rate-limit');
-dotenv.config();
 const sanitizeHtml = require('sanitize-html');
 var { hasRole, isLoggedIn } = require('./middlewares/auth');
 
 const useragent = require('express-useragent');
-const webpush = require('web-push');
 
 const session = require('express-session');
 const passport = require('passport');
+dotenv.config();
 require('./config/passport')(passport);
 
 const app = express();
@@ -93,7 +93,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next)=> {
+app.use((req, res, next) => {
   if (req.session && req.user) {
     req.session.lastActive = new Date();
   }
@@ -101,7 +101,7 @@ app.use((req, res, next)=> {
 })
 
 function allowIfNotGet(req, res, next) {
-  if(req?.user?.role == 'moderator' && req.method == 'GET') {
+  if (req?.user?.role == 'moderator' && req.method == 'GET') {
     return res.redirect('/home')
   }
   next()
@@ -111,6 +111,9 @@ app.use('/admin', allowIfNotGet, hasRole('admin'))
 app.use('/moderator', isLoggedIn, hasRole('moderator'))
 app.get('/api/analytics', isLoggedIn, hasRole('admin'))
 app.use('/quiz', require('./routes/quiz'));
+app.get('/500', (req, res) => {
+  res.render('pages/500')
+})
 app.use('/', require('./middlewares/locals'), getRoutes);
 app.use('/', postRoutes);
 
@@ -118,9 +121,17 @@ app.use((req, res) => {
   res.render('pages/404')
 })
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.render('pages/404');
+app.use(async (err, req, res, next) => {
+  console.error(err);
+  if (process.env.PLATFORM_TYPE !== 'developement') {
+    const stackLines = err.stack.split('\n').map(line => line.trim());
+    const errorMessage = stackLines.shift();
+    const appLines = stackLines.filter(line => !line.includes('node_modules'));
+    const errorData = `${appLines.slice(0, 10).join('\n')}`;
+    const errorTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+    await sendMail('error', [process.env.UJWAL_EMAIL, process.env.PRAJYOT_EMAIL], { errorData, req, errorTime, errorMessage })
+  }
+  res.render('pages/500');
 })
 
 // Rate limits

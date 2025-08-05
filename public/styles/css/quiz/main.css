@@ -15,8 +15,7 @@ body {
 }
 
 .quiz-container,
-.results-container,
-.leaderboard-container {
+.results-container {
   background: transparent;
   backdrop-filter: blur(16px);
   padding: 2rem 3rem;
@@ -26,6 +25,24 @@ body {
   width: calc(100% - 2rem);
   max-width: 600px;
   text-align: center;
+}
+
+.leaderboard-container {
+  background: transparent;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100vw;
+  max-width: 650px;
+  padding: 2rem 1.5rem;
+  max-height: 90vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.leaderboard-container::-webkit-scrollbar {
+  width: 0;
 }
 
 h1 {
@@ -83,7 +100,7 @@ h1 {
 .btn {
   background: var(--primary-dark);
   color: white;
-  padding: 0.8rem 1.5rem;
+  padding: 0.75rem 1.2rem;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -131,29 +148,40 @@ h1 {
   margin-top: 2rem;
 }
 
-.leaderboard-list {
-  list-style: none;
+.leaderboard-table {
+  border-collapse: collapse;
+  width: 100%;
   margin-top: 2.5rem;
-  padding: 0;
   text-align: left;
-}
-.leaderboard-list li {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-  border-radius: 6px;
   font-size: 1rem;
+  border-spacing: 0;
+  border-radius: 6px !important;
+  backdrop-filter: blur(6px);
+}
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 1rem;
+}
+.leaderboard-table thead tr {
+  background-color: rgba(93, 93, 93, 0.15);
+  border-radius: 6px 6px 0 0;
+}
+.leaderboard-table tbody tr {
   background-color: rgba(93, 93, 93, 0.1);
 }
-.leaderboard-list li:nth-child(odd) {
+.leaderboard-table tbody tr:nth-child(odd) {
   background-color: rgba(93, 93, 93, 0.15);
 }
-.leaderboard-list li .name {
+.leaderboard-table tbody .name {
   font-weight: 500;
 }
-.leaderboard-list li .score {
-  font-weight: bold;
-  color: var(--primary);
+.leaderboard-table tbody .score {
+  color: var(--text-light);
+  text-align: right;
+}
+.leaderboard-table tbody .rank {
+  text-align: center;
+  width: 4em;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -242,6 +242,7 @@ exports.members = async (req, res) => {
 
 exports.viewProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.params.username }).populate("settings");
+  if(!user) return res.redirect('/');
   var memories = await Files.find({ people: user._id })
   if (!user) return res.redirect('/');
   if (req.user) {

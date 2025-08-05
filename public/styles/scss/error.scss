@@ -10,7 +10,7 @@ body {
   }
 }
 
-.not-found-container {
+.error-container {
   text-align: center;
   padding: 2rem;
   padding-top: 16rem;
@@ -34,6 +34,7 @@ body {
     margin: 1rem 0;
     color: var(--text-muted);
     font-size: 1.1rem;
+    line-height: 25px;
   }
 
   .back-btn {
@@ -57,7 +58,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .not-found-container {
+  .error-container {
     padding-top: 12rem;
     height: calc(88vh - 47px);
   }

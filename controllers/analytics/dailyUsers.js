@@ -2,7 +2,18 @@ const DailyUsers = require('../../models/DailyUsers');
 
 const dailyUsers = async (req, res) => {
   try {
-    const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' });
+    const dateParts = new Intl.DateTimeFormat('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }).formatToParts(new Date());
+
+    const day = dateParts.find(p => p.type === 'day').value;
+    const month = dateParts.find(p => p.type === 'month').value;
+    const year = dateParts.find(p => p.type === 'year').value;
+
+    const today = `${day}/${month}/${year}`;
     const [result] = await DailyUsers.aggregate([
       { $match: { date: today } },
       {

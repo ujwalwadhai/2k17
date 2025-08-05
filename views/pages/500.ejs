@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html data-theme="<%= typeof theme || 'purple' %>" lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+  <title>500 - Internal Server Error</title>
+  <link rel="stylesheet" href="/styles/css/error.css" />
+</head>
+
+<body>
+  <%- include('../partials/navbar') %>
+
+  <div class="error-container">
+    <h2>500</h2>
+    <p class="heading">Internal Server Error</p>
+    <p class="message">Oops! Something went wrong on our side. An email is sent to Ujwal and Prajyot about this.</p>
+    <p class="message">We'll fix it as soon as possible ✌️</p>
+    
+    <a href="/" class="back-btn">
+      <span class="fal fa-house"></span>Go to Home
+    </a>
+  </div>
+
+  <%- include('../partials/footer') %>
+</body>
+
+</html>

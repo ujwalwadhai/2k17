@@ -5,6 +5,8 @@ const Users = require('../models/Users');
 const { createDate, createLongDate } = require('../utils/time');
 const deviceInfo = require('../middlewares/device');
 var logActivity = require('../utils/log')
+const dotenv = require('dotenv');
+dotenv.config();
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -21,7 +23,7 @@ async function sendEmail(to, subject, htmlContent, includeBCC) {
   try {
     var mailOptions = {
       from: '"2k17 Platform" <2k17platform@gmail.com>',
-      to,
+      to: process.env.PLATFORM_TYPE == 'developement' ? 'wadhaiujwal@gmail.com' : to,
       subject,
       html: htmlContent,
     };
@@ -30,7 +32,8 @@ async function sendEmail(to, subject, htmlContent, includeBCC) {
       var adminEmails = admins.map(u => u.email);
       mailOptions.bcc = adminEmails;
     }
-    await transporter.sendMail(mailOptions);
+    var mail = await transporter.sendMail(mailOptions);
+    console.log(mail)
   } catch (error) {
     console.log(error);
   }
@@ -282,7 +285,27 @@ async function OTPMail(to, data) {
           OTP Requested from ${deviceInfo(data.useragent)}
         </p>`
   logActivity('', `Sent email to ${to} for login OTP`, { device: deviceInfo(data.useragent), otp: data.otp })
-  sendEmail(to, 'OTP for login • 2k17 Platform', createEmailTemplate(content));
+  sendEmail(to, `OTP for login ${data.otp} • 2k17 Platform`, createEmailTemplate(content));
+}
+
+async function AppErrorAlert(to, data) {
+  let content = `
+    <h2 style="color: #7b5cf0">Server Error Alert</h2>
+      <p>Hi <strong>Admin</strong>,</p>
+      <p style="margin-bottom: 12px">A critical error was caught by the application's global error handler as follows:</p>
+
+      <div class="info-box">
+        <p><strong>Error Time:</strong> ${data.errorTime}</p>
+        <p><strong>Request URL:</strong> ${data.req.method} ${data.req.originalUrl}</p>
+        <p><strong>Error Message:</strong> ${data.errorMessage}</p>
+      </div>
+
+      <h3 style="margin-top: 24px; color: white;">Shortened Stack Trace:</h3>
+      <pre class="stack-trace" style="background-color: #2b2b2b; color: #f1f1f1; padding: 15px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; font-family: monospace;"><code>${data.errorData}</code></pre>`
+
+  logActivity('', `Sent email to admins for error alert`)
+  console.log("ERROR EMAIL SENT TO ADMINS")
+  sendEmail(to, "⚠️ App error alert • 2k17 Platform", createEmailTemplate(content));
 }
 
 async function UserReportMail(to, data) {
@@ -513,6 +536,7 @@ async function WeeklyReportMail(to, data) {
 async function sendMail(type, to, data) {
   if (type == 'otp') OTPMail(to, data);
   //if (type == 'login') LoginMail(to, data);
+  if (type == 'error') AppErrorAlert(to, data);
   if (type == 'report_user') UserReportMail(to, data);
   if (type == 'report_admins') AdminReportMail(to, data);
   if (type == 'verify-new-email') VerifyNewEmailMail(to, data);

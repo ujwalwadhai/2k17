@@ -14,16 +14,17 @@ const sendOTP = async (req, res) => {
       return res.json({ success: false, message: 'No user with this email found!' });
     }
 
-    var otp = Math.floor(1000 + Math.random() * 9000);
+    var existingOTP = await otps.findOne({ email });
+    var otp = existingOTP?.otp ?? Math.floor(1000 + Math.random() * 9000);
 
-    sendMail('otp', email, {otp, useragent: req.useragent});
     var newOtp = new otps({
-      email: email,
-      otp: otp
+      email,
+      otp
     });
+    sendMail('otp', email, {otp, useragent: req.useragent});
 
     await newOtp.save()
-    return res.json({ success: true, message: 'OTP sent successfully' });
+    return res.json({ success: true, message: `OTP ${existingOTP ? 're' : ''}sent successfully` });
   } catch (err) {
     console.log(err);
     res.json({ success: false, message: 'Something went wrong' });

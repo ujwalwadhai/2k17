@@ -4,6 +4,7 @@ const Users = require('../models/Users');
 const Settings = require('../models/Settings');
 const { uploadFromUrl } = require('./cloudinary');
 const sendMail = require('./mailer');
+const logActivity = require('../utils/log');
 
 module.exports = function (passport) {
   // Local Strategy
@@ -67,7 +68,7 @@ module.exports = function (passport) {
                 console.error('Cloudinary upload failed:', err);
               }
             }
-
+            logActivity(newUser._id, 'Created account using Google');
             await newUser.save();
 
             await sendMail("new_user_registration", email, { user: newUser });
@@ -98,6 +99,7 @@ module.exports = function (passport) {
               }
             }
           }
+          logActivity(user._id, 'Logged in using Google');
           await user.save();
 
           return done(null, user);

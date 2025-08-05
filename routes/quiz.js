@@ -76,7 +76,7 @@ router.get('/', async (req, res) => {
     if (!activeQuiz) {
       const questions = await generateQuizQuestions(req.user._id);
       if (questions.length === 0) {
-        return res.render('pages/quiz/quiz_error', { title: 'Quiz Error', message: 'Not enough player data to create a quiz.' });
+        return res.render('pages/500', { title: 'Quiz Error', message: 'Not enough player data to create a quiz.' });
       }
       activeQuiz = await QuizState.create({ userId: req.user._id, questions });
     }
@@ -88,7 +88,7 @@ router.get('/', async (req, res) => {
 
   } catch (error) {
     console.error('Quiz GET route error:', error);
-    res.status(500).render('pages/quiz/quiz_error', { title: 'Server Error', message: 'An unexpected error occurred.' });
+    res.status(500).render('pages/500', { title: 'Server Error', message: 'An unexpected error occurred.' });
   }
 });
 
@@ -138,7 +138,7 @@ router.get('/results', async (req, res) => {
         });
     } catch (error) {
         console.error('Quiz results route error:', error);
-        res.status(500).render('pages/quiz/quiz_error', { title: 'Server Error', message: 'Could not load results.' });
+        res.status(500).render('pages/500', { title: 'Server Error', message: 'Could not load results.' });
     }
 });
 
@@ -149,6 +149,7 @@ router.get('/leaderboard', async (req, res) => {
     res.render('pages/quiz/leaderboard', {
       title: 'Leaderboard',
       players,
+      user: req?.user ?? null
     });
   } catch (error) {
     console.error('Leaderboard route error:', error);

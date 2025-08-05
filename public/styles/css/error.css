@@ -10,7 +10,7 @@ body {
   }
 }
 
-.not-found-container {
+.error-container {
   text-align: center;
   padding: 2rem;
   padding-top: 16rem;
@@ -18,22 +18,23 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   height: calc(100vh - 47px);
 }
-.not-found-container h2 {
+.error-container h2 {
   color: var(--primary);
   font-size: 3.2rem;
   margin: 0;
 }
-.not-found-container .heading {
+.error-container .heading {
   font-size: 2.4rem;
   margin: 0;
   color: var(--primary);
 }
-.not-found-container .message {
+.error-container .message {
   margin: 1rem 0;
   color: var(--text-muted);
   font-size: 1.1rem;
+  line-height: 25px;
 }
-.not-found-container .back-btn {
+.error-container .back-btn {
   display: inline-block;
   margin-top: 1rem;
   background-color: var(--primary-dark);
@@ -43,18 +44,18 @@ body {
   text-decoration: none;
   transition: background 0.3s;
 }
-.not-found-container .back-btn:hover {
+.error-container .back-btn:hover {
   background-color: var(--primary);
 }
-.not-found-container .back-btn span {
+.error-container .back-btn span {
   margin-right: 12px;
 }
 
 @media (max-width: 768px) {
-  .not-found-container {
+  .error-container {
     padding-top: 12rem;
     height: calc(88vh - 47px);
   }
 }
 
-/*# sourceMappingURL=404.css.map */
+/*# sourceMappingURL=error.css.map */

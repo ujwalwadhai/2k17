@@ -65,29 +65,11 @@ exports.admin = async (req, res) => {
   const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' });
   const usersToday = await DailyUsers.countDocuments({ date: today });
 
-  res.render('pages/admin', { reports, activeUsers, usersToday });
-}
-
-exports.moderator = async (req, res) => {
-  var reports = await Reports.find({
-    $or: [
-      { resolution: { $exists: false } },
-      { resolution: null },
-      { resolution: '' }
-    ]
-  })
-    .populate('user', 'username')
-    .sort({ createdAt: -1 })
-    .limit(100);
-
-  const today = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' });
-  const usersToday = await DailyUsers.countDocuments({ date: today });
-
-  res.render('pages/admin', { reports, activeUsers: 0, usersToday });
+  res.render('pages/admin/dashboard', { reports, activeUsers, usersToday });
 }
 
 exports.analyticsPage = async (req, res) => {
-  res.render('pages/analytics');
+  res.render('pages/admin/analytics');
 }
 
 let cachedBirthdays = [];
@@ -164,7 +146,7 @@ exports.donate = (req, res) => {
 }
 
 exports.adminUserInfo = async (req, res) => {
-  var user = await Users.findOne({ _id: req.params.userId }).select(`+code ${req.user?.role == 'moderator' ? '-lastLogin': ''}`);
+  var user = await Users.findOne({ _id: req.params.userId }).select('+code');
   if (user) {
     return res.json({ success: true, user });
   }

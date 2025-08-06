@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
+
+<head>
+  <%- include('../../partials/head') %>
+  <title>Today's Analytics</title>
+  <link rel="stylesheet" href="/styles/css/analytics.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+</head>
+
+<body>
+  <%- include('../../partials/navbar') %>
+  <%- include('../../partials/loader') %>
+  <br><br><br><br>
+
+  <div class="analytics-page">
+    <h2>Platform Analytics</h2>
+    <div id="section-1">
+      <section class="analytics-summary">
+        <div class="summary-card">
+          <span class="label">Users today</span>
+          <span class="value" id="active-today">--</span>
+          <p id="usersTodayList"></p>
+        </div>
+      </section>
+
+      <section class="analytics-section" id="active-users"><br>
+        <h3>Active Users</h3>
+        <table class="analytics-table" id="online-users-table">
+          <thead>
+            <tr>
+              <th>User (<span id="online-users-count">0</span> total)</th>
+              <th>Current Page</th>
+            </tr>
+          </thead>
+          <tbody id="online-users-body">
+            <tr>
+              <td colspan="4" style="text-align: center; color: grey;">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </section><br>
+    </div>
+
+    <br><br>
+
+    <div class="route-and-platform-container">
+      <section class="analytics-section" id="daily-route-stats">
+        <div class="daily-route-header">
+          <h3>Route Visits</h3>
+          <input type="date" id="daily-route-date" />
+        </div>
+        <p class="summary-card" id="top-page">
+          <span class="label">Top Page : </span>
+          <span class="value">Loading...</span>
+        </p><br>
+        <div style="overflow-x: auto;">
+          <canvas id="daily-route-chart" height="300">Loading ...</canvas>
+        </div>
+      </section>
+
+      <section class="analytics-section" id="platform-distribution">
+        <h3>Platform analysis</h3>
+        <span id="no-data" class="grey-1"></span>
+        <div class="platform-chart-container">
+          <canvas id="platform-pie-chart" width="250" height="250">Loading ...</canvas>
+        </div>
+      </section>
+    </div>
+
+    <br><br><br>
+  </div>
+
+  <script>
+  const themeColor = '<%= theme ?? 'purple' %>'
+  </script>
+
+  <script src="/js/admin/analytics.js"></script>
+
+</body>
+
+</html>

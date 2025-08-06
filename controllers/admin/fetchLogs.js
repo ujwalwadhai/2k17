@@ -9,13 +9,7 @@ const fetchLogs = async (req, res) => {
   var end = endOfDay(targetDate);
 
   try {
-    var query = {
-      createdAt: { $gte: start, $lte: end }
-    }
-    if (req.user?.role == 'moderator') {
-      query.activity = { $not: /logged in|updated profile/i }
-    }
-    var logs = await Logs.find(query)
+    var logs = await Logs.find({createdAt: { $gte: start, $lte: end }})
       .populate('user', 'username')
       .sort({ createdAt: -1 });
 

@@ -3,19 +3,19 @@ async function updateOnlineUsers() {
         const res = await fetch('/api/analytics/online-users');
         const data = await res.json();
         const users = data.activeUsers;
-        const users30Mins = data.activeUsers30Mins;
-        document.querySelector('#active-30min').textContent = users30Mins.length;
-        document.querySelector('#last30minUserList').innerHTML = ''
+        const users1hr = data.activeUsers1hr;
+        document.querySelector('#active-1hr').textContent = users1hr.length;
+        document.querySelector('#last1hrUserList').innerHTML = ''
         document.querySelector('#activeUserList').innerHTML = ''
         document.querySelector('#active-now').textContent = users.length;
-        if (users30Mins.length == 0) {
-            document.querySelector('#last30minUserList').innerHTML = 'No data available';
+        if (users1hr.length == 0) {
+            document.querySelector('#last1hrUserList').innerHTML = 'No data available';
         } else {
-            users30Mins.forEach(u => {
+            users1hr.forEach(u => {
                 if (u.name) {
-                    document.querySelector('#last30minUserList').innerHTML += `<a href="/${u.username}">${u.name.split(' ')[0]}</a>, `;
+                    document.querySelector('#last1hrUserList').innerHTML += `<a href="/${u.username}">${u.name.split(' ')[0]}</a>, `;
                 } else {
-                    document.querySelector('#last30minUserList').innerHTML += ' Guest, ';
+                    document.querySelector('#last1hrUserList').innerHTML += ' Guest, ';
                 }
             })
         }
@@ -62,8 +62,24 @@ async function updateOnlineUsers() {
 async function updateTodayUsers() {
     try {
         const res = await fetch('/api/analytics/daily-users');
-        const { total = '--', guests = '--', known = '--' } = await res.json();
+        const { sessionTimeData, result:{ total = '--', guests = '--', known = '--'} } = await res.json();
         document.querySelector('#active-today').innerHTML = total;
+        document.querySelector('#avgTime').innerHTML = sessionTimeData.today.avgTime;
+        document.querySelector('#collectiveTime').innerHTML = sessionTimeData.today.collectiveTime;
+        let avgTimeChange = ''
+        if(sessionTimeData.change.avgTime >= 0){
+            avgTimeChange = `<span class="green">+${sessionTimeData.change.avgTime}</span> minutes than yesterday`
+        } else {
+            avgTimeChange = `<span class="red">${sessionTimeData.change.avgTime}</span> minutes than yesterday`
+        }
+        let collectiveTimeChange = ''
+        if(sessionTimeData.change.collectiveTime >= 0){
+            collectiveTimeChange = `<span class="green">+${sessionTimeData.change.collectiveTime}</span> minutes than yesterday`
+        } else {
+            collectiveTimeChange = `<span class="red">${sessionTimeData.change.collectiveTime}</span> minutes than yesterday`
+        }
+        document.querySelector('#avgTimeChange').innerHTML = avgTimeChange;
+        document.querySelector('#collectiveTimeChange').innerHTML = collectiveTimeChange;
         var guestPercent = guests > 0 ? ((guests / total) * 100).toFixed(0) : 0;
         var knownPercent = known > 0 ? ((known / total) * 100).toFixed(0) : 0;
         document.querySelector('#usersTodayList').textContent = `${guestPercent}% guests, ${knownPercent}% known`;
@@ -289,7 +305,7 @@ async function loadMonthlySummary() {
         const res = await fetch('/api/analytics/monthly-users');
         const data = await res.json();
 
-        const { current, change, visits, platform_breakdown } = data;
+        const { current, sessionData, change, visits, platform_breakdown } = data;
         if(Object.keys(platform_breakdown).length > 0){
             loadPlatformPieChart(platform_breakdown)
         } else {
@@ -306,6 +322,15 @@ async function loadMonthlySummary() {
             `${current.known} known / ${current.guests} guests`;
         document.querySelector('#monthly-guest-known + .percentage-change span').innerHTML =
             formatChange(change.known) + ' known, ' + formatChange(change.guests) + ' guests ';
+
+        document.querySelector("#monthAvgTime").innerHTML = sessionData.thisMonth.avgTime;
+        let monthAvgTimeChange = ''
+        if(sessionData.change.avgTime >= 0){
+            monthAvgTimeChange = `<span class="green">+${sessionData.change.avgTime}</span>`
+        } else {
+            monthAvgTimeChange = `<span class="red">${sessionData.change.avgTime}</span>`
+        }
+        document.querySelector("#monthAvgTimeChange").innerHTML = monthAvgTimeChange;
 
         const monthlyOverviewTbody = document.querySelector('#monthly-overview-body');
         var topUser = data.topUser ? `<a href='/${data.topUser.username}'>${data.topUser.name.split(' ')[0]} ${data.topUser.name.split(' ')[1][0]}.</a>` : '<span class="grey-1">No data</span>';

@@ -55,6 +55,7 @@ require('./models/Notifications')
 require('./models/Settings')
 require('./models/ActiveUsers')
 require('./models/PageViews')
+require('./models/UserSessions')
 
 app.use(express.json({ type: 'application/json' }))
 app.use(express.urlencoded({ extended: true }));
@@ -100,15 +101,7 @@ app.use((req, res, next) => {
   next();
 })
 
-function allowIfNotGet(req, res, next) {
-  if (req?.user?.role == 'moderator' && req.method == 'GET') {
-    return res.redirect('/home')
-  }
-  next()
-}
-
-app.use('/admin', allowIfNotGet, hasRole('admin'))
-app.use('/moderator', isLoggedIn, hasRole('moderator'))
+app.use('/admin', isLoggedIn, hasRole('admin'))
 app.get('/api/analytics', isLoggedIn, hasRole('admin'))
 app.use('/quiz', require('./routes/quiz'));
 app.use('/', require('./middlewares/locals'), getRoutes);
@@ -163,6 +156,7 @@ mongoose.connect(process.env.MONGO_URI, {}).then(() => {
   });
   require('./cron/logCleanUp')
   require('./cron/sessionCleanUp')
+  require('./cron/closeSessions')
   require('./utils/cleanup')()
 }).catch((err) => {
   console.error('❌ MongoDB connection error:', err);

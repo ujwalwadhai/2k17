@@ -2,7 +2,7 @@
 <html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
 
 <head>
-  <%- include('../partials/head') %>
+  <%- include('../../partials/head') %>
   <title>Analytics Overview</title>
   <link rel="stylesheet" href="/styles/css/analytics.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -10,8 +10,8 @@
 </head>
 
 <body>
-  <%- include('../partials/navbar') %>
-  <%- include('../partials/loader') %>
+  <%- include('../../partials/navbar') %>
+  <%- include('../../partials/loader') %>
   <br><br><br><br>
 
   <div class="analytics-page">
@@ -19,9 +19,9 @@
     <div id="section-1">
       <section class="analytics-summary">
         <div class="summary-card">
-          <span class="label">Users active in last 30 minutes</span>
-          <span class="value" id="active-30min">--</span>
-          <p id="last30minUserList"></p>
+          <span class="label">Users active in last 1 hour</span>
+          <span class="value" id="active-1hr">--</span>
+          <p id="last1hrUserList"></p>
         </div>
         <div class="summary-card">
           <span class="label">Users active now</span>
@@ -32,6 +32,16 @@
           <span class="label">Users today</span>
           <span class="value" id="active-today">--</span>
           <p id="usersTodayList"></p>
+        </div>
+        <div class="summary-card">
+          <span class="label">Average time spent</span>
+          <span class="value"><span id="avgTime">--</span> <span style="color: #737373; font-size: 14px; font-weight: 400; margin-left: 5px;">minutes/user</span></span>
+          <p id="avgTimeChange"></p>
+        </div>
+        <div class="summary-card">
+          <span class="label">Collective time spent</span>
+          <span class="value"><span id="collectiveTime">--</span> <span style="color: #737373; font-size: 14px; font-weight: 400; margin-left: 5px;">minutes</span></span>
+          <p id="collectiveTimeChange"></p>
         </div>
       </section>
 
@@ -98,6 +108,11 @@
           <span class="value" id="monthly-guest-known">--</span>
           <p class="percentage-change"><span></span> than last month</p>
         </div>
+        <div class="summary-card">
+          <span class="label">Average time this month</span>
+          <span class="value"><span id="monthAvgTime"></span> <span style="color: #737373; font-size: 14px; font-weight: 400; margin-left: 5px;">minutes/user</span></span>
+          <p class="percentage-change"><span id="monthAvgTimeChange"></span> minutes than last month</p>
+        </div>
       </section>
 
       <section class="analytics-section" id="monthly-overview"><br>
@@ -125,7 +140,7 @@
   const themeColor = '<%= theme? theme : 'purple' %>'
   </script>
 
-  <script src="/js/admin-analytics.js"></script>
+  <script src="/js/admin/analytics.js"></script>
 
 </body>
 

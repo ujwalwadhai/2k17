@@ -3,7 +3,6 @@ const PageViews = require('../../models/PageViews');
 const DailyUsers = require('../../models/DailyUsers');
 const Users = require('../../models/Users');
 const Posts = require('../../models/Posts');
-const Folders = require('../../models/Folders');
 
 var ping = async (req, res) => {
     let payload;
@@ -37,14 +36,19 @@ var ping = async (req, res) => {
 
     const updateFields = {
         user: user || null,
-        session_id,
         current_route,
         last_ping: new Date(),
     };
 
     await ActiveUsers.findOneAndUpdate(
         { session_id },
-        { $set: updateFields },
+        {
+            $set: updateFields,
+            $setOnInsert: {
+                session_id: session_id,
+                startTime: new Date()
+            }
+        },
         { upsert: true }
     );
 

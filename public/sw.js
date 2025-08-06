@@ -1,6 +1,4 @@
-const CACHE_NAME = `2k17-v8`; 
-const OFFLINE_URL = '/offline.html';
-
+const CACHE_NAME = `2k17-06-08-2025`; // Add date when you are commiting so that cache of users will be updated on deployment
 const URLS_TO_CACHE = [
   '/',
   '/fonts/Lato.ttf',
@@ -17,7 +15,7 @@ const URLS_TO_CACHE = [
   '/images/icons/logo_96x96.png',
   '/images/icons/maskable_icon.png',
   '/favicon.ico',
-  OFFLINE_URL
+  './offline.html'
 ];
 
 self.addEventListener('install', event => {

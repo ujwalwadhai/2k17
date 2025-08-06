@@ -63,16 +63,11 @@ router.get('/post/:postId/likes', postsController.fetchPostLikes);
 
 router.get('/admin/report/:id', reportsController.fetchReport);
 
-router.get('/moderator/users', adminController.adminUserlist);
-
 router.get('/admin/users', adminController.adminUserlist);
 
 router.get('/admin/analytics', getController.analyticsPage);
 
 router.get('/admin', getController.admin);
-
-router.get('/moderator', getController.moderator);
-
 
 
 router.get('/memories', memoriesController.showMemories)

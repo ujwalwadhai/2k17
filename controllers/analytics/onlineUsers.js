@@ -32,13 +32,13 @@ var onlineUsers = async (req, res) => {
     }
   }
 
-  const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
 
-  const activeUsers30Mins1 = await Users.find({ lastActive: { $gte: thirtyMinutesAgo }, role: { $ne: 'admin' } })
+  const activeUsers1hr1 = await Users.find({ lastActive: { $gte: oneHourAgo }, role: { $ne: 'admin' } })
     .select('name email username lastActive');
-  const activeUsers30Mins2 = await DailyUsers.find({ createdAt: { $gte: thirtyMinutesAgo }, user: null })
-  const activeUsers30Mins = [...activeUsers30Mins1, ...activeUsers30Mins2];
-  res.json({ activeUsers, activeUsers30Mins });
+  const activeUsers1hr2 = await DailyUsers.find({ createdAt: { $gte: oneHourAgo }, user: null })
+  const activeUsers1hr = [...activeUsers1hr1, ...activeUsers1hr2];
+  res.json({ activeUsers, activeUsers1hr });
 };
 
 module.exports = onlineUsers;

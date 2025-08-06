@@ -1,4 +1,72 @@
 const DailyUsers = require('../../models/DailyUsers');
+const Users = require('../../models/Users');
+const UserSessions = require('../../models/UserSessions');
+
+async function getSessionMetricsForDate(targetDate) {
+    const timeZone = 'Asia/Kolkata';
+    const istOffset = '+05:30';
+
+    const year = targetDate.toLocaleString('en-US', { timeZone, year: 'numeric' });
+    const month = targetDate.toLocaleString('en-US', { timeZone, month: '2-digit' });
+    const day = targetDate.toLocaleString('en-US', { timeZone, day: '2-digit' });
+
+    const startOfDayStringIST = `${year}-${month}-${day}T00:00:00.000${istOffset}`;
+    const endOfDayStringIST = `${year}-${month}-${day}T23:59:59.999${istOffset}`;
+
+    const startUTC = new Date(startOfDayStringIST);
+    const endUTC = new Date(endOfDayStringIST);
+
+    const result = await UserSessions.aggregate([
+        {
+            $match: {
+                startTime: {
+                    $gte: startUTC,
+                    $lte: endUTC
+                }
+            }
+        },
+        {
+            $group: {
+                _id: null,
+                collectiveTime: { $sum: '$duration' },
+                avgTime: { $avg: '$duration' },
+                count: { $sum: 1 } 
+            }
+        }
+    ]);
+
+    if (result.length > 0) {
+        return result[0];
+    } else {
+        return { collectiveTime: 0, avgTime: 0, count: 0 };
+    }
+}
+
+async function getAnalyticsWithChange() {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    const [todayMetrics, yesterdayMetrics] = await Promise.all([
+        getSessionMetricsForDate(today),
+        getSessionMetricsForDate(yesterday)
+    ]);
+
+    const changeInCollectiveTime = todayMetrics.collectiveTime - yesterdayMetrics.collectiveTime;
+    const changeInAvgTime = todayMetrics.avgTime - yesterdayMetrics.avgTime;
+
+    return {
+        today: {
+            collectiveTime: todayMetrics.collectiveTime / 60,
+            avgTime: todayMetrics.avgTime / 60,
+            sessionCount: todayMetrics.count
+        },
+        change: {
+            collectiveTime: changeInCollectiveTime / 60,
+            avgTime: changeInAvgTime / 60
+        }
+    };
+}
 
 const dailyUsers = async (req, res) => {
   try {
@@ -25,8 +93,9 @@ const dailyUsers = async (req, res) => {
         }
       }
     ]);
+    const sessionTimeData = await getAnalyticsWithChange();
 
-    res.json(result || { total: 0, guests: 0, known: 0 });
+    res.json({sessionTimeData, result: result || { total: 0, guests: 0, known: 0 }});
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch unique users' });
   }

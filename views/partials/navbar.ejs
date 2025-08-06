@@ -28,10 +28,8 @@
         <ul class="user-dropdown">
           <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user"></span>My profile</a></li>
           <li onclick="window.location.href = '/account'"><a href="/account"><span class="fal fa-user-circle"></span>My account</a></li>
-          <% if(user && user.role == 'admin'){ %>
+          <% if(user && user?.role == 'admin'){ %>
           <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-shield-user"></span>Admin Page</a></li>
-          <% } else if(user && user.role == 'moderator'){ %>
-          <li onclick="window.location.href = '/moderator'"><a href="/moderator"><span class="fal fa-shield-user"></span>Moderator</a></li>
           <% } %>
           <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
           <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>
@@ -61,8 +59,6 @@
         <li onclick="window.location.href = '/account'"><a href="/account"><span class="fal fa-user-circle"></span>My account</a></li>
         <% if(user && user?.role == 'admin'){ %>
           <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-shield-user"></span>Admin Page</a></li>
-        <% } else if(user && user?.role == 'moderator'){ %>
-          <li onclick="window.location.href = '/moderator'"><a href="/moderator"><span class="fal fa-shield-user"></span>Moderator</a></li>
         <% } %>
         <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
         <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>

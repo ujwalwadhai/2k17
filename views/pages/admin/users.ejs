@@ -2,14 +2,14 @@
 <html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
 
 <head>
-  <%-include('../partials/head') %>
+  <%-include('../../partials/head') %>
   <title>Manage Users</title>
   <link rel="stylesheet" href="/styles/css/admin.css">
 </head>
 
 <body>
-  <%-include('../partials/navbar') %>
-  <%-include('../partials/loader') %>
+  <%-include('../../partials/navbar') %>
+  <%-include('../../partials/loader') %>
   <br><br><br><br>
 
   <div class="reports-logs">
@@ -132,7 +132,7 @@
     </div>
   </div>
 
-  <script src="/js/admin-users.js"></script>
+  <script src="/js/admin/users.js"></script>
 </body>
 
 </html>

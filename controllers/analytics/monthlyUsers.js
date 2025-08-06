@@ -3,15 +3,66 @@ const Users = require('../../models/Users');
 const PageViews = require('../../models/PageViews');
 const Files = require('../../models/Files');
 const Folders = require('../../models/Folders');
+const UserSessions = require('../../models/UserSessions');
 
 const getMonthRange = (offset = 0) => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth() + offset;
-    const start = new Date(year, month, 1);
-    const end = new Date(year, month + 1, 0, 23, 59, 59, 999);
+    const timeZone = 'Asia/Kolkata';
+    const istOffset = '+05:30';
+
+    const targetDate = new Date();
+    targetDate.setMonth(targetDate.getMonth() + offset);
+
+    const year = parseInt(targetDate.toLocaleString('en-US', { timeZone, year: 'numeric' }));
+    const month = parseInt(targetDate.toLocaleString('en-US', { timeZone, month: '2-digit' }));
+
+    const start = new Date(`${year}-${String(month).padStart(2, '0')}-01T00:00:00.000${istOffset}`);
+
+    const nextMonth = (month === 12) ? 1 : month + 1;
+    const nextMonthYear = (month === 12) ? year + 1 : year;
+    const startOfNextMonth = new Date(`${nextMonthYear}-${String(nextMonth).padStart(2, '0')}-01T00:00:00.000${istOffset}`);
+    const end = new Date(startOfNextMonth.getTime() - 1);
+
     return { start, end };
 };
+
+async function getAverageTimeForRange(startDate, endDate) {
+    const result = await UserSessions.aggregate([
+        {
+            $match: {
+                startTime: { $gte: startDate, $lte: endDate }
+            }
+        },
+        {
+            $group: {
+                _id: null,
+                avgDuration: { $avg: '$duration' }
+            }
+        }
+    ]);
+
+    return result.length > 0 ? result[0].avgDuration : 0;
+}
+
+async function getMonthlyAvgTimeWithChange() {
+    const thisMonthRange = getMonthRange(0);    
+    const lastMonthRange = getMonthRange(-1);    
+
+    const [thisMonthAvg, lastMonthAvg] = await Promise.all([
+        getAverageTimeForRange(thisMonthRange.start, thisMonthRange.end),
+        getAverageTimeForRange(lastMonthRange.start, lastMonthRange.end)
+    ]);
+
+    const changeInAvgTime = thisMonthAvg - lastMonthAvg;
+
+    return {
+        thisMonth: {
+            avgTime: thisMonthAvg / 60
+        },
+        change: {
+            avgTime: changeInAvgTime / 60
+        }
+    };
+}
 
 const monthlyUsers = async (req, res) => {
     try {
@@ -203,9 +254,12 @@ const monthlyUsers = async (req, res) => {
             };
         }
 
+        const sessionData = await getMonthlyAvgTimeWithChange()
+
         res.json({
             current,
             previous,
+            sessionData,
             change: {
                 total: calcChange(current.total, previous.total),
                 guests: calcChange(current.guests, previous.guests),

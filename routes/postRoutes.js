@@ -98,13 +98,13 @@ router.post('/contact', emailController.contactForm)
 router.post('/newsletter/subscribe', emailController.newsletterSubscribe)
 
 
-router.post('/logs', hasRole('admin', 'moderator'), adminController.fetchLogs)
+router.post('/logs', hasRole('admin'), adminController.fetchLogs)
 
 router.post('/admin/newsletter/new', adminController.createNewsLetter)
 
-router.post('/send-notification', hasRole('admin', 'moderator'), adminController.pushNotification)
+router.post('/send-notification', hasRole('admin'), adminController.pushNotification)
 
-router.post('/users', hasRole('admin', 'moderator'), adminController.adminUserlist);
+router.post('/users', hasRole('admin'), adminController.adminUserlist);
 
 router.post('/userinfo/:userId', getController.adminUserInfo);
 

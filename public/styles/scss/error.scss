@@ -1,7 +1,7 @@
 
 body {
   color: var(--text-light);
-  font-family: 'Lato', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font-family), sans-serif;
   margin: 0;
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 

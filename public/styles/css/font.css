@@ -1,0 +1,27 @@
+:root {
+  --font-family: 'Lato', sans-serif;
+}
+
+[data-font="RobotoSlab"] {
+  --font-family: 'RobotoSlab', 'Lato', sans-serif;
+}
+
+[data-font="Lato"] {
+  --font-family: 'Lato', sans-serif;
+}
+
+[data-font="NunitoSans"] {
+  --font-family: 'NunitoSans', 'Lato', sans-serif;
+}
+
+[data-font="OpenSans"] {
+  --font-family: 'OpenSans', 'Lato', sans-serif;
+}
+
+[data-font="Montserrat"] {
+  --font-family: 'Montserrat', 'Lato', sans-serif;
+}
+
+[data-font="Merriweather"] {
+  --font-family: 'Merriweather', 'Lato', sans-serif;
+}

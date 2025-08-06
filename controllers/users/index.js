@@ -4,6 +4,6 @@ module.exports = {
   updateSettings: require('./updateSettings'),
   updatePrivacySettings: require('./updatePrivacySettings'),
   changePassword: require('./changePassword'),
-  changeTheme: require('./changeTheme'),
+  changeAppearance: require('./changeAppearance'),
   searchUsers: require('./searchUsers')
 };

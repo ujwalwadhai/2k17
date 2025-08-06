@@ -36,6 +36,11 @@ const userSchema = new mongoose.Schema({
     default: 'purple',
     enum: ['purple', 'blue', 'green', 'red', 'teal', 'pink', 'cyan', 'brown']
   },
+  font: {
+    type: String,
+    default: 'Lato',
+    enum: ['Lato', 'Montserrat', 'Merriweather', 'NunitoSans', 'RobotoSlab', 'OpenSans']
+  },
   pushSubscriptions: [{
     endpoint: String,
     keys: {

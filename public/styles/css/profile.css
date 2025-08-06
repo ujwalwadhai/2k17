@@ -458,7 +458,7 @@
 }
 
 .profile-page {
-  font-family: "Lato", sans-serif;
+  font-family: var(--font-family), sans-serif;
   color: var(--text-light);
   background-color: var(--bg-dark);
   padding-bottom: 5rem;

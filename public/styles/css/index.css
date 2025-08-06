@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  font-family: "Segoe UI", sans-serif;
+  font-family: var(--font-family), sans-serif;
   scroll-behavior: smooth;
   box-sizing: border-box;
   color: white;

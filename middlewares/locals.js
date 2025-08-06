@@ -20,5 +20,6 @@ module.exports = function (req, res, next) {
   res.locals.PLATFORM_TYPE = process.env.PLATFORM_TYPE || 'development';
   res.locals.hasUnreadNotifications = false
   res.locals.theme = req?.user?.theme || 'purple'
+  res.locals.font = req?.user?.font || 'Lato'
   next();
 };

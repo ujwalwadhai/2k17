@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
 <head>
     <%- include('../../partials/head') %>
     <title><%= title %></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* Default CSS variables (you can override these) */
         :root {
             --primary: #4F46E5;
             --primary-dark: #4338CA;
@@ -14,9 +13,8 @@
             color: white;
         }
 
-        /* General styles */
         body {
-            font-family: "Lato", Helvetica, Arial, sans-serif;
+            font-family: var(--font-family), Helvetica, Arial, sans-serif;
             display: grid;
             place-items: center;
             min-height: 100vh;

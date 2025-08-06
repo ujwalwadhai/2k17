@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="<%= theme || 'purple' %>" lang="en">
+<html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
 
 <head>
   <%- include('../partials/head') %>
@@ -14,12 +14,12 @@
   <div class="settings-container">
     <h2>Settings</h2><br>
     <div class="links">
-    <div id="moved-things-chip"><span class="fal fa-info-circle"></span>&nbsp; Email and password related settings are now inside <a href="/account">My account</a>.</div>
+      <div id="moved-things-chip"><span class="fal fa-info-circle"></span>&nbsp; Email and password related settings are now inside <a href="/account">My account</a>.</div>
       <ul>
         <li onclick="window.location.href='/profile/edit'"><a href="/profile/edit"><span class="fal fa-user"></span>
             Update profile</a></li>
         <li onclick="window.location.href='/account'"><a href="/account"><span class="fal fa-user-circle"></span> My account</a></li>
-        <li onclick="openChangeTheme()"><a><span class="fal fa-palette"></span> Change theme &nbsp; <span class="grey-1">(New themes)</span></span></a></li>
+        <li onclick="openChangeAppearance()"><a><span class="fal fa-palette"></span> Appearance &nbsp; <span class="grey-1">(Themes & fonts)</span></span></a></li>
         <li onclick="openNotificationSettings()"><a><span class="fal fa-bell"></span> Notifications</a></li>
         <li onclick="openPrivacySettings()"><a><span class="fal fa-eye-slash"></span> Privacy & Visibility</a></li>
       </ul>
@@ -77,51 +77,73 @@
     </div>
   </div>
 
-  <div id="change-theme-popup">
-    <div class="overlay" onclick="closeChangeTheme()"></div>
-    <div class="change-theme-box">
+  <div id="change-appearance-popup">
+    <div class="overlay" onclick="closeChangeAppearance()"></div>
+    <div class="change-appearance-box">
       <div class="heading">
-        <p class="title"><span class="fal fa-palette"></span>Change Theme</p>
-        <p class="close-icon fal fa-xmark" onclick="closeChangeTheme()"></p>
+        <p class="title"><span class="fal fa-palette"></span>Change Appearance</p>
+        <p class="close-icon fal fa-xmark" onclick="closeChangeAppearance()"></p>
       </div>
-      <div class="change-theme-list" id="change-theme-list">
-        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;This only changes theme color. Dark mode will still be on.</span><br><br><br>
-        <form id="change-theme-form">
+      <div class="change-appearance-list" id="change-appearance-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;This only changes theme color. Dark mode will still be on.</span><br>
+        <p id="change-preview-para" style="font-family: var(--font-family); color: var(--primary); line-height: 25px">This is sample paragraph to help you preview the selected theme color and <span id="change-preview-font"><%- font ?? 'Lato' %></span> font style. Feel free to explore combinations of different themes & fonts.</p><br>
+        
+        <form id="change-appearance-form">
           <div class="form-section">
-            <label>
-              <input type="radio" name="theme" value="purple" <%- theme == 'purple' ? 'checked' : '' %>>
-              Purple <%- theme == 'purple' ? '<span class="grey-1">(current theme)</span>' : '' %>
-            </label>
-            <label>
-              <input type="radio" value="blue" name="theme" <%- theme == 'blue' ? 'checked' : '' %>>
-              Blue <%- theme == 'blue' ? '<span class="grey-1">(current theme)</span>' : '' %>
-            </label>
-            <label>
-              <input type="radio" value="green" name="theme" <%- theme == 'green' ? 'checked' : '' %>>
-              Green <%- theme == 'green' ? '<span class="grey-1">(current theme)</span>' : '' %>
-            </label>
-            <label>
-              <input type="radio" value="red" name="theme" <%- theme == 'red' ? 'checked' : '' %>>
-              Red <%- theme == 'red' ? '<span class="grey-1">(current theme)</span>' : '' %>
-            </label>
-            <label>
-              <input type="radio" value="pink" name="theme" <%- theme == 'pink' ? 'checked' : '' %>>
-              Pink <%- theme == 'pink' ? '<span class="grey-1">(current theme)</span>' : '' %>
-            </label>
-            <label>
-              <input type="radio" value="teal" name="theme" <%- theme == 'teal' ? 'checked' : '' %>>
-              Teal <%- theme == 'teal' ? '<span class="grey-1">(current theme)</span>' : '' %>
-            </label>
-            <label>
-              <input type="radio" value="cyan" name="theme" <%- theme == 'cyan' ? 'checked' : '' %>>
-              Ocean <%- theme == 'cyan' ? '<span class="grey-1">(current theme)</span>' : '' %>
-            </label>
-            <label>
-              <input type="radio" value="brown" name="theme" <%- theme == 'brown' ? 'checked' : '' %>>
-              Chocolate <%- theme == 'brown' ? '<span class="grey-1">(current theme)</span>' : '' %>
-            </label>
+            <label for="theme-select">Theme:</label>
+            <select name="theme" id="theme-select">
+              <option value="green" <%- theme == 'green' ? 'selected' : '' %>>
+                Green <%- theme == 'green' ? '(current)' : '(recommended)' %>
+              </option>
+              <option value="purple" <%- theme == 'purple' ? 'selected' : '' %>>
+                Purple <%- theme == 'purple' ? '(current)' : '' %>
+              </option>
+              <option value="blue" <%- theme == 'blue' ? 'selected' : '' %>>
+                Blue <%- theme == 'blue' ? '(current)' : '' %>
+              </option>
+              <option value="red" <%- theme == 'red' ? 'selected' : '' %>>
+                Red <%- theme == 'red' ? '(current)' : '' %>
+              </option>
+              <option value="pink" <%- theme == 'pink' ? 'selected' : '' %>>
+                Pink <%- theme == 'pink' ? '(current)' : '' %>
+              </option>
+              <option value="teal" <%- theme == 'teal' ? 'selected' : '' %>>
+                Teal <%- theme == 'teal' ? '(current)' : '' %>
+              </option>
+              <option value="cyan" <%- theme == 'cyan' ? 'selected' : '' %>>
+                Ocean <%- theme == 'cyan' ? '(current)' : '' %>
+              </option>
+              <option value="brown" <%- theme == 'brown' ? 'selected' : '' %>>
+                Chocolate <%- theme == 'brown' ? '(current)' : '' %>
+              </option>
+            </select>
           </div>
-          <div style="margin-top: 4px" id="change-theme-status"></div>
+          <br>
+          <div class="form-section">
+            <label for="font-select">Font:</label>
+            <select name="font" id="font-select">
+              <option value="Lato" <%- font == 'Lato' ? 'selected' : '' %>>
+                Lato <%- font == 'Lato' ? '(current)' : '(recommended)' %>
+              </option>
+              <option value="OpenSans" <%- font == 'OpenSans' ? 'selected' : '' %>>
+                Open Sans <%- font == 'OpenSans' ? '(current)' : '' %>
+              </option>
+              <option value="NunitoSans" <%- font == 'NunitoSans' ? 'selected' : '' %>>
+                Nunito Sans <%- font == 'NunitoSans' ? '(current)' : '' %>
+              </option>
+              <option value="Montserrat" <%- font == 'Montserrat' ? 'selected' : '' %>>
+                Montserrat <%- font == 'Montserrat' ? '(current)' : '' %>
+              </option>
+              <option value="RobotoSlab" <%- font == 'RobotoSlab' ? 'selected' : '' %>>
+                Roboto Slab <%- font == 'RobotoSlab' ? '(current)' : '' %>
+              </option>
+              <option value="Merriweather" <%- font == 'Merriweather' ? 'selected' : '' %>>
+                Merriweather <%- font == 'Merriweather' ? '(current)' : '' %>
+              </option>
+            </select>
+          </div>
+          <br>
+          <div style="margin-top: 4px" id="change-appearance-status"></div>
           <button type="submit">Change</button>
         </form>
 

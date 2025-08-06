@@ -11,7 +11,7 @@ body {
 .settings-container {
   max-width: 700px;
   margin: 2rem auto;
-  padding: 2rem;
+  padding: 1.5rem;
   background: transparent;
   color: white;
   border-radius: 12px;
@@ -51,7 +51,7 @@ body {
   background-color: rgba(81, 81, 81, 0.2);
 }
 .settings-container .links ul li a {
-  padding-left: 16px;
+  padding-left: 12px;
   color: white;
 }
 .settings-container .links ul li a span {
@@ -134,10 +134,10 @@ body {
 }
 #notification-settings-popup .notification-settings-box .notification-settings-list .form-section {
   line-height: 28px;
+  display: flex;
 }
 #notification-settings-popup .notification-settings-box .notification-settings-list .form-section label {
   display: block;
-  margin-bottom: 0.75rem;
   cursor: pointer;
 }
 #notification-settings-popup .notification-settings-box .notification-settings-list .form-section label input[type=checkbox] {
@@ -162,7 +162,7 @@ body {
   background-color: var(--primary);
 }
 
-#change-theme-popup {
+#change-appearance-popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -174,21 +174,21 @@ body {
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
-#change-theme-popup.show {
+#change-appearance-popup.show {
   transform: translateY(0);
   opacity: 1;
 }
-#change-theme-popup .overlay {
+#change-appearance-popup .overlay {
   position: absolute;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   transition: opacity 0.3s ease;
 }
-#change-theme-popup .overlay.show {
+#change-appearance-popup .overlay.show {
   opacity: 1;
 }
-#change-theme-popup .change-theme-box {
+#change-appearance-popup .change-appearance-box {
   width: 85vw;
   max-width: var(--maxWidth, 700px);
   max-height: var(--maxHeight, 600px);
@@ -203,7 +203,7 @@ body {
   flex-direction: column;
   overflow: hidden;
 }
-#change-theme-popup .change-theme-box .heading {
+#change-appearance-popup .change-appearance-box .heading {
   margin-bottom: 0;
   font-size: 20px;
   font-weight: bold;
@@ -214,10 +214,10 @@ body {
   align-items: center;
   border-bottom: 1px solid var(--text-muted);
 }
-#change-theme-popup .change-theme-box .heading .title span {
+#change-appearance-popup .change-appearance-box .heading .title span {
   margin-right: 16px;
 }
-#change-theme-popup .change-theme-box .heading p.close-icon {
+#change-appearance-popup .change-appearance-box .heading p.close-icon {
   margin: 12px;
   margin-left: auto;
   margin-right: 16px;
@@ -232,25 +232,34 @@ body {
   text-align: center;
   cursor: pointer;
 }
-#change-theme-popup .change-theme-box .change-theme-list {
+#change-appearance-popup .change-appearance-box .change-appearance-list {
   padding: 20px;
 }
-#change-theme-popup .change-theme-box .change-theme-list .form-section {
+#change-appearance-popup .change-appearance-box .change-appearance-list .form-section {
   line-height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
-#change-theme-popup .change-theme-box .change-theme-list .form-section label {
+#change-appearance-popup .change-appearance-box .change-appearance-list .form-section label {
   display: block;
-  margin-bottom: 0.75rem;
   cursor: pointer;
 }
-#change-theme-popup .change-theme-box .change-theme-list .form-section label input[type=radio] {
+#change-appearance-popup .change-appearance-box .change-appearance-list .form-section label input[type=radio] {
   margin-right: 10px;
 }
-#change-theme-popup .change-theme-box .change-theme-list #change-theme-status {
+#change-appearance-popup .change-appearance-box .change-appearance-list .form-section #theme-select, #change-appearance-popup .change-appearance-box .change-appearance-list .form-section #font-select {
+  padding: 6px 12px;
+  border-radius: 2px;
+  background-color: var(--bg-dark3);
+  color: white;
+}
+#change-appearance-popup .change-appearance-box .change-appearance-list #change-appearance-status {
   margin: 1rem 0;
   font-weight: 500;
+  width: 100%;
 }
-#change-theme-popup .change-theme-box .change-theme-list button[type=submit] {
+#change-appearance-popup .change-appearance-box .change-appearance-list button[type=submit] {
   background-color: var(--primary-dark);
   color: white;
   border: none;
@@ -261,7 +270,7 @@ body {
   width: 100%;
   transition: background 0.3s;
 }
-#change-theme-popup .change-theme-box .change-theme-list button[type=submit]:hover {
+#change-appearance-popup .change-appearance-box .change-appearance-list button[type=submit]:hover {
   background-color: var(--primary);
 }
 
@@ -806,7 +815,7 @@ body {
 
 @media (max-width: 600px) {
   .notification-settings-box,
-  .change-theme-box,
+  .change-appearance-box,
   .privacy-settings-box,
   .change-password-box,
   .give-suggestion-box,

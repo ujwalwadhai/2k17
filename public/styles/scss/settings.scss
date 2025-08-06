@@ -1,6 +1,6 @@
 @use 'components/popup/mixins' as *;
 
-body { 
+body {
   height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 
@@ -12,7 +12,7 @@ body {
 .settings-container {
   max-width: 700px;
   margin: 2rem auto;
-  padding: 2rem;
+  padding: 1.5rem;
   background: transparent;
   color: white;
   border-radius: 12px;
@@ -60,7 +60,7 @@ body {
         }
 
         a {
-          padding-left: 16px;
+          padding-left: 12px;
           color: white;
 
           span {
@@ -84,10 +84,10 @@ body {
 
       .form-section {
         line-height: 28px;
+        display: flex;
 
         label {
           display: block;
-          margin-bottom: 0.75rem;
           cursor: pointer;
 
           input[type="checkbox"] {
@@ -108,32 +108,42 @@ body {
   }
 }
 
-#change-theme-popup {
+#change-appearance-popup {
   @include fullscreen-popup;
 
-  .change-theme-box {
+  .change-appearance-box {
     @include popup-box;
 
-    .change-theme-list {
+    .change-appearance-list {
       padding: 20px;
 
       .form-section {
         line-height: 28px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
 
         label {
           display: block;
-          margin-bottom: 0.75rem;
           cursor: pointer;
 
           input[type="radio"] {
             margin-right: 10px;
           }
         }
+
+        #theme-select, #font-select {
+          padding: 6px 12px;
+          border-radius: 2px;
+          background-color: var(--bg-dark3);
+          color: white;
+        }
       }
 
-      #change-theme-status {
+      #change-appearance-status {
         margin: 1rem 0;
         font-weight: 500;
+        width: 100%;
       }
 
       button[type="submit"] {
@@ -291,7 +301,7 @@ body {
 @media (max-width: 600px) {
 
   .notification-settings-box,
-  .change-theme-box,
+  .change-appearance-box,
   .privacy-settings-box,
   .change-password-box,
   .give-suggestion-box,

@@ -16,7 +16,7 @@ document.getElementById("settings-form").addEventListener("submit", function (e)
     if (!settings.hasOwnProperty(key)) settings[key] = false;
   });
 
-  if(document.getElementById('push').checked){
+  if (document.getElementById('push').checked) {
     requestNotificationPermissionAndSubscribe()
   } else {
     unsubscribeUserFromPush()
@@ -45,56 +45,70 @@ document.getElementById("settings-form").addEventListener("submit", function (e)
     });
 });
 
-function openNotificationSettings(){
+function openNotificationSettings() {
   var notificationSettingsPopup = document.getElementById('notification-settings-popup');
   var notificationSettingsOverlay = notificationSettingsPopup.querySelector('.overlay');
   notificationSettingsPopup.classList.add('show');
   notificationSettingsOverlay.classList.add('show');
 }
 
-function closeNotificationSettings(){
+function closeNotificationSettings() {
   var notificationSettingsPopup = document.getElementById('notification-settings-popup');
   var notificationSettingsOverlay = notificationSettingsPopup.querySelector('.overlay');
   notificationSettingsPopup.classList.remove('show');
   notificationSettingsOverlay.classList.remove('show');
 }
 
-function openChangeTheme(){
-  var changeThemePopup = document.getElementById('change-theme-popup');
-  var changeThemeOverlay = changeThemePopup.querySelector('.overlay');
-  changeThemePopup.classList.add('show');
-  changeThemeOverlay.classList.add('show');
+function openChangeAppearance() {
+  var changeAppearancePopup = document.getElementById('change-appearance-popup');
+  var changeAppearanceOverlay = changeAppearancePopup.querySelector('.overlay');
+  changeAppearancePopup.classList.add('show');
+  changeAppearanceOverlay.classList.add('show');
 }
 
-function closeChangeTheme(){
-  var changeThemePopup = document.getElementById('change-theme-popup');
-  var changeThemeOverlay = changeThemePopup.querySelector('.overlay');
-  changeThemePopup.classList.remove('show');
-  changeThemeOverlay.classList.remove('show');
+function closeChangeAppearance() {
+  var changeAppearancePopup = document.getElementById('change-appearance-popup');
+  var changeAppearanceOverlay = changeAppearancePopup.querySelector('.overlay');
+  changeAppearancePopup.classList.remove('show');
+  changeAppearanceOverlay.classList.remove('show');
 }
 
-document.getElementById("change-theme-form").addEventListener("submit", function (e) {
+document.getElementById("theme-select").addEventListener("change", function (e) {
+  if (this.value == 'purple') {
+    document.getElementById("change-preview-para").style.color = "#7b5fc0";
+  } else {
+    document.getElementById("change-preview-para").style.color = this.value;
+  }
+})
+
+document.getElementById("font-select").addEventListener("change", function (e) {
+  document.getElementById("change-preview-para").style.fontFamily = this.value;
+})
+
+document.getElementById("change-appearance-form").addEventListener("submit", function (e) {
   e.preventDefault();
-  var statusBox = document.getElementById("change-theme-status");
+  var statusBox = document.getElementById("change-appearance-status");
   statusBox.style.color = "green";
-  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'><span> &nbsp;Changing theme...";
+  statusBox.innerHTML = ''
+  statusBox.innerHTML = "<i class='fal fa-rotate fa-circle-notch'><i> &nbsp;Saving preferences...";
 
-  fetch("/change-theme", {
+  fetch("/change-appearance", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({theme: this.elements['theme'].value})
+    body: JSON.stringify({ theme: this.elements['theme'].value, font: this.elements['font'].value })
   })
     .then(res => res.json())
     .then(data => {
       if (data.success) {
         document.documentElement.setAttribute("data-theme", this.elements['theme'].value);
-        statusBox.innerHTML = "<i class='fal fa-check-circle'></i> &nbsp;Theme changed to "+this.elements['theme'].value+"!";
-        setTimeout(closeChangeTheme, 2000);
+        document.documentElement.setAttribute("data-font", this.elements['font'].value);
+        statusBox.innerHTML = "<i class='fal fa-check-circle'></i> &nbsp;Preferences saved!";
+        setTimeout(closeChangeAppearance, 3000);
       } else {
         statusBox.style.color = "red";
-        statusBox.innerHTML = `<i class='fal fa-times-circle'></i> &nbsp;${data.message || 'Failed to change theme'}`;
+        statusBox.innerHTML = `<i class='fal fa-times-circle'></i> &nbsp;${data.message || 'Failed to save preferences'}`;
       }
     })
     .catch(err => {
@@ -141,14 +155,14 @@ document.getElementById("give-suggestion-form").addEventListener("submit", funct
     });
 });
 
-function openGiveSuggestion(){
+function openGiveSuggestion() {
   var giveSuggestionPopup = document.getElementById('give-suggestion-popup');
   var giveSuggestionOverlay = giveSuggestionPopup.querySelector('.overlay');
   giveSuggestionPopup.classList.add('show');
   giveSuggestionOverlay.classList.add('show');
 }
 
-function closeGiveSuggestion(){
+function closeGiveSuggestion() {
   var giveSuggestionPopup = document.getElementById('give-suggestion-popup');
   var giveSuggestionOverlay = giveSuggestionPopup.querySelector('.overlay');
   giveSuggestionPopup.classList.remove('show');
@@ -192,14 +206,14 @@ document.getElementById("report-problem-form").addEventListener("submit", functi
     });
 });
 
-function openReportProblem(){
+function openReportProblem() {
   var reportProblemPopup = document.getElementById('report-problem-popup');
   var reportProblemOverlay = reportProblemPopup.querySelector('.overlay');
   reportProblemPopup.classList.add('show');
   reportProblemOverlay.classList.add('show');
 }
 
-function closeReportProblem(){
+function closeReportProblem() {
   var reportProblemPopup = document.getElementById('report-problem-popup');
   var reportProblemOverlay = reportProblemPopup.querySelector('.overlay');
   reportProblemPopup.classList.remove('show');
@@ -248,15 +262,15 @@ document.getElementById("privacy-settings-form").addEventListener("submit", func
       statusBox.style.color = "red";
     });
 });
- 
-function openPrivacySettings(){
+
+function openPrivacySettings() {
   var privacySettingsPopup = document.getElementById('privacy-settings-popup');
   var privacySettingsOverlay = privacySettingsPopup.querySelector('.overlay');
   privacySettingsPopup.classList.add('show');
   privacySettingsOverlay.classList.add('show');
 }
 
-function closePrivacySettings(){
+function closePrivacySettings() {
   var privacySettingsPopup = document.getElementById('privacy-settings-popup');
   var privacySettingsOverlay = privacySettingsPopup.querySelector('.overlay');
   privacySettingsPopup.classList.remove('show');

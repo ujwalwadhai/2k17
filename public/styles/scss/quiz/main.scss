@@ -1,6 +1,5 @@
-// General styles
 body {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
+    font-family: var(--font-family),  Helvetica, Arial, sans-serif;
     background-color: #f0f2f5;
     display: grid;
     place-items: center;

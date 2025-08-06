@@ -27,8 +27,28 @@ html, body{
   src: url('/fonts/Lato.ttf');
 }
 
+@font-face {
+  font-family: 'Merriweather';
+  src: url('/fonts/Merriweather.ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat.ttf');
+}
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('/fonts/NunitoSans.ttf');
+}
+
+@font-face {
+  font-family: 'RobotoSlab';
+  src: url('/fonts/RobotoSlab.ttf');
+}
+
 * {
-  font-family: "Lato", sans-serif;
+  font-family: var(--font-family) , "Lato", sans-serif;
 }
 
 .green {

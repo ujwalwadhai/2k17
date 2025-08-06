@@ -26,6 +26,13 @@
   --info: #2db7f5;
 }
 
+/* Purple Theme */
+[data-theme="purple"] {
+  --primary: #7b5cf0;
+  --primary-dark: #6342d8;
+  --primary-light: #9a7fff;
+}
+
 /* Green Theme */
 [data-theme="green"] {
   --primary: #28a745;

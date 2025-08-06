@@ -111,9 +111,6 @@ app.use('/admin', allowIfNotGet, hasRole('admin'))
 app.use('/moderator', isLoggedIn, hasRole('moderator'))
 app.get('/api/analytics', isLoggedIn, hasRole('admin'))
 app.use('/quiz', require('./routes/quiz'));
-app.get('/500', (req, res) => {
-  res.render('pages/500')
-})
 app.use('/', require('./middlewares/locals'), getRoutes);
 app.use('/', postRoutes);
 

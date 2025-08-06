@@ -39,13 +39,6 @@ cron.schedule('2 0 * * *', async () => {
             timeZone: 'Asia/Kolkata'
         });
 
-        const deleted = await Posts.deleteOne({
-            createdAt: { $gte: startOfYesterday, $lte: endOfYesterday },
-            author: '685680c4709e2711271639d1',
-            text: { $regex: /^<p>Here's the most viewed memory of yesterday!/ }
-        });
-        console.log('[CRON] Deleted yesterday\'s post:', deleted);
-
         const topFile = await PageViews.aggregate([
             {
                 $match: {
@@ -68,29 +61,54 @@ cron.schedule('2 0 * * *', async () => {
             return;
         }
 
-        const fileId = topFile[0]._id.replace('/memories/file/', '');
-        if (!fileId.match(/^[0-9a-fA-F]{24}$/)) {
-            console.warn('[CRON] Invalid file ID extracted:', fileId);
+        const topFileRoute = topFile[0]._id;
+        const newFileId = topFileRoute.replace('/memories/file/', '');
+
+        if (!newFileId.match(/^[0-9a-fA-F]{24}$/)) {
+            console.warn('[CRON] Invalid file ID extracted:', newFileId);
             return;
         }
 
-        const file = await Files.findById(fileId).select("url");
+        const yesterdaysPost = await Posts.findOne({
+            createdAt: { $gte: startOfYesterday, $lte: endOfYesterday },
+            author: '685680c4709e2711271639d1',
+            text: { $regex: "Here's the most viewed memory of yesterday" }
+        });
+
+        if (yesterdaysPost) {
+            if (yesterdaysPost.text.includes(newFileId)) {
+                console.log('[CRON] Yesterday\'s popular post is already for the correct file. No action needed.');
+                return;
+            }
+        }
+
+        const file = await Files.findById(newFileId).select("url");
         if (!file) {
-            console.warn('[CRON] File not found for ID:', fileId);
+            console.warn('[CRON] File not found for ID:', newFileId);
             return;
         }
 
-        const newPost = new Posts({
-            text: `<p>Here's the most viewed memory of yesterday! <a href='${topFile[0]._id}'>Click here</a> to view in full screen.</p>`,
+        const postContent = {
+            text: `<p>Here's the most viewed memory of yesterday! <a href='${topFileRoute}'>Click here</a> to view in full screen.</p>`,
             media: {
                 url: file.url,
                 type: 'image'
             },
-            author: '685680c4709e2711271639d1'
-        });
+            author: '685680c4709e2711271639d1',
+            createdAt: new Date(),
+            updatedAt: new Date()
+        };
 
-        await newPost.save();
-        console.log('[CRON] New popular file post created with ID:', newPost._id);
+        const updatedOrCreatedPost = await Posts.findOneAndUpdate(
+            {
+                createdAt: { $gte: startOfYesterday, $lte: endOfYesterday },
+                author: '685680c4709e2711271639d1',
+                text: { $regex: "Here's the most viewed memory of yesterday" }
+            },
+            { $set: postContent },
+            { new: true, upsert: true }
+        );
+        console.log('[CRON] New popular file post created with ID:', updatedOrCreatedPost._id);
 
     } catch (error) {
         console.error('[CRON] ❌ Error creating new post:', error);

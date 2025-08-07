@@ -57,13 +57,13 @@ async function getAnalyticsWithChange() {
 
     return {
         today: {
-            collectiveTime: todayMetrics.collectiveTime / 60,
-            avgTime: todayMetrics.avgTime / 60,
+            collectiveTime: (todayMetrics.collectiveTime / 60).toFixed(2),
+            avgTime: (todayMetrics.avgTime / 60).toFixed(2),
             sessionCount: todayMetrics.count
         },
         change: {
-            collectiveTime: changeInCollectiveTime / 60,
-            avgTime: changeInAvgTime / 60
+            collectiveTime: (changeInCollectiveTime / 60).toFixed(2),
+            avgTime: (changeInAvgTime / 60).toFixed(2)
         }
     };
 }

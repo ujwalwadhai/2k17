@@ -1,6 +1,4 @@
-
-
-body{
+body {
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 
   @media (max-width: 768px) {
@@ -13,7 +11,27 @@ body{
   color: var(--text-light);
   min-height: 100vh;
 
-  h2 {
+  #analytics-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2.1rem;
+
+    @media (max-width: 768px) {
+      margin: 1.5rem;
+    }
+  }
+
+  #analyticsDate {
+    background: var(--bg-dark3);
+    color: white;
+    padding: 6px 8px;
+    border: none;
+    border-radius: 4px;
+  }
+
+  h2,
+  h3 {
     font-size: 1.6rem;
     color: var(--primary);
     margin: 2rem;
@@ -147,6 +165,9 @@ body{
   background: var(--bg-dark2);
   width: calc(50% - 1.5rem);
   min-width: 300px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   table {
     border-bottom-left-radius: 0.8rem;
@@ -156,7 +177,7 @@ body{
   table tr td,
   table tr th {
     font-size: 14px;
-    min-width: 148px;
+    min-width: 170px;
   }
 
   h3 {
@@ -183,7 +204,7 @@ body{
     #monthly-overview {
       width: 100%;
       margin: 0 1.5rem;
-      
+
     }
   }
 
@@ -224,7 +245,7 @@ body{
     padding-top: 1.5rem;
     margin: auto;
 
-    h3{
+    h3 {
       margin: 0;
       margin-bottom: 2rem;
     }

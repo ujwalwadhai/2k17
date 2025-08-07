@@ -102,9 +102,11 @@
                   <% if (sessionDoc.isCurrent) { %>
                     <span class="current-session"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; This device</span>
                   <% } else { %>
-                  <% const lastSeen = sessionDoc.session?.lastActive %>
-                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last seen <%= lastSeen < 1000 * 60 * 60 ? sessionDoc.session.lastActive.toLocaleString('en-In', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true}).replace('am','AM').replace('pm', 'PM') : getRelativeTime(lastSeen) + ' ago' %></span>
-                  <% } %>
+                  <% if((new Date() - new Date(sessionDoc.session?.lastActive)) < 1000 * 60 * 60){ %>
+                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last seen <%= getRelativeTime(new Date(sessionDoc.session?.lastActive)) + ' ago' %></span>
+                  <% } else { %>
+                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last seen <%= new Date(sessionDoc.session.lastActive).toLocaleString('en-In', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true}).replace('am','AM').replace('pm', 'PM') %></span>
+                  <% }} %>
                 </div>
               </div>
             </div>
@@ -163,6 +165,8 @@
     </div>
   </div>
 
+  <div id="toast-container" style="position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 9999;"></div>
+
   <script src="/js/myAccount.js"></script>
 
   <script>
@@ -175,7 +179,8 @@
       });
       setTimeout(() => {
         document.getElementById(sessionId).style.display = 'none'
-      }, 1000);
+        Toast("Logged out successfully", "success")
+      }, 800);
     }
 
     function unlinkGoogle(){

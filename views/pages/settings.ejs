@@ -86,7 +86,7 @@
       </div>
       <div class="change-appearance-list" id="change-appearance-list">
         <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;This only changes theme color. Dark mode will still be on.</span><br>
-        <p id="change-preview-para" style="font-family: var(--font-family); color: var(--primary); line-height: 25px">This is sample paragraph to help you preview the selected theme color and <span id="change-preview-font"><%- font ?? 'Lato' %></span> font style. Feel free to explore combinations of different themes & fonts.</p><br>
+        <p id="change-preview-para" style="font-family: var(--font-family); color: var(--primary); line-height: 25px">This is sample paragraph to help you preview the selected theme color and font style. Feel free to explore combinations of different themes & fonts.</p><br>
         
         <form id="change-appearance-form">
           <div class="form-section">
@@ -136,6 +136,12 @@
               </option>
               <option value="RobotoSlab" <%- font == 'RobotoSlab' ? 'selected' : '' %>>
                 Roboto Slab <%- font == 'RobotoSlab' ? '(current)' : '' %>
+              </option>
+              <option value="EBGaramond" <%- font == 'EBGaramond' ? 'selected' : '' %>>
+                EB Garamond <%- font == 'EBGaramond' ? '(current)' : '' %>
+              </option>
+              <option value="NotoSans" <%- font == 'NotoSans' ? 'selected' : '' %>>
+                Noto Sans <%- font == 'NotoSans' ? '(current)' : '' %>
               </option>
               <option value="Merriweather" <%- font == 'Merriweather' ? 'selected' : '' %>>
                 Merriweather <%- font == 'Merriweather' ? '(current)' : '' %>

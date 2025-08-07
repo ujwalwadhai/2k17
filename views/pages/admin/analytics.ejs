@@ -15,7 +15,7 @@
   <br><br><br><br>
 
   <div class="analytics-page">
-    <h2>Platform Analytics</h2>
+    <h3 id="analytics-head">Analytics <input type="date" min="2025-07-07" max="<%= new Date().toISOString().slice(0, 10) %>" id="analyticsDate" value="<%= new Date().toISOString().slice(0, 10) %>" onchange="showAnalytics(this.value)"></h3>
     <div id="section-1">
       <section class="analytics-summary">
         <div class="summary-card">
@@ -104,14 +104,14 @@
           <p class="percentage-change"><span></span> than last month</p>
         </div>
         <div class="summary-card">
+          <span class="label">Average time this month</span>
+          <span class="value"><span id="monthAvgTime"></span> <span style="color: #737373; font-size: 14px; font-weight: 400; margin-left: 5px;">minutes/user</span></span>
+          <p class="percentage-change"><span id="monthAvgTimeChange"></span> mins than last month</p>
+        </div>
+        <div class="summary-card">
           <span class="label">Guest vs Known</span>
           <span class="value" id="monthly-guest-known">--</span>
           <p class="percentage-change"><span></span> than last month</p>
-        </div>
-        <div class="summary-card">
-          <span class="label">Average time this month</span>
-          <span class="value"><span id="monthAvgTime"></span> <span style="color: #737373; font-size: 14px; font-weight: 400; margin-left: 5px;">minutes/user</span></span>
-          <p class="percentage-change"><span id="monthAvgTimeChange"></span> minutes than last month</p>
         </div>
       </section>
 

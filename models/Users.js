@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
   font: {
     type: String,
     default: 'Lato',
-    enum: ['Lato', 'Montserrat', 'Merriweather', 'NunitoSans', 'RobotoSlab', 'OpenSans']
+    enum: ['Lato', 'Montserrat', 'Merriweather', 'NunitoSans', 'RobotoSlab', 'OpenSans', 'EBGaramond', 'NotoSans']
   },
   pushSubscriptions: [{
     endpoint: String,

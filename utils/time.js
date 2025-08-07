@@ -106,32 +106,32 @@ function createLongDate() {
 }
 
 const IST_OFFSET_MINUTES = 330;
+const IST_OFFSET_MS = IST_OFFSET_MINUTES * 60 * 1000;
 
-function toIST(date) {
-  const utc = date.getTime() + date.getTimezoneOffset() * 60000;
-  return new Date(utc + IST_OFFSET_MINUTES * 60000);
+function createIstDate(date) {
+  return new Date(date.getTime() + IST_OFFSET_MS);
 }
 
-function fromIST(istDate) {
-  return new Date(istDate.getTime() - IST_OFFSET_MINUTES * 60000);
-}
-
-function subDays(date, days) {
-  const ist = toIST(date);
-  ist.setDate(ist.getDate() - days);
-  return fromIST(ist);
+function fromIstDate(istDate) {
+  return new Date(istDate.getTime() - IST_OFFSET_MS);
 }
 
 function startOfDay(date) {
-  const ist = toIST(date);
-  ist.setHours(0, 0, 0, 0);
-  return fromIST(ist);
+  const istDate = createIstDate(date);
+  istDate.setUTCHours(0, 0, 0, 0);
+  return new Date(fromIstDate(istDate).toISOString());
 }
 
 function endOfDay(date) {
-  const ist = toIST(date);
-  ist.setHours(23, 59, 59, 999);
-  return fromIST(ist);
+  const istDate = createIstDate(date);
+  istDate.setUTCHours(23, 59, 59, 999);
+  return new Date(fromIstDate(istDate).toISOString());
+}
+
+function subDays(date, days) {
+  const istDate = createIstDate(date);
+  istDate.setUTCDate(istDate.getUTCDate() - days);
+  return fromIstDate(istDate);
 }
 
 module.exports = { getRelativeTime, createLongDate, formatDOB, createDate, subDays, startOfDay, endOfDay };

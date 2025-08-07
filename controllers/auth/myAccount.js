@@ -23,7 +23,8 @@ const myAccount = async (req, res) => {
             session: sessionData,
             isCurrent: doc._id.toString() === req.sessionID
         };
-    }).sort((a, b) => b.isCurrent - a.isCurrent);;
+    }).sort((a, b) => b.isCurrent - a.isCurrent)
+    parsedSessions.sort((a, b) => b.session.lastActive - a.session.lastActive);
 
     res.render('pages/myAccount', { user: req.user, sessions: parsedSessions, hasPassword });
 }

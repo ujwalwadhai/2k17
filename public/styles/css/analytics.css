@@ -12,7 +12,26 @@ body {
   color: var(--text-light);
   min-height: 100vh;
 }
-.analytics-page h2 {
+.analytics-page #analytics-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2.1rem;
+}
+@media (max-width: 768px) {
+  .analytics-page #analytics-head {
+    margin: 1.5rem;
+  }
+}
+.analytics-page #analyticsDate {
+  background: var(--bg-dark3);
+  color: white;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 4px;
+}
+.analytics-page h2,
+.analytics-page h3 {
   font-size: 1.6rem;
   color: var(--primary);
   margin: 2rem;
@@ -122,6 +141,9 @@ body {
   background: var(--bg-dark2);
   width: calc(50% - 1.5rem);
   min-width: 300px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 #active-users table,
 #monthly-overview table {
@@ -133,7 +155,7 @@ body {
 #monthly-overview table tr td,
 #monthly-overview table tr th {
   font-size: 14px;
-  min-width: 148px;
+  min-width: 170px;
 }
 #active-users h3,
 #monthly-overview h3 {

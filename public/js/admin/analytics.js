@@ -68,15 +68,15 @@ async function updateTodayUsers() {
         document.querySelector('#collectiveTime').innerHTML = sessionTimeData.today.collectiveTime;
         let avgTimeChange = ''
         if(sessionTimeData.change.avgTime >= 0){
-            avgTimeChange = `<span class="green">+${sessionTimeData.change.avgTime}</span> minutes than yesterday`
+            avgTimeChange = `<span style="color: #6fdc6f">+${sessionTimeData.change.avgTime}</span> minutes than yesterday`
         } else {
-            avgTimeChange = `<span class="red">${sessionTimeData.change.avgTime}</span> minutes than yesterday`
+            avgTimeChange = `<span style="color: #ff6f6f">${sessionTimeData.change.avgTime}</span> minutes than yesterday`
         }
         let collectiveTimeChange = ''
         if(sessionTimeData.change.collectiveTime >= 0){
-            collectiveTimeChange = `<span class="green">+${sessionTimeData.change.collectiveTime}</span> minutes than yesterday`
+            collectiveTimeChange = `<span style="color: #6fdc6f">+${sessionTimeData.change.collectiveTime}</span> minutes than yesterday`
         } else {
-            collectiveTimeChange = `<span class="red">${sessionTimeData.change.collectiveTime}</span> minutes than yesterday`
+            collectiveTimeChange = `<span style="color: #ff6f6f">${sessionTimeData.change.collectiveTime}</span> minutes than yesterday`
         }
         document.querySelector('#avgTimeChange').innerHTML = avgTimeChange;
         document.querySelector('#collectiveTimeChange').innerHTML = collectiveTimeChange;
@@ -326,9 +326,9 @@ async function loadMonthlySummary() {
         document.querySelector("#monthAvgTime").innerHTML = sessionData.thisMonth.avgTime;
         let monthAvgTimeChange = ''
         if(sessionData.change.avgTime >= 0){
-            monthAvgTimeChange = `<span class="green">+${sessionData.change.avgTime}</span>`
+            monthAvgTimeChange = `<span style="color: #6fdc6f">+${sessionData.change.avgTime}</span>`
         } else {
-            monthAvgTimeChange = `<span class="red">${sessionData.change.avgTime}</span>`
+            monthAvgTimeChange = `<span style="color: #ff6f6f">${sessionData.change.avgTime}</span>`
         }
         document.querySelector("#monthAvgTimeChange").innerHTML = monthAvgTimeChange;
 
@@ -413,3 +413,6 @@ async function loadPlatformPieChart(data) {
     }
 }
 
+function showAnalytics(date){
+    window.location.href = `/admin/analytics/${date.split('-').reverse().join('-')}`
+}

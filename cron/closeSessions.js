@@ -2,9 +2,9 @@ const cron = require('node-cron');
 const ActiveUsers = require('../models/ActiveUsers');
 const UserSessions = require('../models/UserSessions');
 
-const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+const INACTIVITY_TIMEOUT_MS = 15 * 60 * 1000;
 
-cron.schedule('*/5 * * * *', async () => {
+cron.schedule('*/10 * * * *', async () => {
     
     try {
         const cutoffTime = new Date(Date.now() - INACTIVITY_TIMEOUT_MS);

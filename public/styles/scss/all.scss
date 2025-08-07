@@ -47,6 +47,16 @@ html, body{
   src: url('/fonts/RobotoSlab.ttf');
 }
 
+@font-face {
+  font-family: 'EBGaramond';
+  src: url('/fonts/EBGaramond.ttf');
+}
+
+@font-face {
+  font-family: 'NotoSans';
+  src: url('/fonts/NotoSans.ttf');
+}
+
 * {
   font-family: var(--font-family) , "Lato", sans-serif;
 }
@@ -108,4 +118,8 @@ img{
   -webkit-user-drag: none;
   -kkee-user-drag: none;
   -moz-user-drag: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }

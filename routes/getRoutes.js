@@ -67,6 +67,8 @@ router.get('/admin/users', adminController.adminUserlist);
 
 router.get('/admin/analytics', getController.analyticsPage);
 
+router.get('/admin/analytics/:date', analyticsController.dayAnalytics)
+
 router.get('/admin', getController.admin);
 
 

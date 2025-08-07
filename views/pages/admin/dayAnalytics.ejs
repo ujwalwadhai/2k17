@@ -3,7 +3,7 @@
 
 <head>
   <%- include('../../partials/head') %>
-  <title>Today's Analytics</title>
+  <title>Analytics for <%= new Date(date).toLocaleDateString('en-IN', {timeZone: 'Asia/Kolkata', year: 'numeric', month: 'short', day: 'numeric'}) %></title>
   <link rel="stylesheet" href="/styles/css/analytics.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
@@ -15,29 +15,50 @@
   <br><br><br><br>
 
   <div class="analytics-page">
-    <h2>Platform Analytics</h2>
+    <h3 id="analytics-head">Analytics <input type="date" min="2025-07-07" max="<%= new Date().toISOString().slice(0, 10) %>" id="analyticsDate" value="<%= new Date(date).toISOString().slice(0, 10) %>" onchange="showAnalytics(this.value)"></h3>
     <div id="section-1">
       <section class="analytics-summary">
         <div class="summary-card">
-          <span class="label">Users today</span>
-          <span class="value" id="active-today">--</span>
-          <p id="usersTodayList"></p>
+          <span class="label">Total users</span>
+          <span class="value" id="total-users"><%= allusers.guests + allusers.users.length %></span>
+          <p id="usersTodayList"><%= allusers.guests %> guests, <%= allusers.users.length %> known</p>
+        </div>
+        <div class="summary-card">
+          <span class="label">Average time spent</span>
+          <span class="value"><span id="avgTime"><%= sessionData.avgTime %> </span> <span style="color: #737373; font-size: 14px; font-weight: 400; margin-left: 5px;">minutes/user</span></span>
+          <p id="avgTimeChange">Counted over <%= sessionData.count %> sessions</p>
+        </div>
+        <div class="summary-card">
+          <span class="label">Collective time spent</span>
+          <span class="value"><span id="collectiveTime"><%= sessionData.collectiveTime %></span> <span style="color: #737373; font-size: 14px; font-weight: 400; margin-left: 5px;">minutes</span></span>
+          <p id="collectiveTimeChange">Counted over <%= sessionData.count %> sessions</p>
         </div>
       </section>
 
       <section class="analytics-section" id="active-users"><br>
-        <h3>Active Users</h3>
+        <h3>Users</h3>
+        <p style="color: #888; font-size: 14px; margin: 0 0 0.8rem 1.2rem; font-weight: bold">Total: <%= allusers.guests + allusers.users.length %> (<%= allusers.guests %> guests, <%= allusers.users.length %> known)</p>
         <table class="analytics-table" id="online-users-table">
           <thead>
             <tr>
-              <th>User (<span id="online-users-count">0</span> total)</th>
-              <th>Current Page</th>
+              <th>User</th>
+              <th>Time</th>
+              <th>Platform</th>
             </tr>
           </thead>
           <tbody id="online-users-body">
-            <tr>
-              <td colspan="4" style="text-align: center; color: grey;">Loading...</td>
-            </tr>
+          <% if(allusers.users.length > 0) { %>
+            <% allusers.users.forEach(sessionInfo => { %>
+              <tr>
+                <td><%= sessionInfo.user.name %></td>
+                <td><%= new Date(sessionInfo.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) %></td>
+                <td><%= sessionInfo.platform %></td>
+              </tr>
+            <% }) } else { %>
+              <tr style="color: #888">
+                <td colspan="3" style="text-align: center;">No known users for <%= new Date(date).toLocaleDateString('en-IN', {timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric'}) %></td>
+              </tr>
+            <% } %>
           </tbody>
         </table>
       </section><br>
@@ -49,7 +70,7 @@
       <section class="analytics-section" id="daily-route-stats">
         <div class="daily-route-header">
           <h3>Route Visits</h3>
-          <input type="date" id="daily-route-date" />
+          <input type="date" id="daily-route-date" value="<%= new Date(date).toISOString().slice(0, 10) %>" disabled />
         </div>
         <p class="summary-card" id="top-page">
           <span class="label">Top Page : </span>
@@ -71,12 +92,16 @@
 
     <br><br><br>
   </div>
+  <script src="/js/admin/dayAnalytics.js"></script>
 
   <script>
-  const themeColor = '<%= theme ?? 'purple' %>'
+  const themeColor = '<%= theme? theme : 'purple' %>'
+  document.addEventListener('DOMContentLoaded', () => {
+    updateDailyRouteChart(new Date('<%= date %>').toISOString().slice(0, 10))
+    var data = <%- JSON.stringify(platform_data) %>
+    loadPlatformPieChart(data)
+  })
   </script>
-
-  <script src="/js/admin/analytics.js"></script>
 
 </body>
 

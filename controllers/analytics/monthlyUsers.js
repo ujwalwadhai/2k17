@@ -1,5 +1,4 @@
 const DailyUsers = require('../../models/DailyUsers');
-const Users = require('../../models/Users');
 const PageViews = require('../../models/PageViews');
 const Files = require('../../models/Files');
 const Folders = require('../../models/Folders');
@@ -56,10 +55,10 @@ async function getMonthlyAvgTimeWithChange() {
 
     return {
         thisMonth: {
-            avgTime: thisMonthAvg / 60
+            avgTime: (thisMonthAvg / 60).toFixed(2)
         },
         change: {
-            avgTime: changeInAvgTime / 60
+            avgTime: (changeInAvgTime / 60).toFixed(2)
         }
     };
 }

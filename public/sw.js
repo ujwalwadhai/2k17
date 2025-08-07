@@ -1,28 +1,26 @@
-const CACHE_NAME = `2k17-06-08-2025`; // Add date when you are commiting so that cache of users will be updated on deployment
+const CACHE_NAME = `2k17-07-08-2025`; // Add date when you are commiting so that cache of users will be updated on deployment
 const URLS_TO_CACHE = [
-  '/',
-  '/fonts/Lato.ttf',
-  '/icons/css/all.css',
-  '/icons/webfonts/fa-brands-400.woff2',
-  '/icons/webfonts/fa-light-300.woff2',
-  '/icons/webfonts/fa-solid-900.woff2',
-  '/icons/webfonts/fa-brands-400.ttf',
-  '/icons/webfonts/fa-light-300.ttf',
-  '/icons/webfonts/fa-solid-900.ttf',
-  '/styles/css/theme.css',
-  '/images/web_logo.png',
-  '/images/icons/logo_72x72.png',
-  '/images/icons/logo_96x96.png',
-  '/images/icons/maskable_icon.png',
-  '/favicon.ico',
-  './offline.html'
+    '/',
+    '/fonts/Lato.ttf',
+    '/icons/css/all.css',
+    '/icons/webfonts/fa-brands-400.woff2',
+    '/icons/webfonts/fa-light-300.woff2',
+    '/icons/webfonts/fa-solid-900.woff2',
+    '/icons/webfonts/fa-brands-400.ttf',
+    '/icons/webfonts/fa-light-300.ttf',
+    '/icons/webfonts/fa-solid-900.ttf',
+    '/styles/css/theme.css',
+    '/images/web_logo.png',
+    '/images/icons/logo_72x72.png',
+    '/images/icons/logo_96x96.png',
+    '/images/icons/maskable_icon.png',
+    '/favicon.ico',
+    './offline.html'
 ];
 
 self.addEventListener('install', event => {
-    console.log('[Service Worker] Installing...');
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            console.log('[Service Worker] Caching App Shell');
             return cache.addAll(URLS_TO_CACHE);
         })
     );
@@ -30,12 +28,11 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-    console.log('[Service Worker] Activating...');
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.filter(cacheName => cacheName !== CACHE_NAME)
-                          .map(cacheName => caches.delete(cacheName))
+                    .map(cacheName => caches.delete(cacheName))
             );
         }).then(() => self.clients.claim())
     );
@@ -77,7 +74,7 @@ self.addEventListener('fetch', event => {
         return;
     }
 
-    event.respondwith(
+    event.respondWith(
         fetch(event.request).catch(() => {
             if (event.request.url.endsWith('/favicon.ico')) {
                 return caches.match('/favicon.ico');
@@ -89,7 +86,6 @@ self.addEventListener('fetch', event => {
 
 
 self.addEventListener('push', event => {
-    console.log('[Service Worker] Push Received.');
     let data = {
         title: 'New Notification',
         body: 'Something new happened!',
@@ -119,7 +115,6 @@ self.addEventListener('push', event => {
 });
 
 self.addEventListener('notificationclick', event => {
-    console.log('[Service Worker] Notification click Received.');
     event.notification.close();
 
     event.waitUntil(
@@ -138,11 +133,11 @@ self.addEventListener('notificationclick', event => {
 });
 
 self.addEventListener('message', event => {
-  if (event.data && event.data.action === 'clear-notifications') {
-    self.registration.getNotifications().then(notifications => {
-      notifications.forEach(notification => {
-        notification.close();
-      });
-    });
-  }
+    if (event.data && event.data.action === 'clear-notifications') {
+        self.registration.getNotifications().then(notifications => {
+            notifications.forEach(notification => {
+                notification.close();
+            });
+        });
+    }
 });

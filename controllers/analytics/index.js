@@ -5,6 +5,7 @@ module.exports = {
   monthlyUsers: require('./monthlyUsers'),
   dailyRouteViews: require('./dailyRouteViews'),
   pageStats: require('./pageStats'),
+  dayAnalytics: require('./dayAnalytics'),
   deleteAdminLog: require('./deleteAdminLog'),
   addFileView: require('./addFileView'),
 };

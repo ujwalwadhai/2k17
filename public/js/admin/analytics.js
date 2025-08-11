@@ -145,7 +145,8 @@ async function updateDailyRouteChart(dateStr) {
                                 data: [],
                                 backgroundColor: '#4120bb',
                                 categoryPercentage: 0.9,
-                                barPercentage: 1
+                                barPercentage: 1,
+                                maxBarThickness: 36,
                             }
                         ]
                     },
@@ -220,9 +221,10 @@ async function updateDailyRouteChart(dateStr) {
                             data: values,
                             backgroundColor: themeColor,
                             categoryPercentage: 0.9,
-                            barPercentage: 1
+                            barPercentage: 1,
+                            maxBarThickness: 36,
                         }
-                    ]
+                    ],
                 },
                 options: {
                     responsive: true,

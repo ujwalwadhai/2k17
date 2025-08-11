@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>">
+
+<head>
+  <%- include('../../partials/head') %>
+  <link rel="stylesheet" href="/styles/css/quiz/result.css">
+  <title>Result for <%= title %> • 2k17 Platform</title>
+</head>
+
+<body>
+  <%- include('../../partials/navbar') %>
+  <%- include('../../partials/loader') %>
+  <br><br><br>
+  <div class="result-container loader-after-body" style="display: none;">
+    <div class="result-summary">
+      <h2>Quiz Result</h2>
+      <p>Result of <strong><%= attempt.user.username %></strong> for <%= title %></p>
+      <h3 style="font-size: 1.6rem">Score: <%= attempt.score %> / <%= attempt.totalQuestions %></h3>
+      <p>Click share to share your result!</p>
+      <a href="/quiz/leaderboard/<%= attempt.quiz._id %>" class="btn btn-secondary">View Leaderboard</a>
+      <a href="#" onclick="shareContent()" class="btn btn-secondary">Share</a>
+    </div>
+
+    <h2>Analysis</h2>
+    <% attempt.quiz.questions.forEach((question, index) => { %>
+    <% const userAnswerIndex = attempt.answers[index]; %>
+    <% const isCorrect = userAnswerIndex === question.correctAnswer; %>
+
+    <div class="analysis-item <%= isCorrect ? 'correct' : 'incorrect' %>">
+      <h4><%= question.question %></h4>
+      <p class="user-answer">
+        Your answer: <%= question.options[userAnswerIndex] %>
+        <% if(isCorrect) { %> ✔️ <% } else { %> ❌ <% } %>
+      </p>
+      <% if (!isCorrect) { %>
+      <p class="correct-answer">
+        Correct answer: <%= question.options[question.correctAnswer] %>
+      </p>
+      <% } %>
+    </div>
+    <% }) %>
+  </div>
+
+  <script src="/js/components/confetti.js"></script>
+  <script>
+    Confetti()
+
+    async function shareContent() {
+      const shareData = {
+        title: '2k17 Platform',
+        text: 'Check out my result for the quiz "<%= title %>" on 2k17 Platform!',
+        url: window.location.href,
+      }
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (error) {
+          console.error('Error sharing content:', error);
+        }
+      } else {
+        console.warn('Web Share API is not supported in this browser.');
+        if (shareData.url) {
+          try {
+            await navigator.clipboard.writeText(shareData.url);
+            alert('Link copied to your clipboard!');
+          } catch (err) {
+            alert('Share not supported and could not copy link to clipboard.');
+          }
+        } else {
+          alert('This browser does not support the share feature.');
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

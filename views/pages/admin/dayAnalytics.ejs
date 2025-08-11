@@ -14,7 +14,7 @@
   <%- include('../../partials/loader') %>
   <br><br><br><br>
 
-  <div class="analytics-page">
+  <div class="analytics-page loader-after-body" style="display: none;">
     <h3 id="analytics-head">Analytics <input type="date" min="2025-07-07" max="<%= new Date().toISOString().slice(0, 10) %>" id="analyticsDate" value="<%= new Date(date).toISOString().slice(0, 10) %>" onchange="showAnalytics(this.value)"></h3>
     <div id="section-1">
       <section class="analytics-summary">
@@ -51,7 +51,7 @@
             <% allusers.users.forEach(sessionInfo => { %>
               <tr>
                 <td><%= sessionInfo.user.name %></td>
-                <td><%= new Date(sessionInfo.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) %></td>
+                <td><%= new Date(sessionInfo.createdAt).toLocaleTimeString('en-IN', {timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }) %></td>
                 <td><%= sessionInfo.platform %></td>
               </tr>
             <% }) } else { %>

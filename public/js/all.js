@@ -1,12 +1,12 @@
-const CACHE_NAME = `2k17-07-08-2025`; // Change this when you want to force localStorage update
+const VERSION = `2k17-11-08-2025`; // Change this when you want to force localStorage update
 
 const storedVersion = localStorage.getItem('version') || null;
 
-if (storedVersion !== CACHE_NAME) {
+if (storedVersion !== VERSION) {
     console.log("OLD VERSION DETECTED, CLEARING CACHE")
     localStorage.removeItem('session_id');
     localStorage.setItem('session_id', crypto.randomUUID())
-    localStorage.setItem('version', CACHE_NAME);
+    localStorage.setItem('version', VERSION);
 }
 
 function Toast(message, type = 'info') {

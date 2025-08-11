@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
+
+<head>
+  <%- include('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/styles/css/contribute.css">
+  <title>Contribute to 2k17 Platform ❤️</title>
+</head>
+
+<body>
+  <%- include('../partials/loader') %>
+  <%- include('../partials/navbar') %>
+  <br>
+  <section class="support-section loader-after-body" style="display: none;">
+  <div class="support-container">
+    <h1>Love the platform?</h1>
+
+    <p class="description">
+      Hey everyone! We built and maintain this little corner of the internet for us in our spare time.
+      There are some small costs for the server to keep it online. 
+      <br><br>
+      If you enjoy the platform and want to show some appreciation, you can chip in. Think of it as treating us to a coffee or a vada pav! 😄 No pressure at all, of course—your presence here is support itself.
+    </p>
+
+    <div class="qr-box">
+      <img class="qr-code" src="/images/donate-qr.png" alt="UPI QR Code for Contribute" srcset="">
+      <p class="help-text">Scan the QR to chip in.</p>
+      <p><a href="/images/donate-qr.png" download="2k17-Platform-Contribute-QR.png"><span class="fal fa-download"></span> &nbsp;Download QR Code</a></p>
+    </div>
+
+    <button class="support-btn" onclick="checkAndOpenUpiLink('upi://pay?pa=wadhaiujwal-2@oksbi&pn=2k17%20Platform&cu=INR')">
+      <span class="fal fa-mug-hot"></span> &nbsp; Contribute with UPI
+    </button>
+  </div>
+</section>
+
+  <%- include('../partials/footer') %>
+  <script>
+    function checkAndOpenUpiLink(upiLink) {
+      // Mobile check
+      var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (!isMobile) {
+        Toast("Please scan the QR code instead.", 'warning');
+        return;
+      }
+
+      // Try to open UPI intent link
+      var timeout = setTimeout(() => {
+        Toast("Unable to open UPI app. Please scan the QR.", 'warning');
+      }, 3000); // Fallback if user doesn't respond
+
+      window.location.href = upiLink;
+
+      // If user returns, clear timeout
+      window.addEventListener("blur", () => clearTimeout(timeout));
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,32 +1,51 @@
-// models/QuizState.js
 const mongoose = require('mongoose');
 
-const quizStateSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Users',
+const questionSchema = new mongoose.Schema({
+  question: {
+    type: String,
     required: true,
-    unique: true, // Ensures a user can only have one active quiz at a time
+    trim: true,
   },
-  questions: {
-    type: Array,
+  options: {
+    type: [String],
     required: true,
+    validate: [val => val.length >= 2, 'A question must have at least 2 options.'],
   },
-  currentQuestionIndex: {
+  correctAnswer: {
     type: Number,
-    default: 0,
-  },
-  score: {
-    type: Number,
-    default: 0,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    // This TTL index will automatically delete the document 2 hours after its creation.
-    // Perfect for cleaning up quizzes that were started but never finished.
-    expires: '2h',
+    required: true,
+    validate: {
+      validator: function (v) {
+        return v >= 0 && v < this.options.length;
+      },
+      message: 'Correct answer index is out of bounds.'
+    }
   },
 });
 
-module.exports = mongoose.model('QuizState', quizStateSchema);
+const quizSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, 'A quiz must have a title.'],
+      trim: true,
+    },
+    description: {
+      type: String,
+      trim: true,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Users',
+      required: true,
+    },
+    questions: [questionSchema],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Quiz = mongoose.model('Quiz', quizSchema);
+
+module.exports = Quiz;

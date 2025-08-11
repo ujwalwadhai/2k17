@@ -20,8 +20,9 @@
 
 <body>
   <%- include('../partials/navbar') %>
+  <%- include('../partials/loader') %>
   <br><br><br><br><br>
-  <div class="posts">
+  <div class="posts loader-after-body" style="display: none;">
     <div class="post" style="border-top: none;" id="post-<%= post._id %>">
       <div class="user-info" onclick="window.location.href='/<%= post.author.username %>'">
         <img src="<%= post.author.profile %>" alt="" class="user-profile">

@@ -141,8 +141,8 @@ exports.renderResetPage = async (req, res) => {
 };
 
 
-exports.donate = (req, res) => {
-  res.render('pages/donate');
+exports.contribute = (req, res) => {
+  res.render('pages/contribute');
 }
 
 exports.adminUserInfo = async (req, res) => {

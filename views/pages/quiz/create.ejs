@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>">
+
+<head>
+  <%- include('../../partials/head') %>
+  <link rel="stylesheet" href="/styles/css/quiz/create.css">
+  <title><%= title %></title>
+</head>
+
+<body>
+  <%- include('../../partials/navbar') %>
+  <%- include('../../partials/loader') %>
+  <br><br><br>
+  <div class="quiz-form loader-after-body" style="display: none;">
+    <form action="/quiz/create" method="POST">
+      <div class="quiz-main-data">
+        <h2><%= title %></h2>
+        <input type="text" id="title" name="title" placeholder="Quiz title" required>
+        <input type="text" id="description" name="description" placeholder="Description (optional)">
+      </div>
+
+      <hr>
+      <h3>Questions</h3>
+      <div id="questions-container">
+      </div>
+
+      <button type="button" id="add-question-btn" class="btn btn-add">Add Question</button>
+
+      <hr><br>
+      <button type="submit" class="btn btn-primary">Create Quiz</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const questionsContainer = document.getElementById('questions-container');
+      const addQuestionBtn = document.getElementById('add-question-btn');
+      let questionCounter = 0;
+
+      function addQuestion() {
+        const questionIndex = questionCounter++;
+        const questionBlock = document.createElement('div');
+        questionBlock.className = 'question-block';
+        questionBlock.innerHTML = `
+                <div class="form-group">
+                    <label>Question ${questionIndex + 1}</label>
+                    <input type="text" name="questions[${questionIndex}][question]" placeholder="Enter question" required>
+                </div>
+                <h5>Options <span class="grey-1">(Check the radio button for the correct answer)</span></h5>
+                <div class="options-container">
+                    </div>
+                <button type="button" class="btn btn-secondary btn-sm add-option-btn" style="margin-top: 12px">Add Option</button>
+            `;
+        questionsContainer.appendChild(questionBlock);
+      }
+
+      function addOption(optionsContainer, questionIndex) {
+        const optionIndex = optionsContainer.children.length;
+        const optionItem = document.createElement('div');
+        optionItem.className = 'option-item';
+        optionItem.innerHTML = `
+                <input type="radio" name="questions[${questionIndex}][correctAnswer]" value="${optionIndex}" required>
+                <input type="text" name="questions[${questionIndex}][options][${optionIndex}]" placeholder="Option text" required>
+            `;
+        optionsContainer.appendChild(optionItem);
+      }
+
+      addQuestion();
+
+      addQuestionBtn.addEventListener('click', addQuestion);
+
+      questionsContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('add-option-btn')) {
+          const questionBlock = event.target.closest('.question-block');
+          const optionsContainer = questionBlock.querySelector('.options-container');
+          const questionIndex = Array.from(questionsContainer.children).indexOf(questionBlock);
+          addOption(optionsContainer, questionIndex);
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

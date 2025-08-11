@@ -3,7 +3,7 @@ function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    var exclude = ['/login', '/signup', '/email-login', '/forgot-password', '/reset-password', '/donate', '/logout', '/home']
+    var exclude = ['/login', '/signup', '/email-login', '/forgot-password', '/reset-password', '/support', '/logout', '/home']
     if(exclude.includes(req.originalUrl)){
         res.redirect('/login');
     } else {

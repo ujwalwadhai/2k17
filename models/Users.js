@@ -23,10 +23,6 @@ const userSchema = new mongoose.Schema({
   googleId: { type: String },
   gender: { type: String, enum: ['male', 'female'] },
   house: { type: String, enum: ['Arawali', 'Nilgiri', 'Shiwalika', 'Udaygiri'] },
-  quizScore: {
-    type: Number,
-    default: null
-  },
   lastActive: {
     type: Date,
     default: null,

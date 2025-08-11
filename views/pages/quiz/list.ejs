@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>">
+
+<head>
+  <%- include('../../partials/head') %>
+  <link rel="stylesheet" href="/styles/css/quiz/list.css">
+  <title><%= title %> • 2k17 Platform</title>
+</head>
+
+<body>
+  <%- include('../../partials/navbar') %>
+  <%- include('../../partials/loader') %>
+  <br><br><br>
+  <div class="quiz-container loader-after-body" style="display: none;">
+    <div class="quiz-header">
+      <h1><%= title %></h1>
+      <a href="/quiz/create" class="btn btn-primary"><span class="fal fa-plus"></span>&nbsp; Create Your Own Quiz</a>
+    </div>
+
+    <% if (quizzes && quizzes.length > 0) { %>
+    <div class="quiz-list">
+      <% quizzes.forEach(quiz => { %>
+      <div class="quiz-card">
+        <h3><%= quiz.title %></h3>
+        <p><%= quiz.description %></p>
+        <p class="quiz-meta">
+          Created by <%- quiz.createdBy ? `<a href="/${quiz.createdBy.username}">${quiz.createdBy.username}</a>` : 'Unknown User' %>
+          on <%= quiz.createdAt.toLocaleString('en-IN', {timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric' }) %>
+        </p>
+        <div class="quiz-btns">
+          <button class="take-quiz-btn" onclick="window.location.href = '/quiz/<%= quiz._id %>'"><span class="fal fa-play"></span>Take quiz</button>
+          <button class="leaderboard-btn" onclick="window.location.href = '/quiz/leaderboard/<%= quiz._id %>'">Leaderboard</button>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <p>No quizzes have been created yet. Why not <a href="/quiz/create"> be the first</a>?</p>
+    <% } %>
+  </div>
+
+</body>
+
+</html>

@@ -1,5 +1,4 @@
 const PageViews = require('../../models/PageViews');
-const ActiveUsers = require('../../models/ActiveUsers');
 
 const addFileView = async (req, res) => {
     try {

@@ -7,21 +7,21 @@ body {
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
 }
 
-.donate-section {
+.support-section {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 4rem 24px;
   background: transparent;
   min-height: 90vh;
+  backdrop-filter: blur(5px);
 
   @media (max-width: 768px) {
     padding: 4rem 0;
     width: 100vw;
   }
 
-  .donate-container {
-    backdrop-filter: blur(5px);
+  .support-container {
     background: transparent;
     padding: 1.2rem 2rem;
     padding-top: 0.8rem;
@@ -29,7 +29,7 @@ body {
     max-width: min(600px, 100vw);
     width: 100%;
     text-align: left;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 1);
+    margin: auto;
 
     @media (max-width: 768px) {
       box-shadow: none;
@@ -64,7 +64,7 @@ body {
     }
 
 
-    .donate-btn {
+    .support-btn {
       background: var(--primary-dark);
       color: var(--text-light);
       padding: 0.8rem;

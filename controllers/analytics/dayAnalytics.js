@@ -24,7 +24,7 @@ const dayAnalytics = async (req, res) => {
             $lte: endOfDay(date)
         },
         user: { $exists: true, $ne: null }
-    }).populate("user", "name username");
+    }).populate("user", "name username"); 
 
     const guests = await DailyUsers.countDocuments({
         createdAt: {

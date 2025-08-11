@@ -5,22 +5,22 @@ body {
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
 }
 
-.donate-section {
+.support-section {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 4rem 24px;
   background: transparent;
   min-height: 90vh;
+  backdrop-filter: blur(5px);
 }
 @media (max-width: 768px) {
-  .donate-section {
+  .support-section {
     padding: 4rem 0;
     width: 100vw;
   }
 }
-.donate-section .donate-container {
-  backdrop-filter: blur(5px);
+.support-section .support-container {
   background: transparent;
   padding: 1.2rem 2rem;
   padding-top: 0.8rem;
@@ -28,38 +28,38 @@ body {
   max-width: min(600px, 100vw);
   width: 100%;
   text-align: left;
-  box-shadow: 0 12px 32px rgb(0, 0, 0);
+  margin: auto;
 }
 @media (max-width: 768px) {
-  .donate-section .donate-container {
+  .support-section .support-container {
     box-shadow: none;
     padding: 16px 28px;
     padding-top: 12px;
     border-radius: 0;
   }
 }
-.donate-section .donate-container h1 {
+.support-section .support-container h1 {
   font-size: 28px;
   color: white;
   margin-bottom: 2rem;
 }
-.donate-section .donate-container .description {
+.support-section .support-container .description {
   font-size: 0.95rem;
   color: var(--text-light);
   margin-bottom: 2rem;
   line-height: 22px;
 }
-.donate-section .donate-container .qr-box {
+.support-section .support-container .qr-box {
   text-align: center;
 }
-.donate-section .donate-container .qr-box img.qr-code {
+.support-section .support-container .qr-box img.qr-code {
   width: 60vw;
   max-width: 300px;
   max-height: 300px;
   margin: 8px;
   text-align: center;
 }
-.donate-section .donate-container .donate-btn {
+.support-section .support-container .support-btn {
   background: var(--primary-dark);
   color: var(--text-light);
   padding: 0.8rem;
@@ -72,8 +72,8 @@ body {
   margin-bottom: 6px;
   width: 100%;
 }
-.donate-section .donate-container .donate-btn:hover {
+.support-section .support-container .support-btn:hover {
   background: var(--primary);
 }
 
-/*# sourceMappingURL=donate.css.map */
+/*# sourceMappingURL=contribute.css.map */

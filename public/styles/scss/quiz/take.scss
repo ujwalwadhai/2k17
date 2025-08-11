@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family), sans-serif;
+  color: white;
+  backdrop-filter: blur(5px);
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+
+  @media (max-width: 768px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+  }
+}
+
+.quiz-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+
+  .leaderboard-link {
+    display: block;
+    text-align: right;
+    margin-bottom: 1rem;
+    color: var(--primary-light);
+  }
+
+  #ownerInfo {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+}
+
+.question-item {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--input-border);
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.options-list {
+  list-style: none;
+  padding: 0;
+
+  li label {
+    display: flex;
+    padding: 0.75rem;
+    margin: 4px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: var(--bg-dark);
+    }
+
+    input {
+      height: 15px;
+      width: 15px;
+      margin-right: 12px;
+    }
+  }
+}
+
+.btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--bg-dark);
+  color: white;
+}
+
+.btn-primary {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--primary);
+  color: white;
+}
+
+.question-item {
+  display: none;
+  animation: fadeIn 0.5s;
+}
+
+.question-item.active {
+  display: block;
+}
+
+.navigation-buttons {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

@@ -56,6 +56,8 @@ require('./models/Settings')
 require('./models/ActiveUsers')
 require('./models/PageViews')
 require('./models/UserSessions')
+require('./models/Quiz')
+require('./models/Attempt')
 
 app.use(express.json({ type: 'application/json' }))
 app.use(express.urlencoded({ extended: true }));
@@ -103,7 +105,6 @@ app.use((req, res, next) => {
 
 app.use('/admin', isLoggedIn, hasRole('admin'))
 app.get('/api/analytics', isLoggedIn, hasRole('admin'))
-app.use('/quiz', require('./routes/quiz'));
 app.use('/', require('./middlewares/locals'), getRoutes);
 app.use('/', postRoutes);
 

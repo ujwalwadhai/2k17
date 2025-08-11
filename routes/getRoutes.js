@@ -9,6 +9,7 @@ var memoriesController = require('../controllers/memories');
 var analyticsController = require('../controllers/analytics');
 var usersController = require('../controllers/users');
 var adminController = require('../controllers/admin');
+var quizController = require('../controllers/quizzes');
 var { isLoggedIn } = require('../middlewares/auth');
 
 
@@ -42,7 +43,7 @@ router.get('/create-account', getController.register);
 
 router.get('/login/email', getController.emailLogin);
 
-router.get('/donate', getController.donate);
+router.get('/contribute', getController.contribute);
 
 router.get('/members', getController.members);
 
@@ -93,6 +94,17 @@ router.get('/api/analytics/monthly-users', analyticsController.monthlyUsers);
 
 
 router.get('/search-users', isLoggedIn, usersController.searchUsers);
+
+
+router.get('/quizzes', isLoggedIn, quizController.listAllQuizzes);
+
+router.get('/quiz/create', isLoggedIn, quizController.renderCreateForm);
+
+router.get('/quiz/:quizId', isLoggedIn, quizController.viewSingleQuiz);
+
+router.get('/quiz/attempt/:attemptId', quizController.viewResult);
+
+router.get('/quiz/leaderboard/:quizId', quizController.viewLeaderboard);
 
 
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping

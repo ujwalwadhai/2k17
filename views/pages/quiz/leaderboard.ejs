@@ -1,50 +1,51 @@
 <!DOCTYPE html>
-<html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
-
+<html lang="en" data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>">
 <head>
-  <%- include('../../partials/head') %>
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/styles/css/quiz/main.css">
+    <%- include('../../partials/head') %>
+    <link rel="stylesheet" href="/styles/css/quiz/leaderboard.css">
+    <title><%= title %> • 2k17 Platform</title>
 </head>
-
 <body>
-  <%- include('../../partials/navbar') %><br><br><br>
-  <div class="leaderboard-container">
-    <h2>Birthday Quiz Leaderboard</h2>
-    <% if(user?.quizScore) { %>
-        <div class="actions">
-        <a href="/home" class="btn"><span class="fal fa-house"></span>&nbsp; Back to home page</a>
-        </div>
-    <% } else { %>
-        <div class="actions">
-            <a href="/quiz" class="btn">Start quiz</a>
-        </div>
-    <% } %>
-    <table class="leaderboard-table">
-      <thead>
-        <tr>
-          <th style="text-align: right">Rank</th>
-          <th>Name of player</th>
-          <th style="text-align: right">Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% players.forEach((player, index) => { %>
-        <tr>
-          <td class="rank"><%- index == 0 ? '<span class="fal fa-user-crown" style="margin-left: 8px; color: white;"></span>' : index + 1 %></td>
-          <td class="name" onclick="window.location.href='/<%= player.username %>'"><%= player.name %></td>
-          <td class="score"><%= player.quizScore %></td>
-        </tr>
-        <% }); %>
-      </tbody>
-    </table>
-  </div>
-  <br><br><br>
-  <script src="/js/components/confetti.js"></script>
+    <%- include('../../partials/navbar') %>
+    <%- include('../../partials/loader') %>
+    <br><br><br><br> 
 
-  <script>
-    Confetti()
-  </script>
+    <div class="leaderboard-container loader-after-body" style="display: none;">
+        <h1>Leaderboard</h1>
+        <h2><%= quiz.title %></h2>
+        <div class="btns">
+            <% if(attempted) { %>
+                <button onclick="window.location.href = '/quiz/<%= quiz._id %>'"><span class="fal fa-chart-mixed"></span>&nbsp; View Analysis</button>
+            <% } else { %>
+                <button onclick="window.location.href = '/quiz/<%= quiz._id %>'"><span class="fal fa-play"></span>&nbsp; Start Quiz</button>
+            <% } %>
+        </div>
+
+        <% if (leaderboard && leaderboard.length > 0) { %>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% leaderboard.forEach((entry, index) => { %>
+                        <tr>
+                            <td><%- index == 0 ? '<span class="fal fa-user-crown"></span>' : index + 1 %></td>
+                            <td onclick="window.location.href = '/<%= entry.user ? entry.user.username : '' %>'"><%= entry.user ? entry.user.username : 'Unknown' %></td>
+                            <td><%= entry.score %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p style="text-align: center; margin-top: 2rem;">
+                No one has completed this quiz yet. 
+                <a href="/quiz/<%= quiz._id %>">Be the first!</a>
+            </p>
+        <% } %>
+    </div>
 </body>
-
 </html>

@@ -282,6 +282,22 @@ async function LoginMail(to, data) {
   sendEmail(to, 'Login Alert • 2k17 Platform', createEmailTemplate(content));
 }
 
+async function NewQuizMail(to, data) {
+  let content = `
+    <h2 style="color: #7b5cf0;">New Quiz Created</h2>
+    <p>Hello Admin,</p>
+    <p style="margin: 0 0 16px 0">A new quiz is created as follows:</p>
+    <div class="info-box">
+      <p><strong>Title:</strong>${data.quiz.title}</p>
+      <p><strong>Description:</strong>${data.quiz.description}</p>
+      <p><strong>No. of questions:</strong>${data.quiz.questions}</p>
+      <p><strong>Time:</strong>${createDate()}</p>
+    </div>`;
+
+  logActivity('', `Sent email to ${to} for new quiz`)
+  sendEmail(to, 'New Quiz Created • 2k17 Platform', createEmailTemplate(content));
+}
+
 async function OTPMail(to, data) {
   let content = `
         <h2 style="color: #7b5cf0">OTP for Login</h2>
@@ -562,6 +578,7 @@ async function sendMail(type, to, data) {
   if (type == 'new_user_registration') RegisteredDataMail(to, data);
   if (type == 'weekly_report') WeeklyReportMail(to, data);
   if (type == 'post_mention') PostMentionMail(to, data);
+  if (type == 'new_quiz') NewQuizMail(to, data);
 }
 
 module.exports = sendMail;

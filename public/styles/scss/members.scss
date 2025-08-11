@@ -13,7 +13,7 @@ body {
 }
 
 .members-page {
-  padding: 40px 20px;
+  padding: 40px 12px;
   background: transparent;
   min-height: 100vh;
   text-align: center;
@@ -86,8 +86,8 @@ body {
     }
 
     img {
-      width: 80px;
-      height: 80px;
+      width: 72px;
+      height: 72px;
       object-fit: cover;
       border-radius: 50%;
       margin-right: 12px;
@@ -95,7 +95,7 @@ body {
     }
 
     .name {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       margin: 0;
       padding: 0;
       margin-bottom: 4px;
@@ -121,12 +121,12 @@ body {
       padding: 0;
       margin: 0;
       margin-top: 8px;
-      color: var(--text-light);
+      color: var(--text-muted);
       font-size: 14px;
     }
 
     .username {
-      color: var(--text-light);
+      color: var(--text-muted);
       font-size: 14px;
       cursor: pointer;
     }

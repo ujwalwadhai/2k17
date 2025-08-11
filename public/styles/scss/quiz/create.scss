@@ -1,0 +1,103 @@
+*{
+  outline: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family), sans-serif;
+  color: white;
+  backdrop-filter: blur(5px);
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+
+  @media (max-width: 768px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+  }
+}
+
+.quiz-form {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.25rem;
+} 
+
+.quiz-main-data, .question-block {
+  background-color: var(--bg-dark2);
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+
+  input:first-of-type {
+    margin-bottom: 1rem;
+  }
+
+  h2{
+    margin-top: 0;
+  }
+
+  h5{
+    margin: 0 0 0.75rem 0;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-light);
+    border-radius: 6px;
+
+    &:focus{
+      border: 1px solid var(--primary);
+    }
+  }
+} 
+
+.quiz-main-data{
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.questions-container {
+  background-color: var(--bg-dark3);
+  border: 1px solid var(--input-border);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 6px;
+
+}
+.options-container .option-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  input[type="text"] {
+    margin-bottom: 0.5rem;
+    width: auto !important;
+  }
+  input[type="radio"] {
+    margin-right: 0.5rem;
+  }
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  &.btn-primary { background-color: var(--primary); color: var(--text-light); }
+  &.btn-add { background-color: var(--success); color: var(--text-light); margin: 0.5rem 0; }
+  &.btn-secondary { background-color: var(--bg-dark3); color: var(--text-light); }
+}

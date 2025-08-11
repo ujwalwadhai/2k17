@@ -11,6 +11,7 @@ var emailController = require('../controllers/email');
 var adminController = require('../controllers/admin');
 var memoriesController = require('../controllers/memories');
 var analyticsController = require('../controllers/analytics');
+var quizController = require('../controllers/quizzes');
 var { upload } = require('../config/cloudinary');
 var { isLoggedIn, hasRole } = require('../middlewares/auth');
 
@@ -133,5 +134,11 @@ router.post('/file/:fileId/new/comment', isLoggedIn, memoriesController.newComme
 router.post('/file/:fileId/comment/:commentId/delete', isLoggedIn, memoriesController.deleteComment);
 
 router.post('/file/:fileId/tag', isLoggedIn, memoriesController.tagFile);
+
+
+router.post('/quiz/create', isLoggedIn, quizController.handleCreateForm);
+
+router.post('/quiz/:quizId/attempt', isLoggedIn, quizController.handleAttempt);
+
 
 module.exports = router;

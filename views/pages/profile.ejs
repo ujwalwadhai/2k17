@@ -18,7 +18,7 @@
 <body>
   <%- include('../partials/loader') %>
   <%- include('../partials/navbar') %>
-  <div class="profile-page">
+  <div class="profile-page loader-after-body" style="display: none;">
     <div class="cover-photo" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(<%= account.coverPhoto || '/images/jnv-bg-1.jpg' %>) center center / cover no-repeat;">
     </div>
 
@@ -189,7 +189,7 @@
                 </div>
               </div>
               <div class="info-item">
-                <i class="fal fa-calendar-days icon"></i>
+                <i class="fal fa-calendar icon"></i>
                 <div class="info-text">
                   <span class="label">Batch Year</span>
                   <span class="value"><%= account.year %></span>

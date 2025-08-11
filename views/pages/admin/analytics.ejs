@@ -14,7 +14,7 @@
   <%- include('../../partials/loader') %>
   <br><br><br><br>
 
-  <div class="analytics-page">
+  <div class="analytics-page loader-after-body" style="display: none;">
     <h3 id="analytics-head">Analytics <input type="date" min="2025-07-07" max="<%= new Date().toISOString().slice(0, 10) %>" id="analyticsDate" value="<%= new Date().toISOString().slice(0, 10) %>" onchange="showAnalytics(this.value)"></h3>
     <div id="section-1">
       <section class="analytics-summary">
@@ -69,7 +69,7 @@
       <section class="analytics-section" id="daily-route-stats">
         <div class="daily-route-header">
           <h3>Route Visits</h3>
-          <input type="date" id="daily-route-date" />
+          <input type="date" id="daily-route-date" min="2025-07-07" max="<%= new Date().toISOString().slice(0, 10) %>"/>
         </div>
         <p class="summary-card" id="top-page">
           <span class="label">Top Page : </span>

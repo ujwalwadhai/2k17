@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>">
+<head>
+    <%- include('../../partials/head') %>
+    <link rel="stylesheet" href="/styles/css/quiz/take.css">
+    <title><%= quiz.title %> • 2k17 Platform</title>
+</head>
+<body>
+    <%- include('../../partials/navbar') %>
+    <%- include('../../partials/loader') %>
+    <br><br>
+    <div class="quiz-container loader-after-body" style="display: none;">
+        <h2><%= quiz.title %></h2>
+        <p><%= quiz.description %></p>
+        <p id="ownerInfo">Created by <a href="/<%= quiz.createdBy.username %>"><%= quiz.createdBy.name %></a> on <%= new Date(quiz.createdAt).toLocaleString('en-IN', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'long', year: 'numeric'}) %></p>
+        <hr><br>
+
+        <form id="quizForm" action="/quiz/<%= quiz._id %>/attempt" method="POST">
+            <% quiz.questions.forEach((question, index) => { %>
+                <div class="question-item" data-question-index="<%= index %>">
+                    <h4><%= question.question %></h4>
+                    <ul class="options-list">
+                        <% question.options.forEach((option, optionIndex) => { %>
+                            <li>
+                                <label>
+                                    <input type="radio" name="answers[<%= index %>]" value="<%= optionIndex %>" required>
+                                    <%= option %>
+                                </label>
+                            </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            <% }) %>
+            
+            <div class="navigation-buttons">
+                <button type="button" id="prevBtn" class="btn">Previous</button>
+                <div id="progressIndicator"></div>
+                <button type="button" id="nextBtn" class="btn btn-primary">Next</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const quizForm = document.getElementById('quizForm');
+            const questions = document.querySelectorAll('.question-item');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const progressIndicator = document.getElementById('progressIndicator');
+            
+            const totalQuestions = questions.length;
+            let currentQuestionIndex = 0;
+
+            function showQuestion(index) {
+                questions.forEach(q => q.classList.remove('active'));
+
+                if (questions[index]) {
+                    questions[index].classList.add('active');
+                }
+                
+                progressIndicator.textContent = `Que ${index + 1} of ${totalQuestions}`;
+
+                prevBtn.style.display = index === 0 ? 'none' : 'inline-block';
+                nextBtn.style.display = index === totalQuestions - 1 ? 'none' : 'inline-block';
+                submitBtn.style.display = index === totalQuestions - 1 ? 'inline-block' : 'none';
+            }
+
+            nextBtn.addEventListener('click', () => {
+                const currentQuestion = questions[currentQuestionIndex];
+                const radioButtons = currentQuestion.querySelectorAll('input[type="radio"]');
+                const isAnswered = Array.from(radioButtons).some(radio => radio.checked);
+
+                if (!isAnswered) {
+                    alert('Please select an answer to continue.');
+                    return; 
+                }
+
+                if (currentQuestionIndex < totalQuestions - 1) {
+                    currentQuestionIndex++;
+                    showQuestion(currentQuestionIndex);
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    showQuestion(currentQuestionIndex);
+                }
+            });
+
+            quizForm.addEventListener('submit', (e) => {
+                const lastQuestion = questions[totalQuestions - 1];
+                const radioButtons = lastQuestion.querySelectorAll('input[type="radio"]');
+                const isAnswered = Array.from(radioButtons).some(radio => radio.checked);
+
+                if (!isAnswered) {
+                    e.preventDefault();
+                    alert('Please select an answer for the final question.');
+                }
+            });
+            showQuestion(currentQuestionIndex);
+        });
+    </script>
+</body>
+</html>

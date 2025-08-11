@@ -11,7 +11,7 @@
   <%-include('../../partials/loader') %>
   <%-include('../../partials/navbar') %>
   <br><br><br><br>
-
+  <div  class="loader-after-body" style="display: none;">
   <div class="admin-btns">
     <button onclick="openNewsLetter()" class="tool-btn"><span class="fal fa-newspaper"></span> Create new newsletter</button>
     <button onclick="openSendNotification()" class="tool-btn"><span class="fal fa-bell"></span> Send push notification</button>
@@ -95,6 +95,7 @@
   </div>
   <br><br>
 
+</div>
   <div id="resolve-report-popup">
     <div class="overlay" onclick="closeResolveReport()"></div>
     <div class="resolve-report-box">

@@ -180,6 +180,10 @@ input:disabled {
   cursor: no-drop;
 }
 
+button {
+  cursor: pointer;
+}
+
 img {
   -webkit-user-drag: none;
   -kkee-user-drag: none;

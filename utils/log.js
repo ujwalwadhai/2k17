@@ -3,6 +3,7 @@ var Logs = require('../models/Logs');
 async function logActivity(userId, activity = '', data={}) {
   try {
     if(process.env.PLATFORM_TYPE == 'developement') return
+    if(req?.user?.role === 'admin') return
     if(!userId) {
       await Logs.create({
         activity,

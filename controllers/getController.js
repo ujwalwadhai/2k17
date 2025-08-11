@@ -208,7 +208,8 @@ async function getSortedUsers(loggedInUserId = null) {
     });
 
     const users = await Users.aggregate(pipeline);
-    return users;
+    const final = users.filter(user => user._id.toString() !== '6899e28c181c7329d31384bc');
+    return final;
 
   } catch (err) {
     console.log(err);

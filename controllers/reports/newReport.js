@@ -18,7 +18,7 @@ const newReport = async (req, res) => {
 
     await newReport.save();
 
-    var admins = await Users.find({ role: 'admin' }).select('email -_id');
+    var admins = await Users.find({ role: 'admin', username: {$ne: '2k17platform'} }).select('email -_id');
     var adminEmails = admins.map(user => user.email);
 
     if(req.user?.email) {

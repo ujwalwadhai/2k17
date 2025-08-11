@@ -109,6 +109,8 @@ router.get('/quiz/leaderboard/:quizId', quizController.viewLeaderboard);
 
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping
 
+router.get('/2k17platform', (req, res) => res.redirect('/'))
+
 router.get('/:username', getController.viewProfile);
 
 module.exports = router;

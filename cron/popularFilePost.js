@@ -71,7 +71,7 @@ cron.schedule('2 0 * * *', async () => {
 
         const yesterdaysPost = await Posts.findOne({
             createdAt: { $gte: startOfYesterday, $lte: endOfYesterday },
-            author: '685680c4709e2711271639d1',
+            author: '6899e28c181c7329d31384bc',
             text: { $regex: "Here's the most viewed memory of yesterday" }
         });
 
@@ -94,7 +94,7 @@ cron.schedule('2 0 * * *', async () => {
                 url: file.url,
                 type: 'image'
             },
-            author: '685680c4709e2711271639d1',
+            author: '6899e28c181c7329d31384bc',
             createdAt: new Date(),
             updatedAt: new Date()
         };
@@ -102,7 +102,7 @@ cron.schedule('2 0 * * *', async () => {
         const updatedOrCreatedPost = await Posts.findOneAndUpdate(
             {
                 createdAt: { $gte: startOfYesterday, $lte: endOfYesterday },
-                author: '685680c4709e2711271639d1',
+                author: '6899e28c181c7329d31384bc',
                 text: { $regex: "Here's the most viewed memory of yesterday" }
             },
             { $set: postContent },

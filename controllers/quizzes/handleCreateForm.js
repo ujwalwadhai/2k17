@@ -1,5 +1,6 @@
 const sendMail = require('../../config/mailer');
 const Quiz = require('../../models/Quiz');
+const Users = require('../../models/Users');
 
 module.exports = async (req, res) => {
   try {
@@ -19,7 +20,9 @@ module.exports = async (req, res) => {
     });
 
     await newQuiz.save();
-    await sendMail('new_quiz', 'wadhaiujwal@gmail.com', { quiz: { title, description, questions: formattedQuestions.length }, createdBy: req.user.name });
+    const admins = await Users.find({ role: 'admin', username: {$ne: '2k17platform'} }, {email: 1});
+    const adminMails = admins.map(admin => admin.email);
+    await sendMail('new_quiz', adminMails, { quiz: { title, description, questions: formattedQuestions.length }, createdBy: req.user.name });
 
     res.redirect(`/quiz/${newQuiz._id}`);
 

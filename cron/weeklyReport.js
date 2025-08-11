@@ -216,7 +216,7 @@ cron.schedule('50 23 * * 6', async () => {
     try {
         const data = await getMonthlyAnalyticsData();
         if(data){
-        const admins = await Users.find({role: 'admin'}).select("email");
+        const admins = await Users.find({role: 'admin', username: {$ne: '2k17platform'}}).select("email");
         const adminEmails = admins.map(u => u.email)
         await sendMail('weekly_report', adminEmails, data);
         console.log('✅ Weekly analytics report sent to', adminEmails);

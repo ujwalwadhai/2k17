@@ -33,7 +33,7 @@ const register = async (req, res) => {
 
     await Settings.create({ user: user._id });
 
-    var admins = await Users.find({ role: 'admin' }, {email:1});
+    var admins = await Users.find({ role: 'admin', username: { $ne: '2k17platform'} }, {email:1});
     var adminEmails = admins.map(u => u.email);
     var totalUsers = await Users.countDocuments();
     var verifiedUsers = await Users.countDocuments({ verified: true });

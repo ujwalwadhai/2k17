@@ -9,7 +9,8 @@ var searchUsers = async (req, res) => {
     $or: [
       { username: { $regex: '^' + keyword, $options: 'i' } },
       { name: { $regex: '^' + keyword, $options: 'i' } }
-    ]
+    ],
+    username: { $ne: "2k17platform" }
   })
     .select('username name profile')
     .limit(5);

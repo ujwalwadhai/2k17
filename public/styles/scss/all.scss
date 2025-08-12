@@ -1,4 +1,3 @@
-
 @use 'components/toast' as *;
 
 html, body{
@@ -20,6 +19,11 @@ html, body{
 *:after {
   box-sizing: inherit;
   accent-color: var(--primary);
+}
+
+::selection{
+  color: var(--text-light);
+  background-color: var(--primary-dark);
 }
 
 @font-face {
@@ -100,8 +104,8 @@ html, body{
 a {
   color: var(--primary);
   text-decoration: none;
-  user-select: none;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 img,

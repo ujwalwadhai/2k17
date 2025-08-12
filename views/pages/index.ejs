@@ -3,7 +3,7 @@
 
 <head>
   <%- include('../partials/head.ejs') %>
-  <title>2k17 Platform</title>
+  <title>Platform dé 2k17</title>
   <link rel="stylesheet" href="/styles/css/index.css" />
   <link rel="stylesheet" href="/styles/css/components/countdown.css" />
 </head>
@@ -12,7 +12,7 @@
   <%- include('../partials/loader') %>
   <%- include('../partials/navbar') %>
 
-  <main  class="loader-after-body" style="display: none;">
+  <main class="loader-after-body" style="display: none;">
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-text">
@@ -122,7 +122,7 @@
     <!-- Features Section -->
     <section id="features" class="features no-select">
       <h3>Features</h3>
-      <p class="grey-1">Hard to count :) These are some of those great things you'll see around here</p>
+      <p class="grey-1">So much to see around here.</p>
       <div class="features-grid">
         <div class="feature-card">
           <span class="fal feature-icon fa-shield-keyhole"></span>
@@ -135,28 +135,52 @@
           <p>Post text and pictures to remember our best moments.</p>
         </div>
         <div class="feature-card">
-          <span class="fal feature-icon fa-square-heart"></span>
-          <h4>Comment & Like</h4>
-          <p>Engage with your batchmates' posts and show appreciation.</p>
+          <span class="fal feature-icon fa-block-question"></span>
+          <h4>Quizzes</h4>
+          <p>Test the knowledge of others through engaging quizzes.</p>
         </div>
         <div class="feature-card">
           <span class="fal feature-icon fa-images"></span>
           <h4>Class Memories</h4>
-          <p>A living scrapbook — from class 10 to whole life.</p>
+          <p>Batch's all digital memories in one place.</p>
         </div>
       </div>
     </section>
 
-    <section class="contact" id="contact">
-      <h3>Contact Us</h3>
-      <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a></p><br>
-      <form id="contact-form">
-        <input type="text" placeholder="Your email" name="email" required>
-        <input type="text" name="text" id="" placeholder="Say hi ..." required>
-        <p id="contact-status" style="font-size: 14px;"></p>
-        <button type="submit"><span class="fal fa-paper-plane"></span> &nbsp; Send</button>
-      </form>
-    </section>
+    <div class="contact-and-about">
+      <section class="contact" id="contact">
+        <h3>Reach out</h3>
+        <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a></p><br>
+        <form id="contact-form">
+          <input type="text" placeholder="Your email" name="email" required>
+          <input type="text" name="text" id="" placeholder="Say hi ..." required>
+          <p id="contact-status" style="font-size: 14px;"></p>
+          <button type="submit"><span class="fal fa-paper-plane"></span> &nbsp; Send</button>
+        </form>
+      </section>
+
+      <section class="about-us" id="about-us">
+        <h3>The developers</h3>
+        <p class="contact-text">Popularly known as "creators" 😁<br>Maintaining platform isn't easy, but<br>“When there's a will, there's a way” 😉</p><br>
+        <div class="admins">
+          <% admins.forEach(admin => { %>
+          <div class="about-card" onclick="window.location.href='/<%= admin.username %>'">
+            <img src="<%= admin.profile || '/images/user.png' %>" alt="Profile Picture" class="about-profile-pic">
+            <div class="admin-info">
+              <p class="name"><%= admin.name %></p>
+              <p class="username">@<%= admin.username %></p>
+              <div class="social">
+                <a href="<%= admin.email %>"><span class="fal fa-envelope"></span></a>
+                <a href="<%= admin.socialLinks.github %>"><span class="fab fa-github"></span></a>
+                <a href="<%= admin.socialLinks.linkedin %>"><span class="fab fa-linkedin"></span></a>
+                <a href="<%= admin.socialLinks.instagram %>"><span class="fab fa-instagram"></span></a>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </section>
+    </div>
   </main>
 
   <%- include('../partials/footer') %>

@@ -1,5 +1,3 @@
-
-
 body {
   margin: 0;
   padding: 0;
@@ -10,7 +8,7 @@ body {
   color: white;
 }
 
-main{
+main {
   background: #100e1789;
   backdrop-filter: blur(5px);
 }
@@ -73,13 +71,18 @@ main{
     position: relative;
     display: inline-block;
     width: 100%;
-    max-width: 40vw;
+    max-width: max(40vw, 500px);
+    ;
     border: 1px solid var(--text-muted);
     border-radius: 12px;
+    transition: 0.3s transform ease;
 
+    &:hover {
+      transform: scale(1.01);
+    }
 
     img.featured-photo-img {
-      height: 100%;
+      height: min(calc(40vh - 6rem), 300px);
       object-fit: cover;
       border-radius: 12px;
       width: 100%;
@@ -95,7 +98,7 @@ main{
       height: 72px;
       color: white;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-      font-size: 22px;
+      font-size: 20px;
       border-radius: 12px;
     }
   }
@@ -105,7 +108,7 @@ main{
 .about,
 .features,
 .members,
-.contact,
+.contact-and-about,
 .gallery {
   padding: 4rem 10%;
   text-align: left;
@@ -135,7 +138,7 @@ main{
 .members,
 .gallery,
 .features,
-.contact {
+.contact-and-about {
   padding-top: 2rem;
 }
 
@@ -259,6 +262,7 @@ main{
     p {
       font-size: 0.95rem;
       color: grey;
+      line-height: 22px;
     }
 
     &:hover {
@@ -281,6 +285,7 @@ footer {
 @media (max-width: 900px) {
   .hero {
     flex-direction: column-reverse;
+    padding-top: 12px;
     gap: auto;
 
     .hero-text {
@@ -297,7 +302,6 @@ footer {
       min-width: 250px;
       width: 100%;
       margin-top: 108px;
-      transform: scale(1.1);
     }
   }
 }
@@ -331,11 +335,11 @@ footer {
     .about {
       width: 70%;
     }
-    
+
     .newsletter-sub {
       background: var(--bg-dark);
       box-sizing: border-box;
-      border: 3px solid var(--primary);
+      border: 2px solid var(--primary);
       border-radius: 8px;
       margin: 5rem 0;
       margin-right: 5%;
@@ -349,9 +353,9 @@ footer {
         width: 100%;
         padding: 0.8rem;
         margin: 0.5rem 0;
-        border: none;
+        border: 1px solid var(--input-border);
         border-radius: 8px;
-        background: var(--input-bg);
+        background: var(--bg-dark);
         color: var(--text-light);
         outline: none;
 
@@ -387,7 +391,7 @@ footer {
     box-sizing: border-box;
     margin: 4rem 8%;
     padding: 8px 32px;
-    border: 3px solid var(--primary);
+    border: 1.5px solid var(--primary);
     border-radius: 8px;
     width: auto;
     min-width: 250px;
@@ -396,9 +400,9 @@ footer {
       width: 100%;
       padding: 0.8rem;
       margin: 0.5rem 0;
-      border: none;
+      border: 1px solid var(--input-border);
       border-radius: 8px;
-      background: var(--input-bg);
+      background: var(--bg-dark);
       color: var(--text-light);
       outline: none;
 
@@ -426,14 +430,15 @@ footer {
   }
 }
 
-.contact {
+.contact,
+.about-us {
   input {
     width: 100%;
     padding: 0.8rem;
     margin: 0.5rem 0;
-    border: none;
+    border: 1px solid var(--input-border);
     border-radius: 8px;
-    background: var(--input-bg);
+    background: var(--bg-dark);
     color: var(--text-light);
     outline: none;
     max-width: 400px;
@@ -459,10 +464,6 @@ footer {
     &:hover {
       background: var(--primary-dark);
     }
-  }
-
-  h3 {
-    margin-bottom: 2rem;
   }
 
   p.contact-text {
@@ -507,6 +508,7 @@ footer {
     a {
       color: var(--primary-light);
       text-decoration: underline;
+
       &:hover {
         color: var(--primary);
       }
@@ -559,6 +561,73 @@ footer {
 }
 
 
-.about-and-newsletter{
+.about-and-newsletter {
   background: transparent;
+}
+
+.contact-and-about {
+  display: flex;
+  gap: 4rem;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+
+  .about-us {
+    .admins {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .about-card {
+      display: flex;
+      align-items: center;
+
+      .username {
+        margin: 4px 0;
+        font-size: 15px;
+        color: var(--text-muted);
+        cursor: pointer;
+      }
+
+      .name {
+        color: var(--text-light);
+        cursor: pointer;
+      }
+
+      .social {
+        margin-top: 8px;
+
+        a {
+          margin-right: 8px;
+
+          span {
+            color: var(--text-muted);
+
+            &:hover,
+            &:focus {
+              color: var(--primary);
+            }
+          }
+        }
+      }
+
+      &:last-of-type {
+        margin-bottom: 1.5rem;
+
+        @media (max-width: 800px) {
+          margin-top: 0.5rem;
+        }
+      }
+
+      img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 1rem;
+        cursor: pointer;
+      }
+    }
+  }
 }

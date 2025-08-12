@@ -65,12 +65,16 @@ main {
   position: relative;
   display: inline-block;
   width: 100%;
-  max-width: 40vw;
+  max-width: max(40vw, 500px);
   border: 1px solid var(--text-muted);
   border-radius: 12px;
+  transition: 0.3s transform ease;
+}
+.hero .featured-photo:hover {
+  transform: scale(1.01);
 }
 .hero .featured-photo img.featured-photo-img {
-  height: 100%;
+  height: min(40vh - 6rem, 300px);
   object-fit: cover;
   border-radius: 12px;
   width: 100%;
@@ -85,14 +89,14 @@ main {
   height: 72px;
   color: white;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-  font-size: 22px;
+  font-size: 20px;
   border-radius: 12px;
 }
 
 .about,
 .features,
 .members,
-.contact,
+.contact-and-about,
 .gallery {
   padding: 4rem 10%;
   text-align: left;
@@ -101,7 +105,7 @@ main {
 .about h3,
 .features h3,
 .members h3,
-.contact h3,
+.contact-and-about h3,
 .gallery h3 {
   font-size: 2rem;
   color: white;
@@ -110,7 +114,7 @@ main {
 .about p,
 .features p,
 .members p,
-.contact p,
+.contact-and-about p,
 .gallery p {
   font-size: 1.1rem;
   max-width: 700px;
@@ -126,7 +130,7 @@ main {
 .members,
 .gallery,
 .features,
-.contact {
+.contact-and-about {
   padding-top: 2rem;
 }
 
@@ -240,6 +244,7 @@ main {
 .features-grid .feature-card p {
   font-size: 0.95rem;
   color: grey;
+  line-height: 22px;
 }
 .features-grid .feature-card:hover {
   transform: scale(1.05);
@@ -258,6 +263,7 @@ footer {
 @media (max-width: 900px) {
   .hero {
     flex-direction: column-reverse;
+    padding-top: 12px;
     gap: auto;
   }
   .hero .hero-text {
@@ -272,7 +278,6 @@ footer {
     min-width: 250px;
     width: 100%;
     margin-top: 108px;
-    transform: scale(1.1);
   }
 }
 @media screen and (min-width: 890px) {
@@ -299,7 +304,7 @@ footer {
   .about-and-newsletter .newsletter-sub {
     background: var(--bg-dark);
     box-sizing: border-box;
-    border: 3px solid var(--primary);
+    border: 2px solid var(--primary);
     border-radius: 8px;
     margin: 5rem 0;
     margin-right: 5%;
@@ -313,9 +318,9 @@ footer {
     width: 100%;
     padding: 0.8rem;
     margin: 0.5rem 0;
-    border: none;
+    border: 1px solid var(--input-border);
     border-radius: 8px;
-    background: var(--input-bg);
+    background: var(--bg-dark);
     color: var(--text-light);
     outline: none;
   }
@@ -344,7 +349,7 @@ footer {
     box-sizing: border-box;
     margin: 4rem 8%;
     padding: 8px 32px;
-    border: 3px solid var(--primary);
+    border: 1.5px solid var(--primary);
     border-radius: 8px;
     width: auto;
     min-width: 250px;
@@ -353,9 +358,9 @@ footer {
     width: 100%;
     padding: 0.8rem;
     margin: 0.5rem 0;
-    border: none;
+    border: 1px solid var(--input-border);
     border-radius: 8px;
-    background: var(--input-bg);
+    background: var(--bg-dark);
     color: var(--text-light);
     outline: none;
   }
@@ -378,21 +383,24 @@ footer {
     background: var(--primary-dark);
   }
 }
-.contact input {
+.contact input,
+.about-us input {
   width: 100%;
   padding: 0.8rem;
   margin: 0.5rem 0;
-  border: none;
+  border: 1px solid var(--input-border);
   border-radius: 8px;
-  background: var(--input-bg);
+  background: var(--bg-dark);
   color: var(--text-light);
   outline: none;
   max-width: 400px;
 }
-.contact input:focus {
+.contact input:focus,
+.about-us input:focus {
   border: 1px solid var(--primary);
 }
-.contact button {
+.contact button,
+.about-us button {
   background: var(--primary);
   color: var(--text-light);
   padding: 0.8rem;
@@ -405,13 +413,12 @@ footer {
   width: 100%;
   max-width: 400px;
 }
-.contact button:hover {
+.contact button:hover,
+.about-us button:hover {
   background: var(--primary-dark);
 }
-.contact h3 {
-  margin-bottom: 2rem;
-}
-.contact p.contact-text {
+.contact p.contact-text,
+.about-us p.contact-text {
   line-height: 28px !important;
 }
 
@@ -492,6 +499,62 @@ footer {
 
 .about-and-newsletter {
   background: transparent;
+}
+
+.contact-and-about {
+  display: flex;
+  gap: 4rem;
+}
+@media (max-width: 800px) {
+  .contact-and-about {
+    flex-direction: column;
+  }
+}
+.contact-and-about .about-us .admins {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.contact-and-about .about-us .about-card {
+  display: flex;
+  align-items: center;
+}
+.contact-and-about .about-us .about-card .username {
+  margin: 4px 0;
+  font-size: 15px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.contact-and-about .about-us .about-card .name {
+  color: var(--text-light);
+  cursor: pointer;
+}
+.contact-and-about .about-us .about-card .social {
+  margin-top: 8px;
+}
+.contact-and-about .about-us .about-card .social a {
+  margin-right: 8px;
+}
+.contact-and-about .about-us .about-card .social a span {
+  color: var(--text-muted);
+}
+.contact-and-about .about-us .about-card .social a span:hover, .contact-and-about .about-us .about-card .social a span:focus {
+  color: var(--primary);
+}
+.contact-and-about .about-us .about-card:last-of-type {
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 800px) {
+  .contact-and-about .about-us .about-card:last-of-type {
+    margin-top: 0.5rem;
+  }
+}
+.contact-and-about .about-us .about-card img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 1rem;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=index.css.map */

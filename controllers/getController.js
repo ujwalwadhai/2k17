@@ -12,9 +12,11 @@ exports.indexPage = async (req, res) => {
   var todayStr = new Date().toLocaleDateString('en-GB', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit' });
 
   var members = await Users.find(
-    { name: { $ne: "Ujwal Wadhai" } },
+    { name: { $ne: "Ujwal Wadhai" }, username: {$ne: '2k17platform'} },
     { profile: 1, name: 1, year: 1, username: 1 }
   ).sort({ role: -1 }).limit(14);
+
+  var admins = await Users.find({ role: 'admin', username: {$ne: '2k17platform'} }, { profile: 1, name: 1, username: 1, socialLinks: 1 });
 
   var featuredImages = await Files.find({ tags: 'featured' });
 
@@ -31,7 +33,8 @@ exports.indexPage = async (req, res) => {
   res.render('pages/index', {
     members,
     featuredImages,
-    birthdayUsers
+    birthdayUsers,
+    admins
   });
 };
 

@@ -95,6 +95,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   accent-color: var(--primary);
 }
 
+::selection {
+  color: var(--text-light);
+  background-color: var(--primary-dark);
+}
+
 @font-face {
   font-family: "Lato";
   src: url("/fonts/Lato.ttf");
@@ -166,8 +171,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 a {
   color: var(--primary);
   text-decoration: none;
-  user-select: none;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 img,

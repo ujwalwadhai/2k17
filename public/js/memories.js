@@ -133,6 +133,7 @@ function openViewImage(name, url, id, thumbnail) {
     ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `alert("Please login to comment on this image")`)
   }
   ViewImagePopup.querySelector("#share-icon").setAttribute('onclick', `shareImage("${id}", "${thumbnail}")`)
+  ViewImagePopup.querySelector("#download-icon").setAttribute('onclick', `downloadImage("${id}")`)
   ViewImagePopup.classList.add('show');
   ViewImageOverlay.classList.add('show');
   navigator.sendBeacon('/api/analytics/addFileView', JSON.stringify({ fileId: id }));
@@ -365,4 +366,29 @@ async function shareImage(fileId) {
   } catch (err) {
     console.error('Sharing failed', err);
   }
+}
+
+function downloadImage(fileId) {
+  const largeImg = document.getElementById('imgLarge');
+  downloadAvifAsJpg(largeImg.src, `memory-${fileId}.jpg`);
+}
+
+function downloadAvifAsJpg(avifUrl, filename = "image.jpg") {
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload = function () {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    canvas.toBlob(function(blob) {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }, "image/jpeg", 0.92);
+  };
+  img.src = avifUrl;
 }

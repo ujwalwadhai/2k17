@@ -1,4 +1,4 @@
-const CACHE_NAME = `2k17-15-08-2025`; // Add date when you are commiting so that cache of users will be updated on deployment
+const CACHE_NAME = `2k17-15-08-2025v2`; // Add date when you are commiting so that cache of users will be updated on deployment
 const URLS_TO_CACHE = [
     '/',
     '/icons/css/all.css',

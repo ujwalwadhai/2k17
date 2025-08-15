@@ -368,9 +368,7 @@ async function shareImage(fileId) {
   }
 }
 
-async function downloadImage(fileName) {
-  const largeImg = document.getElementById('imgLarge');
-  const imgUrl = largeImg.src.replace(/\.avif$/, ".jpg");
+async function downloadImage(fileName, fileId) {
   const downloadBtn = document.getElementById('download-icon');
   const downloadBtnIcon = document.querySelector('#download-icon i');
 
@@ -378,6 +376,19 @@ async function downloadImage(fileName) {
   downloadBtn.disabled = true;
 
   try {
+    const checkRes = await fetch(`/file/download`, { method: 'POST' });
+    const checkData = await checkRes.json();
+
+    if (!checkData.success) {
+      Toast(checkData.message || 'Download failed.', 'error');
+      Toast('To reduce the load on our server, there is a limit of 7 downloads per hour.');
+      downloadBtnIcon.className = 'fal fa-download';
+      downloadBtn.disabled = false;
+      return;
+    }
+
+    const largeImg = document.getElementById('imgLarge');
+    const imgUrl = largeImg.src.replace(/\.avif$/, ".jpg");
     const response = await fetch(imgUrl);
     const blob = await response.blob();
 
@@ -390,6 +401,7 @@ async function downloadImage(fileName) {
     URL.revokeObjectURL(link.href);
   } catch (error) {
     console.error('Error fetching image:', error);
+    Toast('Could not download image.', 'error');
   }
 
   downloadBtnIcon.className = 'fal fa-download';

@@ -135,6 +135,10 @@ router.post('/file/:fileId/comment/:commentId/delete', isLoggedIn, memoriesContr
 
 router.post('/file/:fileId/tag', isLoggedIn, memoriesController.tagFile);
 
+router.post('/file/download', isLoggedIn, (req, res, next) => {
+    req.app.get('downloadLimiter')(req, res, next);
+}, memoriesController.downloadFile);
+
 
 router.post('/quiz/create', isLoggedIn, quizController.handleCreateForm);
 

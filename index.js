@@ -139,6 +139,18 @@ const generalLimiter = rateLimit({
 });
 app.use(generalLimiter);
 
+const downloadLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 7,
+  handler: (req, res) => {
+    res.status(429).json({
+      success: false,
+      message: 'You have exceeded the download limit for today. Please try again tomorrow.'
+    });
+  }
+});
+app.set('downloadLimiter', downloadLimiter);
+
 // CRON Jobs for recurring events
 require('./cron/birthday')
 require('./cron/newsletter')

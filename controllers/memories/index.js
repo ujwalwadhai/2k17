@@ -10,5 +10,6 @@ module.exports = {
     deleteComment: require('./deleteComment.js'),
     tagFile: require('./tagFile.js'),
     myMemories: require('./myMemories.js'),
-    showMyMemories: require('./showMyMemories.js')
+    showMyMemories: require('./showMyMemories.js'),
+    downloadFile: require('./downloadFile.js')
 }

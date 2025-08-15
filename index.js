@@ -103,8 +103,11 @@ app.use((req, res, next) => {
   next();
 })
 
-app.use("/memories", (req, res) => {
-  res.render('pages/500')
+app.use("/memories", (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    return next();
+  }
+  res.render('pages/500');
 })
 
 app.use('/admin', isLoggedIn, hasRole('admin'))
@@ -149,7 +152,7 @@ const downloadLimiter = rateLimit({
   handler: (req, res) => {
     res.status(429).json({
       success: false,
-      message: 'You have exceeded the download limit for today. Please try again tomorrow.'
+      message: 'You have exceeded the download limit. Please try again later.'
     });
   }
 });

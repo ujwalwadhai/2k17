@@ -381,7 +381,6 @@ async function downloadImage(fileName, fileId) {
 
     if (!checkData.success) {
       Toast(checkData.message || 'Download failed.', 'error');
-      Toast('To reduce the load on our server, there is a limit of 7 downloads per hour.');
       downloadBtnIcon.className = 'fal fa-download';
       downloadBtn.disabled = false;
       return;

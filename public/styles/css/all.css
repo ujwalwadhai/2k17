@@ -93,6 +93,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 *:after {
   box-sizing: inherit;
   accent-color: var(--primary);
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 ::selection {
@@ -172,7 +173,8 @@ a {
   color: var(--primary);
   text-decoration: none;
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 img,

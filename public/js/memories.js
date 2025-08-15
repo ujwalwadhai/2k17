@@ -133,7 +133,7 @@ function openViewImage(name, url, id, thumbnail) {
     ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `alert("Please login to comment on this image")`)
   }
   ViewImagePopup.querySelector("#share-icon").setAttribute('onclick', `shareImage("${id}", "${thumbnail}")`)
-  ViewImagePopup.querySelector("#download-icon").setAttribute('onclick', `downloadImage("${id}")`)
+  ViewImagePopup.querySelector("#download-icon").setAttribute('onclick', `downloadImage("${name}")`)
   ViewImagePopup.classList.add('show');
   ViewImageOverlay.classList.add('show');
   navigator.sendBeacon('/api/analytics/addFileView', JSON.stringify({ fileId: id }));
@@ -368,27 +368,31 @@ async function shareImage(fileId) {
   }
 }
 
-function downloadImage(fileId) {
+async function downloadImage(fileName) {
   const largeImg = document.getElementById('imgLarge');
-  downloadAvifAsJpg(largeImg.src, `memory-${fileId}.jpg`);
+  const imgUrl = largeImg.src.replace(/\.avif$/, ".jpg");
+  const downloadBtn = document.getElementById('download-icon');
+  const downloadBtnIcon = document.querySelector('#download-icon i');
+
+  downloadBtnIcon.className = 'fal fa-spinner fa-spin';
+  downloadBtn.disabled = true;
+
+  try {
+    const response = await fetch(imgUrl);
+    const blob = await response.blob();
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName.endsWith('.jpg') ? fileName : fileName + '.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+  } catch (error) {
+    console.error('Error fetching image:', error);
+  }
+
+  downloadBtnIcon.className = 'fal fa-download';
+  downloadBtn.disabled = false;
 }
 
-function downloadAvifAsJpg(avifUrl, filename = "image.jpg") {
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.onload = function () {
-    const canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-    canvas.toBlob(function(blob) {
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      link.click();
-      URL.revokeObjectURL(link.href);
-    }, "image/jpeg", 0.92);
-  };
-  img.src = avifUrl;
-}

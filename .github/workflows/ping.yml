@@ -1,0 +1,29 @@
+name: Ping Website Randomly
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # Runs every 10 minutes; exact interval is randomized below
+
+jobs:
+  ping_and_wait:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Random wait between 10 and 15 minutes
+        uses: AliSajid/random-wait-action@v2
+        with:
+          minimum: 600    # 10 minutes (in seconds)
+          maximum: 900    # 15 minutes (in seconds)
+
+      - name: Ping the website and check for "pong"
+        id: ping
+        run: |
+          response=$(curl -fs --max-time 10 https://twok17.onrender.com/ping || echo "")
+          if [ "$response" = "pong" ]; then
+            echo "status=up" >> $GITHUB_OUTPUT
+          else
+            echo "status=down" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Wait 2 minutes if website is DOWN
+        if: steps.ping.outputs.status == 'down'
+        run: sleep 120

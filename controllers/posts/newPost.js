@@ -2,7 +2,7 @@ const Posts = require('../../models/Posts');
 const Users = require('../../models/Users');
 const Notifications = require('../../models/Notifications');
 var sendMail = require('../../config/mailer')
-const logActivity = require('../../utils/log');
+const logActivity = require('../../utils/log'); 
 const sendPushNotification = require('../../utils/push');
 
 const newPost = async (req, res) => {

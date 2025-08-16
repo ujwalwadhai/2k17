@@ -493,6 +493,17 @@ async function PostMentionMail(to, data) {
   sendEmail(to, 'Post mention • 2k17 Platform', createEmailTemplate(content));
 }
 
+async function CommentMentionMail(to, data) {
+  let content = `
+    <h2 style="color: #7b5cf0;">Post Mention</h2>
+    <p style="margin-bottom: 8px;">Hello, ${data.name || 'there'}</p>
+    <p style="margin-bottom: 16px;"><a href="https://twok17.onrender.com/${data.username}">${data.username}</a> mentioned you in a comment.</p>
+    <a href="${data.url}" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">See post</a>`
+
+  logActivity('', `Sent email for comment mention`)
+  sendEmail(to, 'Comment mention • 2k17 Platform', createEmailTemplate(content));
+}
+
 async function UserRegisteredMail(to, data) {
   let content = `
     <h2 style="color: #7b5cf0;">New User Registration</h2>
@@ -578,6 +589,7 @@ async function sendMail(type, to, data) {
   if (type == 'new_user_registration') RegisteredDataMail(to, data);
   if (type == 'weekly_report') WeeklyReportMail(to, data);
   if (type == 'post_mention') PostMentionMail(to, data);
+  if (type == 'comment_mention') CommentMentionMail(to, data);
   if (type == 'new_quiz') NewQuizMail(to, data);
 }
 

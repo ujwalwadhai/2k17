@@ -97,3 +97,153 @@ async function deleteComment(commentId, postId, isHomePage = true) {
     Toast('Failed to delete comment! Please try again later.', 'error')
   }
 }
+
+
+
+
+// Logic for mentions in comments
+var editor = document.getElementById('editor');
+var newCommentInput = document.getElementById('new-comment');
+var mentionBox = document.getElementById('mentionBox');
+
+let editorMentionStartNode = null;
+let editorMentionStartOffset = 0;
+
+editor.addEventListener('input', async () => {
+    cleanupBrokenMentions();
+
+    const selection = window.getSelection();
+    if (selection.rangeCount === 0) return;
+    const range = selection.getRangeAt(0);
+    const node = selection.anchorNode;
+    const offset = range.startOffset;
+
+    if (node.nodeType !== Node.TEXT_NODE) return;
+
+    editorMentionStartNode = node;
+    editorMentionStartOffset = offset;
+    
+    const textUpToCursor = node.textContent.slice(0, offset);
+    const match = textUpToCursor.match(/@([a-zA-Z0-9_.]{1,20})$/);
+
+    if (match) {
+        const keyword = match[1];
+        const suggestions = await fetchSuggestions(keyword);
+        showMentionBox(suggestions, editor);
+
+        mentionBox.onclick = (e) => {
+            let li = e.target.closest('li');
+            if (li) {
+                insertMentionIntoEditor(li.dataset.username);
+            }
+        };
+    } else {
+        mentionBox.classList.add('hidden');
+    }
+});
+
+function insertMentionIntoEditor(username) {
+    if (!editorMentionStartNode) return;
+
+    const text = editorMentionStartNode.textContent;
+    const before = text.slice(0, editorMentionStartOffset).replace(/@([a-zA-Z0-9_.]{1,20})$/, '');
+    const after = text.slice(editorMentionStartOffset);
+
+    const span = document.createElement('span');
+    span.textContent = `@${username}`;
+    span.style.color = 'var(--primary)';
+    span.setAttribute('data-username', username);
+    span.classList.add('mention');
+    span.contentEditable = 'false';
+
+    editorMentionStartNode.textContent = before;
+    editorMentionStartNode.parentNode.insertBefore(span, editorMentionStartNode.nextSibling);
+    span.after(document.createTextNode('\u00A0' + after));
+
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.setStartAfter(span.nextSibling || span);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+
+    editor.focus();
+    mentionBox.classList.add('hidden');
+}
+
+function cleanupBrokenMentions() {
+    editor.querySelectorAll('span.mention').forEach(span => {
+        if (span.textContent !== `@${span.dataset.username}`) {
+            span.replaceWith(document.createTextNode(span.textContent));
+        }
+    });
+}
+
+newCommentInput.addEventListener('input', async () => {
+    const textUpToCursor = newCommentInput.value.slice(0, newCommentInput.selectionStart);
+    const match = textUpToCursor.match(/@([a-zA-Z0-9_.]{1,20})$/);
+
+    if (match) {
+        const keyword = match[1];
+        const suggestions = await fetchSuggestions(keyword);
+        showMentionBox(suggestions, newCommentInput);
+
+        mentionBox.onclick = (e) => {
+            let li = e.target.closest('li');
+            if (li) {
+                insertMentionIntoInput(li.dataset.username);
+            }
+        };
+    } else {
+        mentionBox.classList.add('hidden');
+    }
+});
+
+function insertMentionIntoInput(username) {
+    const input = newCommentInput;
+    const currentVal = input.value;
+    const cursorPos = input.selectionStart;
+
+    const textBefore = currentVal.slice(0, cursorPos).replace(/@([a-zA-Z0-9_.]{1,20})$/, `@${username} `);
+    const textAfter = currentVal.slice(cursorPos);
+
+    input.value = textBefore + textAfter;
+    
+    input.focus();
+    input.setSelectionRange(textBefore.length, textBefore.length); // Move cursor
+    mentionBox.classList.add('hidden');
+}
+
+async function fetchSuggestions(keyword) {
+    if (keyword.toLowerCase() === 'all') {
+        return [{ username: 'all', name: 'Everyone', isAll: true }];
+    }
+    try {
+        const res = await fetch(`/search-users?keyword=${keyword}`);
+        return await res.json();
+    } catch (error) {
+        console.error("Failed to fetch suggestions:", error);
+        return [];
+    }
+}
+
+function showMentionBox(suggestions, targetElement) {
+    if (suggestions.length === 0) {
+        mentionBox.classList.add('hidden');
+        return;
+    }
+    
+    const rect = targetElement.getBoundingClientRect();
+    mentionBox.style.top = `${rect.bottom + window.scrollY + 5}px`;
+    mentionBox.style.left = `${rect.left + window.scrollX}px`;
+
+    mentionBox.innerHTML = suggestions.map(user => {
+        const isAll = user.isAll;
+        return `<li data-username="${user.username}" ${isAll ? 'data-all="true"' : ''}>
+            <img src="${isAll ? '/images/icons/members.png' : (user.profile || '/images/user.png')}" alt="${user.username}" />
+            ${isAll ? 'Everyone' : user.username}
+        </li>`;
+    }).join('');
+    
+    mentionBox.classList.remove('hidden');
+}

@@ -329,13 +329,13 @@ body {
   position: relative;
   overflow: hidden;
   transition: background 0.2s;
-  background: var(--bg-dark);
+  background: var(--bg-dark2);
   color: white;
   font-weight: 400;
   font-size: 0.95rem;
 
   &:hover {
-    background: var(--bg-dark2);
+    background: var(--bg-dark3);
   }
 
   .email-icon {

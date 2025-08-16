@@ -1,5 +1,5 @@
-const textarea = document.getElementById('editor');
-const mentionBox = document.getElementById('mentionBox');
+var textarea = document.getElementById('editor');
+var mentionBox = document.getElementById('mentionBox');
 
 let mentionActive = false;
 let mentionStartNode = null;

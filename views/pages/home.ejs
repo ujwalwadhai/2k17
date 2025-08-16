@@ -20,7 +20,7 @@
   <%- include('../partials/loader') %>
   <%- include('../partials/navbar') %>
 
-  <main  class="loader-after-body" style="display: none;">
+  <main class="loader-after-body" style="display: none;">
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-text">
@@ -91,8 +91,10 @@
       </div>
       <div class="comments-list" id="comments-list">
       </div>
-      <div class="input-area">
-        <input id="new-comment" autocomplete="off" placeholder="Write a comment..." />
+      <div id="editor" class="editor" contenteditable="true" placeholder="Express your opinion..."></div>
+      <ul id="mentionBox" class="mention-box hidden" style="margin: 14rem 0 0 0.75rem;"></ul>
+      <div class="input-area comment-container">
+        <input id="new-comment" autocomplete="off" placeholder="Comment (Mention using @username)..." />
         <button type="button" id="newCommentBtn">Post</button>
       </div>
     </div>
@@ -107,7 +109,7 @@
       </div>
       <span class="grey-1" style="margin: 1rem 0;"><span class="fal fa-info-circle"></span> &nbsp;You can mention people by typing @ followed by their name or username. Use @all to mention everyone.</span>
       <div id="editor" class="editor" placeholder="Say hi to everyone..."></div>
-      <textarea id="hiddenContent" name="content" hidden></textarea> 
+      <textarea id="hiddenContent" name="content" hidden></textarea>
       <ul id="mentionBox" class="mention-box hidden"></ul>
       <input type="file" id="media-input" accept="image/*">
       <label for="media-input" class="upload-label"><span class="fal fa-upload"></span> &nbsp; Add photo</label>

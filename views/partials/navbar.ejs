@@ -87,9 +87,10 @@
       <ul class="nav-items">
         <% if(user) { %>
         <li onclick="window.location.href = '/home'"><a href="/home"><span class="fal fa-house"></span>Home</a></li>
+        <% if(user?.role !== 'admin'){ %>
         <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user"></span>My profile</a></li>
         <li onclick="window.location.href = '/account'"><a href="/account"><span class="fal fa-user-circle"></span>My account</a></li>
-        <% } %>
+        <% }} %>
         <li onclick="window.location.href = '/quizzes'"><a href="/quizzes"><span class="fal fa-block-question"></span>Quizzes</a></li>
         <li onclick="window.location.href = '/memories'"><a href="/memories"><span class="fal fa-images"></span>Memories</a></li>
         <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>
@@ -99,6 +100,7 @@
         <li onclick="window.location.href = '/contribute'"><a href="/contribute"><span class="fal fa-hand-holding-heart"></span>Contribute</a></li>
         <% if (user) { %>
         <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
+        <li onclick="window.location.href = '/whatsnew'"><a href="/whatsnew"><span class="fal fa-sparkle"></span>What's new</a></li>
         <li class="profile-box"><img class="navbar-profile-img" src="<%- user.profile ? user.profile : '/images/user.png' %>" alt=""><a><%= user.name.split(' ')[0] %> <%= user.name.split(' ')[1][0] %>.</a><a href="/logout" class="fal fa-arrow-right-from-bracket logout-icon"></a></li>
         <% } %>
       </ul>

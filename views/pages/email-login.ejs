@@ -16,26 +16,21 @@
         <h1>Log in to 2k17 ❤️</h1>
         <p>Don't have an account? &nbsp;<a href="/create-account">Create account</a></p><br>
         <div>
-          <small id="otp-status-message" class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; You must have verified email to use this feature.</small><br><br>
           <div class="email-field">
             <input type="email" id="login-email" name="email" placeholder="Enter your email" onkeyup="if(event.key === 'Enter') document.getElementById('send-otp-btn').click()" />
           </div>
           <input oninput="Number(this.value) > 999999 ? this.value = this.value.slice(0, 6) : this.value" type="number" min="0" max="99999" style="display: none;" name="otp" id="otp" placeholder="Enter OTP" onkeyup="if(event.key === 'Enter') document.getElementById('login-btn').click()" />
         </div><br>
-
-        <a href="/login">Login with Password instead</a>
         <button class="primary-btn" id="send-otp-btn" onclick="sendOTP(); document.querySelector('.google-btn').style.display = 'none'; ">Send OTP</button><br>
+        <a href="/login" class="email-btn">
+          <span style="font-size: 1.1rem;" class="fal fa-lock-keyhole email-icon"></span>
+          Continue with Password
+        </a>
         <a href="/auth/google" class="google-btn">
           <img src="/images/icons/google.svg" alt="Google Logo" class="google-icon">
           Continue with Google
         </a><br>
         <button class="primary-btn" style="display: none;" id="login-btn" onclick="email_login()">Verify and Login</button><br><br>
-
-        <!-- <div class="divider">Or register with</div>
-        <div class="social-buttons">
-          <button class="google"><span class="fab fa-google"></span> &nbsp; Google</button>
-          <button class="apple">Apple</button>
-        </div>-->
       </div>
     </div>
   </div>

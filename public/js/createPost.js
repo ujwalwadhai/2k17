@@ -59,7 +59,7 @@ mentionBox.addEventListener('click', (e) => {
     insertMention(username);
   }
 });
-
+ 
 function insertMention(username) {
   if (!mentionStartNode) return;
 

@@ -12,11 +12,11 @@ exports.indexPage = async (req, res) => {
   var todayStr = new Date().toLocaleDateString('en-GB', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit' });
 
   var members = await Users.find(
-    { name: { $ne: "Ujwal Wadhai" }, username: {$ne: '2k17platform'} },
+    { name: { $ne: "Ujwal Wadhai" }, username: { $ne: '2k17platform' } },
     { profile: 1, name: 1, year: 1, username: 1 }
   ).sort({ role: -1 }).limit(14);
 
-  var admins = await Users.find({ role: 'admin', username: {$ne: '2k17platform'} }, { profile: 1, name: 1, username: 1, socialLinks: 1 });
+  var admins = await Users.find({ role: 'admin', username: { $ne: '2k17platform' } }, { profile: 1, name: 1, username: 1, socialLinks: 1 });
 
   var featuredImages = await Files.find({ tags: 'featured' });
 
@@ -86,7 +86,7 @@ const refreshCache = async () => {
       Files.aggregate([{ $match: { tags: 'featured' } }]),
       getSortedUsers()
     ]);
-    
+
     cachedBirthdays = birthdays;
     cachedFeaturedPhotos = photos;
     cachedMembers = members
@@ -96,7 +96,7 @@ const refreshCache = async () => {
   }
 };
 
-setInterval(refreshCache, 3600000 * 12); 
+setInterval(refreshCache, 3600000 * 12);
 
 refreshCache();
 
@@ -105,12 +105,12 @@ exports.home = async (req, res) => {
     const hasUnreadNotifications = await Notifications.countDocuments(
       { $or: [{ user: req.user._id }, { user: null }], seen: false })
 
-    const randomPhoto = cachedFeaturedPhotos.length 
-      ? cachedFeaturedPhotos[Math.floor(Math.random() * cachedFeaturedPhotos.length)] 
+    const randomPhoto = cachedFeaturedPhotos.length
+      ? cachedFeaturedPhotos[Math.floor(Math.random() * cachedFeaturedPhotos.length)]
       : null;
 
     res.render('pages/home', {
-      birthdays: cachedBirthdays, 
+      birthdays: cachedBirthdays,
       featuredPhoto: randomPhoto,
       hasUnreadNotifications: hasUnreadNotifications > 0,
       isHome: true
@@ -159,7 +159,7 @@ exports.adminUserInfo = async (req, res) => {
 async function getSortedUsers(loggedInUserId = null) {
   try {
     const pipeline = [];
-    
+
     pipeline.push({
       $addFields: {
         isAdmin: {
@@ -167,10 +167,12 @@ async function getSortedUsers(loggedInUserId = null) {
         },
         isLoggedInUser: {
           $cond: {
-            if: { $and: [
+            if: {
+              $and: [
                 loggedInUserId,
                 { $eq: ["$_id", loggedInUserId] }
-            ]},
+              ]
+            },
             then: 1,
             else: 0
           }
@@ -180,18 +182,18 @@ async function getSortedUsers(loggedInUserId = null) {
 
     pipeline.push({
       $sort: {
-        isLoggedInUser: -1,  
-        isAdmin: -1,    
+        isLoggedInUser: -1,
+        isAdmin: -1,
         house: 1,
-        name: 1            
+        name: 1
       }
     });
 
     pipeline.push({
       $lookup: {
         from: "settings",
-        localField: "_id",     
-        foreignField: "user",  
+        localField: "_id",
+        foreignField: "user",
         as: "settings"
       }
     });
@@ -228,7 +230,7 @@ exports.members = async (req, res) => {
 
 exports.viewProfile = async (req, res) => {
   var user = await Users.findOne({ username: req.params.username }).populate("settings");
-  if(!user) return res.redirect('/');
+  if (!user) return res.redirect('/');
   var memories = await Files.find({ people: user._id })
   if (!user) return res.redirect('/');
   if (req.user) {

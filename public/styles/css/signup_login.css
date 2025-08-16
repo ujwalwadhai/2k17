@@ -27,8 +27,10 @@ body {
   min-width: min(100vw, 500px);
   margin: auto;
   overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }
 .right-pane ::-webkit-scrollbar {
   display: none;
@@ -129,7 +131,6 @@ body {
   border: none;
   border-radius: 8px;
   color: var(--text-light);
-  font-weight: bold;
   margin-top: 1rem;
   cursor: pointer;
   font-size: 1rem;
@@ -167,7 +168,7 @@ body {
     margin-top: 84px;
   }
   .right-pane {
-    height: 60vh;
+    height: 100vh;
     padding: 1.5rem;
   }
   .right-pane .signup-form {
@@ -342,6 +343,34 @@ body {
 }
 .google-btn span {
   color: var(--primary-dark);
+}
+
+.email-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid var(--input-border);
+  border-radius: 8px;
+  padding: 0.8rem;
+  width: 100%;
+  margin-top: 1rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s;
+  background: var(--bg-dark);
+  color: white;
+  font-weight: 400;
+  font-size: 0.95rem;
+}
+.email-btn:hover {
+  background: var(--bg-dark2);
+}
+.email-btn .email-icon {
+  position: absolute;
+  left: 0.8rem;
+  font-size: 1.2rem;
+  color: var(--text-light);
 }
 
 /*# sourceMappingURL=signup_login.css.map */

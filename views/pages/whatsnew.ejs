@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+  <title>What's New</title>
+  <link rel="stylesheet" href="/styles/css/theme.css">
+  <link rel="stylesheet" href="/styles/css/font.css">
+  <link rel="stylesheet" href="/styles/css/whatsnew.css">
+</head>
+
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/loader') %>
+  <br><br><br><br><br>
+  <div class="whats-new-container loader-after-body" style="display: none">
+    <header class="whats-new-header">
+      <h1>What's New</h1>
+      <p>Stay updated with the latest features, improvements, and bug fixes.</p>
+    </header>
+
+    <main class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date-container">
+          <span class="timeline-date">15 August, 4:00 PM</span>
+        </div>
+        <div class="timeline-content">
+          <h2 class="update-title">Download memories</h2>
+          <div class="description-content">
+            You can now download memories from the memories section.
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date-container">
+          <span class="timeline-date">13 August, 7:00 PM</span>
+        </div>
+        <div class="timeline-content">
+          <h2 class="update-title">Updated landing page</h2>
+          <div class="description-content">
+            Improved <a href="/">landing page</a> design for responsiveness on all screen sizes.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

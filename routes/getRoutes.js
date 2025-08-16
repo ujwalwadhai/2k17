@@ -107,6 +107,9 @@ router.get('/quiz/attempt/:attemptId', quizController.viewResult);
 router.get('/quiz/leaderboard/:quizId', quizController.viewLeaderboard);
 
 
+router.get('/whatsnew', (req, res) => res.render('pages/whatsnew'))
+
+
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping
 
 router.get('/2k17platform', (req, res) => res.redirect('/'))

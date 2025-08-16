@@ -25,12 +25,14 @@
           <div class="password-field">
             <input id="password" name="password" type="password" placeholder="Enter password (or activation code)" onkeyup="if(event.key === 'Enter') document.getElementById('login_btn').click()" />
             <span onclick="togglePassword()" id="toggle" class="eye-icon fal fa-eye"></span>
-          </div><br>
+          </div>
         </div>
-
-        <p><a href="/login/email">Login with Email OTP instead</a></p>
         <p><a style="margin-top: 8px;" onclick="openForgottenPassword()">Forgotten password?</a></p>
         <button onclick="login('/home')" class="primary-btn" id="login_btn">Continue</button><br>
+        <a href="/login/email" class="email-btn">
+          <span class="fal fa-envelope email-icon"></span>
+          Continue with Email OTP
+        </a>
         <a href="/auth/google" class="google-btn">
           <img src="/images/icons/google.svg" alt="Google Logo" class="google-icon">
           Continue with Google

@@ -59,12 +59,26 @@ function closeSendNotification() {
   SendNotificationOverlay.classList.remove('show');
 }
 
+function openSendEmail() {
+  const SendEmailPopup = document.getElementById('send-email-popup');
+  const SendEmailOverlay = SendEmailPopup.querySelector('.overlay');
+  SendEmailPopup.classList.add('show');
+  SendEmailOverlay.classList.add('show');
+}
+
+function closeSendEmail() {
+  var SendEmailPopup = document.getElementById('send-email-popup');
+  var SendEmailOverlay = SendEmailPopup.querySelector('.overlay');
+  SendEmailPopup.classList.remove('show');
+  SendEmailOverlay.classList.remove('show');
+}
+
 
 document.getElementById("resolve-report-form").addEventListener("submit", function (e) {
   e.preventDefault();
   var statusBox = document.getElementById("resolve-report-status");
   statusBox.style.color = "green";
-  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'><span> &nbsp;Resolving report...";
+  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'></span> &nbsp;Resolving report...";
   var reportId = document.getElementById('report-id-input').value;
   fetch("/admin/report/resolve", {
     method: "POST",
@@ -170,7 +184,7 @@ document.getElementById("newsletter-form").addEventListener("submit", function (
   e.preventDefault();
   var statusBox = document.getElementById("newsletter-status");
   statusBox.style.color = "green";
-  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'><span> &nbsp;Saving newsletter...";
+  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'></span> &nbsp;Saving newsletter...";
   fetch("/admin/newsletter/new", {
     method: "POST",
     headers: {
@@ -206,7 +220,7 @@ document.getElementById("send-notification-form").addEventListener("submit", fun
   if (!conf) return;
   var statusBox = document.getElementById("send-notification-status");
   statusBox.style.color = "green";
-  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'><span> &nbsp;Sending notification...";
+  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'></span> &nbsp;Sending notification...";
   fetch("/send-notification", {
     method: "POST",
     headers: {
@@ -227,6 +241,41 @@ document.getElementById("send-notification-form").addEventListener("submit", fun
         statusBox.innerHTML = `<i class='fal fa-times-circle'></i> &nbsp;${data.message || 'Failed to send notification.'}`;
       }
       document.querySelector('#send-notification-form').reset();
+    })
+    .catch(err => {
+      console.log(err);
+      statusBox.style.color = "red";
+      statusBox.innerHTML = "<i class='fal fa-times-circle'></i> &nbsp;Something went wrong.";
+    });
+});
+
+document.getElementById("send-email-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var conf = confirm("Are you sure you want to send this email?")
+  if (!conf) return;
+  var statusBox = document.getElementById("send-email-status");
+  statusBox.style.color = "green";
+  statusBox.innerHTML = "<span class='fal fa-rotate fa-circle-notch'></span> &nbsp;Sending email...";
+  fetch("/send-email", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      to: document.querySelector('#send-email-to').value,
+      heading: document.querySelector('#send-email-heading').value,
+      body: document.querySelector('#send-email-body').value
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        statusBox.innerHTML = `<i class='fal fa-check-circle'></i> &nbsp;${data.message}`;
+      } else {
+        statusBox.style.color = "red";
+        statusBox.innerHTML = `<i class='fal fa-times-circle'></i> &nbsp;${data.message || 'Failed to send email.'}`;
+      }
+      document.querySelector('#send-email-form').reset();
     })
     .catch(err => {
       console.log(err);

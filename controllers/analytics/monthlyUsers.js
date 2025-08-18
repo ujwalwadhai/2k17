@@ -24,43 +24,22 @@ const getMonthRange = (offset = 0) => {
     return { start, end };
 };
 
-async function getAverageTimeForRange(startDate, endDate) {
+async function getTotalTime() {
     const result = await UserSessions.aggregate([
         {
             $match: {
-                startTime: { $gte: startDate, $lte: endDate }
+                startTime: { $gte: getMonthRange(0).start, $lte: getMonthRange(0).end }
             }
         },
         {
             $group: {
                 _id: null,
-                avgDuration: { $avg: '$duration' }
+                totalDuration: { $sum: '$duration' }
             }
         }
     ]);
 
-    return result.length > 0 ? result[0].avgDuration : 0;
-}
-
-async function getMonthlyAvgTimeWithChange() {
-    const thisMonthRange = getMonthRange(0);    
-    const lastMonthRange = getMonthRange(-1);    
-
-    const [thisMonthAvg, lastMonthAvg] = await Promise.all([
-        getAverageTimeForRange(thisMonthRange.start, thisMonthRange.end),
-        getAverageTimeForRange(lastMonthRange.start, lastMonthRange.end)
-    ]);
-
-    const changeInAvgTime = thisMonthAvg - lastMonthAvg;
-
-    return {
-        thisMonth: {
-            avgTime: (thisMonthAvg / 60).toFixed(2)
-        },
-        change: {
-            avgTime: (changeInAvgTime / 60).toFixed(2)
-        }
-    };
+    return result.length > 0 ? result[0].totalDuration : 0;
 }
 
 const monthlyUsers = async (req, res) => {
@@ -253,12 +232,12 @@ const monthlyUsers = async (req, res) => {
             };
         }
 
-        const sessionData = await getMonthlyAvgTimeWithChange()
+        const TotalTime = await getTotalTime()
 
         res.json({
             current,
             previous,
-            sessionData,
+            monthlyAvgTime: ((TotalTime/ current.total)/60).toFixed(2),
             change: {
                 total: calcChange(current.total, previous.total),
                 guests: calcChange(current.guests, previous.guests),

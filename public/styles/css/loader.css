@@ -38,7 +38,7 @@
   font-weight: bold;
 }
 #full-loader .loader-text .letter .letter-blue {
-  color: rgb(5, 110, 214);
+  color: #056ed6;
 }
 #full-loader .loader-text .letter .letter-green {
   color: green;

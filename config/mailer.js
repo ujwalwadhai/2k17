@@ -32,13 +32,13 @@ async function sendEmail(to, subject, htmlContent, includeBCC) {
 
     let shouldSendEmail = true;
 
-    if (process.env.PLATFORM_TYPE == 'developement') {
+    /* if (process.env.PLATFORM_TYPE == 'developement') {
       if (!adminEmails.includes(to)) {
         // Don't send email if 'to' is not admin
         shouldSendEmail = false;
         console.log(`[DEVELOPMENT MODE] Suppressed email to non-admin in developement: ${to}`);
       }
-    }
+    } */
 
     if (includeBCC) {
       mailOptions.bcc = adminEmails;
@@ -493,6 +493,14 @@ async function PostMentionMail(to, data) {
   sendEmail(to, 'Post mention • 2k17 Platform', createEmailTemplate(content));
 }
 
+async function AdminSendMail(to, data) {
+  let content = `
+    <h2 style="color: #7b5cf0;">${data.heading}</h2>
+    ${data.body}`
+  logActivity('', `Sent email from admin dashboard`)
+  sendEmail(to, `${data.heading} • 2k17 Platform`, createEmailTemplate(content));
+}
+
 async function CommentMentionMail(to, data) {
   let content = `
     <h2 style="color: #7b5cf0;">Post Mention</h2>
@@ -591,6 +599,7 @@ async function sendMail(type, to, data) {
   if (type == 'post_mention') PostMentionMail(to, data);
   if (type == 'comment_mention') CommentMentionMail(to, data);
   if (type == 'new_quiz') NewQuizMail(to, data);
+  if (type == 'admin_send_mail') AdminSendMail(to, data);
 }
 
 module.exports = sendMail;

@@ -3,24 +3,18 @@
 
 <head>
   <%- include('../partials/head') %>
-  <title>500 - Internal Server Error</title>
+  <title>Post Not Found</title>
   <link rel="stylesheet" href="/styles/css/error.css" />
 </head>
 
 <body>
   <%- include('../partials/navbar') %>
   <%- include('../partials/loader') %>
-
   <div class="error-container loader-after-body" style="display: none">
-    <p class="heading">Internal Server Error</p>
-    <p class="message">Oops! Something went wrong on our side.</p>
-    <p class="message">Please let Ujwal and Prajyot know that there is an error. So that they can fix it.</p>
-    
-    <a href="/" class="back-btn">
-      <span class="fal fa-house"></span>Go to Home
-    </a>
+    <p class="heading">Post Not Found</p>
+    <p class="message">Oops! The post you're looking for doesn't exist or may have been deleted by it's owner.</p>
+    <a href="/" class="back-btn"><span class="fal fa-house"></span>Go to Home</a>
   </div>
-
   <%- include('../partials/footer') %>
 </body>
 

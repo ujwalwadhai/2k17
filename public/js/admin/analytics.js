@@ -64,7 +64,7 @@ async function updateTodayUsers() {
         const res = await fetch('/api/analytics/daily-users');
         const { sessionTimeData, result:{ total = '--', guests = '--', known = '--'} } = await res.json();
         document.querySelector('#active-today').innerHTML = total;
-        document.querySelector('#avgTime').innerHTML = sessionTimeData.today.avgTime;
+        document.querySelector('#avgTime').innerHTML = (sessionTimeData.today.collectiveTime / total).toFixed(2);
         document.querySelector('#collectiveTime').innerHTML = sessionTimeData.today.collectiveTime;
         let avgTimeChange = ''
         if(sessionTimeData.change.avgTime >= 0){
@@ -307,7 +307,7 @@ async function loadMonthlySummary() {
         const res = await fetch('/api/analytics/monthly-users');
         const data = await res.json();
 
-        const { current, sessionData, change, visits, platform_breakdown } = data;
+        const { current, monthlyAvgTime, change, visits, platform_breakdown } = data;
         if(Object.keys(platform_breakdown).length > 0){
             loadPlatformPieChart(platform_breakdown)
         } else {
@@ -325,14 +325,8 @@ async function loadMonthlySummary() {
         document.querySelector('#monthly-guest-known + .percentage-change span').innerHTML =
             formatChange(change.known) + ' known, ' + formatChange(change.guests) + ' guests ';
 
-        document.querySelector("#monthAvgTime").innerHTML = sessionData.thisMonth.avgTime;
-        let monthAvgTimeChange = ''
-        if(sessionData.change.avgTime >= 0){
-            monthAvgTimeChange = `<span style="color: #6fdc6f">+${sessionData.change.avgTime}</span>`
-        } else {
-            monthAvgTimeChange = `<span style="color: #ff6f6f">${sessionData.change.avgTime}</span>`
-        }
-        document.querySelector("#monthAvgTimeChange").innerHTML = monthAvgTimeChange;
+        document.querySelector("#monthAvgTime").innerHTML = monthlyAvgTime;
+        document.querySelector("#monthAvgTimeChange").innerHTML = `Counted for ${current.total} users`;
 
         const monthlyOverviewTbody = document.querySelector('#monthly-overview-body');
         var topUser = data.topUser ? `<a href='/${data.topUser.username}'>${data.topUser.name.split(' ')[0]} ${data.topUser.name.split(' ')[1][0]}.</a>` : '<span class="grey-1">No data</span>';
@@ -390,7 +384,7 @@ async function loadPlatformPieChart(data) {
                     labels: labels,
                     datasets: [{
                         data: values,
-                        backgroundColor: [themeColor, '#4dd0e1', '#81c784', '#ffb74d'],
+                        backgroundColor: ['#056ed6', '#066306', '#e71a1a', '#eabc16ff'],
                         borderWidth: 0
                     }]
                 },

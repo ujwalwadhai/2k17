@@ -5,7 +5,7 @@ const viewPost = async (req, res) => {
   if(!req.params.id) return res.redirect('/home');
 
   var post = await Posts.findOne({ _id: req.params.id }).populate('comments.user likes', 'name username profile')
-  if(!post) return res.redirect('/');
+  if(!post) return res.render('pages/nopost');
   var comments = post.comments;
   res.render('pages/post', {post, comments});
 }

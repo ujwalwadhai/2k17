@@ -50,7 +50,7 @@ async function getAnalyticsWithChange() {
     const [todayMetrics, yesterdayMetrics] = await Promise.all([
         getSessionMetricsForDate(today),
         getSessionMetricsForDate(yesterday)
-    ]);
+    ]); 
 
     const changeInCollectiveTime = todayMetrics.collectiveTime - yesterdayMetrics.collectiveTime;
     const changeInAvgTime = todayMetrics.avgTime - yesterdayMetrics.avgTime;

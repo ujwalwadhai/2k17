@@ -105,6 +105,8 @@ router.post('/admin/newsletter/new', adminController.createNewsLetter)
 
 router.post('/send-notification', hasRole('admin'), adminController.pushNotification)
 
+router.post('/send-email', hasRole('admin'), adminController.sendEmail)
+
 router.post('/users', hasRole('admin'), adminController.adminUserlist);
 
 router.post('/userinfo/:userId', getController.adminUserInfo);

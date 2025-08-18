@@ -2,17 +2,17 @@ name: Ping Website Randomly
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Runs every 10 minutes; exact interval is randomized below
+    - cron: '*/9 * * * *'  # Runs every 9 minutes; exact interval is randomized below
 
 jobs:
   ping_and_wait:
     runs-on: ubuntu-latest
     steps:
-      - name: Random wait between 10 and 15 minutes
+      - name: Random wait between 8 and 12 minutes
         uses: AliSajid/random-wait-action@v2.11.0
         with:
-          minimum: 600    # 10 minutes (in seconds)
-          maximum: 900    # 15 minutes (in seconds)
+          minimum: 480    # 8 minutes (in seconds)
+          maximum: 720    # 12 minutes (in seconds)
 
       - name: Ping the website and check for "pong"
         id: ping

@@ -25,8 +25,8 @@
         </div>
         <div class="summary-card">
           <span class="label">Average time spent</span>
-          <span class="value"><span id="avgTime"><%= sessionData.avgTime %> </span> <span style="color: #737373; font-size: 14px; font-weight: 400; margin-left: 5px;">minutes/user</span></span>
-          <p id="avgTimeChange">Counted over <%= sessionData.count %> sessions</p>
+          <span class="value"><span id="avgTime"><%= (sessionData.collectiveTime / (allusers.guests + allusers.users.length)).toFixed(2) %> </span> <span style="color: #737373; font-size: 14px; font-weight: 400; margin-left: 5px;">minutes/user</span></span>
+          <p id="avgTimeChange">Counted for <%= allusers.guests + allusers.users.length %> users</p>
         </div>
         <div class="summary-card">
           <span class="label">Collective time spent</span>

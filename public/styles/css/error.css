@@ -54,7 +54,7 @@ body {
 @media (max-width: 768px) {
   .error-container {
     padding-top: 12rem;
-    height: calc(88vh - 47px);
+    height: calc(93vh - 47px);
   }
 }
 

@@ -3,5 +3,6 @@ module.exports = {
   createNewsLetter: require('./createNewsLetter'),
   disableLoginUser: require('./disableLoginUser'),
   pushNotification: require('./pushNotification'),
-  adminUserlist: require('./adminUserlist')
+  adminUserlist: require('./adminUserlist'),
+  sendEmail: require('./sendEmail')
 };

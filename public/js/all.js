@@ -1,6 +1,6 @@
-const VERSION = `2k17-11-08-2025`; // Change this when you want to force localStorage update
+var VERSION = `2k17-11-08-2025`; // Change this when you want to force localStorage update
 
-const storedVersion = localStorage.getItem('version') || null;
+var storedVersion = localStorage.getItem('version') || null;
 
 if (storedVersion !== VERSION) {
     console.log("OLD VERSION DETECTED, CLEARING CACHE")

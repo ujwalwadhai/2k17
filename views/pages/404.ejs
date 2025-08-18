@@ -9,10 +9,10 @@
 
 <body>
   <%- include('../partials/navbar') %>
-  <div class="error-container">
-    <h2>404</h2>
+  <%- include('../partials/loader') %>
+  <div class="error-container loader-after-body" style="display: none">
     <p class="heading">Page Not Found</p>
-    <p class="message">Oops! The page you're looking for doesn't exist.</p>
+    <p class="message">Oops! The page you're looking for doesn't exist or may have been moved to another place.</p>
     <a href="/" class="back-btn"><span class="fal fa-house"></span>Go to Home</a>
   </div>
   <%- include('../partials/footer') %>

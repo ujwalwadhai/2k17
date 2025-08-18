@@ -114,6 +114,9 @@ router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from s
 
 router.get('/2k17platform', (req, res) => res.redirect('/'))
 
+router.get('/500', (req, res) => res.render('pages/500'))
+router.get('/404', (req, res) => res.render('pages/404'))
+
 router.get('/:username', getController.viewProfile);
 
 module.exports = router;

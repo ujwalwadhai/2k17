@@ -11,91 +11,92 @@
   <%-include('../../partials/loader') %>
   <%-include('../../partials/navbar') %>
   <br><br><br><br>
-  <div  class="loader-after-body" style="display: none;">
-  <div class="admin-btns">
-    <button onclick="openNewsLetter()" class="tool-btn"><span class="fal fa-newspaper"></span> Create new newsletter</button>
-    <button onclick="openSendNotification()" class="tool-btn"><span class="fal fa-bell"></span> Send push notification</button>
-    <button onclick="window.location.href='/<%= user?.role %>/users'" class="tool-btn"><span class="fal fa-users"></span> Manage users</button>
-    <button onclick="window.location.href='/admin/analytics'" class="tool-btn"><span class="fal fa-chart-mixed"></span> Analytics</button>
-  </div>
+  <div class="loader-after-body" style="display: none;">
+    <div class="admin-btns">
+      <!--<button onclick="openNewsLetter()" class="tool-btn"><span class="fal fa-newspaper"></span> Create new newsletter</button> hidden because newsletter logic is different -->
+      <button onclick="openSendNotification()" class="tool-btn"><span class="fal fa-bell"></span> Send push notification</button>
+      <button onclick="openSendEmail()" class="tool-btn"><span class="fal fa-envelope"></span> Send email</button>
+      <button onclick="window.location.href='/<%= user?.role %>/users'" class="tool-btn"><span class="fal fa-users"></span> Manage users</button>
+      <button onclick="window.location.href='/admin/analytics'" class="tool-btn"><span class="fal fa-chart-mixed"></span> Analytics</button>
+    </div>
 
-  <div class="analytics-capsule">
-    <p class="capsule-head"><b>Analytics overview</b></p>
-    <% if(user?.role == 'admin'){ %>
-    <div class="users-active">
-      <p class="label">Users active now</p>
-      <p class="value"><%= activeUsers %></p>
-    </div><br>
+    <div class="analytics-capsule">
+      <p class="capsule-head"><b>Analytics overview</b></p>
+      <% if(user?.role == 'admin'){ %>
+      <div class="users-active">
+        <p class="label">Users active now</p>
+        <p class="value"><%= activeUsers %></p>
+      </div><br>
+      <% } %>
+      <div class="users-today">
+        <p class="label">Users today</p>
+        <p class="value"><%= usersToday %></p>
+      </div>
+    </div>
+
+    <% if(reports.length > 0){ %>
+    <div class="reports-logs">
+      <h2>Submitted Reports</h2>
+      <input type="text" id="reportSearch" placeholder="Search reports..." class="search-bar" />
+      <div class="logs-table-wrapper">
+        <table class="logs-table" id="reports-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Subject</th>
+              <th>Details</th>
+              <th>Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% reports.forEach(report=> { %>
+            <tr id="report-<%= report._id %>">
+              <td onclick="<%- `window.location.href='/${report.user?.username}'` %>" style="cursor: pointer;">
+                <%= report.user?.username || 'Guest' %>
+              </td>
+              <td>
+                <%= report.subject %>
+              </td>
+              <td>
+                <%= report.details.length> 50 ? report.details.substring(0, 50) + '...' : report.details %>
+              </td>
+              <td>
+                <%= new Date(report.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %>
+              </td>
+              <td>
+                <span onclick="openResolveReport('<%= report._id %>')" class="resolve-link">Resolve</span>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
     <% } %>
-    <div class="users-today">
-      <p class="label">Users today</p>
-      <p class="value"><%= usersToday %></p>
+
+
+    <div class="activity-logs">
+      <h2>Activity Logs</h2>
+      <input type="text" id="logSearch" placeholder="Search logs..." class="search-bar" style="display: none">
+      <div class="logs-table-wrapper">
+        <table class="logs-table" id="logs-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Activity</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <button id="loadMoreLogsBtn" class="load-more-btn">Load Previous Day</button>
+      </div>
     </div>
+    <br><br>
+
   </div>
-
-  <% if(reports.length > 0){ %>
-  <div class="reports-logs">
-    <h2>Submitted Reports</h2>
-    <input type="text" id="reportSearch" placeholder="Search reports..." class="search-bar" />
-    <div class="logs-table-wrapper">
-      <table class="logs-table" id="reports-table">
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Subject</th>
-            <th>Details</th>
-            <th>Time</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% reports.forEach(report=> { %>
-          <tr id="report-<%= report._id %>">
-            <td onclick="<%- `window.location.href='/${report.user?.username}'` %>" style="cursor: pointer;">
-              <%= report.user?.username || 'Guest' %>
-            </td>
-            <td>
-              <%= report.subject %>
-            </td>
-            <td>
-              <%= report.details.length> 50 ? report.details.substring(0, 50) + '...' : report.details %>
-            </td>
-            <td>
-              <%= new Date(report.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %>
-            </td>
-            <td>
-              <span onclick="openResolveReport('<%= report._id %>')" class="resolve-link">Resolve</span>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <% } %>
-
-
-  <div class="activity-logs">
-    <h2>Activity Logs</h2>
-    <input type="text" id="logSearch" placeholder="Search logs..." class="search-bar" style="display: none">
-    <div class="logs-table-wrapper">
-      <table class="logs-table" id="logs-table">
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Activity</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-      <button id="loadMoreLogsBtn" class="load-more-btn">Load Previous Day</button>
-    </div>
-  </div>
-  <br><br>
-
-</div>
   <div id="resolve-report-popup">
     <div class="overlay" onclick="closeResolveReport()"></div>
     <div class="resolve-report-box">
@@ -155,6 +156,33 @@
           <br>
           <div id="send-notification-status"></div><br>
           <button type="submit">Send notification</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="send-email-popup">
+    <div class="overlay" onclick="closeSendEmail()"></div>
+    <div class="send-email-box">
+      <div class="heading">
+        <p class="title"><span class="fal fa-envelope"></span> Send Email</p>
+        <p class="close-icon fal fa-xmark" onclick="closeSendEmail()"></p>
+      </div>
+      <div class="send-email-list" id="send-email-list">
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Header and footer will automatically be added to this email.</span><br><br>
+        <div class="info-box">
+          To create a box like this use div.info-box and p inside it. Inspect this element for more details.
+          <p><strong>Name:</strong>XYZ</p>
+          <p><strong>Username:</strong>2k17platform</p>
+        </div><br>
+        <form id="send-email-form">
+          <input type="text" autocomplete="off" id="send-email-to" name="to" required placeholder="To (Comma seperated, use 'all' for all users)" />
+          <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp; Heading is also subject of email.</span>
+          <input type="text" autocomplete="off" id="send-email-heading" name="heading" required placeholder="Heading of email" />
+          <textarea name="body" rows="5" required id="send-email-body" placeholder="Email body..."></textarea>
+          <br>
+          <div id="send-email-status"></div><br>
+          <button type="submit">Send email</button>
         </form>
       </div>
     </div>

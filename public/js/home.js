@@ -241,7 +241,7 @@ function loadPosts() {
 }
 
 async function toggleReaction(postId, emoji) {
-  try { 
+  try {
     const res = await fetch(`/post/${postId}/react`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -252,13 +252,13 @@ async function toggleReaction(postId, emoji) {
 
     // The backend returns the new list of all reactions for the post
     const updatedReactions = await res.json();
-    
+
     // ---- DYNAMICALLY UPDATE THE UI ----
-    
+
     // Find what the user's new reaction is (it could be null if they un-reacted)
     const newUserReaction = updatedReactions.find(r => r.user === userId);
 
-    if(newUserReaction){
+    if (newUserReaction) {
       document.querySelector(`#post-${postId} .post-buttons`).style.padding = '2px 0'
     } else {
       document.querySelector(`#post-${postId} .post-buttons`).style.padding = '8px 0'
@@ -270,7 +270,7 @@ async function toggleReaction(postId, emoji) {
     reactionButtons.forEach(button => {
       // First, remove the 'reacted' class from all buttons
       button.classList.remove('reacted');
-      
+
       // Then, add the 'reacted' class ONLY to the button that matches the new reaction
       if (newUserReaction && button.dataset.emoji === newUserReaction.reaction) {
         button.classList.add('reacted');
@@ -281,31 +281,31 @@ async function toggleReaction(postId, emoji) {
     console.error("Failed to toggle reaction:", err);
   }
 }
-
 let quill;
 
-// This function should be called when your popup opens, or on page load.
-function initializeQuillEditor() {
-  // Prevent re-initializing
-  if (quill) return;
+document.addEventListener('DOMContentLoaded', () => {
 
-  quill = new Quill('#editor', {
-    theme: 'snow', // Use the 'snow' theme for a clean toolbar
-    placeholder: 'Say hi to everyone...',
-    modules: {
-      // Configure the toolbar for bold, italics, underline, and links
-      toolbar: [
-        ['bold', 'italic', 'underline'],
-        ['link']
-      ]
-    }
-  });
-}
+
+    // Prevent re-initializing
+    if (quill) return;
+
+    quill = new Quill('#editor2', {
+      theme: 'snow', // Use the 'snow' theme for a clean toolbar
+      placeholder: 'Say hi to everyone...',
+      modules: {
+        // Configure the toolbar for bold, italics, underline, and links
+        toolbar: [
+          ['bold', 'italic', 'underline'],
+          ['link']
+        ]
+      }
+    });
+})
+
 
 function openPostPopup() {
   document.getElementById('post-popup').classList.add('show');
-  initializeQuillEditor()
-  document.getElementById('editor').focus();
+  document.getElementById('editor2').focus();
 }
 
 function closePostPopup() {

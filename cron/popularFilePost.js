@@ -89,7 +89,7 @@ cron.schedule('2 0 * * *', async () => {
         }
 
         const postContent = {
-            text: `<p>Here's the most viewed memory of yesterday! <a href='${topFileRoute}'>Click here</a> to view in full screen.</p>`,
+            text: `<p>Here's the most popular memory! <a href='${topFileRoute}'>Click here</a> to view in full screen.</p>`,
             media: {
                 url: file.url,
                 type: 'image'
@@ -103,7 +103,7 @@ cron.schedule('2 0 * * *', async () => {
             {
                 createdAt: { $gte: startOfYesterday, $lte: endOfYesterday },
                 author: '6899e28c181c7329d31384bc',
-                text: { $regex: "Here's the most viewed memory of yesterday" }
+                text: { $regex: "Here's the most popular memory" }
             },
             { $set: postContent },
             { new: true, upsert: true }

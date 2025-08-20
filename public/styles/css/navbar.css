@@ -118,7 +118,6 @@
 .header nav.small-only .user-capsule-2 img {
   width: 32px;
   height: 32px;
-  margin-left: 4px;
   object-fit: cover;
 }
 
@@ -217,13 +216,14 @@
   width: 100vw;
 }
 .header nav.small-only span.menu-icon {
-  font-size: 20px;
-  padding: 6px 8px;
-  border: 1.2px solid white !important;
+  font-size: 18px;
+  padding: 6px 2px;
+  border: 0.75px solid white !important;
   border-radius: 4px;
   cursor: pointer;
   color: white;
-  min-width: 36px;
+  margin-top: 1.5px;
+  min-width: 32px;
 }
 .header nav.small-only p.brand {
   margin-left: 16px;
@@ -396,6 +396,53 @@
   border-radius: 6px;
   height: 36px !important;
   margin-top: 4px;
+}
+
+.profile-container {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-left: 4px;
+}
+.profile-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 10;
+  margin: 0;
+}
+.profile-container .wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--primary-dark);
+  animation: wave-animation 3s forwards;
+  opacity: 0;
+}
+@keyframes wave-animation {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+}
+.profile-container .wave:nth-of-type(1) {
+  animation-delay: 0s;
+}
+.profile-container .wave:nth-of-type(2) {
+  animation-delay: 1s;
+}
+.profile-container .wave:nth-of-type(3) {
+  animation-delay: 2s;
 }
 
 /*# sourceMappingURL=navbar.css.map */

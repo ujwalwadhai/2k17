@@ -32,13 +32,13 @@ async function sendEmail(to, subject, htmlContent, includeBCC) {
 
     let shouldSendEmail = true;
 
-    /* if (process.env.PLATFORM_TYPE == 'developement') {
+    if (process.env.PLATFORM_TYPE == 'developement') {
       if (!adminEmails.includes(to)) {
         // Don't send email if 'to' is not admin
         shouldSendEmail = false;
         console.log(`[DEVELOPMENT MODE] Suppressed email to non-admin in developement: ${to}`);
       }
-    } */
+    }
 
     if (includeBCC) {
       mailOptions.bcc = adminEmails;
@@ -450,9 +450,9 @@ async function BirthdayMail(to, data) {
   let content = `
   <h2 style="color: #7b5cf0;">🎂 Happy Birthday, ${data.name || 'Friend'}!</h2>
 
-  <p style="margin-bottom: 16px;">Today’s your day – and you’re officially in the spotlight on <b><a href="https://twok17.onrender.com/" target="_blank">2k17 Platform</a></b>! You are featured on our website on this special day. 🥳</p>
+  <p style="margin-bottom: 16px;">Today’s your day – and you’re officially in the spotlight on <b><a href="https://twok17.onrender.com/" target="_blank">2k17 Platform</a></b> on this special day. 🥳</p>
 
-  <p>Drop a post, share the vibes, or just soak in the birthday wishes from your batchmates. We’re glad you’re part of this journey!</p>
+  <p>Drop a post, share the vibes or just soak in the birthday wishes from your batchmates. We’re glad you’re part of this journey!</p>
 
   <p style="margin-bottom: 16px;">Wishing you an amazing year ahead. 🎈</p>
 
@@ -547,7 +547,7 @@ async function RegisteredDataMail(to, data) {
       <small>We use industry-standard hashing (bcryptjs) to protect your password. This means no one can know your actual password, not even Ujwal and Prajyot.</small>
     </div>
     <p style="margin-top: 16px;">Begin your journey with us, explore the 2k17 Platform.</p><br>
-    <a href="https://twok17.onrender.com/" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px;">Visit 2k17 Platform</a>`
+    <a href="https://twok17.onrender.com/" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px; margin: 8px 0;">Visit 2k17 Platform</a>`
 
   sendEmail(to, "Welcome to 2k17 Platform ❤️", createEmailTemplate(content));
 }

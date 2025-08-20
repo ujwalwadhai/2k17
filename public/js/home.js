@@ -281,27 +281,6 @@ async function toggleReaction(postId, emoji) {
     console.error("Failed to toggle reaction:", err);
   }
 }
-let quill;
-
-document.addEventListener('DOMContentLoaded', () => {
-
-
-    // Prevent re-initializing
-    if (quill) return;
-
-    quill = new Quill('#editor2', {
-      theme: 'snow', // Use the 'snow' theme for a clean toolbar
-      placeholder: 'Say hi to everyone...',
-      modules: {
-        // Configure the toolbar for bold, italics, underline, and links
-        toolbar: [
-          ['bold', 'italic', 'underline'],
-          ['link']
-        ]
-      }
-    });
-})
-
 
 function openPostPopup() {
   document.getElementById('post-popup').classList.add('show');

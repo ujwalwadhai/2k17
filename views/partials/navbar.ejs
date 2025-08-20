@@ -1,12 +1,12 @@
 <div class="header" style="display: none;">
   <nav class="large-and-medium">
-    <h1 style="cursor: pointer;" onclick="window.location.href = '/'">2k17 ❤️</h1>
+    <h1 style="cursor: pointer;" onclick="window.location.href = '/'">2k17 <span class="fas fa-hearts" style="margin-left: 6px; color: #f14545;"></span></h1>
     <ul class="nav-items">
       <li><a href="/memories">Memories</a></li>
       <li><a href="/members">Members</a></li>
       <li><a href="/quizzes"><span class="fal fa-block-question"></span></a></li>
       <% if(user && user?.role == 'admin'){ %>
-        <li><a href="/admin/analytics"><span class="fal fa-chart-mixed"></span></a></li>
+      <li><a href="/admin/analytics"><span class="fal fa-chart-mixed"></span></a></li>
       <% } %>
       <li><a href="/contribute"><span class="fal fa-hand-holding-heart"></span></a></li>
       <% if (!user) { %>
@@ -19,7 +19,6 @@
       <li><a href="/home"><span class="fal fa-house"></span></a></li>
       <% } %>
       <li><a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a></li>
-      <li><a href="/settings"><span class="fal fa-cog"></span></a></li>
       <li class="user-capsule-wrapper">
         <div class="user-capsule">
           <img src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
@@ -41,7 +40,7 @@
   </nav>
   <nav class="small-only">
     <span class="menu-icon fal fa-bars-sort" onclick="toggleMenu()"></span>
-    <p class="brand" style="cursor: pointer;" onclick="window.location.href = '/'">2k17 ❤️</p>
+    <p class="brand" style="cursor: pointer;" onclick="window.location.href = '/'">2k17 <span class="fas fa-hearts" style="margin-left: 6px; color: #f14545;"></span></p>
     <% if (user) { %>
     <li class="user-capsule-wrapper">
       <div class="user-capsule user-capsule-2">
@@ -50,16 +49,22 @@
         <% } else { %>
         <a href="/home"><span class="fal fa-house"></span></a>
         <% } %>
-        <!--<a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a>-->
         <a href="/settings"><span class="fal fa-cog"></span></a>
-        <img id="user-capsule-img" src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
+        <div class="profile-container">
+          <img id="user-capsule-img" src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="@">
+          <% if(typeof isHome !== 'undefined' && isHome) { %>
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <div class="wave"></div>
+          <% } %>
+        </div>
       </div>
 
       <ul class="user-dropdown user-dropdown-2">
         <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user"></span>My profile</a></li>
         <li onclick="window.location.href = '/account'"><a href="/account"><span class="fal fa-user-circle"></span>My account</a></li>
         <% if(user && user?.role == 'admin'){ %>
-          <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-shield-user"></span>Admin Page</a></li>
+        <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-shield-user"></span>Admin Page</a></li>
         <% } %>
         <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
         <li class="logout-btn" onclick="window.location.href = '/logout'"><a href="/logout"><span class="fal fa-arrow-right-from-bracket"></span>Logout</a></li>
@@ -87,21 +92,21 @@
       <ul class="nav-items">
         <% if(user) { %>
         <li onclick="window.location.href = '/home'"><a href="/home"><span class="fal fa-house"></span>Home</a></li>
-        <% if(user?.role !== 'admin'){ %>
         <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user"></span>My profile</a></li>
-        <li onclick="window.location.href = '/account'"><a href="/account"><span class="fal fa-user-circle"></span>My account</a></li>
-        <% }} %>
+        <% }%>
         <li onclick="window.location.href = '/quizzes'"><a href="/quizzes"><span class="fal fa-block-question"></span>Quizzes</a></li>
         <li onclick="window.location.href = '/memories'"><a href="/memories"><span class="fal fa-images"></span>Memories</a></li>
         <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>
         <% if(user && user?.role == 'admin'){ %>
-          <li onclick="window.location.href = '/admin/analytics'"><a href="/admin/analytics"><span class="fal fa-chart-mixed"></span>Analytics</a></li>
+        <li onclick="window.location.href = '/admin/analytics'"><a href="/admin/analytics"><span class="fal fa-chart-mixed"></span>Analytics</a></li>
         <% } %>
         <li onclick="window.location.href = '/contribute'"><a href="/contribute"><span class="fal fa-hand-holding-heart"></span>Contribute</a></li>
         <% if (user) { %>
-        <li onclick="window.location.href = '/settings'"><a href="/settings"><span class="fal fa-gear"></span>Settings</a></li>
-        <li onclick="window.location.href = '/whatsnew'"><a href="/whatsnew"><span class="fal fa-sparkle"></span>What's new</a></li>
-        <li class="profile-box"><img class="navbar-profile-img" src="<%- user.profile ? user.profile : '/images/user.png' %>" alt=""><a><%= user.name.split(' ')[0] %> <%= user.name.split(' ')[1][0] %>.</a><a href="/logout" class="fal fa-arrow-right-from-bracket logout-icon"></a></li>
+        <li class="profile-box">
+          <img class="navbar-profile-img" src="<%- user.profile ? user.profile : '/images/user.png' %>" alt="">
+          <a><%= user.name.split(' ')[0] %> <%= user.name.split(' ')[1][0] %>.</a>
+          <a href="/logout" class="fal fa-arrow-right-from-bracket logout-icon"></a>
+        </li>
         <% } %>
       </ul>
     </div>

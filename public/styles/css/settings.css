@@ -1,5 +1,6 @@
 body {
   height: 100vh;
+  backdrop-filter: blur(6px);
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
 }
 @media (max-width: 768px) {
@@ -103,7 +104,6 @@ body {
 #notification-settings-popup .notification-settings-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -135,6 +135,8 @@ body {
 #notification-settings-popup .notification-settings-box .notification-settings-list .form-section {
   line-height: 28px;
   display: flex;
+  gap: 1rem;
+  flex-direction: column;
 }
 #notification-settings-popup .notification-settings-box .notification-settings-list .form-section label {
   display: block;
@@ -206,7 +208,6 @@ body {
 #change-appearance-popup .change-appearance-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -318,7 +319,6 @@ body {
 #change-password-popup .change-password-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -424,7 +424,6 @@ body {
 #report-problem-popup .report-problem-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -532,7 +531,6 @@ body {
 #give-suggestion-popup .give-suggestion-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -640,7 +638,6 @@ body {
 #change-email-popup .change-email-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -746,7 +743,6 @@ body {
 #privacy-settings-popup .privacy-settings-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -803,14 +799,6 @@ body {
 }
 #privacy-settings-popup .privacy-settings-box .privacy-settings-list button[type=submit]:hover {
   background-color: var(--primary);
-}
-
-#moved-things-chip {
-  padding: 12px 14px;
-  margin-bottom: 36px;
-  border-radius: 6px;
-  background: var(--bg-dark);
-  line-height: 24px;
 }
 
 @media (max-width: 600px) {

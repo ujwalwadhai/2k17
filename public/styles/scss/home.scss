@@ -97,9 +97,9 @@ body {
     .cta-btn {
       background: var(--primary-dark);
       color: var(--text-light);
-      padding: 0.75rem 1.5rem;
+      padding: 0.7rem 1.35rem 0.7rem 1.1rem;
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 6px;
       transition: 0.3s;
       cursor: pointer;
 
@@ -154,7 +154,7 @@ body {
     gap: auto;
 
     .hero-text {
-      margin-top: 12px;
+      margin-top: 8px;
 
       #greeting {
         margin-top: 24px;
@@ -243,9 +243,9 @@ body {
 
   h3 {
     color: var(--text-light);
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 
     span {
       margin-right: 12px;
@@ -272,7 +272,7 @@ body {
     display: flex;
     gap: 1.2rem;
     margin-top: 0.75rem;
-    padding: 16px 0;
+    padding: 16px 0 0 0;
     padding-bottom: 24px;
     overflow-x: auto;
 
@@ -284,7 +284,7 @@ body {
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       box-shadow: 0 0 0 transparent;
       border: 0.5px solid var(--text-light);
-      min-width: 225px;
+      min-width: 200px;
 
       &:hover {
         transform: translateY(-4px);
@@ -302,9 +302,9 @@ body {
 
       h4 {
         color: var(--primary);
-        font-size: 1.2rem;
-        margin: 4px 0;
-        margin-top: 12px;
+        font-size: 1.1rem;
+        margin: 0;
+        margin-top: 10px;
       }
 
       p {

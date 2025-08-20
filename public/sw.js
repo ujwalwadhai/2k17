@@ -1,6 +1,7 @@
-const CACHE_NAME = `2k17-16-08-2025`; // Add date when you are commiting so that cache of users will be updated on deployment
+const CACHE_NAME = `2k17-20-08-2025`; // Add date when you are commiting so that cache of users will be updated on deployment
 const URLS_TO_CACHE = [
     '/',
+    './offline.html',
     '/icons/css/all.css',
     '/styles/css/theme.css',
     '/styles/css/font.css',
@@ -52,8 +53,7 @@ const URLS_TO_CACHE = [
     '/images/icons/logo_96x96.png',
     '/images/icons/maskable_icon.png',
     '/images/jnv-bg-1.jpg',
-    '/favicon.ico',
-    './offline.html'
+    '/favicon.ico'
 ];
 
 self.addEventListener('install', event => {
@@ -106,7 +106,7 @@ self.addEventListener('fetch', event => {
     if (event.request.mode === 'navigate') {
         event.respondWith(
             fetch(event.request).catch(() => {
-                return caches.match(OFFLINE_URL);
+                return caches.match('./offline.html');
             })
         );
         return;

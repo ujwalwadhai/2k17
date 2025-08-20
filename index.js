@@ -158,11 +158,13 @@ const downloadLimiter = rateLimit({
 });
 app.set('downloadLimiter', downloadLimiter);
 
+if(process.env.PLATFORM_TYPE === 'production') {
 // CRON Jobs for recurring events
 require('./cron/birthday')
 require('./cron/newsletter')
 require('./cron/weeklyReport')
 require('./cron/popularFilePost')
+}
 
 require('./config/mailer')
 
@@ -174,10 +176,12 @@ mongoose.connect(process.env.MONGO_URI, {}).then(() => {
   app.listen(PORT, () => {
     console.log(`🚀 Server is running\n`);
   });
+  if(process.env.PLATFORM_TYPE === 'production') {
   require('./cron/logCleanUp')
   require('./cron/sessionCleanUp')
   require('./cron/closeSessions')
   require('./utils/cleanup')()
+  }
 }).catch((err) => {
   console.error('❌ MongoDB connection error:', err);
 });

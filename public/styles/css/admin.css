@@ -204,7 +204,6 @@ body {
 #resolve-report-popup .resolve-report-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -319,7 +318,6 @@ body {
 #newsletter-popup .newsletter-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -434,7 +432,6 @@ body {
 #send-notification-popup .send-notification-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -549,7 +546,6 @@ body {
 #send-email-popup .send-email-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;
@@ -723,7 +719,6 @@ body {
 #user-info-popup .user-info-box .heading {
   margin-bottom: 0;
   font-size: 20px;
-  font-weight: bold;
   padding-left: 16px;
   display: flex;
   width: 100%;

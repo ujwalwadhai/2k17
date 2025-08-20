@@ -64,14 +64,9 @@ async function updateTodayUsers() {
         const res = await fetch('/api/analytics/daily-users');
         const { sessionTimeData, result:{ total = '--', guests = '--', known = '--'} } = await res.json();
         document.querySelector('#active-today').innerHTML = total;
-        document.querySelector('#avgTime').innerHTML = (sessionTimeData.today.collectiveTime / total).toFixed(2);
+        document.querySelector('#avgTime').innerHTML = (sessionTimeData.today.collectiveTime / (total > 0 ? total : 1)).toFixed(2);
         document.querySelector('#collectiveTime').innerHTML = sessionTimeData.today.collectiveTime;
-        let avgTimeChange = ''
-        if(sessionTimeData.change.avgTime >= 0){
-            avgTimeChange = `<span style="color: #6fdc6f">+${sessionTimeData.change.avgTime}</span> minutes than yesterday`
-        } else {
-            avgTimeChange = `<span style="color: #ff6f6f">${sessionTimeData.change.avgTime}</span> minutes than yesterday`
-        }
+        let avgTimeChange = `Counted for ${total} users`
         let collectiveTimeChange = ''
         if(sessionTimeData.change.collectiveTime >= 0){
             collectiveTimeChange = `<span style="color: #6fdc6f">+${sessionTimeData.change.collectiveTime}</span> minutes than yesterday`

@@ -14,12 +14,11 @@
   <div class="settings-container loader-after-body" style="display: none;">
     <h2>Settings</h2><br>
     <div class="links">
-      <div id="moved-things-chip"><span class="fal fa-info-circle"></span>&nbsp; Email and password related settings are now inside <a href="/account">My account</a>.</div>
       <ul>
         <li onclick="window.location.href='/profile/edit'"><a href="/profile/edit"><span class="fal fa-user"></span>
             Update profile</a></li>
         <li onclick="window.location.href='/account'"><a href="/account"><span class="fal fa-user-circle"></span> My account</a></li>
-        <li onclick="openChangeAppearance()"><a><span class="fal fa-palette"></span> Appearance &nbsp; <span class="grey-1">(Themes & fonts)</span></span></a></li>
+        <li onclick="openChangeAppearance()"><a><span class="fal fa-palette"></span> Appearance</a></li>
         <li onclick="openNotificationSettings()"><a><span class="fal fa-bell"></span> Notifications</a></li>
         <li onclick="openPrivacySettings()"><a><span class="fal fa-eye-slash"></span> Privacy & Visibility</a></li>
       </ul>
@@ -53,7 +52,7 @@
           <div class="form-section">
             <label>
               <input type="checkbox" id="push" name="push" <%- settings.notifications?.push ? 'checked' : '' %>>
-              Push notifications <small class="grey-1"> &nbsp;(Permission needed the first time)</small>
+              Push notifications <small class="grey-1"> &nbsp;(Permission needed)</small>
             </label>
             <label>
               <input type="checkbox" name="email" <%=settings.notifications.email ? 'checked' : '' %>>
@@ -210,7 +209,7 @@
           <div class="form-section">
             <label>
               <input type="checkbox" id="privacy-email" name="email" <%- settings.privacy?.email ? 'checked' : '' %>>
-              Email <small class="grey-1"> &nbsp;(System emails will still be sent.)</small>
+              Email <small class="grey-1"> &nbsp;(System emails will always be sent.)</small>
             </label>
             <label>
               <input type="checkbox" name="phone" <%=settings.privacy?.phone ? 'checked' : '' %>>

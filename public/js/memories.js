@@ -277,7 +277,12 @@ async function loadFolder(folderId, updateURL = true) {
       } else {
         pathLinks = data.breadcrumb.map(folder => `<a onclick="loadFolder('${folder.id}')">${folder.name}</a>`).join('');
       }
+      if(folderId == 'root'){
+        breadcrumb.style.display = 'none'
+      } else {
+      breadcrumb.style.display = 'flex'
       breadcrumb.innerHTML = homeLink + pathLinks;
+      }
 
       let subfoldersHTML = '';
 

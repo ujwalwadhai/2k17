@@ -103,13 +103,6 @@ app.use((req, res, next) => {
   next();
 })
 
-app.use("/memories", (req, res, next) => {
-  if (req.user && req.user.role === 'admin') {
-    return next();
-  }
-  res.render('pages/500');
-})
-
 app.use('/admin', isLoggedIn, hasRole('admin'))
 app.get('/api/analytics', isLoggedIn, hasRole('admin'))
 app.use('/', require('./middlewares/locals'), getRoutes);
@@ -135,7 +128,7 @@ app.use(async (err, req, res, next) => {
 // Rate limits
 const generalLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 100,
+  max: 40,
   skipSuccessfulRequests: false,
   handler: (req, res) => {
     res.status(429).json({

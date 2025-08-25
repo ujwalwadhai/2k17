@@ -7,17 +7,18 @@
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
-
-  @media (max-width: 768px) {
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
-  }
+  
   color: var(--text-light);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 0.5s ease;
-
+  backdrop-filter: blur(10px);
+  
+  @media (max-width: 768px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+  }
   .loader-text {
     font-size: 3rem;
     font-family: 'Lato';
@@ -66,8 +67,11 @@
   }
 }
 
-@keyframes jump {
+div.ganesha-loader{
+  animation: jump 1.25s infinite ease-in-out;
+}
 
+@keyframes jump {
   0%,
   100% {
     transform: translateY(0);

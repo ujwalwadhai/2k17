@@ -3,6 +3,7 @@ var Settings = require('../../models/Settings');
 var sendMail = require('../../config/mailer')
 var logActivity = require('../../utils/log');
 var deviceInfo = require('../../middlewares/device')
+const { checkAndAwardBadges } = require('../../config/badges');
 
 const loginPassword = async (req, res) => {
   var { username, password } = req.body;
@@ -35,7 +36,7 @@ const loginPassword = async (req, res) => {
       }
     }
 
-    if(!user.registered) return res.json({ success: false, message: 'Your account is under review. Please try again later!' });
+    if(!user.verified) return res.json({ success: false, message: 'Your account is under review. Please try again later!' });
 
     var isMatch = await user.validatePassword(password);
     if (!isMatch) {
@@ -52,6 +53,7 @@ const loginPassword = async (req, res) => {
       logActivity(user._id, `Logged in with password.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
       await Users.findOneAndUpdate({ email: user.email }, { lastLogin: Date.now() }, { new: true });
+      await checkAndAwardBadges(user._id, 'festive-spirit'); // ganesha theme festive spirit badge
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     });
 

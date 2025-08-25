@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.5s ease;
+  backdrop-filter: blur(10px);
 }
 @media (max-width: 768px) {
   #full-loader {
@@ -52,6 +53,10 @@
 #full-loader.hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+div.ganesha-loader {
+  animation: jump 1.25s infinite ease-in-out;
 }
 
 @keyframes jump {

@@ -20,9 +20,9 @@ module.exports = async (req, res) => {
     });
 
     await newQuiz.save();
-    const admins = await Users.find({ role: 'admin', username: {$ne: '2k17platform'} }, {email: 1});
-    const adminMails = admins.map(admin => admin.email);
-    await sendMail('new_quiz', adminMails, { quiz: { title, description, questions: formattedQuestions.length }, createdBy: req.user.name });
+    //const admins = await Users.find({ role: 'admin', username: {$ne: '2k17platform'} }, {email: 1});
+    //const adminMails = admins.map(admin => admin.email);
+    //await sendMail('new_quiz', adminMails, { quiz: { title, description, questions: formattedQuestions.length }, createdBy: req.user.name });
 
     res.redirect(`/quiz/${newQuiz._id}`);
 

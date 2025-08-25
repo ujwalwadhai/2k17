@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
   password: { type: String, select: false },
   profile: { type: String },
   bio: { type: String },
-  registered: { type: Boolean, default: false },
   verified: { type: Boolean, default: false },
   socialLinks: { type: Object, default: {} },
   code: { type: String, select: false },
@@ -42,6 +41,21 @@ const userSchema = new mongoose.Schema({
     keys: {
       p256dh: String,
       auth: String
+    }
+  }],
+  // ganesha theme game score
+  modakScore: {
+    type: Number,
+    default: 0
+  },
+  earnedBadges: [{
+    badge: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Badges'
+    },
+    earnedAt: {
+      type: Date,
+      default: Date.now
     }
   }]
 }, {

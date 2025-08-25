@@ -5,6 +5,7 @@ const Settings = require('../models/Settings');
 const { uploadFromUrl } = require('./cloudinary');
 const sendMail = require('./mailer');
 const logActivity = require('../utils/log');
+const { checkAndAwardBadges } = require('../config/badges');
 
 module.exports = function (passport) {
   // Local Strategy
@@ -46,6 +47,10 @@ module.exports = function (passport) {
           if (!verified) return done(null, false, { message: 'Google email not verified.' });
 
           let user = await Users.findOne({ email });
+          // ganesha theme award festive spirit badge
+          if(user){
+            await checkAndAwardBadges(user._id, 'festive-spirit');
+          }
 
           if (!user) {
             const newUser = await Users.create({
@@ -54,7 +59,6 @@ module.exports = function (passport) {
               username: email.split('@')[0],
               profile: '',
               createdAt: new Date(),
-              registered: true,
               verified: true,
               googleId: profile.id,
               lastLogin: new Date()
@@ -70,7 +74,7 @@ module.exports = function (passport) {
             }
             logActivity(newUser._id, 'Created account using Google');
             await newUser.save();
-
+            await checkAndAwardBadges(newUser._id, 'new-account');
             await sendMail("new_user_registration", email, { user: newUser });
             console.log('✅ Registration credentials sent', email);
 
@@ -80,8 +84,7 @@ module.exports = function (passport) {
             var adminEmails = admins.map(u => u.email);
             var totalUsers = await Users.countDocuments();
             var verifiedUsers = await Users.countDocuments({ verified: true });
-            var registeredUsers = await Users.countDocuments({ registered: true });
-            await sendMail('user_registered', adminEmails, { name: newUser.name, email, username: newUser.username, totalUsers, verifiedUsers, registeredUsers, method: 'Google' });
+            await sendMail('user_registered', adminEmails, { name: newUser.name, email, username: newUser.username, totalUsers, verifiedUsers, method: 'Google' });
             return done(null, newUser);
           }
 

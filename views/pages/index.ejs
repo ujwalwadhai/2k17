@@ -26,7 +26,7 @@
       </div>
     </section>
 
-    <% if (birthdayUsers.length > 0) { %>
+    <% if (birthdayUsers && birthdayUsers.length > 0) { %>
     <section id="birthday-spotlight" class="no-select">
       <h3>🎉 Birthday Spotlight</h3>
       <p class="grey-1">It’s <%= birthdayUsers.length === 1 ? birthdayUsers[0].name + "'s" : "their" %> special day! Drop a wish and make it memorable. 🥳</p><br>
@@ -55,17 +55,11 @@
       </section>
 
       <section id="newsletter-sub" class="newsletter-sub">
-        <h3>Subscribe to our Newsletter</h3>
-        <p style="line-height: 24px">Stay updated with the latest news and updates from 2k17 with an email.</p>
-        <form id="newsletter-form" onsubmit="e=> e.preventDefault()">
-          <input type="email" name="email" placeholder="Enter your email" required>
-          <button type="submit" id="newsletter-sub-btn">Subscribe</button>
-        </form>
-        <br><br>
+        <iframe src="https://player.cloudinary.com/embed/?cloud_name=batch-2k17&public_id=2k17_platform_compressed_m3gtaq&profile=cld-adaptive-stream" height="360px" width="700px" style="border-radius: 6px; width: 100%; aspect-ratio: 700 / 360;" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
       </section>
 
     </div>
-
+    <% if(members && members.length > 0) { %>
     <!-- Members Section -->
     <div id="members" class="members no-select">
       <h3>Members of 2k17</h3>
@@ -100,7 +94,8 @@
         </div>
       </div>
     </div>
-
+    <% } %>
+    <% if(featuredImages && featuredImages.length > 0) { %>
     <!-- Gallery Section -->
     <section id="gallery" class="gallery no-select">
       <h3>Memories</h3>
@@ -118,6 +113,7 @@
         </div>
       </div>
     </section>
+    <% } %>
 
     <!-- Features Section -->
     <section id="features" class="features no-select">

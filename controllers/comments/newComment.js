@@ -3,6 +3,7 @@ var Users = require('../../models/Users');
 var Notifications = require('../../models/Notifications');
 var sendMail = require('../../config/mailer')
 var sendPushNotification = require('../../utils/push');
+const { checkAndAwardBadges } = require('../../config/badges');
 
 const newComment = async (req, res) => {
   try {
@@ -28,7 +29,7 @@ const newComment = async (req, res) => {
         return `<a href="/members" class="mention-link">@all</a>`;
       } else if (validUsernames.includes(username)) {
         return `<a href="/${username}" class="mention-link">@${username}</a>`;
-      }
+      } 
       return match;
     });
 
@@ -79,7 +80,9 @@ const newComment = async (req, res) => {
       post.comments = []
       post.comments.push(newCommentData);
     }
+
     await post.save();
+    await checkAndAwardBadges(req.user.id, 'FIRST_COMMENT');
 
     // In-app notification logic
     if (post.author._id.toString() !== req.user._id.toString()) {

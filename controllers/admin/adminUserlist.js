@@ -3,7 +3,7 @@ const Users = require('../../models/Users');
 const adminUserlist = async (req, res) => {
   try {
     var users = await Users.find({ role: { $ne: 'admin' } })
-      .sort({ registered: -1, name: 1 })
+      .sort({ verified: -1, name: 1 })
 
     res.render('pages/admin/users', { users });
   } catch (err) {

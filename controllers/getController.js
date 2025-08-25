@@ -3,6 +3,7 @@ var ActiveUsers = require('../models/ActiveUsers');
 var DailyUsers = require('../models/DailyUsers');
 var Files = require('../models/Files');
 var Posts = require('../models/Posts');
+var Badges = require('../models/Badges');
 var Notifications = require('../models/Notifications');
 var Settings = require('../models/Settings');
 var getUpcomingBirthdays = require('../utils/birthdays');
@@ -10,30 +11,32 @@ const Reports = require('../models/Reports');
 
 exports.indexPage = async (req, res) => {
   var todayStr = new Date().toLocaleDateString('en-GB', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit' });
+  if (req.user) {
+    var members = await Users.find(
+      { name: { $ne: "Ujwal Wadhai" }, username: { $ne: '2k17platform' } },
+      { profile: 1, name: 1, year: 1, username: 1 }
+    ).sort({ role: -1 }).limit(14);
 
-  var members = await Users.find(
-    { name: { $ne: "Ujwal Wadhai" }, username: { $ne: '2k17platform' } },
-    { profile: 1, name: 1, year: 1, username: 1 }
-  ).sort({ role: -1 }).limit(14);
+
+    var featuredImages = await Files.find({ tags: 'featured' });
+
+    var birthdayUsers = await Users.find({
+      dob: { $regex: `^${todayStr}/` }
+      , verified: true
+    }, {
+      name: 1,
+      username: 1,
+      profile: 1,
+      dob: 1
+    });
+  }
 
   var admins = await Users.find({ role: 'admin', username: { $ne: '2k17platform' } }, { profile: 1, name: 1, username: 1, socialLinks: 1 });
 
-  var featuredImages = await Files.find({ tags: 'featured' });
-
-  var birthdayUsers = await Users.find({
-    dob: { $regex: `^${todayStr}/` }
-    , verified: true
-  }, {
-    name: 1,
-    username: 1,
-    profile: 1,
-    dob: 1
-  });
-
   res.render('pages/index', {
-    members,
-    featuredImages,
-    birthdayUsers,
+    members: members ?? [],
+    featuredImages: featuredImages ?? [],
+    birthdayUsers: birthdayUsers ?? [],
     admins
   });
 };
@@ -110,7 +113,7 @@ exports.home = async (req, res) => {
       : null;
 
     res.render('pages/home', {
-      birthdays: cachedBirthdays,
+      birthdays: cachedBirthdays.reverse(),
       featuredPhoto: randomPhoto,
       hasUnreadNotifications: hasUnreadNotifications > 0,
       isHome: true
@@ -229,22 +232,12 @@ exports.members = async (req, res) => {
 }
 
 exports.viewProfile = async (req, res) => {
-  var user = await Users.findOne({ username: req.params.username }).populate("settings");
+  let username = req.params.username ?? req.user.username;
+  var user = await Users.findOne({ username }).populate("settings earnedBadges.badge");
   if (!user) return res.redirect('/');
+  user.earnedBadges = Array.from(new Map(user.earnedBadges.map(item => [item.badge.id, item])).values());
+  await user.save()
   var memories = await Files.find({ people: user._id })
-  if (!user) return res.redirect('/');
-  if (req.user) {
-    var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 });
-  } else {
-    var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 }).limit(5);
-  }
-  res.render('pages/profile', { account: user, posts, memories });
-}
-
-exports.myProfile = async (req, res) => {
-  var user = await Users.findOne({ username: req.user.username }).populate('settings');
-  var memories = await Files.find({ people: user._id })
-  if (!user) return res.redirect('/');
   if (req.user) {
     var posts = await Posts.find({ author: user._id }).populate("likes", "username profile").sort({ createdAt: -1 });
   } else {
@@ -264,4 +257,24 @@ exports.settings = async (req, res) => {
   if (!user) return res.redirect('/');
   var settings = await Settings.findOne({ user: user._id });
   res.render('pages/settings', { account: user, settings });
+}
+
+
+// ganesha theme render game
+exports.modakGame = async (req, res) => {
+  var user = req.user ? await Users.findOne({ username: req.user.username }).select("modakScore") : null;
+  res.render('pages/modak-game', { score: user?.modakScore ?? 0 });
+}
+
+// ganesha theme score update
+exports.modakScore = async (req, res) => {
+  if(!req.user) return
+  await Users.findOneAndUpdate({ username: req.user.username }, { $set: { modakScore: JSON.parse(req.body).score } }, { new: true });
+}
+
+exports.badges = async (req, res) => {
+  var user = await Users.findOne({ username: req.user.username }).populate("earnedBadges.badge");
+  if (!user) return res.redirect('/');
+  var badges = await Badges.find();
+  res.render('pages/badges', { earnedBadges: user.earnedBadges, badges });
 }

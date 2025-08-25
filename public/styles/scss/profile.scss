@@ -64,7 +64,7 @@
         flex-direction: column;
         align-items: flex-start;
 
-        p.name{
+        p.name {
           font-size: 22px;
         }
       }
@@ -181,6 +181,14 @@
         display: block;
       }
     }
+  }
+}
+
+.post {
+  border-bottom: 1px solid var(--text-muted);
+
+  &:last-of-type {
+    border-bottom: none;
   }
 }
 
@@ -443,6 +451,7 @@
 .login-box {
   text-align: center;
   margin-top: 48px;
+
   p {
     font-size: 18px;
   }
@@ -454,5 +463,88 @@
     max-height: 100vh !important;
     height: 100vh !important;
     border-radius: 0 !important;
+  }
+}
+
+.badges-container {
+  margin: 1rem 0 0 0;
+  display: flex;
+  gap: 0.5rem;
+  width: 80vw;
+  overflow-x: scroll;
+  scrollbar-width: none;
+
+  div {
+    cursor: pointer;
+
+    img {
+      width: 36px;
+      height: 36px;
+    }
+  }
+}
+
+.badges-section {
+  max-width: 550px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .badge-card {
+    background: var(--bg-dark2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+
+    .badge-heading {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-light);
+      margin: 0 0 0.5rem 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--bg-dark);
+    }
+
+    .badge-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      &:not(:last-child) {
+        margin-bottom: 0.25rem;
+      }
+    }
+
+    p.icon {
+      padding-top: 3px;
+      margin: 2px 0;
+
+      img {
+        width: 52px;
+        height: 52px;
+      }
+    }
+
+    .info-text {
+      display: flex;
+      flex-direction: column;
+
+      .name {
+        font-size: 15px;
+        color: var(--text-light);
+        margin-bottom: 4px;
+      }
+
+      .description {
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+    }
+
+    @media (max-width: 600px) {
+      width: calc(100vw - 32px);
+      margin: 0 auto;
+    }
   }
 }

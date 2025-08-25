@@ -208,7 +208,7 @@ function loadPosts() {
                 <span class="username">@${post.author.username} (${post.timeAgo})</span>
               </div>
             </div>
-            <div class="post-data"> 
+            <div class="post-data" ondblclick="toggleLike('${post._id}')"> 
               ${post.text}
               ${mediaItem}
             </div>

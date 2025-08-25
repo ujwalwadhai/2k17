@@ -1,6 +1,7 @@
 var Users = require('../../models/Users');
 var { destroy } = require('../../config/cloudinary');
 var logActivity = require('../../utils/log');
+const { checkAndAwardBadges } = require('../../config/badges');
 
 const updateProfile = async (req, res) => {
   try {
@@ -39,8 +40,11 @@ const updateProfile = async (req, res) => {
     if (req.file?.path) {
       if (req.user.profile) destroy(req.user.profile);
       update.profile = req.file.path;
+      await checkAndAwardBadges(req.user.id, 'profile-pic');
     }
 
+    if(bio) await checkAndAwardBadges(req.user.id, 'profile-bio');
+    await checkAndAwardBadges(req.user.id, 'profile-any');
     var user = await Users.findOneAndUpdate({ _id: req.user._id }, update);
     logActivity(req.user._id, 'Updated profile');
     res.json({ success: true });

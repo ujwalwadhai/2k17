@@ -18,6 +18,7 @@
       <% } else { %>
       <li><a href="/home"><span class="fal fa-house"></span></a></li>
       <% } %>
+      <li><a href="/settings"><span class="fal fa-cog"></span></a></li>
       <li><a onclick="loadNotifications('<%- user._id %>')"><span class="fal fa-bell <%- hasUnreadNotifications ? 'has-unread' : '' %>"></span></a></li>
       <li class="user-capsule-wrapper">
         <div class="user-capsule">
@@ -28,6 +29,7 @@
         <ul class="user-dropdown">
           <li onclick="window.location.href = '/profile'"><a href="/profile"><span class="fal fa-user"></span>My profile</a></li>
           <li onclick="window.location.href = '/account'"><a href="/account"><span class="fal fa-user-circle"></span>My account</a></li>
+          <li onclick="window.location.href = '/badges'"><a href="/badges"><span class="fal fa-award"></span>My badges</a></li>
           <% if(user && user?.role == 'admin'){ %>
           <li onclick="window.location.href = '/admin'"><a href="/admin"><span class="fal fa-shield-user"></span>Admin Page</a></li>
           <% } %>

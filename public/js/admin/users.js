@@ -11,7 +11,7 @@ function disableLoginUser(userId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.getElementById('user-action-btn').innerHTML = data.registered ? `<button id="user-disable-login-btn" class="btn btn-danger" onclick="disableLoginUser('${userId}')">Disable Login</button>` : `<button id="user-enable-login-btn" class="btn btn-success" onclick="disableLoginUser('${userId}')">Enable Login</button>`;
+                document.getElementById('user-action-btn').innerHTML = data.verified ? `<button id="user-disable-login-btn" class="btn btn-danger" onclick="disableLoginUser('${userId}')">Disable Login</button>` : `<button id="user-enable-login-btn" class="btn btn-success" onclick="disableLoginUser('${userId}')">Enable Login</button>`;
             } else {
                 alert('Error: ' + data.message); 
             }
@@ -45,7 +45,7 @@ function openUserInfo(userId) {
                 if(data.user?.lastLogin){
                 document.getElementById('user-lastLogin').innerHTML = data.user?.lastLogin ? new Date(data.user.lastLogin).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '<span class="grey-1">No data available</span>';
                 }
-                document.getElementById('user-action-btn').innerHTML = data.user?.registered ? `<button id="user-disable-login-btn" class="btn btn-danger" onclick="disableLoginUser('${userId}')">Disable Login</button>` : `<button id="user-enable-login-btn" class="btn btn-success" onclick="disableLoginUser('${userId}')">Enable Login</button>`;
+                document.getElementById('user-action-btn').innerHTML = data.user?.verified ? `<button id="user-disable-login-btn" class="btn btn-danger" onclick="disableLoginUser('${userId}')">Disable Login</button>` : `<button id="user-enable-login-btn" class="btn btn-success" onclick="disableLoginUser('${userId}')">Enable Login</button>`;
             } else {
                 alert("No user found")
             }

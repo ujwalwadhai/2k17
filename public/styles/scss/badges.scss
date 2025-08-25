@@ -1,0 +1,200 @@
+body {
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+
+    header {
+        text-align: center;
+        margin-bottom: 3rem;
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+    }
+
+    section {
+        margin-bottom: 3rem;
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--input-border);
+        }
+    }
+
+    .my-badges {
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .badge-card {
+            background-color: var(--bg-dark);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border: 1px solid var(--input-border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(123, 92, 240, 0.15);
+                border-color: var(--primary);
+            }
+
+            .badge-name {
+                display: block;
+                margin-top: 1rem;
+                font-weight: 500;
+                font-size: 0.9rem;
+            }
+        }
+
+        .empty-state {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--bg-dark);
+            border-radius: 12px;
+            border: 1px dashed var(--input-border);
+        }
+    }
+
+    .badge-icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+
+        img {
+            width: 72px;
+            height: 72px;
+        }
+    }
+
+    .icon-cell{
+        .badge-icon img{
+            width: 64px;
+            height: 64px;
+            margin: 0.5rem;
+        }
+    }
+
+    .all-badges {
+        .table-container {
+            overflow-x: auto;
+            background-color: var(--bg-dark);
+            border-radius: 12px;
+            border: 1px solid var(--input-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            thead tr {
+                border-bottom: 2px solid var(--input-border);
+
+                th {
+                    padding: 1rem 1.5rem 1rem 0;
+                    text-align: left;
+                    font-weight: 600;
+                    color: var(--text-muted);
+                    text-transform: uppercase;
+                    font-size: 0.8rem;
+                    letter-spacing: 0.5px;
+
+                    &:first-of-type{
+                        padding-left: 1rem;
+                    }
+                }
+            }
+
+            tbody tr {
+                border-bottom: 1px solid var(--input-border);
+                transition: background-color 0.2s ease;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                &:hover {
+                    background-color: var(--bg-dark2);
+                }
+
+                td {
+                    vertical-align: middle;
+
+                    &.icon-cell {
+                        padding-right: 0;
+
+                        .badge-icon {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .all-badges {
+            table {
+                thead {
+                    display: none; 
+                }
+
+                tr {
+                    display: block;
+                    margin-bottom: 1rem;
+                    border: 1px solid var(--input-border);
+                    border-radius: 8px;
+                    padding: 0.5rem 1rem;
+                    background-color: var(--bg-dark);
+                }
+
+                td {
+                    flex-direction: column;
+                    display: flex;
+                    text-align: left;
+                    padding: 0.5rem 0 !important;
+                    line-height: 25px;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+
+                    &::before {
+                        content: attr(data-label);
+                        float: left;
+                        font-weight: bold;
+                        color: var(--text-muted);
+                        text-transform: uppercase;
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+    }
+}

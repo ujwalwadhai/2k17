@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+  <title>My Badges</title>
+  <link rel="stylesheet" href="/styles/css/badges.css">
+</head>
+
+<body>
+  <%- include('../partials/navbar') %>
+  <%- include('../partials/loader') %> <br><br>
+  <div class="container loader-after-body" style="display: none">
+    <header>
+      <h1>Badge Collection</h1>
+      <p>Celebrate your achievements and discover new ones to unlock!</p>
+    </header>
+
+    <section class="my-badges">
+      <h2>My Badges</h2>
+      <% if (earnedBadges && earnedBadges.length > 0) { %>
+      <div class="badge-grid">
+        <% earnedBadges.forEach(badge => { %>
+        <div class="badge-card">
+          <div class="badge-icon earned">
+            <img src="<%= badge.badge.icon %>">
+          </div>
+          <span class="badge-name"><%= badge.badge.name %></span>
+        </div>
+        <% }); %>
+      </div>
+      <% } else { %>
+      <p class="empty-state">You haven't earned any badges yet. Start contributing to unlock your first one!</p>
+      <% } %>
+    </section>
+
+    <section class="all-badges">
+      <h2>All Badges</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Icon</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>How to Earn</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% badges.forEach(badge => { %>
+            <tr>
+              <td class="icon-cell">
+                <div class="badge-icon"><img src="<%- badge.icon %>"></div>
+              </td>
+              <td data-label="Name"><%= badge.name %></td>
+              <td data-label="Description"><%= badge.description %></td>
+              <td data-label="How to Earn"><%= badge.howTo %></td>
+            </tr>
+            <% }); %>
+            <tr>
+              <td colspan="4" style="color: var(--text-muted); text-align: center; padding: 1.2rem 1rem">More badges coming soon...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <%- include('../partials/footer') %>
+</body>
+
+</html>

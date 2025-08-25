@@ -333,7 +333,7 @@ footer {
     display: flex;
 
     .about {
-      width: 70%;
+      width: 60%;
     }
 
     .newsletter-sub {
@@ -343,8 +343,6 @@ footer {
       border-radius: 8px;
       margin: 5rem 0;
       margin-right: 5%;
-      padding: 0 36px;
-      padding-top: 16px;
       max-height: max-content;
       width: auto;
       max-width: 400px;
@@ -390,7 +388,6 @@ footer {
     background: var(--bg-dark);
     box-sizing: border-box;
     margin: 4rem 8%;
-    padding: 8px 32px;
     border: 1.5px solid var(--primary);
     border-radius: 8px;
     width: auto;

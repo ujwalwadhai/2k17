@@ -87,6 +87,7 @@ body {
   color: var(--text-muted);
   margin-bottom: 16px;
   flex-grow: 0;
+  margin-top: 0;
 }
 .quiz-card .quiz-meta a {
   color: var(--primary-light);

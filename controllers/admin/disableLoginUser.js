@@ -12,17 +12,17 @@ async function disableLoginUser(req, res) {
     const user = await Users.findById(userId);
     if (!user) return res.status(404).json({ success: false, message: 'User not found' });
 
-    user.registered = !user.registered;
+    user.verified = !user.verified;
     await user.save();
-    if(!user.registered){
+    if(!user.verified){
         await Sessions.deleteMany({ session: {$regex : userId} });
     }
 
     return res.status(200).json({
         success: true,
-        message: user.registered ? 'User enabled successfully' : 'User disabled and logged out successfully',
+        message: user.verified ? 'Login enabled successfully' : 'Login disabled and logged out successfully',
         name: user.name,
-        registered: user.registered
+        verified: user.verified
     });
 }
 

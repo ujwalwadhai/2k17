@@ -115,7 +115,6 @@ body {
     display: inline-block;
     width: 100%;
     max-width: max(40vw, 500px);
-    ;
     border: 1px solid var(--text-muted);
     border-radius: 12px;
     transition: 0.3s transform ease;
@@ -130,6 +129,10 @@ body {
       border-radius: 12px;
       width: 100%;
       display: block;
+
+      @media (min-width: 900px) {
+        height: 60vh;
+      }
     }
 
     .overlay-text {
@@ -324,5 +327,71 @@ body {
     max-height: 100vh !important;
     height: 100vh !important;
     border-radius: 0 !important;
+  }
+}
+
+#virtual-prasad {
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.2rem;
+  background-color: #F47820;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: pulse 2s infinite ease-in-out;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+  svg {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.6rem;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+.competition {
+  padding: 1rem 6%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .competition-box {
+    max-width: 552px;
+    padding: 1rem 1.2rem;
+    border: 2px solid var(--primary);
+    border-radius: 6px;
+    background: var(--bg-dark2);
+
+    h3 {
+      margin: 4px 0 0 0;
+    }
+
+    p{
+      line-height: 22px;
+    }
+
+    button {
+      padding: 8px 16px;
+      background: var(--primary-dark);
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
   }
 }

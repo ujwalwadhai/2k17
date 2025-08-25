@@ -458,7 +458,7 @@ async function BirthdayMail(to, data) {
 
   <a href="https://twok17.onrender.com/#birthday-spotlight" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Visit 2k17 Platform</a>`
 
-  logActivity('', `Sent email to ${to} for birthday wish`)
+  logActivity('', `Sent email to ${data.name} for birthday wish`)
   sendEmail(to, 'Happy Birthday 🎂 • 2k17 Platform', createEmailTemplate(content));
 }
 
@@ -526,7 +526,6 @@ async function UserRegisteredMail(to, data) {
       <p>The current user stats are as follows:</p>
       <p><strong>Total users:</strong>${data.totalUsers}</p>
       <p><strong>Verified users:</strong>${data.verifiedUsers}</p>
-      <p><strong>Registered users:</strong>${data.registeredUsers}</p>
     </div>`
 
   sendEmail(to, 'New user registration • 2k17 Platform', createEmailTemplate(content));
@@ -550,6 +549,18 @@ async function RegisteredDataMail(to, data) {
     <a href="https://twok17.onrender.com/" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px; margin: 8px 0;">Visit 2k17 Platform</a>`
 
   sendEmail(to, "Welcome to 2k17 Platform ❤️", createEmailTemplate(content));
+}
+
+async function GaneshaWishMail(to, data) {
+  let content = `
+    <h2 style="color: #7b5cf0;">Happy Ganesh Chaturthi 🎊</h2>
+    <p>Hi ${data.name},</p>
+    <p style="margin-bottom: 16px;">We wish you Happy Ganesh Chaturthi from 2k17 platform.</p>
+    <p style="margin-bottom: 16px;">May bappa bring joy and success in your life.</p>
+    <p style="margin-bottom: 16px;">We are also happy to announce that we are celebrating this festival with a special Ganesh Chaturthi theme on our platform. Visit now to participate and have fun.</p><br>
+    <a href="https://twok17.onrender.com/home" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px; margin: 4px 0;">Visit 2k17 Platform</a>`
+
+  sendEmail(to, "Happy Ganesh Chaturthi 🎊", createEmailTemplate(content));
 }
 
 async function WeeklyReportMail(to, data) {
@@ -580,6 +591,7 @@ async function WeeklyReportMail(to, data) {
 
 async function sendMail(type, to, data) {
   if (type == 'otp') OTPMail(to, data);
+  if (type == 'ganesha_wish') GaneshaWishMail(to, data);
   //if (type == 'login') LoginMail(to, data);
   if (type == 'error') AppErrorAlert(to, data);
   if (type == 'report_user') UserReportMail(to, data);

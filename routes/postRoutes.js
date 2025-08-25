@@ -147,4 +147,8 @@ router.post('/quiz/create', isLoggedIn, quizController.handleCreateForm);
 router.post('/quiz/:quizId/attempt', isLoggedIn, quizController.handleAttempt);
 
 
+// ganesha theme score update
+router.post('/modak/score', express.text({ type: '*/*' }), isLoggedIn, getController.modakScore);
+
+
 module.exports = router;

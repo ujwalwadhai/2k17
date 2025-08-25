@@ -48,7 +48,7 @@ router.get('/contribute', getController.contribute);
 router.get('/members', getController.members);
 
 
-router.get('/profile', isLoggedIn, getController.myProfile);
+router.get('/profile', isLoggedIn, getController.viewProfile);
 
 router.get('/profile/edit', isLoggedIn, getController.editProfile);
 
@@ -110,12 +110,18 @@ router.get('/quiz/leaderboard/:quizId', quizController.viewLeaderboard);
 router.get('/whatsnew', (req, res) => res.render('pages/whatsnew'))
 
 
+router.get('/badges', isLoggedIn, getController.badges)
+
+
 router.get('/ping', (req, res)=> res.send('pong')) // to keep the website from sleeping
 
 router.get('/2k17platform', (req, res) => res.redirect('/'))
 
 router.get('/500', (req, res) => res.render('pages/500'))
+
 router.get('/404', (req, res) => res.render('pages/404'))
+
+router.get('/modak', getController.modakGame)
 
 router.get('/:username', getController.viewProfile);
 

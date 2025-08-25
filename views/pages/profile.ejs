@@ -34,8 +34,20 @@
         <p class="bio"><%- account.bio %></p>
         <% } %>
 
+        <div class="badges-container">
+          <% if (account.earnedBadges && account.earnedBadges.length > 0) { %>
+          <% account.earnedBadges.forEach(earned => { %>
+          <div class="badge-item" onclick="openBadgesTab()" data-tab="badges" title="<%= earned.badge.description %>">
+            <img src="<%- earned.badge.icon %>">
+          </div>
+          <% }) %>
+          <% } else { %>
+          <p style="color: var(--text-muted)">No badges earned yet.</p>
+          <% } %>
+        </div>
+
         <div class="action-buttons">
-          <% if(account.registered && user && user._id.toString() === account._id.toString()){ %>
+          <% if(account.verified && user && user._id.toString() === account._id.toString()){ %>
           <button class="action-btn primary" onclick="window.location.href = '/profile/edit'"><span class="fal fa-user-pen"></span> Edit</button>
           <% } %>
           <% if (account.email && account?.settings?.privacy?.email) { %>
@@ -57,6 +69,7 @@
         <% } else { %>
         <button class="tab-btn" data-tab="about" id="about-tab" onclick="showLoginBanner()"><span class="fal fa-address-card"></span><span class="helper-text">ABOUT</span></button>
         <% } %>
+        <button class="tab-btn" data-tab="badges" id="badges-tab"><span class="helper-text"><span class="fal fa-award"></span></span></button>
       </div>
 
       <div class="tab-content">
@@ -66,7 +79,7 @@
           <% } else { %>
           <div class="posts">
             <% posts.forEach(post => { %>
-            <div class="post" style="border-top: none;" id="post-<%= post._id %>">
+            <div class="post" style="border-top: none;" id="post-<%= post._id %>" ondblclick="toggleLike('<%= post._id %>')">
               <div class="user-info">
                 <img src="<%= post.author.profile %>" alt="" class="user-profile">
                 <div class="user-info-helper">
@@ -141,6 +154,7 @@
           </div>
           <% } %>
         </div>
+
         <div class="tab-panel" id="memories">
           <% if (memories.length === 0) { %>
           <p class="empty-msg"><span class="fal fa-image-slash"></span><br>No tagged memories found.<br>Go to <a href="/memories">Memories</a> to add some.</p>
@@ -159,7 +173,7 @@
                   <span><i class="fal fa-message"></i> <%= memory.comments.length %></span>
                 </div>
               </div>
-              <img src="<%= memory.url %>" alt="Media" />
+              <img src="<%= memory.thumbnail %>" alt="Media" />
             </div>
             <% }) %>
           </div>
@@ -169,7 +183,6 @@
         <% if(user) { %>
         <div class="tab-panel" id="about">
           <div class="about-section">
-
             <div class="about-card">
               <h3 class="about-heading">Basic Info</h3>
               <% if((account.settings?.privacy?.dob || user._id.toString() == account._id.toString())){ %>
@@ -181,24 +194,17 @@
                 </div>
               </div>
               <% }%>
-              <div class="info-item" style="margin: 16px 0">
-                <i class="fal fa-user-group icon" style="font-size: 16px"></i>
-                <div class="info-text">
-                  <span class="label">House</span>
-                  <span class="value"><%= account.house %></span>
-                </div>
-              </div>
               <div class="info-item">
                 <i class="fal fa-calendar icon"></i>
                 <div class="info-text">
-                  <span class="label">Batch Year</span>
+                  <span class="label">Years in JNV</span>
                   <span class="value"><%= account.year %></span>
                 </div>
               </div>
               <div class="info-item" style="margin-top: 16px">
                 <i class="fal fa-user-clock icon" style="font-size: 17px"></i>
                 <div class="info-text">
-                  <span class="label">Join date</span>
+                  <span class="label">Platform join date</span>
                   <span class="value"><%= account.joinedAt.toLocaleString("en-IN", { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' }) %></span>
                 </div>
               </div>
@@ -234,51 +240,80 @@
           </div>
         </div>
         <% } %>
-      </div>
-    </div>
-  </div>
-  <div id="comments-popup">
-    <div class="overlay" onclick="hidePopup()" id="overlay"></div>
-    <div class="comments-box">
-      <div class="heading">
-        <p>Comments</p>
-        <p class="close-icon fas fa-times" onclick="hidePopup()"></p>
-      </div>
-      <div class="comments-list" id="comments-list"></div>
-      <% if(user) { %>
-      <div class="input-area">
-        <input id="new-comment" autocomplete="off" placeholder="Write a comment..." />
-        <button type="button" id="newCommentBtn">Post</button>
-      </div>
-      <% } %>
-    </div>
-  </div>
 
-  <div class="login-banner" id="login-banner">
-    <div class="overlay"></div>
-    <div class="login-required-box">
-      <span onclick="hidePopup('login-banner')" class="fal fa-xmark"></span>
-      <img src="<%= account.profile || '/images/user.png' %>" alt="" class="user-profile" />
-      <p id="title"></p>
-      <span class="grey-1">You must log in to do this.</span><br>
-      <span class="grey-1">See much more about <%= account.name %><br>on 2k17 Platform.</span><br><br>
-      <button class="signup-btn" onclick="window.location.href='/create-account'">Create account</button>
-      <button class="login-btn" onclick="window.location.href='/login?url=/<%= account.username %>'">Log in</button>
-    </div>
-  </div>
+        <div class="tab-panel" id="badges">
+          <div class="badges-section">
+            <div class="badge-card">
+              <h3 class="badge-heading">Badges earned</h3>
+              <div class="badge-list">
+                <% if (account.earnedBadges && account.earnedBadges.length > 0) { %>
+                <% account.earnedBadges.forEach(earned => { %>
+                <div class="badge-item">
+                  <p class="icon">
+                    <img src="<%- earned.badge.icon %>">
+                  </p>
+                  <div class="info-text">
+                    <span class="name"><%= earned.badge.name %></span>
+                    <span class="description"><%- earned.badge.description %></span>
+                  </div>
+                </div>
+                <% }) } else { %>
+                <p class="empty-msg" style="text-align: center;">
+                  <span class="fal fa-award"></span><br>
+                  No badges earned yet.
+                </p>
+                <% } %>
+                <br>
+                <span class="grey-1"><a href="/badges">Click here</a> to know more about badges.</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <div id="post-likes-popup">
-    <div class="overlay" onclick="closePostLikes()"></div>
-    <div class="post-likes-box">
-      <div class="heading">
-        <p class="title"><span class="fal fa-heart"></span> Likes on post</p>
-        <p class="close-icon fal fa-xmark" onclick="closePostLikes()"></p>
       </div>
-      <div class="post-likes-list" id="post-likes-list"></div>
     </div>
-  </div>
-  <script src="/js/profile.js"></script>
-  <script src="/js/comment.js"></script>
+    <div id="comments-popup">
+      <div class="overlay" onclick="hidePopup()" id="overlay"></div>
+      <div class="comments-box">
+        <div class="heading">
+          <p>Comments</p>
+          <p class="close-icon fas fa-times" onclick="hidePopup()"></p>
+        </div>
+        <div class="comments-list" id="comments-list"></div>
+        <% if(user) { %>
+        <div class="input-area">
+          <input id="new-comment" autocomplete="off" placeholder="Write a comment..." />
+          <button type="button" id="newCommentBtn">Post</button>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="login-banner" id="login-banner">
+      <div class="overlay"></div>
+      <div class="login-required-box">
+        <span onclick="hidePopup('login-banner')" class="fal fa-xmark"></span>
+        <img src="<%= account.profile || '/images/user.png' %>" alt="" class="user-profile" />
+        <p id="title"></p>
+        <span class="grey-1">You must log in to do this.</span><br>
+        <span class="grey-1">See much more about <%= account.name %><br>on 2k17 Platform.</span><br><br>
+        <button class="signup-btn" onclick="window.location.href='/create-account'">Create account</button>
+        <button class="login-btn" onclick="window.location.href='/login?url=/<%= account.username %>'">Log in</button>
+      </div>
+    </div>
+
+    <div id="post-likes-popup">
+      <div class="overlay" onclick="closePostLikes()"></div>
+      <div class="post-likes-box">
+        <div class="heading">
+          <p class="title"><span class="fal fa-heart"></span> Likes on post</p>
+          <p class="close-icon fal fa-xmark" onclick="closePostLikes()"></p>
+        </div>
+        <div class="post-likes-list" id="post-likes-list"></div>
+      </div>
+    </div>
+    <script src="/js/profile.js"></script>
+    <script src="/js/comment.js"></script>
 </body>
 
 </html>

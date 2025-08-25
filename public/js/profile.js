@@ -5,16 +5,21 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
     btn.classList.add('active');
     document.getElementById(btn.dataset.tab).classList.add('active');
-    var url = new URL(window.location);
-    url.searchParams.set('s', btn.dataset.tab);
-    window.history.pushState({}, '', url);
   });
 });
+
+function openBadgesTab(){
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+  document.getElementById('badges').classList.add('active');
+  document.getElementById('badges-tab').classList.add('active');
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   var urlParams = new URLSearchParams(window.location.search);
   var s = urlParams.get('s');
-  if (['about', 'memories', 'posts'].includes(s)) {
+  if (['about', 'memories', 'posts', 'badges'].includes(s)) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     var btn = document.getElementById(s);

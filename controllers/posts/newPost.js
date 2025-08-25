@@ -4,6 +4,7 @@ const Notifications = require('../../models/Notifications');
 var sendMail = require('../../config/mailer')
 const logActivity = require('../../utils/log'); 
 const sendPushNotification = require('../../utils/push');
+const { checkAndAwardBadges } = require('../../config/badges');
 
 const newPost = async (req, res) => {
   try {
@@ -87,6 +88,7 @@ const newPost = async (req, res) => {
 
     logActivity(req.user._id, `Created new post (${newPost._id})`);
 
+    await checkAndAwardBadges(req.user.id, 'CREATED_POST');
     return res.json({ success: true, message: 'Post created' });
 
   } catch (err) {

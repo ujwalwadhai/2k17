@@ -4,6 +4,7 @@ var sendMail = require('../../config/mailer');
 var otps = require('../../models/OTP');
 var logActivity = require('../../utils/log');
 var deviceInfo = require('../../middlewares/device')
+const { checkAndAwardBadges } = require('../../config/badges');
 
 const loginEmail = async (req, res) => {
   var { email, otp } = req.body;
@@ -34,7 +35,7 @@ const loginEmail = async (req, res) => {
           }
         }
 
-    if(!user.registered) return res.json({ success: false, message: 'Your account is under verification. You will get email shortly!' });
+    if(!user.verified) return res.json({ success: false, message: 'Your account is under verification. You will get email shortly!' });
 
     var otpRecord = await otps.findOne({ email: email, otp: otp });
 
@@ -53,6 +54,7 @@ const loginEmail = async (req, res) => {
       sendMail('login', user.email, {useragent: req.useragent, method: 'Email OTP'});
       await Users.findOneAndUpdate({ email: email }, { lastLogin: Date.now() }, { new: true });
       await otps.deleteMany({ email: email })
+      await checkAndAwardBadges(user._id, 'festive-spirit'); // ganesha theme festive spirit badge
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     })
 

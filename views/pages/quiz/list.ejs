@@ -24,8 +24,7 @@
         <h3><%= quiz.title %></h3>
         <p><%- quiz.description %></p>
         <p class="quiz-meta">
-          Created by <%- quiz.createdBy ? `<a href="/${quiz.createdBy.username}">${quiz.createdBy.username}</a>` : 'Unknown User' %>
-          on <%= quiz.createdAt.toLocaleString('en-IN', {timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric' }) %>
+          Created by <%- quiz.createdBy ? `<a href="/${quiz.createdBy.username}">${quiz.createdBy.username}</a>` : 'Unknown User' %> on <%= new Date(quiz.createdAt).toLocaleString('en-IN', {timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric' }) %>
         </p>
         <div class="quiz-btns">
           <button class="take-quiz-btn" onclick="window.location.href = '/quiz/<%= quiz._id %>'"><span class="fal fa-play"></span>Take quiz</button>

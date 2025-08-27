@@ -11,7 +11,7 @@
     <br><br>
     <div class="quiz-container loader-after-body" style="display: none;">
         <h2><%= quiz.title %></h2>
-        <p><%= quiz.description %></p>
+        <p><%- quiz.description %></p>
         <p id="ownerInfo">Created by <a href="/<%= quiz.createdBy.username %>"><%= quiz.createdBy.name %></a> on <%= new Date(quiz.createdAt).toLocaleString('en-IN', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'long', year: 'numeric'}) %></p>
         <hr><br>
 

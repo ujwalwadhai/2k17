@@ -338,7 +338,7 @@ async function loadFolder(folderId, updateURL = true) {
           img.onload = () => img.classList.add('loaded');
           const viewAction = file.type === 'image'
             ? `openViewImage("${fileName}", "${file.url}", "${file._id}", "${file.thumbnail}")`
-            : `openViewVideo('${fileName}', "${file.url}", "${file._id}", "${file.thumbnail}")`;
+            : `openViewVideo("${fileName}", "${file.url}", "${file._id}", "${file.thumbnail}")`;
           img.setAttribute('onclick', viewAction);
 
           wrapper.innerHTML = fileInfoHTML;

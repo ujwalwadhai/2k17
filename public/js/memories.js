@@ -126,11 +126,11 @@ function openViewImage(name, url, id, thumbnail) {
   if (USER_ID) {
     ViewImagePopup.querySelector('#tagBtnImg').setAttribute('onclick', `tagMemory("${id}", 'yes')`)
     ViewImagePopup.querySelector('.no').setAttribute('onclick', `tagMemory("${id}", 'no')`)
-    ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
+    //ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
   } else {
     ViewImagePopup.querySelector('#tagBtnImg').setAttribute('onclick', `alert("Please login to tag yourself in memories")`)
     ViewImagePopup.querySelector('.no').setAttribute('onclick', `alert("Please login to remove yourself from memories")`)
-    ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `alert("Please login to comment on this image")`)
+    //ViewImagePopup.querySelector("#comments-icon").setAttribute('onclick', `alert("Please login to comment on this image")`)
   }
   ViewImagePopup.querySelector("#share-icon").setAttribute('onclick', `shareImage("${id}", "${thumbnail}")`)
   ViewImagePopup.querySelector("#download-icon").setAttribute('onclick', `downloadImage("${name}")`)
@@ -180,7 +180,7 @@ function openViewVideo(name, url, id, thumbnail) {
   var videoName = document.querySelector('#videoName')
   videoIframe.src = url;
   videoName.textContent = name;
-  ViewVideoPopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
+  //ViewVideoPopup.querySelector("#comments-icon").setAttribute('onclick', `openComments("${id}")`)
   ViewVideoPopup.querySelector("#share-icon").setAttribute('onclick', `shareImage("${id}", "${thumbnail}")`)
   ViewVideoPopup.classList.add('show');
   ViewVideoOverlay.classList.add('show');

@@ -43,11 +43,6 @@ const userSchema = new mongoose.Schema({
       auth: String
     }
   }],
-  // ganesha theme game score
-  modakScore: {
-    type: Number,
-    default: 0
-  },
   earnedBadges: [{
     badge: {
       type: mongoose.Schema.Types.ObjectId,

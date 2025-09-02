@@ -92,10 +92,9 @@
   <%- include('../partials/navbar') %>
   <br><br>
   <div class="game-container">
-    <h1>Modak Catcher</h1>
-    <img id="ganesha_img" src="/images/ganesha_game.gif" alt="">
+    <h1>Football Catcher</h1>
     <div class="info-panel">
-      <div id="score">Modaks Caught: <span style="color: var(--primary)"><%= score %></span></div>
+      <div id="score">Score: <span style="color: var(--primary)">0</span></div>
     </div>
     <canvas id="gameCanvas"></canvas>
   </div>
@@ -106,9 +105,7 @@
     const ctx = canvas.getContext('2d');
     const scoreElement = document.getElementById('score');
 
-    alert("The player with highest score will get a special badge at the end of Ganesh Chaturthi theme. It could be you 😉")
-
-    let score = <%= score %>;
+    let score = 0;
     let gameLoop;
     let modakInterval;
     let difficultyInterval;
@@ -122,20 +119,15 @@
     const maxModakCreationInterval = 1200; 
     const intervalIncrement = 50;
 
-    window.addEventListener('beforeunload', () => {
-      navigator.sendBeacon('/modak/score', JSON.stringify({
-        score
-      }))
-    })
     const modakImage = new Image();
-    modakImage.src = '/images/modak.png';
+    modakImage.src = '/images/football.png';
 
     modakImage.onload = () => {
       isImageLoaded = true;
       startGame();
     };
     modakImage.onerror = () => {
-      console.error("Failed to load the modak image. The game will run, but no modaks will appear.");
+      console.error("Failed to load the modak image. The game will run, but no football will appear.");
       startGame();
     };
 
@@ -173,14 +165,14 @@
       }
     };
 
-    let modaks = [];
+    let football = [];
 
     function createModak() {
       if (!isImageLoaded) return;
       if (document.hidden) return;
 
       const modakSize = canvas.width * 0.1;
-      modaks.push({
+      football.push({
         x: Math.random() * (canvas.width - modakSize),
         y: -modakSize,
         size: modakSize,
@@ -209,8 +201,8 @@
       bowl.draw();
 
       if (isImageLoaded) {
-        for (let i = modaks.length - 1; i >= 0; i--) {
-          const modak = modaks[i];
+        for (let i = football.length - 1; i >= 0; i--) {
+          const modak = football[i];
           modak.y += modak.speed;
 
           ctx.drawImage(modakImage, modak.x, modak.y, modak.size, modak.size);
@@ -219,10 +211,10 @@
             modak.y + modak.size > bowl.y - bowl.height * 0.5) {
 
             score++;
-            scoreElement.innerHTML = `Modaks Caught: <span style="color: var(--primary)">${score}</span>`;
-            modaks.splice(i, 1);
+            scoreElement.innerHTML = `Score: <span style="color: var(--primary)">${score}</span>`;
+            football.splice(i, 1);
           } else if (modak.y > canvas.height) {
-            modaks.splice(i, 1);
+            football.splice(i, 1);
           }
         }
       }
@@ -248,9 +240,9 @@
       clearInterval(modakInterval);
       clearInterval(difficultyInterval);
 
-      score = <%= score %>;
-      modaks = [];
-      scoreElement.innerHTML = `Modaks Caught: <span style="color: var(--primary)">${score}</span>`;
+      score = 0;
+      football = [];
+      scoreElement.innerHTML = `Score: <span style="color: var(--primary)">${score}</span>`;
 
       baseModakSpeed = 2;
       modakCreationInterval = 1000;

@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
     const { quizId } = req.params;
 
     const [quiz, leaderboard] = await Promise.all([
-      Quiz.findById(quizId).select('title description'),
+      Quiz.findById(quizId).select('title description isClosed'),
 
       Attempt.find({ quiz: quizId })
         .sort({ score: -1, createdAt: 1 })

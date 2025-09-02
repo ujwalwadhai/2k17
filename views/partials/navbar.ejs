@@ -10,7 +10,6 @@
       <% } %>
       <li><a href="/contribute"><span class="fal fa-hand-holding-heart"></span></a></li>
       <% if (!user) { %>
-      <li><a href="/create-account">Register</a></li>
       <li><a href="/login" class="login-btn" id="navbar-login-btn-large">Login</a></li>
       <% } else { %>
       <% if(typeof isHome !== 'undefined' && isHome) { %>
@@ -101,6 +100,8 @@
         <li onclick="window.location.href = '/members'"><a href="/members"><span class="fal fa-users"></span>Members</a></li>
         <% if(user && user?.role == 'admin'){ %>
         <li onclick="window.location.href = '/admin/analytics'"><a href="/admin/analytics"><span class="fal fa-chart-mixed"></span>Analytics</a></li>
+        <% } else { %>
+        <li onclick="window.location.href = '/football'"><a href="/football"><span class="fal fa-basketball"></span>Play Game</a></li>
         <% } %>
         <li onclick="window.location.href = '/contribute'"><a href="/contribute"><span class="fal fa-hand-holding-heart"></span>Contribute</a></li>
         <% if (user) { %>

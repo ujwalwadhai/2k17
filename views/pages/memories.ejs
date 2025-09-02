@@ -43,7 +43,7 @@
         <div class="action-buttons">
           <button class="action-btn" id="download-icon"><i class="fal fa-download"></i></button>
           <button class="action-btn" id="share-icon"><i class="fal fa-share"></i></button>
-          <button class="action-btn" data-action="comment" id="comments-icon" aria-label="Comments"><i class="fal fa-message-lines"></i></button>
+          <% if(false){ %><button class="action-btn" data-action="comment" id="comments-icon" aria-label="Comments"><i class="fal fa-message-lines"></i></button><% } %>
           <button class="action-btn close-icon" onclick="closeViewImage()" aria-label="Close"><i class="fal fa-times"></i></button>
         </div>
       </header>
@@ -67,7 +67,7 @@
         <p class="title"><span class="fal fa-video"></span> <span id="videoName"></span></p>
         <div class="right-btns">
           <p id="share-icon" class="comments-icon fal fa-share"></p>
-          <p id="comments-icon" class="comments-icon fal fa-message"></p>
+          <% if(false){ %><p id="comments-icon" class="comments-icon fal fa-message"></p><% } %>
           <p class="close-icon fal fa-xmark" onclick="closeViewVideo()"></p>
         </div>
       </div>

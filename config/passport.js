@@ -47,12 +47,10 @@ module.exports = function (passport) {
           if (!verified) return done(null, false, { message: 'Google email not verified.' });
 
           let user = await Users.findOne({ email });
-          // ganesha theme award festive spirit badge
-          if(user){
-            await checkAndAwardBadges(user._id, 'festive-spirit');
-          }
 
-          if (!user) {
+          /* create new account if it doesn't exist */
+          /* disabled for now */
+          /*if (!user) {
             const newUser = await Users.create({
               name: profile.displayName || email.split('@')[0],
               email,
@@ -87,6 +85,9 @@ module.exports = function (passport) {
             await sendMail('user_registered', adminEmails, { name: newUser.name, email, username: newUser.username, totalUsers, verifiedUsers, method: 'Google' });
             return done(null, newUser);
           }
+            */
+
+          if(!user) return done(null, false, { message: 'No user with this email exists.' });
 
           await Users.findOneAndUpdate({ email }, { lastLogin: new Date() });
 

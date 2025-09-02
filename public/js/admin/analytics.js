@@ -75,9 +75,7 @@ async function updateTodayUsers() {
         }
         document.querySelector('#avgTimeChange').innerHTML = avgTimeChange;
         document.querySelector('#collectiveTimeChange').innerHTML = collectiveTimeChange;
-        var guestPercent = guests > 0 ? ((guests / total) * 100).toFixed(0) : 0;
-        var knownPercent = known > 0 ? ((known / total) * 100).toFixed(0) : 0;
-        document.querySelector('#usersTodayList').textContent = `${guestPercent}% guests, ${knownPercent}% known`;
+        document.querySelector('#usersTodayList').textContent = `${guests} guests, ${known} known`;
     } catch (err) {
         console.error('Failed to load unique user stats', err);
     }

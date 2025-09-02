@@ -5,7 +5,6 @@ module.exports = async (req, res) => {
     const quizzes = await Quiz.find({}).sort({ createdAt: -1 }).populate('createdBy', 'name username')
 
     res.render('pages/quiz/list', {
-      title: 'Available Quizzes',
       quizzes: quizzes
     });
 

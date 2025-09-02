@@ -35,7 +35,7 @@ async function getUpcomingBirthdays() {
         isBirthdayToday: isToday
       };
 
-      upcomingBirthdays.push(userWithFlag);
+      if(isToday) upcomingBirthdays.push(userWithFlag); // modified to push only today's birthdays
     }
   }
 

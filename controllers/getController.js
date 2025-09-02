@@ -113,7 +113,7 @@ exports.home = async (req, res) => {
       : null;
 
     res.render('pages/home', {
-      birthdays: cachedBirthdays.reverse(),
+      birthdays: cachedBirthdays,
       featuredPhoto: randomPhoto,
       hasUnreadNotifications: hasUnreadNotifications > 0,
       isHome: true
@@ -259,17 +259,8 @@ exports.settings = async (req, res) => {
   res.render('pages/settings', { account: user, settings });
 }
 
-
-// ganesha theme render game
-exports.modakGame = async (req, res) => {
-  var user = req.user ? await Users.findOne({ username: req.user.username }).select("modakScore") : null;
-  res.render('pages/modak-game', { score: user?.modakScore ?? 0 });
-}
-
-// ganesha theme score update
-exports.modakScore = async (req, res) => {
-  if(!req.user) return
-  await Users.findOneAndUpdate({ username: req.user.username }, { $set: { modakScore: JSON.parse(req.body).score } }, { new: true });
+exports.footballGame = async (req, res) => {
+  res.render('pages/football-game');
 }
 
 exports.badges = async (req, res) => {

@@ -17,6 +17,10 @@ module.exports = async (req, res) => {
       return res.status(404).send('Quiz not found.');
     }
 
+    if(quiz.isClosed){
+      return res.redirect(`/quiz/leaderboard/${quiz._id}`)
+    }
+
     res.render('pages/quiz/take', {
       quiz: quiz,
     });

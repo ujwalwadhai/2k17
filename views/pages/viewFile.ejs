@@ -34,7 +34,7 @@
         <div class="action-buttons">
           <button class="action-btn" data-action="like" aria-label="Like"><i class="<%- user && file.likes.includes(user._id) ? 'fas' : 'fal' %> fa-heart" id="like-icon-<%= file.id %>"></i></button>
           <button class="action-btn" data-action="share" data-thumbnail="<%= file.thumbnail %>" aria-label="Share"><i class="fal fa-share"></i></button>
-          <button class="action-btn" data-action="comment" aria-label="Comments"><i class="fal fa-message-lines"></i></button>
+          <% if(false){ %><button class="action-btn" data-action="comment" aria-label="Comments"><i class="fal fa-message-lines"></i></button><% } %>
         </div>
       </header>
       <div class="view-file-content">
@@ -62,7 +62,7 @@
         <div class="action-buttons">
           <button class="action-btn" data-action="like" aria-label="Like"><i class="fal fa-heart" id="like-icon-<%= file.id %>"></i></button>
           <button class="action-btn" data-action="share" data-thumbnail="<%= file.thumbnail %>" aria-label="Share"><i class="fal fa-share"></i></button>
-          <button class="action-btn" data-action="comment" aria-label="Comments"><i class="fal fa-message-lines"></i></button>
+          <% if(false){ %><button class="action-btn" data-action="comment" aria-label="Comments"><i class="fal fa-message-lines"></i></button><% } %>
         </div>
       </header>
       <div class="view-file-content">

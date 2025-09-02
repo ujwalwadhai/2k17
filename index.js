@@ -156,7 +156,6 @@ if(process.env.PLATFORM_TYPE === 'production') {
 require('./cron/birthday')
 require('./cron/newsletter')
 require('./cron/weeklyReport')
-require('./cron/popularFilePost')
 }
 
 require('./config/mailer')

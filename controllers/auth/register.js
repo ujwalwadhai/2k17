@@ -7,6 +7,8 @@ const { checkAndAwardBadges } = require('../../config/badges');
 const register = async (req, res) => {
   var { email, username, name, dob, password } = req.body;
   email = email.toLowerCase();
+  // remove following line to allow creating new accounts
+  return res.json({ success: false, message: 'New account registrations are closed' });
   try {
     if (!email || !username || !name || !dob || !password) {
         return res.json({ success: false, message: 'All fields are required!' });

@@ -20,8 +20,7 @@
         <h1 class="error">Create account</h1>
         <p>Already have an account? &nbsp;<a href="/login">Login instead</a></p>
         <div>
-
-
+          <% if(false){ %>
           <div>
             <div>
               <input type="input" autocomplete="name" name="name" id="name" placeholder="Full Name *" oninput="updateUsername(this.value)" required />
@@ -44,12 +43,17 @@
               I agree to the &nbsp;
               <a href="/terms-of-service"> Terms of Service</a> </label>
           </div>
-
-          <button onclick="register()" id="signup-btn" class="primary-btn">Create Account</button><br />
-          <a href="/auth/google" class="google-btn">
+          <% } %> <br>
+          <div style="color: grey; line-height: 25px">Creating new accounts is disabled. Please contact Ujwal or Prajyot if you want to create a new account.</div><br>
+          <% if(false){ %>
+          <button onclick="register()" id="signup-btn" class="primary-btn" disabled>Create Account</button><br />
+          <% } else { %>
+          <button class="primary-btn"><a style="color: white" href="mailto:2k17platform@gmail.com">Send us an email</a></button>
+          <% } %>
+          <!--<a href="/auth/google" class="google-btn">
             <img src="/images/icons/google.svg" alt="Google Logo" class="google-icon">
             Continue with Google
-          </a><br />
+          </a><br />-->
           <span class="only-small"><br /><br /></span>
         </div>
       </div>

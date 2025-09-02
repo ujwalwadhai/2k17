@@ -15,9 +15,12 @@
         <h2><%= quiz.title %></h2>
         <div class="btns">
             <% if(attempted) { %>
-                <button onclick="window.location.href = '/quiz/<%= quiz._id %>'"><span class="fal fa-chart-mixed"></span>&nbsp; View Analysis</button>
-            <% } else { %>
+                <button onclick="window.location.href = '/quiz/<%= quiz._id %>'"><span class="fal fa-chart-mixed"></span> &nbsp; View your attempt</button>
+            <% } else if(!quiz.isClosed) { %>
                 <button onclick="window.location.href = '/quiz/<%= quiz._id %>'"><span class="fal fa-play"></span>&nbsp; Start Quiz</button>
+            <% } %>
+            <% if(quiz.isClosed){ %>
+            <p class="grey-1">This quiz is now closed</p>
             <% } %>
         </div>
 

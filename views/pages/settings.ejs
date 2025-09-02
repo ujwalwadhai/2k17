@@ -22,11 +22,13 @@
         <li onclick="openNotificationSettings()"><a><span class="fal fa-bell"></span> Notifications</a></li>
         <li onclick="openPrivacySettings()"><a><span class="fal fa-eye-slash"></span> Privacy & Visibility</a></li>
       </ul>
+      <% if(false){ %>
       <ul>
         <li onclick="openReportProblem()"><a><span class="fal fa-triangle-exclamation"></span>
             Report a problem</a></li>
         <li onclick="openGiveSuggestion()"><a><span class="fal fa-lightbulb-on"></span> Suggest new feature</a></li>
       </ul>
+      <% } %>
       <ul id="account">
         <!--<li onclick="window.location.href='/delete-account'"><a href="/delete-account"><span class="fal fa-trash"></span> Delete
             account</a></li>-->
@@ -57,14 +59,6 @@
             <label>
               <input type="checkbox" name="email" <%=settings.notifications.email ? 'checked' : '' %>>
               Email notifications
-            </label>
-            <label>
-              <input type="checkbox" name="login" <%=settings.notifications.login ? 'checked' : '' %>>
-              Login alerts (via email)
-            </label>
-            <label style="color: grey; pointer-events: none;">
-              <input type="checkbox" name="newsletter" <%=settings.notifications.newsletter ? 'checked' : '' %>>
-              Monthly newsletter via email
             </label>
           </div><br>
 
@@ -176,7 +170,7 @@
     </div>
   </div>
 
-  <div id="give-suggestion-popup">
+  <% if(false){ %><div id="give-suggestion-popup">
     <div class="overlay" onclick="closeGiveSuggestion()"></div>
     <div class="give-suggestion-box">
       <div class="heading">
@@ -194,7 +188,7 @@
         </form>
       </div>
     </div>
-  </div>
+  </div><% } %>
 
   <div id="privacy-settings-popup">
     <div class="overlay" onclick="closePrivacySettings()"></div>
@@ -204,7 +198,7 @@
         <p class="close-icon fal fa-xmark" onclick="closePrivacySettings()"></p>
       </div>
       <div class="privacy-settings-list" id="privacy-settings-list">
-        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Your profile will be in spotlight on your birthday even if you hide the birth date.<br>Check mark the details you want the people to see :</span><br><br><br>
+        <span class="grey-1"><span class="fal fa-info-circle"></span> &nbsp;Your profile will be in spotlight on your birthday even if you hide the birth date.<br>Check mark the details you want other people to see:</span><br><br><br>
         <form id="privacy-settings-form">
           <div class="form-section">
             <label>

@@ -53,7 +53,6 @@ const loginPassword = async (req, res) => {
       logActivity(user._id, `Logged in with password.`);
       sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
       await Users.findOneAndUpdate({ email: user.email }, { lastLogin: Date.now() }, { new: true });
-      await checkAndAwardBadges(user._id, 'festive-spirit'); // ganesha theme festive spirit badge
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     });
 

@@ -33,10 +33,6 @@ router.get('/home', isLoggedIn, getController.home);
 router.get('/verify-email/:token', emailController.verifyEmail);
 
 
-router.get("/pre-register", (req, res) => res.redirect('/create-account'));
-
-router.get('/preregister', (req, res) => res.redirect('/create-account'));
-
 router.get('/login', getController.login);
 
 router.get('/create-account', getController.register);
@@ -45,7 +41,7 @@ router.get('/login/email', getController.emailLogin);
 
 router.get('/contribute', getController.contribute);
 
-router.get('/members', getController.members);
+router.get('/members', isLoggedIn, getController.members);
 
 
 router.get('/profile', isLoggedIn, getController.viewProfile);
@@ -73,7 +69,7 @@ router.get('/admin/analytics/:date', analyticsController.dayAnalytics)
 router.get('/admin', getController.admin);
 
 
-router.get('/memories', memoriesController.showMemories)
+router.get('/memories', isLoggedIn, memoriesController.showMemories)
 
 router.get('/memories/folder/my-memories', isLoggedIn, memoriesController.showMyMemories)
 
@@ -107,9 +103,6 @@ router.get('/quiz/attempt/:attemptId', quizController.viewResult);
 router.get('/quiz/leaderboard/:quizId', quizController.viewLeaderboard);
 
 
-router.get('/whatsnew', (req, res) => res.render('pages/whatsnew'))
-
-
 router.get('/badges', isLoggedIn, getController.badges)
 
 
@@ -121,7 +114,7 @@ router.get('/500', (req, res) => res.render('pages/500'))
 
 router.get('/404', (req, res) => res.render('pages/404'))
 
-router.get('/modak', getController.modakGame)
+router.get('/football', getController.footballGame)
 
 router.get('/:username', getController.viewProfile);
 

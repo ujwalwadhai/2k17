@@ -40,6 +40,10 @@ const quizSchema = new mongoose.Schema(
       required: true,
     },
     questions: [questionSchema],
+    isClosed: {
+      type: Boolean,
+      default: false,
+    }
   },
   {
     timestamps: true,

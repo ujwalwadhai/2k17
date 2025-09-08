@@ -6,9 +6,12 @@ var showFile = async (req, res) => {
     var file = fileId !== 'undefined' ? await Files.findById(fileId) : null
 
     if (!file) return res.redirect('/memories')
-        var folder = await Folders.findById(file.folder)
+    var folder = await Folders.findById(file.folder)
     if (folder.access !== req?.user?.gender && folder.access !== 'both') {
-      return res.redirect('/memories')
+        return res.redirect('/memories')
+    }
+    if (folder.shared && !folder.shared.includes(req.user?._id)) {
+        return res.redirect('/memories');
     }
 
     res.render('pages/viewFile', {

@@ -10,6 +10,9 @@ var showFolder = async (req, res) => {
     if (folder.access !== req?.user?.gender && folder.access !== 'both') {
         return res.status(403).json({ success: false, message: 'Access Denied' });
     }
+    if(folder.shared && !folder.shared.includes(req.user?._id)) {
+      return res.status(403).json({ success: false, message: 'Access Denied' });
+    }
 
     res.render('pages/memories', {
         currentFolder: folder,

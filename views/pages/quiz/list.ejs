@@ -24,10 +24,12 @@
         <h3><%= quiz.title %></h3>
         <p><%- quiz.description %></p>
         <p class="quiz-meta">
+        <% if(quiz.createdBy.username !== '2k17platform'){ %>
           Created by <%- quiz.createdBy ? `<a href="/${quiz.createdBy.username}">${quiz.createdBy.username}</a>` : 'Unknown User' %> on <%= new Date(quiz.createdAt).toLocaleString('en-IN', {timeZone: 'Asia/Kolkata', year: 'numeric', month: 'long', day: 'numeric' }) %>
+        <% } %>
         </p>
         <% if(quiz.isClosed){ %>
-          <span style="color: grey">This quiz is now closed. View <a href="/quiz/leaderboard/<%= quiz._id %>">leaderboard</a></span>
+          <span style="color: grey; font-size: 15px">This quiz is now closed. View <a href="/quiz/leaderboard/<%= quiz._id %>">leaderboard</a></span>
         <% } else { %>
         <div class="quiz-btns">
           <button class="take-quiz-btn" onclick="window.location.href = '/quiz/<%= quiz._id %>'"><span class="fal fa-play"></span>Take quiz</button>

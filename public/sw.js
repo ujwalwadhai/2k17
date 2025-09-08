@@ -1,4 +1,4 @@
-const CACHE_NAME = `2k17-02-09-2025`; // Add date when you are commiting so that cache of users will be updated on deployment
+const CACHE_NAME = `2k17-08-09-2025`; // Add date when you are commiting so that cache of users will be updated on deployment
 const URLS_TO_CACHE = [
     '/',
     './offline.html',

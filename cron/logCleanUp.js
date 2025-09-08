@@ -12,8 +12,6 @@ cron.schedule('5 0 * * *', async () => {
       const result = await Logs.deleteMany({ createdAt: { $lt: threshold } });
       const istNowStr = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
       const istNow = new Date(istNowStr);
-
-      logActivity('', `Deleted ${result.deletedCount} logs older than ${retentionPeriod} days.`, istNow);
     }
   } catch (err) {
     console.error('[LOG CLEANUP ERROR]', err);

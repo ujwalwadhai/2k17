@@ -295,7 +295,7 @@ async function loadFolder(folderId, updateURL = true) {
 
       subfoldersHTML += data.subfolders.map(folder => `
     <div class="folder" onclick="loadFolder('${folder._id}')">
-    <span class="fal fa-folder"></span>
+    <span class="fal fa-folder${folder.shared ? '-user' : ''}"></span>
     <span class="foldername">${folder.name}</span>
     </div>`).join('');
 

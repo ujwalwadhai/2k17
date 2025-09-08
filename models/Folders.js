@@ -19,6 +19,10 @@ const folderSchema = new mongoose.Schema({
     enum: ['male', 'female', 'both'],
     default: 'both'
   },
+  shared: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users'
+  }],
   path: {
     type: String,
     required: true

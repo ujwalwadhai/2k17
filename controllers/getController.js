@@ -78,19 +78,16 @@ exports.analyticsPage = async (req, res) => {
   res.render('pages/admin/analytics');
 }
 
-let cachedBirthdays = [];
 let cachedFeaturedPhotos = [];
 let cachedMembers = []
 
 const refreshCache = async () => {
   try {
-    const [birthdays, photos, members] = await Promise.all([
-      getUpcomingBirthdays(),
+    const [photos, members] = await Promise.all([
       Files.aggregate([{ $match: { tags: 'featured' } }]),
       getSortedUsers()
     ]);
 
-    cachedBirthdays = birthdays;
     cachedFeaturedPhotos = photos;
     cachedMembers = members
 
@@ -113,7 +110,7 @@ exports.home = async (req, res) => {
       : null;
 
     res.render('pages/home', {
-      birthdays: cachedBirthdays,
+      birthdays: await getUpcomingBirthdays(),
       featuredPhoto: randomPhoto,
       hasUnreadNotifications: hasUnreadNotifications > 0,
       isHome: true

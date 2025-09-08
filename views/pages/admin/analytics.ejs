@@ -29,7 +29,7 @@
           <p id="activeUserList"></p>
         </div>
         <div class="summary-card">
-          <span class="label">Users today</span>
+          <span class="label">Users today (<a href="/admin/analytics/<%= new Date().toISOString().slice(0, 10).split("-").reverse().join("-") %>">view all</a>)</span>
           <span class="value" id="active-today">--</span>
           <p id="usersTodayList"></p>
         </div>

@@ -4,7 +4,7 @@
 <head>
   <%- include('../partials/head') %>
   <link rel="stylesheet" href="/styles/css/members.css">
-  <title>Members of 2k17 Batch</title>
+  <title>Members of 2k17 Platform</title>
 </head>
 
 <body>
@@ -12,8 +12,8 @@
   <%- include('../partials/navbar') %>
 
   <section class="members-page loader-after-body" style="display: none;">
-    <h2>Batch members</h2>
-    <input type="text" id="searchInput" placeholder="Search by name, username, or email..." />
+    <h2>Platform members</h2>
+    <input type="text" id="searchInput" placeholder="Search by name, username or year..." />
 
     <div class="members-container" id="membersContainer">
       <% members.forEach(member => { %>

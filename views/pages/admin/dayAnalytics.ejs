@@ -42,7 +42,8 @@
           <thead>
             <tr>
               <th>User</th>
-              <th>Time</th>
+              <th>Duration</th>
+              <th>Start time</th>
               <th>Platform</th>
             </tr>
           </thead>
@@ -50,7 +51,8 @@
           <% if(allusers.users.length > 0) { %>
             <% allusers.users.forEach(sessionInfo => { %>
               <tr>
-                <td><%= sessionInfo.user.name %></td>
+                <td><%= sessionInfo.user.name.split(' ')[0] %></td>
+                <td><%= sessionInfo.duration %> mins</td>
                 <td><%= new Date(sessionInfo.createdAt).toLocaleTimeString('en-IN', {timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }) %></td>
                 <td><%= sessionInfo.platform %></td>
               </tr>

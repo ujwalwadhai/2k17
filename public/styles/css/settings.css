@@ -1,6 +1,7 @@
 body {
   height: 100vh;
   backdrop-filter: blur(6px);
+  overflow: hidden;
   background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url("/images/jnv-bg-1.jpg") center center/cover no-repeat;
 }
 @media (max-width: 768px) {
@@ -57,7 +58,7 @@ body {
 }
 .settings-container .links ul li a span {
   width: 28px;
-  margin-right: 4px;
+  margin-right: 8px;
 }
 
 #notification-settings-popup {

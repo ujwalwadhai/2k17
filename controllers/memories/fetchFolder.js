@@ -30,11 +30,24 @@ var fetchFolder = async (req, res) => {
     if (folder.access !== userGender && folder.access !== 'both') {
       return res.status(403).json({ success: false, message: 'Access Denied' });
     }
+    if(folder.shared && !folder.shared.includes(req.user?._id)) {
+      return res.status(403).json({ success: false, message: 'Access Denied' });
+    }
     const subfolders = await Folders.find({
       parent: folderId,
-      $or: [
-        { access: 'both' },
-        { access: userGender }
+      $and: [
+        {
+          $or: [
+            { access: 'both' },
+            { access: userGender }
+          ]
+        },
+        {
+          $or: [
+            { shared: null },
+            { shared: { $in: [req.user?._id] } }
+          ]
+        }
       ]
     });
     var files = await Files.find({ folder: folderId }).populate('likes', '_id name username profile');

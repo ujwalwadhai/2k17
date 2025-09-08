@@ -14,23 +14,23 @@
   <div class="loader-after-body" style="display: none;">
     <div class="admin-btns">
       <!--<button onclick="openNewsLetter()" class="tool-btn"><span class="fal fa-newspaper"></span> Create new newsletter</button> hidden because newsletter logic is different -->
-      <button onclick="openSendNotification()" class="tool-btn"><span class="fal fa-bell"></span> Send push notification</button>
+      <button onclick="openSendNotification()" class="tool-btn"><span class="fal fa-bell"></span> Send push</button>
       <button onclick="openSendEmail()" class="tool-btn"><span class="fal fa-envelope"></span> Send email</button>
-      <button onclick="window.location.href='/<%= user?.role %>/users'" class="tool-btn"><span class="fal fa-users"></span> Manage users</button>
+      <button onclick="window.location.href='/<%= user?.role %>/users'" class="tool-btn"><span class="fal fa-user-group"></span> Manage users</button>
       <button onclick="window.location.href='/admin/analytics'" class="tool-btn"><span class="fal fa-chart-mixed"></span> Analytics</button>
     </div>
 
     <div class="analytics-capsule">
-      <p class="capsule-head"><b>Analytics overview</b></p>
-      <% if(user?.role == 'admin'){ %>
-      <div class="users-active">
-        <p class="label">Users active now</p>
-        <p class="value"><%= activeUsers %></p>
-      </div><br>
-      <% } %>
-      <div class="users-today">
-        <p class="label">Users today</p>
-        <p class="value"><%= usersToday %></p>
+      <p class="capsule-head"><b>User analytics</b></p>
+      <div class="capsule-data">
+        <div class="users-active">
+          <p class="label">Active now</p>
+          <p class="value"><%= activeUsers %></p>
+        </div>
+        <div class="users-today">
+          <p class="label">Total today</p>
+          <p class="value"><%= usersToday %></p>
+        </div>
       </div>
     </div>
 

@@ -24,7 +24,7 @@ const dayAnalytics = async (req, res) => {
             $lte: endOfDay(date)
         },
         user: { $exists: true, $ne: null }
-    }).populate("user", "name username"); 
+    }).populate("user", "name username").lean();
 
     const guests = await DailyUsers.countDocuments({
         createdAt: {
@@ -33,6 +33,30 @@ const dayAnalytics = async (req, res) => {
         },
         user: { $eq: null }
     })
+
+    const promises = users.map(async (user) => {
+        const [sessionData] = await UserSessions.aggregate([
+            {
+                $match: {
+                    user: user.user._id,
+                    startTime: {
+                        $gte: startOfDay(date),
+                        $lte: endOfDay(date),
+                    },
+                },
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalDuration: { $sum: '$duration' },
+                    sessionCount: { $sum: 1 },
+                },
+            },
+        ]);
+
+        user.duration = sessionData ? (sessionData.totalDuration / 60).toFixed(2) : 0;
+    });
+    await Promise.all(promises);
 
     const allusers = {
         guests,

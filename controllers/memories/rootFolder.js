@@ -5,9 +5,19 @@ var rootFolder = async (req, res) => {
     try {
         const subfolders = await Folders.find({
             parent: null,
-            $or: [
-                { access: 'both' },
-                { access: req.user?.gender }
+            $and: [
+                {
+                    $or: [
+                        { access: 'both' },
+                        { access: req.user.gender }
+                    ]
+                },
+                {
+                    $or: [
+                        { shared: null },
+                        { shared: { $in: [req.user?._id] } }
+                    ]
+                }
             ]
         });
         var files = await Files.find({ folder: null }).populate('likes', '_id name username profile');

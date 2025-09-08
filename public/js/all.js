@@ -1,4 +1,4 @@
-var VERSION = `2k17-02-09-2025`; // Change this when you want to force localStorage update
+var VERSION = `2k17-08-09-2025`; // Change this when you want to force localStorage update
 
 var storedVersion = localStorage.getItem('version') || null;
 

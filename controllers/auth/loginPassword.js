@@ -51,7 +51,7 @@ const loginPassword = async (req, res) => {
       req.session.device = deviceInfo(req.useragent);
       req.session.method = 'password';
       logActivity(user._id, `Logged in with password.`);
-      sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
+      // sendMail('login', user.email, {useragent: req.useragent, method: 'Password'});
       await Users.findOneAndUpdate({ email: user.email }, { lastLogin: Date.now() }, { new: true });
       return res.json({ success: true, message: 'Login successful', redirect: '/home' });
     });

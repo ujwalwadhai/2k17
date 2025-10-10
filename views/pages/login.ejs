@@ -29,7 +29,7 @@
         </div>
         <p><a style="margin-top: 8px;" onclick="openForgottenPassword()">Forgotten password?</a></p>
         <button onclick="login('/home')" class="primary-btn" id="login_btn">Continue</button><br>
-        <a href="/login/email" class="email-btn">
+        <a href="/login/email" onclick="alert('Login with Email OTP is currently not available. Please use other methods to login.'); return false" class="email-btn">
           <span class="fal fa-envelope email-icon"></span>
           Continue with Email OTP
         </a>

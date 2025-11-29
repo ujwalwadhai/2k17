@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="purple">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+        <title>2k17 Platform — Coming Soon</title>
+        <style>
+            :root {
+                --primary: #7b5cf0;
+                --primary-dark: #6342d8;
+                --primary-light: #9a7fff;
+
+                --bg-dark: #1f1c2e;
+                --bg-dark2: #252236;
+                --bg-dark3: #332f48;
+
+                --text-light: #ffffff;
+                --text-muted: #9e9e9e;
+                --text-disabled: #555;
+
+                --input-bg: #2c283d;
+                --input-border: #3e3a50;
+
+                --success: #4bb543;
+                --error: #ff4d4f;
+                --warning: #ffcc00;
+                --info: #2db7f5;
+            }
+
+            body {
+                margin: 0;
+                font-family: "Lato", sans-serif;
+                color: var(--text-light);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                text-align: center;
+                padding: 20px;
+            }
+
+            body {
+                background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+
+                @media (max-width: 768px) {
+                    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/jnv-bg-1.jpg') center center / cover no-repeat;
+                }
+            }
+
+            .container {
+                max-width: 500px;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 2.3rem;
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: var(--primary-light);
+            }
+
+            p.subtitle {
+                color: var(--text-muted);
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+
+            .launch-box {
+                background: var(--bg-dark2);
+                padding: 16px 8px;
+                border-radius: 12px;
+                border: 1px solid var(--bg-dark3);
+                font-size: 1rem;
+                color: var(--primary-light);
+                margin-bottom: 35px;
+                line-height: 25px;
+            }
+
+            .loader {
+                width: 60px;
+                height: 60px;
+                border: 4px solid var(--bg-dark3);
+                border-top-color: var(--primary);
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 25px;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .footer {
+                margin-top: 25px;
+                font-size: 0.85rem;
+                color: var(--text-muted);
+            }
+
+            .footer span {
+                color: var(--primary-light);
+            }
+
+            p.fal {
+                width: 48px;
+                height: 48px;
+                font-size: 48px;
+                margin: 0 0 12px 0;
+                color: var(--primary-light);
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('../partials/loader') %>
+        <%- include('../partials/navbar') %>
+            <div class="container loader-after-body" style="display: none;">
+                <p class="fal fa-2x fa-hourglass fa-spin"></p>
+
+                <h1>2k17 Platform</h1>
+
+                <p class="subtitle">Something fresh is coming your way.</p>
+
+                <div class="launch-box">
+                    Celebrating our<br>
+                    <strong style="font-size: 18px;">Five Month Anniversary</strong><br>
+                    <p id="timer">Launching in <strong id="countdown">some time.</strong></p>
+                </div>
+
+                <div class="footer">
+                    Made with ❤️ by <a href="https://twok17.onrender.com/ujwalw">Ujwal W.</a> and <a
+                        href="https://twok17.onrender.com/prajyot_raut">Prajyot R.</a>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", ()=>{
+                    document.querySelector('#navbar-login-btn-large').innerText = "Coming soon"
+                    document.querySelector('#navbar-login-btn-small').innerText = "Coming..."
+                })
+                const targetDate = new Date("2025-12-02T00:00:00+05:30").getTime();
+
+                const timer = setInterval(() => {
+                    const now = new Date().getTime();
+                    const diff = targetDate - now;
+
+                    if (diff <= 0) {
+                        document.getElementById("timer").innerHTML = "The website is live!";
+                        clearInterval(timer);
+                        return;
+                    }
+
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    document.getElementById("countdown").innerText =
+                        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }, 1000);
+            </script>
+</body>
+
+</html>

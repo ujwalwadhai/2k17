@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
+  contributor: { type: Boolean, default: false },
   theme: {
     type: String,
     default: 'purple',

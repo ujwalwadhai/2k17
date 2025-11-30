@@ -362,7 +362,7 @@ async function shareImage(fileId) {
   const shareData = {
     title: 'Check this memory',
     text: 'See this memory I found on 2k17 Platform.',
-    url: `https://twok17.onrender.com/memories/file/${fileId}`,
+    url: `https://the2k17.in/memories/file/${fileId}`,
   };
 
   try {

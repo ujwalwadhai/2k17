@@ -8,7 +8,7 @@
     "dev": "nodemon",
     "sass": "sass --watch ./public/styles/scss:./public/styles/css"
   },
-  "homepage": "https://twok17.onrender.com/",
+  "homepage": "https://the2k17.in/",
   "bugs": {
     "email": "wadhaiujwal@gmail.com"
   },
@@ -18,7 +18,7 @@
   },
   "funding": {
     "type": "individual",
-    "url": "https://twok17.onrender.com/support"
+    "url": "https://the2k17.in/contribute"
   },
   "nodemonConfig": {
     "ignore": [

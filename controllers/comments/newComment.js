@@ -70,7 +70,7 @@ const newComment = async (req, res) => {
             postId: post._id,
           }
         });
-        if (user.email) await sendMail('comment_mention', user.email, { name: user.name.split(' ')[0], username: req.user.username, url: `https://twok17.onrender.com/post/${post._id}` })
+        if (user.email) await sendMail('comment_mention', user.email, { name: user.name.split(' ')[0], username: req.user.username, url: `https://the2k17.in/post/${post._id}` })
       }
     }
 

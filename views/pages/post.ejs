@@ -12,7 +12,7 @@
   <% const processedTitle = post.text.replace(/<[^>]+>/g, '') %>
   <meta property="og:title" content="<%= processedTitle.length > 40 ? processedTitle.substring(0, processedTitle.lastIndexOf(' ', 40) ?? 40).trim() + '...' : processedTitle %> • 2k17 Platform">
   <meta property="og:description" content="Post by <%= post.author.name.split(" ")[0] %> <%= post.author.name.split(" ")[1][0] %>. on 2k17 Platform">
-  <meta property="og:image" content="<%- post?.media?.url || 'https://twok17.onrender.com/images/web_logo.png' %>">
+  <meta property="og:image" content="<%- post?.media?.url || 'https://the2k17.in/images/web_logo.png' %>">
   <meta property="og:url" content="/post/<%= post._id %>">
   <meta property="og:type" content="website">
 </head>
@@ -77,7 +77,7 @@
           <%= post.comments.length %>
         </button>
         <div class="btns-right">
-          <button class="share-btn" onclick="sharePost(this)" data-text="<%= post.text.replace(/<[^>]+>/g, '') %> • 2k17 Platform" data-title="2k17 Platform" data-media="<%= post.media ? post.media.url : '' %>" data-url="https://twok17.onrender.com/post/<%= post._id %>"><span class="fal fa-share"></span></button>
+          <button class="share-btn" onclick="sharePost(this)" data-text="<%= post.text.replace(/<[^>]+>/g, '') %> • 2k17 Platform" data-title="2k17 Platform" data-media="<%= post.media ? post.media.url : '' %>" data-url="https://the2k17.in/post/<%= post._id %>"><span class="fal fa-share"></span></button>
         </div>
       </div>
       <% if(post.likes.length > 2) { %>

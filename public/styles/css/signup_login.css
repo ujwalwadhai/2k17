@@ -27,13 +27,15 @@ body {
   min-width: min(100vw, 500px);
   margin: auto;
   overflow-y: auto;
+}
+.right-pane ::-webkit-scrollbar {
+  display: none;
+}
+.right-pane {
   scrollbar-width: none;
   /* Firefox */
   -ms-overflow-style: none;
   /* IE and Edge */
-}
-.right-pane ::-webkit-scrollbar {
-  display: none;
 }
 .right-pane .signup-form {
   width: 100%;

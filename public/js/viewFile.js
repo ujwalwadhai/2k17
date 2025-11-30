@@ -155,7 +155,7 @@ async function shareImage(fileId, url) {
     const shareData = {
       title: 'Check out this memory!',
       text: 'See this memory I found on the 2k17 Platform.',
-      url: `https://twok17.onrender.com/memories/file/${fileId}`
+      url: `https://the2k17.in/memories/file/${fileId}`
     };
     if (navigator.canShare && navigator.canShare(shareData)) {
       await navigator.share(shareData);

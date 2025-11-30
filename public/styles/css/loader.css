@@ -27,6 +27,11 @@
 #full-loader .loader-text .letter {
   display: inline-block;
   animation: jump 1s infinite ease-in-out;
+}
+#full-loader .loader-text .letter span {
+  font-weight: bold;
+}
+#full-loader .loader-text .letter {
   /* span {
     text-shadow:
       -1px -1px 0 white,
@@ -34,9 +39,6 @@
       -1px 1px 0 white,
       1px 1px 0 white;
   } */
-}
-#full-loader .loader-text .letter span {
-  font-weight: bold;
 }
 #full-loader .loader-text .letter .letter-blue {
   color: #056ed6;

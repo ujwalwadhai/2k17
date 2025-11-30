@@ -13,6 +13,9 @@
   <meta property="og:image" content="<%= account.profile || '/images/user.png' %>">
   <meta property="og:url" content="/<%= account.username %>">
   <meta property="og:type" content="website">
+
+  <meta name="description" content="Profile of <%= account.name %> from our 2k17 batch.">
+  <link rel="canonical" href="https://the2k17.in/<%= user.username %>">
 </head>
 
 <body>
@@ -134,7 +137,7 @@
                   <span class="fal fa-message-lines"></span> <%- post.comments.length || '' %>
                 </button>
                 <div class="btns-right">
-                  <button class="share-btn" onclick="sharePost(this)" data-text="See this post by <%= post.author.name %> on 2k17" data-title="2k17 Platform" data-media="<%= post.media ? post.media.url : '' %>" data-url="https://twok17.onrender.com/post/<%= post._id %>">
+                  <button class="share-btn" onclick="sharePost(this)" data-text="See this post by <%= post.author.name %> on 2k17" data-title="2k17 Platform" data-media="<%= post.media ? post.media.url : '' %>" data-url="https://the2k17.in/post/<%= post._id %>">
                     <span class="fal fa-share"></span>
                   </button>
                 </div>

@@ -704,7 +704,6 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  overflow-y: auto;
 }
 #user-info-popup .user-info-box .heading {
   margin-bottom: 0;
@@ -734,22 +733,14 @@ body {
   text-align: center;
   cursor: pointer;
 }
+#user-info-popup .user-info-box {
+  overflow-y: auto;
+}
 #user-info-popup .user-info-box .user-info-list {
   padding: 0;
 }
 #user-info-popup .user-info-box .user-info-list p {
   line-height: 25px;
-}
-#user-info-popup .user-info-box .user-info-list button {
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.75rem;
-  width: 100%;
-  max-width: 120px;
-  transition: background 0.3s;
 }
 #user-info-popup .user-info-box .user-info-list button.btn-danger {
   background: rgb(200, 37, 37);
@@ -762,6 +753,17 @@ body {
 }
 #user-info-popup .user-info-box .user-info-list button.btn-success:hover {
   background-color: green;
+}
+#user-info-popup .user-info-box .user-info-list button {
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  width: 100%;
+  max-width: 120px;
+  transition: background 0.3s;
 }
 
 @media (max-width: 600px) {

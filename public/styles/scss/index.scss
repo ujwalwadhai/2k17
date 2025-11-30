@@ -160,14 +160,14 @@ main {
   .member-card {
     background: var(--bg-dark);
     user-select: none;
-    padding: 1.2rem;
+    padding: 1.2rem 1.2rem 0 1.2rem;
     text-align: left;
     border-radius: 1rem;
     border: 0.5px solid grey;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     cursor: pointer;
     width: 188px;
-    height: 188px;
+    height: 164px;
     transition-duration: 0.25s;
 
     .member-profile-pic {

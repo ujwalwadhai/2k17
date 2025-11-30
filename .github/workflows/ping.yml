@@ -17,7 +17,7 @@ jobs:
       - name: Ping the website and check for "pong"
         id: ping
         run: |
-          response=$(curl -fs --max-time 10 https://twok17.onrender.com/ping || echo "")
+          response=$(curl -fs --max-time 10 https://the2k17.in/ping || echo "")
           if [ "$response" = "pong" ]; then
             echo "status=up" >> $GITHUB_OUTPUT
           else

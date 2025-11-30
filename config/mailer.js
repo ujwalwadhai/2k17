@@ -232,17 +232,17 @@ function createEmailTemplate(mainContent) {
         <table class="navbar-table" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <td class="navbar-logo" valign="middle">
-                    <a href="https://twok17.onrender.com/" target="_blank">
+                    <a href="https://the2k17.in/" target="_blank">
                         <div class="logo"><p class="logo-top">2k17</p><p class="logo-bottom">PLATFORM</p></div>
                     </a>
                 </td>
                 <td class="navbar-brand" valign="middle">
-                    <a href="https://twok17.onrender.com/" target="_blank">
+                    <a href="https://the2k17.in/" target="_blank">
                         <p>2k17 Platform</p>
                     </a>
                 </td>
                 <td class="navbar-link" valign="middle" align="right">
-                    <a href="https://twok17.onrender.com/home" target="_blank">Home</a>
+                    <a href="https://the2k17.in/home" target="_blank">Home</a>
                 </td>
             </tr>
         </table>
@@ -254,9 +254,9 @@ function createEmailTemplate(mainContent) {
                 <p class="footer-links">
                     <a href="mailto:2k17%20Platform<2k17platform@gmail.com>?cc=Ujwal%20W.<wadhaiujwal@gmail.com>,Prajyot%20R.<prajyotraut77@gmail.com>&subject=Feedback%20to%202k17%20Platform">Contact us</a>
                     &nbsp;|&nbsp;
-                    <a href="https://twok17.onrender.com/members">Members</a>
+                    <a href="https://the2k17.in/members">Members</a>
                     &nbsp;|&nbsp;
-                    <a href="https://twok17.onrender.com/memories">Memories</a>
+                    <a href="https://the2k17.in/memories">Memories</a>
                 </p>
             </div>
         </div>
@@ -271,7 +271,7 @@ async function LoginMail(to, data) {
   let content = `
     <h2 style="color: #ffcc00;">Security Alert</h2>
     <p>We detected a new login to your 2k17 Platform account. If this was you, you can safely disregard this email.</p>
-    <p style="margin: 20px 0">If you don't recognize this activity, please <a href="https://twok17.onrender.com/settings" target="_blank">change your password</a> immediately.</p>
+    <p style="margin: 20px 0">If you don't recognize this activity, please <a href="https://the2k17.in/settings" target="_blank">change your password</a> immediately.</p>
     <div class="info-box">
       <p><strong>Browser:</strong>${deviceInfo(data.useragent)}</p>
       <p><strong>Method:</strong>${data.method}</p>
@@ -383,7 +383,7 @@ async function AdminReportMail(to, data) {
       <p><strong>Time:</strong>${createLongDate()}</p>
     </div>
 
-    <p style="color: #888; margin-top: 16px">Open the <a href="https://twok17.onrender.com/admin">admin dashboard</a> to manage this report.</p>`
+    <p style="color: #888; margin-top: 16px">Open the <a href="https://the2k17.in/admin">admin dashboard</a> to manage this report.</p>`
 
   logActivity('', `Sent email to admins for new report`)
   sendEmail(to, "New Report Submitted • 2k17 Platform", createEmailTemplate(content));
@@ -450,13 +450,13 @@ async function BirthdayMail(to, data) {
   let content = `
   <h2 style="color: #7b5cf0;">🎂 Happy Birthday, ${data.name || 'Friend'}!</h2>
 
-  <p style="margin-bottom: 16px;">Today’s your day – and you’re officially in the spotlight on <b><a href="https://twok17.onrender.com/" target="_blank">2k17 Platform</a></b> on this special day. 🥳</p>
+  <p style="margin-bottom: 16px;">Today’s your day – and you’re officially in the spotlight on <b><a href="https://the2k17.in/" target="_blank">2k17 Platform</a></b> on this special day. 🥳</p>
 
   <p>Drop a post, share the vibes or just soak in the birthday wishes from your batchmates. We’re glad you’re part of this journey!</p>
 
   <p style="margin-bottom: 16px;">Wishing you an amazing year ahead. 🎈</p>
 
-  <a href="https://twok17.onrender.com/#birthday-spotlight" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Visit 2k17 Platform</a>`
+  <a href="https://the2k17.in/#birthday-spotlight" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">Visit 2k17 Platform</a>`
 
   logActivity('', `Sent email to ${data.name} for birthday wish`)
   sendEmail(to, 'Happy Birthday 🎂 • 2k17 Platform', createEmailTemplate(content));
@@ -486,7 +486,7 @@ async function PostMentionMail(to, data) {
   let content = `
     <h2 style="color: #7b5cf0;">Post Mention</h2>
     <p style="margin-bottom: 8px;">Hello, ${data.name || 'there'}</p>
-    <p style="margin-bottom: 16px;"><a href="https://twok17.onrender.com/${data.username}">${data.username}</a> mentioned you in their post.</p>
+    <p style="margin-bottom: 16px;"><a href="https://the2k17.in/${data.username}">${data.username}</a> mentioned you in their post.</p>
     <a href="${data.url}" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">See post</a>`
 
   logActivity('', `Sent email for post mention`)
@@ -505,7 +505,7 @@ async function CommentMentionMail(to, data) {
   let content = `
     <h2 style="color: #7b5cf0;">Post Mention</h2>
     <p style="margin-bottom: 8px;">Hello, ${data.name || 'there'}</p>
-    <p style="margin-bottom: 16px;"><a href="https://twok17.onrender.com/${data.username}">${data.username}</a> mentioned you in a comment.</p>
+    <p style="margin-bottom: 16px;"><a href="https://the2k17.in/${data.username}">${data.username}</a> mentioned you in a comment.</p>
     <a href="${data.url}" target="_blank" style="display: inline-block; margin: 10px 0; padding: 10px 20px; background: #7b5cf0; color: white; text-decoration: none; border-radius: 5px;">See post</a>`
 
   logActivity('', `Sent email for comment mention`)
@@ -521,7 +521,7 @@ async function UserRegisteredMail(to, data) {
       <p><strong>Username:</strong>${data.username}</p>
       <p><strong>Email:</strong>${data.email}</p>
       ${data.method ? `<p><strong>Method:</strong>${data.method}</p>` : ''}
-      <p><a href="https://twok17.onrender.com/admin/users" style="font-weight: bold; text-decoration: none;" target="_blank">Open admin dashboard</a> to approve this user</p>
+      <p><a href="https://the2k17.in/admin/users" style="font-weight: bold; text-decoration: none;" target="_blank">Open admin dashboard</a> to approve this user</p>
       <br>
       <p>The current user stats are as follows:</p>
       <p><strong>Total users:</strong>${data.totalUsers}</p>
@@ -546,7 +546,7 @@ async function RegisteredDataMail(to, data) {
       <small>We use industry-standard hashing (bcryptjs) to protect your password. This means no one can know your actual password, not even Ujwal and Prajyot.</small>
     </div>
     <p style="margin-top: 16px;">Begin your journey with us, explore the 2k17 Platform.</p><br>
-    <a href="https://twok17.onrender.com/" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px; margin: 8px 0;">Visit 2k17 Platform</a>`
+    <a href="https://the2k17.in/" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px; margin: 8px 0;">Visit 2k17 Platform</a>`
 
   sendEmail(to, "Welcome to 2k17 Platform ❤️", createEmailTemplate(content));
 }
@@ -558,7 +558,7 @@ async function GaneshaWishMail(to, data) {
     <p style="margin-bottom: 16px;">We wish you Happy Ganesh Chaturthi from 2k17 platform.</p>
     <p style="margin-bottom: 16px;">May bappa bring joy and success in your life.</p>
     <p style="margin-bottom: 16px;">We are also happy to announce that we are celebrating this festival with a special Ganesh Chaturthi theme on our platform. Visit now to participate and have fun.</p><br>
-    <a href="https://twok17.onrender.com/home" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px; margin: 4px 0;">Visit 2k17 Platform</a>`
+    <a href="https://the2k17.in/home" style="padding:10px 20px; background:#7b5cf0; color:white; text-decoration:none; border-radius:4px; margin: 4px 0;">Visit 2k17 Platform</a>`
 
   sendEmail(to, "Happy Ganesh Chaturthi 🎊", createEmailTemplate(content));
 }
@@ -584,7 +584,7 @@ async function WeeklyReportMail(to, data) {
       <p><strong>Top Route:</strong>${data.topRoute || 'No data available'}</p>
     </div>
 
-    <p style="line-height: 25px; margin-top: 16px;">For detailed analytics, visit <a href="https://twok17.onrender.com/admin/analytics" style="color: #7b5cf0; text-decoration: underline;">admin dashboard</a>.</p>`
+    <p style="line-height: 25px; margin-top: 16px;">For detailed analytics, visit <a href="https://the2k17.in/admin/analytics" style="color: #7b5cf0; text-decoration: underline;">admin dashboard</a>.</p>`
 
   sendEmail(to, "Weekly Analytics Report", createEmailTemplate(content));
 }

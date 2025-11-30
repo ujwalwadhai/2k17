@@ -45,11 +45,53 @@ app.use(async (req, res, next) => {
 });
 dotenv.config();
 
-const cutoff = new Date('2025-12-01T18:30:00Z')
-
 app.get('/comingsoon', (req, res)=> {
   res.render('pages/comingsoon')
 })
+
+app.get('/sitemap.xml', async (req, res) => {
+  const baseUrl = 'https://the2k17.in';
+
+  const users = await Users.find({username: { $ne: '2k17platform'}}, { username: 1, _id: 0 });
+
+  const staticUrls = [
+    '',
+    '/terms-of-service',
+    '/login',
+    '/contribute'
+  ];
+
+  const profileUrls = users.map(u => `/${u.username}`);
+
+  const allUrls = [...staticUrls, ...profileUrls];
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+  ${allUrls
+    .map(
+      (path) => `
+  <url>
+    <loc>${baseUrl}${path}</loc>
+  </url>`
+    )
+    .join('')}
+</urlset>`;
+
+res.header('Content-Type', 'application/xml');
+res.send(xml);
+});
+
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(
+`User-agent: *
+Allow: /
+
+Sitemap: https://the2k17.in/sitemap.xml`
+  );
+});
+
+const cutoff = new Date('2025-12-01T18:30:00Z');
 
 app.use((req, res, next) => {
   const now = Date.now()
@@ -60,6 +102,10 @@ app.use((req, res, next) => {
     if (
       url.startsWith('/comingsoon') ||
       url.endsWith('.css') ||
+      url === '/robots.txt' ||
+      url === '/sitemap.xml' ||
+      url.includes('robots.txt') ||
+      url.includes('sitemap.xml') ||
       url.endsWith('.js') ||
       url.endsWith('.png') ||
       url.endsWith('.jpg') ||
@@ -74,25 +120,25 @@ app.use((req, res, next) => {
     return res.redirect('/comingsoon')
   }
 
-  next()
+  next();
 })
-
 
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');
+const Users = require('./models/Users');
 
-require('./models/Users')
-require('./models/DailyUsers')
-require('./models/Posts')
-require('./models/Notifications')
-require('./models/Settings')
-require('./models/ActiveUsers')
-require('./models/PageViews')
-require('./models/UserSessions')
-require('./models/Quiz')
-require('./models/Attempt')
+require('./models/Users');
+require('./models/DailyUsers');
+require('./models/Posts');
+require('./models/Notifications');
+require('./models/Settings');
+require('./models/ActiveUsers');
+require('./models/PageViews');
+require('./models/UserSessions');
+require('./models/Quiz');
+require('./models/Attempt');
 
-app.use(express.json({ type: 'application/json' }))
+app.use(express.json({ type: 'application/json' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(useragent.express());

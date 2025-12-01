@@ -45,10 +45,6 @@ app.use(async (req, res, next) => {
 });
 dotenv.config();
 
-app.get('/comingsoon', (req, res)=> {
-  res.render('pages/comingsoon')
-})
-
 app.get('/sitemap.xml', async (req, res) => {
   const baseUrl = 'https://the2k17.in';
 
@@ -90,38 +86,6 @@ Allow: /
 Sitemap: https://the2k17.in/sitemap.xml`
   );
 });
-
-const cutoff = new Date('2025-12-01T18:30:00Z');
-
-app.use((req, res, next) => {
-  const now = Date.now()
-
-  if (now < cutoff.getTime() && req.headers.host.includes('the2k17.in')) {
-    const url = req.originalUrl
-
-    if (
-      url.startsWith('/comingsoon') ||
-      url.endsWith('.css') ||
-      url === '/robots.txt' ||
-      url === '/sitemap.xml' ||
-      url.includes('robots.txt') ||
-      url.includes('sitemap.xml') ||
-      url.endsWith('.js') ||
-      url.endsWith('.png') ||
-      url.endsWith('.jpg') ||
-      url.endsWith('.jpeg') ||
-      url.endsWith('.svg') ||
-      url.endsWith('.webp') ||
-      url.endsWith('.ico')
-    ) {
-      return next()
-    }
-
-    return res.redirect('/comingsoon')
-  }
-
-  next();
-})
 
 const getRoutes = require('./routes/getRoutes');
 const postRoutes = require('./routes/postRoutes');

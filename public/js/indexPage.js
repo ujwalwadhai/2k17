@@ -28,7 +28,7 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
             statusBox.style.color = "red";
         });
 });
-
+/* 
 document.getElementById("newsletter-form").addEventListener("submit", function (e) {
     e.preventDefault();
     var statusBtn = document.getElementById("newsletter-sub-btn");
@@ -55,4 +55,4 @@ document.getElementById("newsletter-form").addEventListener("submit", function (
             console.log(err);
             statusBox.innerHTML = "Server unavailable";
         });
-});
+}); */

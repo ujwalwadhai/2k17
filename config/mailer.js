@@ -21,8 +21,6 @@ const transporter = nodemailer.createTransport({
 
 async function sendEmail(to, subject, htmlContent, includeBCC) {
   try {
-    const adminEmails = [process.env.UJWAL_EMAIL, process.env.PRAJYOT_EMAIL]
-
     var mailOptions = {
       from: '"2k17 Platform" <2k17platform@gmail.com>',
       to,
@@ -30,20 +28,7 @@ async function sendEmail(to, subject, htmlContent, includeBCC) {
       html: htmlContent,
     };
 
-    let shouldSendEmail = true;
-
-    if (process.env.PLATFORM_TYPE == 'developement') {
-      if (!adminEmails.includes(to)) {
-        // Don't send email if 'to' is not admin
-        shouldSendEmail = false;
-        console.log(`[DEVELOPMENT MODE] Suppressed email to non-admin in developement: ${to}`);
-      }
-    }
-
-    if (includeBCC) {
-      mailOptions.bcc = adminEmails;
-    }
-    if (shouldSendEmail) await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
   } catch (error) {
     console.log(error);
   }

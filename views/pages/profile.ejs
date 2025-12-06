@@ -5,17 +5,32 @@
   <%- include('../partials/head') %>
   <% const nameParts = account.name.split(' '); %>
   <% const titleName = nameParts.length > 1 ? `${nameParts[0]} ${nameParts[1][0]}.` : nameParts[0]; %>
-  <title><%= titleName %> on 2k17 Platform</title>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "<%= account.name %> | 2k17 Platform",
+  "alternateName": "2k17",
+  "url": "https://the2k17.in/<%= account.username %>"
+}
+</script>
+  <title><%= titleName %> | 2k17 Platform</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="stylesheet" href="/styles/css/profile.css">
 
-  <meta property="og:title" content="<%= account.name %> on 2k17 Platform">
+  <meta property="og:title" content="<%= account.name %> | 2k17 Platform">
   <meta property="og:description" content="2k17 Platform">
   <meta property="og:image" content="<%= account.profile || '/images/user.png' %>">
   <meta property="og:url" content="/<%= account.username %>">
   <meta property="og:type" content="website">
-
-  <meta name="description" content="Profile of <%= account.name %> from our 2k17 batch.">
-  <link rel="canonical" href="https://the2k17.in/<%= user.username %>">
+<% if(account.bio){ %>
+  <meta property="og:description" content="<%- account.bio %>">
+  <meta name="description" content="<%= account.bio %>">
+<% } else { %>
+  <meta property="og:description" content="Profile of <%= account.name %> from our 2k17 batch | JNV Chandrapur">
+  <meta name="description" content="Profile of <%= account.name %> from our 2k17 batch | JNV Chandrapur">
+<% } %>
+  <link rel="canonical" href="https://the2k17.in/<%= account.username %>">
 </head>
 
 <body>

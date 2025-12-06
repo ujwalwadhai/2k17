@@ -2,183 +2,228 @@
 <html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
 
 <head>
-  <%- include('../partials/head.ejs') %>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "2k17 Platform",
+  "alternateName": "2k17",
+  "url": "https://the2k17.in/"
+}
+</script>
   <title>2k17 Platform | JNV Chandrapur</title>
-  <meta name="description" content="2k17 Platform is a dedicated social space for the 2017–24 batch. Share posts, memories, media, chats, and much more. Launching soon.">
-  <meta name="keywords" content="2k17, social platform, batchmates, memories, alumni, jnv, 2017-24 batch">
+  <meta name="description"
+    content="2k17 Platform is a dedicated social space for the 2017–24 batch of JNV Chandrapur. Share posts, memories, media, and much more.">
+  <meta name="keywords"
+    content="2k17, social platform, batchmates, memories, alumni, jnv, jnv chandrapur, chandrapur, navodaya, 2017-24 batch">
   <meta name="author" content="2k17 Platform">
   <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="192x192" href="/images/icons/logo_192x192.png">
-  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <%- include('../partials/head.ejs') %>
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://the2k17.in/">
-  <link rel="stylesheet" href="/styles/css/index.css" />
-  <link rel="stylesheet" href="/styles/css/components/countdown.css" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/images/icons/logo_192x192.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.the2k17.in/">
+    <link rel="stylesheet" href="/styles/css/index.css" />
+    <link rel="stylesheet" href="/styles/css/components/countdown.css" />
 </head>
 
 <body id="body">
   <%- include('../partials/loader') %>
-  <%- include('../partials/navbar') %>
+    <%- include('../partials/navbar') %>
 
-  <main class="loader-after-body" style="display: none;">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-text">
-        <h2>Welcome to <span style="color: blue;">2</span><span style="color: green;">k</span><span style="color: red;">1</span><span style="color: yellow;">7</span></h2>
-        <p>Mini social media platform built specially for the 2017-24 batch of JNV Chandrapur.</p><br>
-        <a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span class="fal fa-arrow-right"></span></a>
-      </div>
-      <div class="featured-photo">
-        <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
-        <div class="overlay-text">Featured photo</div>
-      </div>
-    </section>
-
-    <% if (birthdayUsers && birthdayUsers.length > 0) { %>
-    <section id="birthday-spotlight" class="no-select">
-      <h3>🎉 Birthday Spotlight</h3>
-      <p class="grey-1">It’s <%= birthdayUsers.length === 1 ? birthdayUsers[0].name + "'s" : "their" %> special day! Drop a wish and make it memorable. 🥳</p><br>
-
-      <div class="gallery-grid">
-        <% birthdayUsers.forEach(bdayuser => { %>
-        <div class="image-card" style="padding: 1.2rem;" onclick="window.location.href='/<%= bdayuser.username %>'">
-          <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo" style="border-radius: 50%">
-          <h4 style="color: var(--primary); margin-bottom: 10px;"><%= bdayuser.name %> 🎂</h4>
-          <p style="line-height: 26px;">We wish you a happy birthday from 2k17 ❤️</p>
-          <p><a href="/<%= bdayuser.username %>">View profile</a></p>
-        </div>
-        <% }) %>
-      </div>
-    </section>
-    <% } %>
-
-    <div class="about-and-newsletter">
-      <!-- About Section -->
-      <section id="about" class="about">
-        <h3>What is 2k17 Platform?</h3>
-        <p>This isn’t just another social media site — it’s a digital time capsule. 2k17 exists for the quiet moments — when you’re feeling a little nostalgic, when you want to see a familiar face or check where someone is, or when a memory from school suddenly resurfaces. It’s not about daily posts or endless scrolling. It’s about checking in once in a while, smiling at something someone shared, and remembering the chaos, laughter, and friendships that shaped those seven years. This place will be here — quietly, patiently — whenever you feel like coming home for a bit.
-        </p>
-      </section>
-
-      <section id="newsletter-sub" class="newsletter-sub">
-        <iframe src="https://player.cloudinary.com/embed/?cloud_name=batch-2k17&public_id=2k17_platform_compressed_m3gtaq&profile=cld-adaptive-stream" height="360px" width="700px" style="border-radius: 6px; width: 100%; aspect-ratio: 700 / 360;" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
-      </section>
-
-    </div>
-    <% if(contributors && contributors.length > 0) { %>
-    <!-- Members Section -->
-    <div id="members" class="members no-select">
-      <h3>Contributors</h3>
-      <p class="grey-1">Thanks to these amazing people who have contributed to making <b>the2k17.in</b> ours.</p><br><br>
-      <div class="members-grid">
-        <div class="member-card" onclick="window.location.href='/ujwalw'">
-          <img src="https://res.cloudinary.com/batch-2k17/image/upload/v1751284805/2k17/profiles/hdfjrhjplqfpznxpfurr.jpg" alt="Profile Picture" class="member-profile-pic">
-          <h4>Ujwal Wadhai</h4>
-          <p style="margin-bottom: 4px;">2017-24 in JNVC</p>
-        </div>
-        <% contributors.forEach(contributor => { %>
-        <div class="member-card" onclick="window.location.href='/<%= contributor.username %>'">
-          <img src="<%- contributor.profile || '/images/user.png' %>" alt="Profile Picture" class="member-profile-pic">
-          <h4><%= contributor.name %></h4>
-          <p style="margin-bottom: 4px;"><%= contributor.year %> in JNVC</p>
-          
-        </div>
-        <% }) %>
-        <div class="member-card" onclick="window.location.href='/members'">
-          <p class="fal fa-users-rectangle" style="color:white; font-size:40px; margin: 2px 2px 16px 2px;"></p>
-          <h4 style="line-height: 24px;">Visit <a href="/members">members</a> to see all of us.</h4>
-        </div>
-      </div>
-    </div>
-    <% } %>
-    <% if(featuredImages && featuredImages.length > 0) { %>
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery no-select">
-      <h3>Memories</h3>
-      <p class="grey-1">For the memories living in our heads. Visit <a href="/memories">memories</a> to see all.</p><br><br>
-      <div class="gallery-grid">
-        <% featuredImages.forEach(image => { %>
-        <div class="image-card" onclick="window.location.href= '/memories'">
-          <img src="<%= image.thumbnail %>" alt="<%= image.pid %>">
-        </div>
-        <% }) %>
-        <div class="image-card" style="padding: 1.2rem;">
-          <span style="color:white; font-size:42px; margin: 2px 2px 18px 2px;" class="fal fa-images"></span>
-          <p style="line-height: 26px;">There's much more,</p>
-          <p>Visit <a href="/memories">memories</a> to see.</p>
-        </div>
-      </div>
-    </section>
-    <% } %>
-
-    <!-- Features Section -->
-    <section id="features" class="features no-select">
-      <h3>Features</h3>
-      <p class="grey-1">So much to see around here.</p>
-      <div class="features-grid">
-        <div class="feature-card">
-          <span class="fal feature-icon fa-shield-keyhole"></span>
-          <h4>Private & Secure</h4>
-          <p>Access limited to classmates only — no outsiders allowed.</p>
-        </div>
-        <div class="feature-card">
-          <span class="fal feature-icon fa-layer-group"></span>
-          <h4>Share Posts</h4>
-          <p>Post text and pictures to remember our best moments.</p>
-        </div>
-        <div class="feature-card">
-          <span class="fal feature-icon fa-block-question"></span>
-          <h4>Quizzes</h4>
-          <p>Test the knowledge of others through engaging quizzes.</p>
-        </div>
-        <div class="feature-card">
-          <span class="fal feature-icon fa-images"></span>
-          <h4>Class Memories</h4>
-          <p>Batch's all digital memories in one place.</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="contact-and-about">
-      <section class="contact" id="contact">
-        <h3>Reach out</h3>
-        <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send an email to <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a></p><br>
-        <form id="contact-form">
-          <input type="text" placeholder="Your email" name="email" required>
-          <input type="text" name="text" id="" placeholder="Say hi ..." required>
-          <p id="contact-status" style="font-size: 14px;"></p>
-          <button type="submit"><span class="fal fa-paper-plane"></span> &nbsp; Send</button>
-        </form>
-      </section>
-
-      <section class="about-us" id="about-us">
-        <h3>The developers</h3>
-        <p class="contact-text">Popularly known as "creators" 😁<br>Maintaining platform isn't easy, but<br>“When there's a will, there's a way” 😉</p><br>
-        <div class="admins">
-          <% admins.forEach(admin => { %>
-          <div class="about-card" onclick="window.location.href='/<%= admin.username %>'">
-            <img src="<%= admin.profile || '/images/user.png' %>" alt="Profile Picture" class="about-profile-pic">
-            <div class="admin-info">
-              <p class="name"><%= admin.name %></p>
-              <div class="social">
-                <a href="<%= admin.email %>"><span class="fal fa-envelope"></span></a>
-                <a href="<%= admin.socialLinks.github %>"><span class="fab fa-github"></span></a>
-                <a href="<%= admin.socialLinks.linkedin %>"><span class="fab fa-linkedin"></span></a>
-                <a href="<%= admin.socialLinks.instagram %>"><span class="fab fa-instagram"></span></a>
-              </div>
-            </div>
+      <main class="loader-after-body" style="display: none;">
+        <!-- Hero Section -->
+        <section class="hero">
+          <div class="hero-text">
+            <h2>Welcome to <span style="color: blue;">2</span><span style="color: green;">k</span><span
+                style="color: red;">1</span><span style="color: yellow;">7</span></h2>
+            <p>Mini social media platform built specially for the 2017-24 batch of JNV Chandrapur.</p><br>
+            <a href="/create-account" class="cta-btn">Get Started &nbsp; &nbsp; <span
+                class="fal fa-arrow-right"></span></a>
           </div>
-          <% }) %>
-        </div>
-      </section>
-    </div>
-  </main>
+          <div class="featured-photo">
+            <img src="/images/jnv-bg-1.jpg" alt="Today's featured photo" class="featured-photo-img">
+            <div class="overlay-text">Featured photo</div>
+          </div>
+        </section>
 
-  <%- include('../partials/footer') %>
+        <% if (birthdayUsers && birthdayUsers.length> 0) { %>
+          <section id="birthday-spotlight" class="no-select">
+            <h3>🎉 Birthday Spotlight</h3>
+            <p class="grey-1">It’s <%= birthdayUsers.length===1 ? birthdayUsers[0].name + "'s" : "their" %> special day!
+                Drop a wish and make it memorable. 🥳</p><br>
 
-  <script src="/js/indexPage.js"></script>
+            <div class="gallery-grid">
+              <% birthdayUsers.forEach(bdayuser=> { %>
+                <div class="image-card" style="padding: 1.2rem;"
+                  onclick="window.location.href='/<%= bdayuser.username %>'">
+                  <img src="<%- bdayuser.profile || '/images/user.png' %>" alt="<%= bdayuser.name %>'s photo"
+                    style="border-radius: 50%">
+                  <h4 style="color: var(--primary); margin-bottom: 10px;">
+                    <%= bdayuser.name %> 🎂
+                  </h4>
+                  <p style="line-height: 26px;">We wish you a happy birthday from 2k17 ❤️</p>
+                  <p><a href="/<%= bdayuser.username %>">View profile</a></p>
+                </div>
+                <% }) %>
+            </div>
+          </section>
+          <% } %>
+
+            <div class="about-and-newsletter">
+              <!-- About Section -->
+              <section id="about" class="about">
+                <h3>What is 2k17 Platform?</h3>
+                <p>This isn’t just another social media site — it’s a digital time capsule. 2k17 exists for the quiet
+                  moments — when you’re feeling a little nostalgic, when you want to see a familiar face or check where
+                  someone is, or when a memory from school suddenly resurfaces. It’s not about daily posts or endless
+                  scrolling. It’s about checking in once in a while, smiling at something someone shared, and
+                  remembering the chaos, laughter, and friendships that shaped those seven years. This place will be
+                  here — quietly, patiently — whenever you feel like coming home for a bit.
+                </p>
+              </section>
+
+              <section id="newsletter-sub" class="newsletter-sub">
+                <iframe
+                  src="https://player.cloudinary.com/embed/?cloud_name=batch-2k17&public_id=2k17_platform_compressed_m3gtaq&profile=cld-adaptive-stream"
+                  height="360px" width="700px" style="border-radius: 6px; width: 100%; aspect-ratio: 700 / 360;"
+                  allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen
+                  frameborder="0"></iframe>
+              </section>
+
+            </div>
+            <% if(contributors && contributors.length> 0) { %>
+              <!-- Members Section -->
+              <div id="members" class="members no-select">
+                <h3>Contributors</h3>
+                <p class="grey-1">Thanks to these amazing people who have contributed to making <b>the2k17.in</b> ours.
+                </p><br><br>
+                <div class="members-grid">
+                  <div class="member-card" onclick="window.location.href='/ujwalw'">
+                    <img
+                      src="https://res.cloudinary.com/batch-2k17/image/upload/v1751284805/2k17/profiles/hdfjrhjplqfpznxpfurr.jpg"
+                      alt="Profile Picture" class="member-profile-pic">
+                    <h4>Ujwal Wadhai</h4>
+                    <p style="margin-bottom: 4px;">2017-24 in JNVC</p>
+                  </div>
+                  <% contributors.forEach(contributor=> { %>
+                    <div class="member-card" onclick="window.location.href='/<%= contributor.username %>'">
+                      <img src="<%- contributor.profile || '/images/user.png' %>" alt="Profile Picture"
+                        class="member-profile-pic">
+                      <h4>
+                        <%= contributor.name %>
+                      </h4>
+                      <p style="margin-bottom: 4px;">
+                        <%= contributor.year %> in JNVC
+                      </p>
+
+                    </div>
+                    <% }) %>
+                      <div class="member-card" onclick="window.location.href='/members'">
+                        <p class="fal fa-users-rectangle"
+                          style="color:white; font-size:40px; margin: 2px 2px 16px 2px;"></p>
+                        <h4 style="line-height: 24px;">Visit <a href="/members">members</a> to see all of us.</h4>
+                      </div>
+                </div>
+              </div>
+              <% } %>
+                <% if(featuredImages && featuredImages.length> 0) { %>
+                  <!-- Gallery Section -->
+                  <section id="gallery" class="gallery no-select">
+                    <h3>Memories</h3>
+                    <p class="grey-1">For the memories living in our heads. Visit <a href="/memories">memories</a> to
+                      see all.</p><br><br>
+                    <div class="gallery-grid">
+                      <% featuredImages.forEach(image=> { %>
+                        <div class="image-card" onclick="window.location.href= '/memories'">
+                          <img src="<%= image.thumbnail %>" alt="<%= image.pid %>">
+                        </div>
+                        <% }) %>
+                          <div class="image-card" style="padding: 1.2rem;">
+                            <span style="color:white; font-size:42px; margin: 2px 2px 18px 2px;"
+                              class="fal fa-images"></span>
+                            <p style="line-height: 26px;">There's much more,</p>
+                            <p>Visit <a href="/memories">memories</a> to see.</p>
+                          </div>
+                    </div>
+                  </section>
+                  <% } %>
+
+                    <!-- Features Section -->
+                    <section id="features" class="features no-select">
+                      <h3>Features</h3>
+                      <p class="grey-1">So much to see around here.</p>
+                      <div class="features-grid">
+                        <div class="feature-card">
+                          <span class="fal feature-icon fa-shield-keyhole"></span>
+                          <h4>Private & Secure</h4>
+                          <p>Access limited to classmates only — no outsiders allowed.</p>
+                        </div>
+                        <div class="feature-card">
+                          <span class="fal feature-icon fa-layer-group"></span>
+                          <h4>Share Posts</h4>
+                          <p>Post text and pictures to remember our best moments.</p>
+                        </div>
+                        <div class="feature-card">
+                          <span class="fal feature-icon fa-block-question"></span>
+                          <h4>Quizzes</h4>
+                          <p>Test the knowledge of others through engaging quizzes.</p>
+                        </div>
+                        <div class="feature-card">
+                          <span class="fal feature-icon fa-images"></span>
+                          <h4>Class Memories</h4>
+                          <p>Batch's all digital memories in one place.</p>
+                        </div>
+                      </div>
+                    </section>
+
+                    <div class="contact-and-about">
+                      <section class="contact" id="contact">
+                        <h3>Reach out</h3>
+                        <p class="contact-text">Have any questions or suggestions?<br> Reach out to us now! <br> or send
+                          an email to <a href="mailto:2k17platform@gmail.com">2k17platform@gmail.com</a></p><br>
+                        <form id="contact-form">
+                          <input type="text" placeholder="Your email" name="email" required>
+                          <input type="text" name="text" id="" placeholder="Say hi ..." required>
+                          <p id="contact-status" style="font-size: 14px;"></p>
+                          <button type="submit"><span class="fal fa-paper-plane"></span> &nbsp; Send</button>
+                        </form>
+                      </section>
+
+                      <section class="about-us" id="about-us">
+                        <h3>The developers</h3>
+                        <p class="contact-text">Popularly known as "creators" 😁<br>Maintaining platform isn't easy,
+                          but<br>“When there's a will, there's a way” 😉</p><br>
+                        <div class="admins">
+                          <% admins.forEach(admin=> { %>
+                            <div class="about-card" onclick="window.location.href='/<%= admin.username %>'">
+                              <img src="<%= admin.profile || '/images/user.png' %>" alt="Profile Picture"
+                                class="about-profile-pic">
+                              <div class="admin-info">
+                                <p class="name">
+                                  <%= admin.name %>
+                                </p>
+                                <div class="social">
+                                  <a href="<%= admin.email %>"><span class="fal fa-envelope"></span></a>
+                                  <a href="<%= admin.socialLinks.github %>"><span class="fab fa-github"></span></a>
+                                  <a href="<%= admin.socialLinks.linkedin %>"><span class="fab fa-linkedin"></span></a>
+                                  <a href="<%= admin.socialLinks.instagram %>"><span
+                                      class="fab fa-instagram"></span></a>
+                                </div>
+                              </div>
+                            </div>
+                            <% }) %>
+                        </div>
+                      </section>
+                    </div>
+      </main>
+
+      <%- include('../partials/footer') %>
+
+        <script src="/js/indexPage.js"></script>
 
 </body>
 

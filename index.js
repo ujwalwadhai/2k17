@@ -54,7 +54,8 @@ app.get('/sitemap.xml', async (req, res) => {
     '',
     '/terms-of-service',
     '/login',
-    '/contribute'
+    '/contribute',
+    '/members'
   ];
 
   const profileUrls = users.map(u => `/${u.username}`);
@@ -82,6 +83,9 @@ app.get('/robots.txt', (req, res) => {
   res.send(
 `User-agent: *
 Allow: /
+Disallow: /images/donate-qr.png          
+Disallow: /memories/*    
+Disallow: /memories/   
 
 Sitemap: https://the2k17.in/sitemap.xml`
   );

@@ -57,6 +57,7 @@
         font-size: 28px;
         font-weight: 700;
         margin: 0;
+        margin-bottom: 8px;
       }
 
       @media (max-width: 600px) {
@@ -74,14 +75,14 @@
         font-size: 16px;
         margin-top: 4px;
         margin-bottom: 0;
+        text-align: left;
       }
 
       .bio {
-        color: var(--text-muted);
+        color: var(--text-light);
         max-width: 500px;
         margin-top: 1rem;
         font-size: 15px;
-        line-height: 1.5;
         margin-bottom: 0;
       }
 

@@ -5,6 +5,14 @@
   <%- include('../partials/head') %>
   <link rel="stylesheet" href="/styles/css/members.css">
   <title>Members of 2k17 Platform</title>
+  <meta name="description"
+    content="Members of our beautiful 2k17 family | JNV Chandrapur.">
+  <meta name="keywords"
+    content="2k17, social platform, batchmates, memories, alumni, jnv, jnv chandrapur, chandrapur, navodaya, 2017-24 batch">
+  <meta name="author" content="2k17 Platform">
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="canonical" href="https://www.the2k17.in/">
 </head>
 
 <body>
@@ -25,9 +33,12 @@
             <p class="name" onclick="window.location.href='/<%= member.username %>'"><%= member.name %>
             </p>
             <% if (member.username) { %>
-            <span class="username" onclick="window.location.href='/<%= member.username %>'">@<%= member.username %></span>
               <% if (member.role == 'admin') { %>
               <span class="admin-badge"><%= member.role %></span>
+              <% } else if (member.contributor) { %>
+              <span class="admin-badge">Contributor</span>
+              <% } else { %>
+                <span class="admin-badge grey">Member</span>
               <% } %>
             <% } else { %>
             <span class="username" style="cursor: text;">Not registered</span>

@@ -103,9 +103,9 @@
                     <span class="current-session"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; This device</span>
                   <% } else { %>
                   <% if((new Date() - new Date(sessionDoc.session?.lastActive)) < 1000 * 60 * 60){ %>
-                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last seen <%= getRelativeTime(new Date(sessionDoc.session?.lastActive)) + ' ago' %></span>
+                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last active <%= getRelativeTime(new Date(sessionDoc.session?.lastActive)) + ' ago' %></span>
                   <% } else { %>
-                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last seen <%= new Date(sessionDoc.session.lastActive).toLocaleString('en-In', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true}).replace('am','AM').replace('pm', 'PM') %></span>
+                    <span class="last-active"><span style="text-align: left;" class="<%= deviceIcon %>"></span>&nbsp; Last active <%= new Date(sessionDoc.session.lastActive).toLocaleString('en-In', {timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric', hour12: true}).replace('am','AM').replace('pm', 'PM') %></span>
                   <% }} %>
                 </div>
               </div>
@@ -121,6 +121,7 @@
         </ul>
       </div>
     </div>
+    <br><br><br>
 
   </div>
   <br><br><br><br>

@@ -3,8 +3,6 @@
 
 <head>
   <%- include('../partials/head') %>
-  <% const nameParts = account.name.split(' '); %>
-  <% const titleName = nameParts.length > 1 ? `${nameParts[0]} ${nameParts[1][0]}.` : nameParts[0]; %>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -14,7 +12,7 @@
   "url": "https://the2k17.in/<%= account.username %>"
 }
 </script>
-  <title><%= titleName %> | 2k17 Platform</title>
+  <title><%= account.name %> | 2k17 Platform</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="stylesheet" href="/styles/css/profile.css">
 
@@ -30,7 +28,7 @@
   <meta property="og:description" content="Profile of <%= account.name %> from our 2k17 batch | JNV Chandrapur">
   <meta name="description" content="Profile of <%= account.name %> from our 2k17 batch | JNV Chandrapur">
 <% } %>
-  <link rel="canonical" href="https://the2k17.in/<%= account.username %>">
+  <link rel="canonical" href="https://www.the2k17.in/<%= account.username %>">
 </head>
 
 <body>
@@ -46,10 +44,11 @@
       </div>
       <div class="user-details">
         <p class="name"><%= account.name %></p>
-        <p class="username"><%- account.username ? `@${account.username}` : 'Not registered' %></p>
+        <p class="username"><span style="color: var(--text-muted)">Student at JNV Chandrapur (<%= account.year %>)</span></p>
 
         <% if(account.bio){ %>
-        <p class="bio"><%- account.bio %></p>
+        <p class="bio"><%- account.bio %><br>
+        </p>
         <% } %>
 
         <div class="badges-container">
@@ -85,7 +84,7 @@
         <% if(user){ %>
         <button class="tab-btn" data-tab="about" id="about-tab"><span class="helper-text">ABOUT</span></button>
         <% } else { %>
-        <button class="tab-btn" data-tab="about" id="about-tab" onclick="showLoginBanner()"><span class="fal fa-address-card"></span><span class="helper-text">ABOUT</span></button>
+        <button class="tab-btn" data-tab="about" id="about-tab" onclick="showLoginBanner()"><span class="helper-text">ABOUT</span></button>
         <% } %>
         <button class="tab-btn" data-tab="badges" id="badges-tab"><span class="helper-text"><span class="fal fa-award"></span></span></button>
       </div>
@@ -148,9 +147,15 @@
                 </button>
                 <% }) %>
                 <% } %>
+                <% if(user){ %>
                 <button class="comment-btn" onclick="loadComments('<%= post._id %>')" id="comment-btn-<%= post._id %>">
                   <span class="fal fa-message-lines"></span> <%- post.comments.length || '' %>
                 </button>
+                <% } else { %>
+                <button class="comment-btn" onclick="showLoginBanner()" id="comment-btn-<%= post._id %>">
+                  <span class="fal fa-message-lines"></span> <%- post.comments.length || '' %>
+                </button>
+                <% } %>
                 <div class="btns-right">
                   <button class="share-btn" onclick="sharePost(this)" data-text="See this post by <%= post.author.name %> on 2k17" data-title="2k17 Platform" data-media="<%= post.media ? post.media.url : '' %>" data-url="https://the2k17.in/post/<%= post._id %>">
                     <span class="fal fa-share"></span>
@@ -158,7 +163,11 @@
                 </div>
               </div>
               <% if(post.likes.length > 2) { %>
+              <% if(user){ %>
               <p class="extend-like-msg"><img src="<%-post.likes[1].profile || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/<%= post.likes[1].username%>"'><%-post.likes[1].username%></span>&nbsp; and <span style="margin: 0 3px;" onclick="openPostLikes('<%= post._id %>')"><%-post.likes.length - 1 %> others</span></p>
+              <% } else { %>
+                <p class="extend-like-msg"><img src="<%-post.author.profile || '/images/user.png'%>" alt="" class="user-profile"> Liked by &nbsp;<span onclick='window.location.href="/<%= post.author.username%>"'><%-post.author.username%></span>&nbsp; and <span style="margin: 0 3px;" onclick="showLoginBanner()"><%-post.likes.length - 1 %> others</span></p>
+              <% } %>
               <% } %>
             </div>
             <% }) %>
@@ -313,7 +322,7 @@
         <span onclick="hidePopup('login-banner')" class="fal fa-xmark"></span>
         <img src="<%= account.profile || '/images/user.png' %>" alt="" class="user-profile" />
         <p id="title"></p>
-        <span class="grey-1">You must log in to do this.</span><br>
+        <span class="grey-1">You must log in to view this.</span><br>
         <span class="grey-1">See much more about <%= account.name %><br>on 2k17 Platform.</span><br><br>
         <button class="signup-btn" onclick="window.location.href='/create-account'">Create account</button>
         <button class="login-btn" onclick="window.location.href='/login?url=/<%= account.username %>'">Log in</button>

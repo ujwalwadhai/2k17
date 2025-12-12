@@ -41,7 +41,7 @@ router.get('/login/email', getController.emailLogin);
 
 router.get('/contribute', getController.contribute);
 
-router.get('/members', isLoggedIn, getController.members);
+router.get('/members', getController.members);
 
 
 router.get('/profile', isLoggedIn, getController.viewProfile);

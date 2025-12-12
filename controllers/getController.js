@@ -159,30 +159,39 @@ async function getSortedUsers(loggedInUserId = null) {
   try {
     const pipeline = [];
 
-    pipeline.push({
-      $addFields: {
-        isAdmin: {
-          $cond: { if: { $eq: ["$role", "admin"] }, then: 1, else: 0 }
-        },
-        isLoggedInUser: {
-          $cond: {
-            if: {
-              $and: [
-                loggedInUserId,
-                { $eq: ["$_id", loggedInUserId] }
-              ]
-            },
-            then: 1,
-            else: 0
-          }
-        }
+    let loggedObjectId = null;
+    if (loggedInUserId) {
+      try {
+        loggedObjectId = mongoose.Types.ObjectId(loggedInUserId);
+      } catch (e) {
+        loggedObjectId = null;
       }
-    });
+    }
+
+    const addFields = {
+      isAdmin: {
+        $cond: { if: { $eq: ["$role", "admin"] }, then: 1, else: 0 }
+      },
+      isContributor: {
+        $cond: { if: { $eq: ["$contributor", true] }, then: 1, else: 0 }
+      }
+    };
+
+    if (loggedObjectId) {
+      addFields.isLoggedInUser = {
+        $cond: { if: { $eq: ["$_id", loggedObjectId] }, then: 1, else: 0 }
+      };
+    } else {
+      addFields.isLoggedInUser = 0;
+    }
+
+    pipeline.push({ $addFields: addFields });
 
     pipeline.push({
       $sort: {
         isLoggedInUser: -1,
         isAdmin: -1,
+        isContributor: -1,
         house: 1,
         name: 1
       }
@@ -207,6 +216,7 @@ async function getSortedUsers(loggedInUserId = null) {
     pipeline.push({
       $project: {
         isAdmin: 0,
+        isContributor: 0,
         isLoggedInUser: 0
       }
     });
@@ -216,11 +226,10 @@ async function getSortedUsers(loggedInUserId = null) {
     return final;
 
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return [];
   }
 }
-
 
 exports.members = async (req, res) => {
   var members = cachedMembers

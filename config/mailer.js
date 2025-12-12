@@ -20,6 +20,7 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendEmail(to, subject, htmlContent, includeBCC) {
+  if(process.env.PLATFORM_TYPE == 'development') return
   try {
     var mailOptions = {
       from: '"2k17 Platform" <2k17platform@gmail.com>',

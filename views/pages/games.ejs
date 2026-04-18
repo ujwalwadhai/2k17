@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+  <title>Games | 2k17</title>
+  <meta name="description" content="Play fun games with your friends on 2k17 Platform">
+  <link rel="stylesheet" href="/styles/css/games.css">
+</head>
+
+<body>
+  <%- include('../partials/navbar') %>
+
+  <div class="games-page">
+    <div class="page-header">
+      <h1><span class="fal fa-gamepad-modern"></span> Games</h1>
+      <p>Take a break and play some games with your friends!</p>
+    </div>
+
+    <div class="games-grid">
+      <!-- Ludo Game Card -->
+      <a href="/games/ludo" class="game-card" id="ludo-game-card">
+        <div class="game-card-preview ludo-preview">
+          <div class="ludo-mini-board">
+            <div class="corner green"></div>
+            <div class="path"></div>
+            <div class="corner yellow"></div>
+            <div class="path"></div>
+            <div class="center"></div>
+            <div class="path"></div>
+            <div class="corner blue"></div>
+            <div class="path"></div>
+            <div class="corner red"></div>
+          </div>
+        </div>
+        <div class="game-card-body">
+          <h3>Ludo</h3>
+          <p>The classic board game! Create a room, invite friends, and play online with 2-4 players. Roll the dice, race your tokens, and get all four home first.</p>
+          <div class="game-card-tags">
+            <span class="game-tag multiplayer">Multiplayer</span>
+            <span class="game-tag classic">Online Rooms</span>
+            <span class="game-tag classic">Classic</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Football Catcher Card -->
+      <a href="/football" class="game-card" id="football-game-card">
+        <div class="game-card-preview football-preview">
+          <span class="game-icon">⚽</span>
+        </div>
+        <div class="game-card-body">
+          <h3>Football Catcher</h3>
+          <p>Catch as many footballs as you can! Move your bowl to catch the falling balls before they hit the ground. How high can you score?</p>
+          <div class="game-card-tags">
+            <span class="game-tag solo">Solo</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <%- include('../partials/footer') %>
+
+  <script>
+    document.querySelector(".header").style.display = ''
+  </script>
+</body>
+
+</html>

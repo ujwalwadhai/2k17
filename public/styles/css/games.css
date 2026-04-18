@@ -1,0 +1,202 @@
+/* Games Hub Page */
+.games-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-dark2) 50%, var(--bg-dark3) 100%);
+  padding: 100px 20px 60px;
+}
+
+.games-page .page-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.games-page .page-header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary-light), var(--primary), var(--primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.games-page .page-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.game-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  display: block;
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(123, 92, 240, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.game-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--primary);
+  box-shadow: 0 20px 60px rgba(123, 92, 240, 0.15), 0 0 40px rgba(123, 92, 240, 0.05);
+}
+
+.game-card:hover::before {
+  opacity: 1;
+}
+
+.game-card-preview {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.game-card-preview .game-icon {
+  font-size: 5rem;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
+  transition: transform 0.4s ease;
+}
+
+.game-card:hover .game-icon {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+.game-card-preview.ludo-preview {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+
+.game-card-preview.football-preview {
+  background: linear-gradient(135deg, #1a2e1a, #0d2818);
+}
+
+.game-card-body {
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.game-card-body h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.game-card-body p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.game-card-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.game-tag {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.game-tag.multiplayer {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.25);
+}
+
+.game-tag.solo {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+  border: 1px solid rgba(52, 152, 219, 0.25);
+}
+
+.game-tag.classic {
+  background: rgba(241, 196, 15, 0.15);
+  color: #f1c40f;
+  border: 1px solid rgba(241, 196, 15, 0.25);
+}
+
+/* Ludo mini board preview */
+.ludo-mini-board {
+  width: 120px;
+  height: 120px;
+  display: grid;
+  grid-template: 1fr 0.4fr 1fr / 1fr 0.4fr 1fr;
+  gap: 2px;
+  border-radius: 8px;
+  overflow: hidden;
+  transform: rotate(45deg);
+  transition: transform 0.4s ease;
+}
+
+.game-card:hover .ludo-mini-board {
+  transform: rotate(45deg) scale(1.1);
+}
+
+.ludo-mini-board .corner {
+  border-radius: 3px;
+}
+
+.ludo-mini-board .corner.red { background: #E74C3C; }
+.ludo-mini-board .corner.green { background: #2ECC71; }
+.ludo-mini-board .corner.yellow { background: #F1C40F; }
+.ludo-mini-board .corner.blue { background: #3498DB; }
+.ludo-mini-board .path { background: rgba(255, 255, 255, 0.15); }
+.ludo-mini-board .center { background: rgba(255, 255, 255, 0.25); border-radius: 3px; }
+
+/* Responsive */
+@media (max-width: 700px) {
+  .games-page {
+    padding: 80px 16px 40px;
+  }
+
+  .games-page .page-header h1 {
+    font-size: 2rem;
+  }
+
+  .games-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .game-card-preview {
+    height: 160px;
+  }
+}

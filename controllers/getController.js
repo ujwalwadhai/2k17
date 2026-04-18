@@ -268,6 +268,14 @@ exports.footballGame = async (req, res) => {
   res.render('pages/football-game');
 }
 
+exports.gamesHub = async (req, res) => {
+  res.render('pages/games');
+}
+
+exports.ludoGame = async (req, res) => {
+  res.render('pages/ludo');
+}
+
 exports.badges = async (req, res) => {
   var user = await Users.findOne({ username: req.user.username }).populate("earnedBadges.badge");
   if (!user) return res.redirect('/');

@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const dotenv = require('dotenv');
@@ -13,9 +15,10 @@ const session = require('express-session');
 const passport = require('passport');
 dotenv.config();
 require('./config/passport')(passport);
+const initLudoSocket = require('./sockets/ludo');
 
 const app = express();
-app.use(session({
+const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -28,7 +31,9 @@ app.use(session({
     secure: process.env.PLATFORM_TYPE === 'production',
     sameSite: 'lax'
   }
-}));
+});
+
+app.use(sessionMiddleware);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -105,6 +110,7 @@ require('./models/PageViews');
 require('./models/UserSessions');
 require('./models/Quiz');
 require('./models/Attempt');
+require('./models/GameRooms');
 
 app.use(express.json({ type: 'application/json' }));
 app.use(express.urlencoded({ extended: true }));
@@ -210,9 +216,20 @@ require('./config/mailer')
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {}).then(() => {
   console.log('✅ Connected to MongoDB');
+  const server = http.createServer(app);
+  const io = new Server(server, {
+    cors: {
+      origin: true,
+      credentials: true
+    }
+  });
+
+  app.set('io', io);
+  initLudoSocket(io);
+
   // Start server only after DB is connected
   const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`🚀 Server is running\n`);
   });
   if(process.env.PLATFORM_TYPE === 'production') {

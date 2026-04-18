@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html data-theme="<%= theme ?? 'purple' %>" data-font="<%= font ?? 'Lato' %>" lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+  <title>Ludo | 2k17 Games</title>
+  <meta name="description" content="Play Ludo with your friends - classic multiplayer board game on 2k17">
+  <link rel="stylesheet" href="/styles/css/ludo.css">
+</head>
+
+<body>
+  <%- include('../partials/navbar') %>
+
+  <div class="ludo-page">
+
+    <!-- Lobby Screen -->
+    <div class="ludo-setup" id="ludoSetup">
+      <h1>🎲 Ludo</h1>
+      <p class="subtitle">Create a room or join one and play live multiplayer.</p>
+
+      <div class="lobby-grid">
+        <div class="lobby-card">
+          <h2>Create Room</h2>
+          <p>Anyone can host a game room.</p>
+
+          <div class="input-group" id="nicknameGroup">
+            <label for="nicknameInput">Nickname</label>
+            <input id="nicknameInput" type="text" maxlength="24" placeholder="Enter your name">
+          </div>
+
+          <div class="player-select">
+            <label>Room Size</label>
+            <div class="player-buttons">
+              <button class="player-btn" data-players="2">2</button>
+              <button class="player-btn" data-players="3">3</button>
+              <button class="player-btn active" data-players="4">4</button>
+            </div>
+          </div>
+
+          <button class="start-game-btn" id="createRoomBtn">
+            Create Room <span class="fal fa-plus" style="margin-left: 8px;"></span>
+          </button>
+        </div>
+
+        <div class="lobby-card">
+          <h2>Join Room</h2>
+          <p>Join using room code or pick from public rooms.</p>
+
+          <div class="input-group">
+            <label for="roomCodeInput">Room Code</label>
+            <div class="inline-input">
+              <input id="roomCodeInput" type="text" maxlength="6" placeholder="ABC123">
+              <button id="joinRoomBtn" class="mini-btn">Join</button>
+            </div>
+          </div>
+
+          <div class="public-rooms" id="publicRooms"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Area -->
+    <div class="ludo-game" id="ludoGame">
+      <a href="/games" class="back-link"><span class="fal fa-arrow-left"></span> Back to Games</a>
+
+      <div class="room-meta">
+        <div class="room-code">Room: <strong id="roomCodeLabel">-</strong></div>
+        <div class="room-actions">
+          <button class="mini-btn" id="copyCodeBtn">Copy Code</button>
+          <button class="mini-btn" id="startGameBtn">Start</button>
+          <button class="mini-btn danger" id="leaveRoomBtn">Leave</button>
+        </div>
+      </div>
+
+      <div class="players-panel" id="playersPanel"></div>
+
+      <!-- Info Bar -->
+      <div class="game-info-bar">
+        <div class="turn-indicator">
+          <div class="turn-dot"></div>
+          <span class="turn-label">Red's Turn</span>
+        </div>
+        <div class="game-status">Roll the dice!</div>
+      </div>
+
+      <!-- Scoreboard -->
+      <div class="scoreboard"></div>
+
+      <!-- Game Board Canvas -->
+      <div class="board-container">
+        <canvas id="ludoCanvas"></canvas>
+      </div>
+
+      <!-- Dice Area -->
+      <div class="dice-area">
+        <div class="dice-container">
+          <div class="dice" id="diceElement">
+            <div class="dice-face face-1">
+              <div class="dice-dot"></div>
+            </div>
+          </div>
+        </div>
+        <button class="roll-btn" id="rollDiceBtn">
+          Roll Dice <span class="fal fa-dice" style="margin-left: 6px;"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Game Message Toast -->
+    <div class="game-message" id="gameMessage"></div>
+
+    <!-- Winner Modal -->
+    <div class="winner-overlay" id="winnerOverlay">
+      <div class="winner-modal">
+        <div class="trophy">🏆</div>
+        <h2 class="winner-name" style="color: var(--primary);">Red Player</h2>
+        <p>is the winner! Congratulations!</p>
+        <div class="modal-buttons">
+          <button class="btn-primary" id="playAgainBtn">Play Again</button>
+          <button class="btn-secondary" id="backToGamesBtn">Back to Games</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/ludo.js"></script>
+  <script>
+    document.querySelector(".header").style.display = ''
+  </script>
+</body>
+
+</html>

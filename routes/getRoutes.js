@@ -10,6 +10,7 @@ var analyticsController = require('../controllers/analytics');
 var usersController = require('../controllers/users');
 var adminController = require('../controllers/admin');
 var quizController = require('../controllers/quizzes');
+var gamesController = require('../controllers/games');
 var { isLoggedIn } = require('../middlewares/auth');
 
 
@@ -115,6 +116,14 @@ router.get('/500', (req, res) => res.render('pages/500'))
 router.get('/404', (req, res) => res.render('pages/404'))
 
 router.get('/football', getController.footballGame)
+
+router.get('/games', getController.gamesHub)
+
+router.get('/games/ludo', getController.ludoGame)
+
+router.get('/api/games/ludo/rooms', gamesController.ludoRooms.listRooms)
+
+router.get('/api/games/ludo/rooms/:roomCode', gamesController.ludoRooms.getRoomDetails)
 
 router.get('/:username', getController.viewProfile);
 

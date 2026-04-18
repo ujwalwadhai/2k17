@@ -12,6 +12,7 @@ var adminController = require('../controllers/admin');
 var memoriesController = require('../controllers/memories');
 var analyticsController = require('../controllers/analytics');
 var quizController = require('../controllers/quizzes');
+var gamesController = require('../controllers/games');
 var { upload } = require('../config/cloudinary');
 var { isLoggedIn, hasRole } = require('../middlewares/auth');
 
@@ -145,6 +146,11 @@ router.post('/file/download', isLoggedIn, (req, res, next) => {
 router.post('/quiz/create', isLoggedIn, quizController.handleCreateForm);
 
 router.post('/quiz/:quizId/attempt', isLoggedIn, quizController.handleAttempt);
+
+
+router.post('/api/games/ludo/rooms/create', gamesController.ludoRooms.createRoom);
+
+router.post('/api/games/ludo/rooms/join', gamesController.ludoRooms.joinRoom);
 
 
 module.exports = router;
